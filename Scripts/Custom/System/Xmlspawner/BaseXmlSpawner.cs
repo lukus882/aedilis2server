@@ -17,6 +17,7 @@ using System.Xml;
 using Server.Spells;
 using System.Text;
 using System.Globalization;
+using Server.Accounting;
 using Server.Engines.XmlSpawner2;
 
 namespace Server.Mobiles
@@ -209,9 +210,11 @@ namespace Server.Mobiles
             SETONSPAWN,
             SETONSPAWNENTRY,
             SETONNEARBY,
+            SETONPETS,
             SETONMOB,
             SETONTHIS,
             SETONPARENT,
+            SETACCOUNTTAG,
             GIVE,
             TAKE,
             GUMP,
@@ -288,12 +291,14 @@ namespace Server.Mobiles
             GETONMOB,
             GETONCARRIED,
             GETONTRIGMOB,
+            GETONNEARBY,
             GETONSPAWN,
             GETONPARENT,
             GETONTHIS,
             GETONTAKEN,
             GETONGIVEN,
             GETFROMFILE,
+            GETACCOUNTTAG,
             AMOUNTCARRIED,
             RND,
             RNDBOOL,
@@ -312,12 +317,14 @@ namespace Server.Mobiles
             GETVAR,
             GETONCARRIED,
             GETONTRIGMOB,
+            GETONNEARBY,
             GETONSPAWN,
             GETONPARENT,
             GETONTHIS,
             GETONTAKEN,
             GETONGIVEN,
             GETFROMFILE,
+            GETACCOUNTTAG,
             AMOUNTCARRIED,
             RND,
             RNDBOOL,
@@ -452,11 +459,13 @@ namespace Server.Mobiles
             AddTypeKeyword("SETONTRIGMOB");
             AddTypeKeyword("SETONCARRIED");
             AddTypeKeyword("SETONNEARBY");
+            AddTypeKeyword("SETONPETS");
             AddTypeKeyword("SETONSPAWN");
             AddTypeKeyword("SETONSPAWNENTRY");
             AddTypeKeyword("SETONMOB");
             AddTypeKeyword("SETONTHIS");
             AddTypeKeyword("SETONPARENT");
+            AddTypeKeyword("SETACCOUNTTAG");
             AddTypeKeyword("GIVE");
             AddTypeKeyword("TAKE");
             AddTypeKeyword("GUMP");
@@ -518,12 +527,14 @@ namespace Server.Mobiles
             AddValueKeyword("GETONCARRIED");
             AddValueKeyword("AMOUNTCARRIED");
             AddValueKeyword("GETONTRIGMOB");
+            AddValueKeyword("GETONNEARBY");
             AddValueKeyword("GETONSPAWN");
             AddValueKeyword("GETONPARENT");
             AddValueKeyword("GETONTHIS");
             AddValueKeyword("GETONTAKEN");
             AddValueKeyword("GETONGIVEN");
             AddValueKeyword("GETFROMFILE");
+            AddValueKeyword("GETACCOUNTTAG");
             AddValueKeyword("RANDNAME");
             AddValueKeyword("TRIGSKILL");
             AddValueKeyword("PLAYERSINRANGE");
@@ -541,12 +552,14 @@ namespace Server.Mobiles
             AddValuemodKeyword("GETONCARRIED");
             AddValuemodKeyword("AMOUNTCARRIED");
             AddValuemodKeyword("GETONTRIGMOB");
+            AddValuemodKeyword("GETONNEARBY");
             AddValuemodKeyword("GETONSPAWN");
             AddValuemodKeyword("GETONPARENT");
             AddValuemodKeyword("GETONTHIS");
             AddValuemodKeyword("GETONTAKEN");
             AddValuemodKeyword("GETONGIVEN");
             AddValuemodKeyword("GETFROMFILE");
+            AddValuemodKeyword("GETACCOUNTTAG");
             AddValuemodKeyword("MUL");
             AddValuemodKeyword("INC");
             AddValuemodKeyword("MOB");
@@ -1112,7 +1125,7 @@ namespace Server.Mobiles
                 if (shouldLog)
                     CommandLogging.LogChangeProperty(from, o, p.Name, value);
 
-                if(ptype.IsPrimitive)
+                if (ptype.IsPrimitive)
                 {
                     p.SetValue(o, toSet, null);
                 }
@@ -1525,7 +1538,17 @@ namespace Server.Mobiles
             Type type = o.GetType();
             object po = null;
 
-            PropertyInfo[] props = type.GetProperties(BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
+            PropertyInfo[] props = null;
+
+            try
+            {
+                props = type.GetProperties(BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
+            }
+            catch
+            {
+                Console.WriteLine("GetProperties error with type {0}", type);
+                return null;
+            }
 
             // parse the strings of the form property.attribute into two parts
             // first get the property
@@ -1722,10 +1745,10 @@ namespace Server.Mobiles
                             //return "Property is protected.";
 
                             ptype = p.PropertyType;
-                            if(ptype.IsPrimitive)
+                            if (ptype.IsPrimitive)
                             {
                                 po = p.GetValue(o, null);
-                            } 
+                            }
                             else if ((ptype.GetInterface("IList") != null) && index >= 0)
                             {
                                 try
@@ -2273,6 +2296,86 @@ namespace Server.Mobiles
                                 if (arglist.Length < 3) break;
                                 remainder = arglist[2];
                             }
+                            else if (kw == valuemodKeyword.GETONNEARBY)
+                            {
+                                // syntax is GETONNEARBY,range,name[,type][,searchcontainers],property
+                                // or GETONNEARBY,range,name[,type][,searchcontainers],[ATTACHMENT,type,name,property]
+                                // note this will be an arg to some property
+                                if (value_keywordargs.Length > 3)
+                                {
+                                    string targetname = value_keywordargs[2];
+                                    string propname = value_keywordargs[3];
+                                    string typestr = null;
+                                    bool searchcontainers = false;
+                                    int range = -1;
+                                    try
+                                    {
+                                        range = int.Parse(value_keywordargs[1]);
+                                    }
+                                    catch { }
+
+                                    if (range < 0)
+                                    {
+                                        status_str = "invalid range in GETONNEARBY";
+                                        no_error = false;
+                                    }
+
+                                    if (value_keywordargs.Length > 4)
+                                    {
+                                        typestr = value_keywordargs[3];
+                                        propname = value_keywordargs[4];
+                                    }
+
+                                    if (value_keywordargs.Length > 5)
+                                    {
+                                        try
+                                        {
+                                            searchcontainers = bool.Parse(value_keywordargs[3]);
+                                        }
+                                        catch
+                                        {
+                                            status_str = "invalid searchcontainer bool in GETONNEARBY";
+                                            no_error = false;
+                                        }
+                                        typestr = value_keywordargs[4];
+                                        propname = value_keywordargs[5];
+                                    }
+
+                                    Type targettype = null;
+                                    if (typestr != null)
+                                    {
+                                        targettype = SpawnerType.GetType(typestr);
+                                    }
+
+                                    if (no_error)
+                                    {
+                                        // get all of the nearby objects
+                                        ArrayList nearbylist = GetNearbyObjects(spawner, targetname, targettype, typestr, range, searchcontainers);
+
+                                        string resultstr = null;
+
+                                        // apply the properties from the first valid thing on the list
+                                        foreach (object nearbyobj in nearbylist)
+                                        {
+                                            resultstr = ApplyToProperty(spawner, nearbyobj, o, propname, arglist[0]);
+                                            if (resultstr == null)
+                                                break;
+                                        }
+                                        if (resultstr != null)
+                                        {
+                                            status_str = "GETONNEARBY error: " + resultstr;
+                                            no_error = false;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    status_str = "Invalid GETONNEARBY args : " + arglist[1];
+                                    no_error = false;
+                                }
+                                if (arglist.Length < 3) break;
+                                remainder = arglist[2];
+                            }
                             else if (kw == valuemodKeyword.GETONPARENT)
                             {
                                 // syntax is GETONPARENT,property
@@ -2515,12 +2618,71 @@ namespace Server.Mobiles
                                             status_str = "GETFROMFILE error: " + filename;
                                             no_error = false;
                                         }
+                                        // set the property value 
+                                        string result = SetPropertyValue(spawner, o, arglist[0], filestring);
+
+                                        // see if it was successful
+                                        if (result != "Property has been set.")
+                                        {
+                                            status_str = arglist[0] + " : " + result;
+                                            no_error = false;
+                                        }
                                     }
 
                                 }
                                 else
                                 {
                                     status_str = "Invalid GETFROMFILE args : " + arglist[1];
+                                    no_error = false;
+                                }
+                                if (arglist.Length < 3) break;
+                                remainder = arglist[2];
+                            }
+                            else if (kw == valuemodKeyword.GETACCOUNTTAG)
+                            {
+                                // syntax is GETACCOUNTTAG,tagname
+
+                                if (value_keywordargs.Length > 1)
+                                {
+
+                                    string tagname = value_keywordargs[1];
+                                    string tagvalue = null;
+
+                                    // get the value of the account tag from the triggering mob
+                                    if (trigmob != null && !trigmob.Deleted)
+                                    {
+                                        Account acct = trigmob.Account as Account;
+                                        if (acct != null)
+                                        {
+                                            tagvalue = acct.GetTag(tagname);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        no_error = false;
+                                    }
+
+                                    if (tagvalue != null)
+                                    {
+                                        // set the property value 
+                                        string result = SetPropertyValue(spawner, o, arglist[0], tagvalue);
+
+                                        // see if it was successful
+                                        if (result != "Property has been set.")
+                                        {
+                                            status_str = arglist[0] + " : " + result;
+                                            no_error = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        status_str = "Invalid GETACCOUNTTAG tagname : " + tagname;
+                                        no_error = false;
+                                    }
+                                }
+                                else
+                                {
+                                    status_str = "Invalid GETACCOUNTTAG args : " + arglist[1];
                                     no_error = false;
                                 }
                                 if (arglist.Length < 3) break;
@@ -3021,8 +3183,9 @@ namespace Server.Mobiles
                             else if (kw == typemodKeyword.MEFFECT)
                             {
                                 int effect = -1;
-                                int duration = 1;
-                                // syntax is MEFFECT,itemid,duration,[x,y,z]
+                                int duration = 0;
+                                int speed = 1;
+                                // syntax is MEFFECT,itemid[,speed]
 
 
                                 // try to get the effect argument
@@ -3043,52 +3206,16 @@ namespace Server.Mobiles
                                 {
                                     try
                                     {
-                                        duration = int.Parse(keywordargs[2]);
+                                        speed = int.Parse(keywordargs[2]);
                                     }
-                                    catch { status_str = "Improper effect duration format"; no_error = false; }
-                                }
-                                // by default just use the spawn location
-                                Point3D eloc;
-                                Map emap = Map.Internal;
-                                if (o is Mobile)
-                                {
-                                    eloc = ((Mobile)o).Location;
-                                    emap = ((Mobile)o).Map;
-                                }
-                                else if (o is Item)
-                                {
-                                    eloc = ((Item)o).Location;
-                                    emap = ((Item)o).Map;
-                                }
-                                else
-                                {
-                                    // should never get here
-                                    eloc = new Point3D(0, 0, 0);
+                                    catch { status_str = "Improper effect speed format"; no_error = false; }
                                 }
 
-                                if (keywordargs.Length > 3)
-                                {
-                                    // is this applied to the trig mob or to a location?
-                                    if (keywordargs.Length > 5)
-                                    {
-                                        int x = 0;
-                                        int y = 0;
-                                        int z = 0;
-                                        try
-                                        {
-                                            x = int.Parse(keywordargs[3]);
-                                            y = int.Parse(keywordargs[4]);
-                                            z = int.Parse(keywordargs[5]);
-                                        }
-                                        catch { status_str = "Improper effect location format"; }
-                                        eloc = new Point3D(x, y, z);
-                                    }
-                                }
-                                if (effect >= 0 && refobject is Mobile)
+                                if (effect >= 0 && refobject is IEntity && o is IEntity)
                                 {
                                     //Effects.SendLocationEffect(eloc, emap, effect, duration);
                                     //public static void SendMovingEffect( IEntity from, IEntity to, int itemID, int speed, int duration, bool fixedDirection, bool explodes )
-                                    Effects.SendMovingEffect((Mobile)refobject, (Mobile)refobject, effect, 0, duration, true, false);
+                                    Effects.SendMovingEffect((IEntity)refobject, (IEntity)o, effect, speed, duration, false, false);
                                 }
                                 if (arglist.Length < 2) break;
                                 remainder = singlearglist[1];
@@ -3790,7 +3917,6 @@ namespace Server.Mobiles
                 {
                     if (Insensitive.Equals(p.Name, propname))
                     {
-
                         // did we find the type at least?
                         if (tinfo == null)
                         {
@@ -3970,6 +4096,61 @@ namespace Server.Mobiles
 
                             return ParseGetValue(getvalue, ptype);
                         }
+                        else if ((kw == valueKeyword.GETONNEARBY) && arglist.Length > 3)
+                        {
+                            // syntax is GETONNEARBY,range,name[,type][,searchcontainers],property
+                            // or GETONNEARBY,range,name[,type][,searchcontainers],[ATTACHMENT,type,name,property]
+
+                            string targetname = arglist[2];
+                            string propname = arglist[3];
+                            string typestr = null;
+                            bool searchcontainers = false;
+                            int range = -1;
+                            try
+                            {
+                                range = int.Parse(arglist[1]);
+                            }
+                            catch { }
+
+                            if (arglist.Length > 4)
+                            {
+                                typestr = arglist[3];
+                                propname = arglist[4];
+                            }
+
+                            if (arglist.Length > 5)
+                            {
+                                try
+                                {
+                                    searchcontainers = bool.Parse(arglist[4]);
+                                }
+                                catch
+                                {
+                                }
+                                propname = arglist[5];
+                            }
+
+                            Type targettype = null;
+                            if (typestr != null)
+                            {
+                                targettype = SpawnerType.GetType(typestr);
+                            }
+
+                            if (range >= 0)
+                            {
+                                // get all of the nearby objects
+                                ArrayList nearbylist = GetNearbyObjects(spawner, targetname, targettype, typestr, range, searchcontainers);
+
+                                // apply the properties from the first valid thing on the list
+                                foreach (object nearbyobj in nearbylist)
+                                {
+                                    string getvalue = GetPropertyValue(spawner, nearbyobj, propname, out ptype);
+                                     return ParseGetValue(getvalue, ptype);
+                                }
+                            }
+                            else
+                                return null;
+                        }
                         else if ((kw == valueKeyword.GETONTRIGMOB) && arglist.Length > 1)
                         {
                             // syntax is GETONTRIGMOB,property
@@ -4146,6 +4327,26 @@ namespace Server.Mobiles
                             }
 
                             return filestring;
+                        }
+                        else if ((kw == valueKeyword.GETACCOUNTTAG) && arglist.Length > 1)
+                        {
+                            // syntax is GETACCOUNTTAG,tagname
+                            ptype = typeof(string);
+
+                            string tagname = arglist[1];
+                            string tagvalue = null;
+
+                            // get the value of the account tag from the triggering mob
+                            if (trigmob != null && !trigmob.Deleted)
+                            {
+                                Account acct = trigmob.Account as Account;
+                                if (acct != null)
+                                {
+                                    tagvalue = '"' + acct.GetTag(tagname) + '"';
+                                }
+                            }
+
+                            return tagvalue;
                         }
                         else if ((kw == valueKeyword.RND) && arglist.Length > 2)
                         {
@@ -4874,73 +5075,80 @@ namespace Server.Mobiles
 
             }
         }
-        private static ArrayList GetNearbyItems(object invoker, string targetname, Type targettype, string typestr, int range, bool searchcontainers)
+        private static ArrayList GetNearbyObjects(object invoker, string targetname, Type targettype, string typestr, int range, bool searchcontainers)
         {
             IPooledEnumerable itemlist = null;
             IPooledEnumerable mobilelist = null;
             ArrayList nearbylist = new ArrayList();
 
             // get nearby items
-
-            if (invoker is Item)
+            if (targettype == null || targettype == typeof(Item) || targettype.IsSubclassOf(typeof(Item)))
             {
-                itemlist = ((Item)invoker).GetItemsInRange(range);
-            }
-            else
-                if (invoker is Mobile)
+                if (invoker is Item)
                 {
-                    itemlist = ((Mobile)invoker).GetItemsInRange(range);
+                    itemlist = ((Item)invoker).GetItemsInRange(range);
                 }
-
-
-            if (itemlist != null)
-            {
-                foreach (Item i in itemlist)
-                {
-                    // check the type and name
-
-                    Type itemtype = i.GetType();
-
-                    if (searchcontainers)
+                else
+                    if (invoker is Mobile)
                     {
-                        if (i is Container)
-                            GetItemsIn(i, targetname, targettype, typestr, ref nearbylist);
+                        itemlist = ((Mobile)invoker).GetItemsInRange(range);
                     }
-                    else
-                        if (!i.Deleted && ((targetname.Length == 0 || String.Compare(i.Name, targetname, true) == 0)) && (typestr == null ||
-                            (itemtype != null && targettype != null && (itemtype.Equals(targettype) || itemtype.IsSubclassOf(targettype)))))
-                        {
-                            nearbylist.Add(i);
-                        }
 
+
+                if (itemlist != null)
+                {
+                    foreach (Item i in itemlist)
+                    {
+                        // check the type and name
+
+                        Type itemtype = i.GetType();
+
+                        if (searchcontainers)
+                        {
+                            if (i is Container)
+                                GetItemsIn(i, targetname, targettype, typestr, ref nearbylist);
+                        }
+                        else
+                            if (!i.Deleted && ((targetname == null || targetname.Length == 0 || String.Compare(i.Name, targetname, true) == 0)) && (typestr == null ||
+                                (itemtype != null && targettype != null && (itemtype.Equals(targettype) || itemtype.IsSubclassOf(targettype)))))
+                            {
+                                nearbylist.Add(i);
+                            }
+
+
+                    }
 
                 }
-
             }
 
             // get nearby mobiles
-
-            if (invoker is Item)
+            if (targettype == null || targettype == typeof(Mobile) || targettype.IsSubclassOf(typeof(Mobile)))
             {
-                mobilelist = ((Item)invoker).GetMobilesInRange(range);
-            }
-            else
-                if (invoker is Mobile)
+                if (invoker is Item)
                 {
-                    mobilelist = ((Mobile)invoker).GetMobilesInRange(range);
+                    mobilelist = ((Item)invoker).GetMobilesInRange(range);
                 }
-
-            if (mobilelist != null)
-            {
-                foreach (Mobile m in mobilelist)
-                {
-                    // check the type and name
-                    Type mobtype = m.GetType();
-
-                    if (!m.Deleted && ((targetname.Length == 0 || String.Compare(m.Name, targetname, true) == 0)) && (typestr == null ||
-                        (mobtype != null && targettype != null && (mobtype.Equals(targettype) || mobtype.IsSubclassOf(targettype)))))
+                else
+                    if (invoker is Mobile)
                     {
-                        nearbylist.Add(m);
+                        mobilelist = ((Mobile)invoker).GetMobilesInRange(range);
+                    }
+
+                if (mobilelist != null)
+                {
+
+                    foreach (Mobile m in mobilelist)
+                    {
+
+
+                        // check the type and name
+                        Type mobtype = m.GetType();
+
+                        if (!m.Deleted && ((targetname == null || targetname.Length == 0 || String.Compare(m.Name, targetname, true) == 0)) && (typestr == null ||
+                            (mobtype != null && targettype != null && (mobtype.Equals(targettype) || mobtype.IsSubclassOf(targettype)))))
+                        {
+                            nearbylist.Add(m);
+                        }
                     }
                 }
             }
@@ -7999,6 +8207,7 @@ namespace Server.Mobiles
                             // check for the SET,itemname[,itemtype]/prop/value form is used
                             string[] arglist = ParseSlashArgs(substitutedtypeName, 3);
                             string[] keywordargs = ParseString(arglist[0], 3, ",");
+
                             if (keywordargs.Length > 1)
                             {
                                 string typestr = null;
@@ -8036,7 +8245,7 @@ namespace Server.Mobiles
                                     ApplyObjectStringProperties(spawner, substitutedtypeName, setitem, triggermob, invoker, out status_str);
                                 }
                             }
-                            else
+                            else if (spawner != null)
                             {
                                 ApplyObjectStringProperties(spawner, substitutedtypeName, spawner.SetItem, triggermob, invoker, out status_str);
                             }
@@ -8101,6 +8310,45 @@ namespace Server.Mobiles
                         {
                             // the syntax is SETONTRIGMOB/prop/value/prop2/value...
                             ApplyObjectStringProperties(spawner, substitutedtypeName, triggermob, triggermob, invoker, out status_str);
+                            TheSpawn.SpawnedObjects.Add(new KeywordTag(substitutedtypeName, spawner));
+
+                            break;
+                        }
+                    case typeKeyword.SETACCOUNTTAG:
+                        {
+                            // the syntax is SETACCOUNTTAG,tagname/value
+                            string[] arglist = ParseSlashArgs(substitutedtypeName, 2);
+
+                            if (arglist.Length > 1)
+                            {
+                                string[] objstr = ParseString(arglist[0], 2, ",");
+
+                                if (objstr.Length < 2)
+                                {
+                                    status_str = "missing tagname in SETACCOUNTTAG";
+                                    return false;
+                                }
+
+                                string tagname = objstr[1];
+                                string tagval = arglist[1];
+
+                                // set the tag value
+                                // get the value of the account tag from the triggering mob
+                                if (triggermob != null && !triggermob.Deleted)
+                                {
+                                    Account acct = triggermob.Account as Account;
+                                    if (acct != null)
+                                    {
+                                        acct.SetTag(tagname, tagval);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                status_str = "no value assigned to SETACCOUNTTAG";
+                                return false;
+                            }
+
                             TheSpawn.SpawnedObjects.Add(new KeywordTag(substitutedtypeName, spawner));
 
                             break;
@@ -8206,7 +8454,7 @@ namespace Server.Mobiles
                             {
                                 targettype = SpawnerType.GetType(typestr);
                             }
-                            ArrayList nearbylist = GetNearbyItems(invoker, targetname, targettype, typestr, range, searchcontainers);
+                            ArrayList nearbylist = GetNearbyObjects(invoker, targetname, targettype, typestr, range, searchcontainers);
 
                             // apply the properties to everything on the list
                             foreach (object nearbyobj in nearbylist)
@@ -8218,6 +8466,72 @@ namespace Server.Mobiles
 
                             break;
                         }
+                    case typeKeyword.SETONPETS:
+                        {
+                            // the syntax is SETONPETS,range/prop/value/prop/value...
+
+                            string[] arglist = ParseSlashArgs(substitutedtypeName, 3);
+                            string typestr = "BaseCreature";
+                            string targetname = null;
+                            int range = -1;
+                            bool searchcontainers = false;
+
+                            if (arglist.Length > 0)
+                            {
+                                string[] objstr = ParseString(arglist[0], 2, ",");
+                                if (objstr.Length < 2)
+                                {
+                                    status_str = "missing range or name in SETONPETS";
+                                    return false;
+                                }
+
+                                try
+                                {
+                                    range = int.Parse(objstr[1]);
+                                }
+                                catch { }
+
+                                if (range < 0)
+                                {
+                                    status_str = "invalid range in SETONPETS";
+                                    return false;
+                                }
+
+
+                            }
+                            else
+                            {
+                                status_str = "missing args to SETONPETS";
+                                return false;
+                            }
+
+                            Type targettype = null;
+
+                            if (typestr != null)
+                            {
+                                targettype = SpawnerType.GetType(typestr);
+                            }
+
+                            // get all of the nearby pets
+                            ArrayList nearbylist = GetNearbyObjects(triggermob, targetname, targettype, typestr, range, searchcontainers);
+
+                            // apply the properties to everything on the list
+                            foreach (object nearbyobj in nearbylist)
+                            {
+                                // is this a pet of the triggering mob
+                                BaseCreature pet = nearbyobj as BaseCreature;
+
+                                if (pet != null && pet.Controlled && pet.ControlMaster == triggermob)
+                                {
+                                    ApplyObjectStringProperties(spawner, substitutedtypeName, nearbyobj, triggermob, invoker, out status_str);
+                                }
+                            }
+
+                            TheSpawn.SpawnedObjects.Add(new KeywordTag(substitutedtypeName, spawner));
+
+                            break;
+                        }
+
                     case typeKeyword.SETONCARRIED:
                         {
                             // the syntax is SETONCARRIED,itemname[,itemtype][,equippedonly]/prop/value/prop2/value...
@@ -8484,6 +8798,7 @@ namespace Server.Mobiles
                             {
                                 // search the trigger mob for the named item
                                 Item itemTarget = SearchMobileForItem(triggermob, targetName, typestr, banksearch);
+
                                 // found the item so get rid of it
                                 if (itemTarget != null)
                                 {
@@ -8551,19 +8866,26 @@ namespace Server.Mobiles
                                         else
                                             savedItem = itemTarget;
                                     }
+
+
+                                    // if the saved item was being held then release it otherwise the player can take it back
+                                    if (triggermob != null && triggermob.Holding == savedItem)
+                                    {
+                                        triggermob.Holding = null;
+                                    }
+
+                                    XmlSaveItem si = (XmlSaveItem)XmlAttach.FindAttachment(invoker, typeof(XmlSaveItem), "Taken");
+
+                                    if (si == null)
+                                    {
+                                        XmlAttach.AttachTo(invoker, new XmlSaveItem("Taken", savedItem, triggermob));
+                                    }
+                                    else
+                                    {
+                                        si.SavedItem = savedItem;
+                                        si.WasOwnedBy = triggermob;
+                                    }
                                 }
-                            }
-
-                            XmlSaveItem si = (XmlSaveItem)XmlAttach.FindAttachment(invoker, typeof(XmlSaveItem), "Taken");
-
-                            if (si == null)
-                            {
-                                XmlAttach.AttachTo(invoker, new XmlSaveItem("Taken", savedItem, triggermob));
-                            }
-                            else
-                            {
-                                si.SavedItem = savedItem;
-                                si.WasOwnedBy = triggermob;
                             }
 
                             TheSpawn.SpawnedObjects.Add(new KeywordTag(substitutedtypeName, spawner));

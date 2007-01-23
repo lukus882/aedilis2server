@@ -18,7 +18,7 @@ Additional Recommended Steps:
 If you install the recommended support files, please go through these steps.
 
 If you have installed xmlspawner2-support.zip you MUST either follow Step 4 or get rid of the custom container.cs and stealing.cs files from this package.
-If you plan on spawning rares or any items with long spawn cycles I would strongly recommend that you follow installation step 4.  You can find the reason for this described at the end of this document in the section "FIX FOR STOLEN/TAKEN ITEM SPAWNS THAT REMAIN UNDER SPAWNER CONTROL"
+If you plan on spawning rares or any items with long spawn cycles I would strongly recommend that you follow installation step 4.  You can find the reason for this described at the end of xmlspawner2.txt in the section "FIX FOR STOLEN/TAKEN ITEM SPAWNS THAT REMAIN UNDER SPAWNER CONTROL"
 
 
 STEP 2: (recommended but not required)
@@ -414,4 +414,22 @@ public virtual bool HoldSmartSpawning
 
                 return false;
             }
+        }
+
+STEP 13: (recommended but not required)
+To fix a problem with lootpack generation under RunUO 2.0 make this mod in Misc/LootPack.cs around line 571.  If you dont make this mod, you will not be able to use the LOOTPACK keyword.
+
+        private static bool IsInTokuno(Mobile m)
+        {
+            // ARTEGORDONMOD
+            // allow lootpack construction without a mobile
+            if (m == null) return false;
+
+            if (m.Region.IsPartOf("Fan Dancer's Dojo"))
+                return true;
+
+            if (m.Region.IsPartOf("Yomotsu Mines"))
+                return true;
+
+            return (m.Map == Map.Tokuno);
         }

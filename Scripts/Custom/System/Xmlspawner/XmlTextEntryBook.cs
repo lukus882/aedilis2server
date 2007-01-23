@@ -323,7 +323,7 @@ namespace Server.Items
 
 				for ( int j = 0; j < page.Lines.Length; ++j )
 				{
-					byte[] buffer = Encoding.UTF8.GetBytes( page.Lines[j] );
+					byte[] buffer = Utility.UTF8.GetBytes( page.Lines[j] );
 
 					m_Stream.Write( buffer, 0, buffer.Length );
 					m_Stream.Write( (byte) 0 );
@@ -339,8 +339,8 @@ namespace Server.Items
 			string title = book.Title == null ? "" : book.Title;
 			string author = book.Author == null ? "" : book.Author;
 
-			byte[] titleBuffer = Encoding.UTF8.GetBytes( title );
-			byte[] authorBuffer = Encoding.UTF8.GetBytes( author );
+			byte[] titleBuffer = Utility.UTF8.GetBytes( title );
+			byte[] authorBuffer = Utility.UTF8.GetBytes( author );
 
 			EnsureCapacity( 15 + titleBuffer.Length + authorBuffer.Length );
 

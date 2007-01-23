@@ -151,10 +151,16 @@ namespace Server.Gumps
 
 					if ( xml.NodeType == XmlNodeType.Element && xml.Name == "object" )
 						nodes.Add( new XmlAddCAGObject( this, xml ) );
-					else if ( xml.NodeType == XmlNodeType.Element && xml.Name == "category" )
-						nodes.Add( new XmlAddCAGCategory( this, xml ) );
-					else
-						xml.Skip();
+                    else if (xml.NodeType == XmlNodeType.Element && xml.Name == "category")
+                    {
+                        if (!xml.IsEmptyElement)
+                        {
+
+                            nodes.Add(new XmlAddCAGCategory(this, xml));
+                        }
+                    }
+                    else
+                        xml.Skip();
 
 				}
 				} catch (Exception ex){
@@ -224,17 +230,17 @@ namespace Server.Gumps
 		public static readonly int SetGumpID = PropsConfig.SetGumpID;
 
 		public static readonly int SetWidth = PropsConfig.SetWidth;
-		public static readonly int SetOffsetX = PropsConfig.SetOffsetX, SetOffsetY = PropsConfig.SetOffsetY + (((EntryHeight - 20) / 2) / 2);
+		public static readonly int SetOffsetX = PropsConfig.SetOffsetX, SetOffsetY = PropsConfig.SetOffsetY /*+ (((EntryHeight - 20) / 2) / 2)*/;
 		public static readonly int SetButtonID1 = PropsConfig.SetButtonID1;
 		public static readonly int SetButtonID2 = PropsConfig.SetButtonID2;
 
 		public static readonly int PrevWidth = PropsConfig.PrevWidth;
-		public static readonly int PrevOffsetX = PropsConfig.PrevOffsetX, PrevOffsetY = PropsConfig.PrevOffsetY + (((EntryHeight - 20) / 2) / 2);
+		public static readonly int PrevOffsetX = PropsConfig.PrevOffsetX, PrevOffsetY = PropsConfig.PrevOffsetY /*+ (((EntryHeight - 20) / 2) / 2)*/;
 		public static readonly int PrevButtonID1 = PropsConfig.PrevButtonID1;
 		public static readonly int PrevButtonID2 = PropsConfig.PrevButtonID2;
 
 		public static readonly int NextWidth = PropsConfig.NextWidth;
-		public static readonly int NextOffsetX = PropsConfig.NextOffsetX, NextOffsetY = PropsConfig.NextOffsetY + (((EntryHeight - 20) / 2) / 2);
+		public static readonly int NextOffsetX = PropsConfig.NextOffsetX, NextOffsetY = PropsConfig.NextOffsetY /*+ (((EntryHeight - 20) / 2) / 2)*/;
 		public static readonly int NextButtonID1 = PropsConfig.NextButtonID1;
 		public static readonly int NextButtonID2 = PropsConfig.NextButtonID2;
 

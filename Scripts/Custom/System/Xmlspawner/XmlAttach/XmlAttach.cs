@@ -2012,7 +2012,7 @@ namespace Server.Engines.XmlSpawner2
                 AllAttachments.Remove(a.Serial.Value);
         }
 
-        private static void Defrag(object o)
+        public static void Defrag(object o)
         {
             Hashtable attachments = null;
             if(o is Item)
