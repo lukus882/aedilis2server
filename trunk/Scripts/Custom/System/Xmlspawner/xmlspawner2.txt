@@ -93,6 +93,49 @@ http://runuo.com/forums/showpost.php?p=448568&postcount=1078
 
 
 CHANGELOG:
+[color=red][b]New to version 3.18[/b][/color]
+updated 1/13/07
+[color=red][b][u]Bug Fixes[/u][/b][/color]
+[b]- fixed a possible exploit with the TAKE keyword in which players could hold an item on the cursor and prevent the item from being taken[/b] (thanks to DazedAndConfused for pointing this out).
+
+[b]- fixed a possible crash when using the SET keyword with no args in an XmlDialog Action field[/b] (thanks to morganm for pointing this out).
+
+[b]- fixed a display bug with the 'search for type' button in the spawner gump (little arrow to the right of the spawn entry) not listing all type categories.[/b] (thanks to Irian for the fix).
+
+[color=red][b][u]Modified Features[/u][/b][/color]
+[b]- added a new installation step (STEP #13) to the "installation 2.0.txt" file that includes a small mod to lootpack.cs that is required for the LOOTPACK keyword to function under RunUO 2.0[/b] (thanks to snicker7 for pointing this out).
+
+[b]- modified the XmlDeathAction attachment to support multiple actions in a single Action specification.[/b]  Just separate the multiple actions with semicolons.
+
+[color=red][b][u]New Features[/u][/b][/color]
+[b]- added the 'GETONNEARBY,range,name[,type][,searchcontainers],property' keyword that can be used to get or test properties on nearby items or mobiles[/b].  This can be used in property assignments or property tests.  If more than one of the specified object is found, it will only return the value from one.
+
+For example, to test to see if someone has placed the longsword named "Grizzleblag" on the ground near the spawner you could use a condition test like
+
+[color=blue]GETONNEARBY,1,Grizzleblag,longsword,visible=true[/color]
+
+Or you could get the size of a pile of gold in a nearby container with
+
+[color=blue]SENDMSG/{GETONNEARBY,1,,gold,true,amount} gold pieces are in the container[/color]
+
+[b]- added the new standalone keyword 'SETONPETS,range' that allows you to set properties on nearby pets belonging to the triggering mob[/b] where the range is the distance from the triggering mob.  You would use it like
+
+[color=blue]SETONPETS,range/prop/value/prop/value... [/color]
+
+[b]- added the new 'GETACCOUNTTAG,tagname' keyword that allows access to account tags on the triggering player[/b]  (thanks to CEO for the suggestion). This can be used in value assignments or property tests.  For example, if you wanted to test for an account tag before handing out a quest, you could use a Condition test like
+
+[color=blue]GETACCOUNTTAG,quest1="done"[/color]
+
+where 'quest1' would be the account tag name, and "done" would be the value of the tag, or
+
+[color=blue]SENDMSG/I see that you already have {GETACCOUNTTAG,numRewardsChosen} veteran rewards.[/color]
+
+where 'numRewardsChosen' is the account tag used to keep track of vet rewards.
+
+[b]- added the new 'SETACCOUNTTAG,tagname/value' keyword that allows you to create or change the value of account tags on the triggering player.[/b]  For example, to create an account tag named 'quest1' with the value 'done' use a spawn entry like
+
+[color=blue]SETACCOUNTTAG,quest1/done[/color]
+
 [color=red][b]New to version 3.17[/b][/color]
 updated 11/29/06
 [color=red][b][u]Bug Fixes[/u][/b][/color]

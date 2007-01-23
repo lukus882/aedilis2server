@@ -101,7 +101,22 @@ namespace Server.Engines.XmlSpawner2
                 }
             }
 
-            ExecuteDeathAction(killed.Corpse, killer, Action);
+            ExecuteDeathActions(killed.Corpse, killer, Action);
+        }
+
+        private void ExecuteDeathActions(Item corpse, Mobile killer, string actions)
+        {
+            if (actions == null || actions.Length <= 0) return;
+            // execute any action associated with it
+            // allow for multiple action strings on a single line separated by a semicolon
+
+            string[] args = actions.Split(';');
+
+            for (int j = 0; j < args.Length; j++)
+            {
+                ExecuteDeathAction(corpse, killer, args[j]);
+            }
+
         }
 
         private static void ExecuteDeathAction(Item corpse, Mobile killer, string action)

@@ -66,7 +66,8 @@ namespace Server.Mobiles
 				"SETONTRIGMOB/property/value/...\n" +
 				"SETONTHIS/property/value/...\n" +
 				"SETONPARENT/property/value/...\n" +
-				"SETONNEARBY,range,name[,type]/prop/value/prop/value...\n" +
+				"SETONNEARBY,range,name[,type][,searchcontainers]/prop/value/prop/value...\n" +
+                "SETONPETS,range/prop/value/prop/value...\n" +
 				"SETONCARRIED,itemname[,itemtype][,equippedonly]/property/value/...\n" +
 				"SETONSPAWN[,spawnername],subgroup/property/value/...\n" +
 				"SETONSPAWNENTRY[,spawnername],entrystring/property/value/...\n" +
@@ -119,6 +120,7 @@ namespace Server.Mobiles
 				"GET,itemname or serialno[,itemtype],property\n" +
 				"GETVAR,varname\n" +
 				"GETONCARRIED,itemname[,itemtype],property\n" +
+                "GETONNEARBY,range,name[,type][,searchcontainers],property\n" +
 				"GETONMOB,mobname[,mobtype],property\n" +
 				"GETONGIVEN,property\n" +
 				"GETONTAKEN,property\n" +

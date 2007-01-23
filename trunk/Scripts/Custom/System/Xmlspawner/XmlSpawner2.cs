@@ -74,7 +74,7 @@ namespace Server.Mobiles
 
         #region Constant declarations
 
-        public const string Version = "3.17";
+        public const string Version = "3.18";
         //private const double SpawnIdleTime = 72.0;              // time in hours after which idle spawns will be relocated. A value < 0 disables this feature. This does not work properly under RunUO 2.0
         private const int ShowBoundsItemId = 14089;             // 14089 Fire Column // 3555 Campfire // 8708 Skull Pole
         private const string SpawnDataSetName = "Spawns";
