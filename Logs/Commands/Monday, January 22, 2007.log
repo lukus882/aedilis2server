@@ -1,0 +1,68 @@
+##############################
+Log started on 1/22/2007 8:05:50 PM
+
+1/22/2007 8:07:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/22/2007 8:07:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/22/2007 8:08:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'AccessLevel' of 0x8A "Katt" ('Katt') to 'Developer'
+1/22/2007 8:08:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'unhide '
+1/22/2007 8:08:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') unhiding 0x1 "Stormwolf" ('Stormwolf')
+1/22/2007 8:08:24 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add statuedeed'
+1/22/2007 8:08:27 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1492, 1629, 13) in Felucca: "BaseStatueDeed"
+1/22/2007 8:08:27 PM: 127.0.0.1: Serials: 0x40017997; 
+1/22/2007 8:09:58 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'go '
+1/22/2007 8:10:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/22/2007 8:10:13 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'light 35'
+1/22/2007 8:10:16 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'sm Here is fine =)'
+1/22/2007 8:10:23 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'tile trickbow'
+1/22/2007 8:10:25 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') building from (5305, 668, 0) to (5306, 668, 0) in Felucca: "trickbow"
+1/22/2007 8:10:25 PM: 68.60.118.181: Serials: 0x40017998; 0x40017999; 
+1/22/2007 8:10:33 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'setallskills 120'
+1/22/2007 8:10:34 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') set property 'EverySkill.Base' of 0x8A "Katt" ('Katt') to '120'
+1/22/2007 8:10:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set str 100'
+1/22/2007 8:10:37 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'str' of 0x1 "Stormwolf" ('Stormwolf') to '100'
+1/22/2007 8:11:07 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'add Arr'
+1/22/2007 8:11:18 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'add firearrow 25'
+1/22/2007 8:11:19 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') building at (5307, 669, 0) in Felucca: "firearrow" "25"
+1/22/2007 8:11:19 PM: 68.60.118.181: Serials: 0x400179D1; 
+1/22/2007 8:11:22 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'add firearrow 25'
+1/22/2007 8:11:22 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') building at (5306, 668, 0) in Felucca: "firearrow" "25"
+1/22/2007 8:11:22 PM: 68.60.118.181: Serials: 0x400179D2; 
+1/22/2007 8:11:30 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'add energyarrow 25'
+1/22/2007 8:11:35 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'add shockarrow 25'
+1/22/2007 8:11:35 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') building at (5308, 669, 0) in Felucca: "shockarrow" "25"
+1/22/2007 8:11:35 PM: 68.60.118.181: Serials: 0x400179D3; 
+1/22/2007 8:11:39 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'add poisonarrow 25'
+1/22/2007 8:11:40 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') building at (5307, 669, 0) in Felucca: "poisonarrow" "25"
+1/22/2007 8:11:40 PM: 68.60.118.181: Serials: 0x400179D4; 
+1/22/2007 8:11:47 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'add poisonarrow 25'
+1/22/2007 8:11:47 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') building at (5307, 669, 0) in Felucca: "poisonarrow" "25"
+1/22/2007 8:11:47 PM: 68.60.118.181: Serials: 0x400179D5; 
+1/22/2007 8:11:51 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'add burningarrow 25'
+1/22/2007 8:11:52 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') building at (5306, 669, 0) in Felucca: "burningarrow" "25"
+1/22/2007 8:11:52 PM: 68.60.118.181: Serials: 0x400179D6; 
+1/22/2007 8:11:55 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'add burningarrow 25'
+1/22/2007 8:11:56 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') building at (5305, 667, 0) in Felucca: "burningarrow" "25"
+1/22/2007 8:11:56 PM: 68.60.118.181: Serials: 0x400179D7; 
+1/22/2007 8:12:06 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'tile holyarrow set amount 25'
+1/22/2007 8:12:07 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') building from (5309, 665, 0) to (5310, 665, 0) in Felucca: "holyarrow" "set" "amount" "25"
+1/22/2007 8:12:07 PM: 68.60.118.181: Serials: 0x400179D8; 0x40017B22; 
+1/22/2007 8:12:09 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add nightsightpotion'
+1/22/2007 8:12:10 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (5308, 665, 0) in Felucca: "nightsightpotion"
+1/22/2007 8:12:10 PM: 127.0.0.1: Serials: 0x40017B58; 
+1/22/2007 8:12:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/22/2007 8:12:43 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'set cantwalk true'
+1/22/2007 8:12:44 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') set property 'cantwalk' of 0x520 "a fire elemental" (no account) to 'True'
+1/22/2007 8:13:21 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'invul '
+1/22/2007 8:13:23 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'blessed' of 0x1 "Stormwolf" ('Stormwolf') to 'True'
+1/22/2007 8:13:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/22/2007 8:14:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'Blessed' of 0x1 "Stormwolf" ('Stormwolf') to 'False'
+1/22/2007 8:14:28 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'set cantwalk true'
+1/22/2007 8:14:28 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') set property 'cantwalk' of 0x4F9 "a lich" (no account) to 'True'
+1/22/2007 8:14:51 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'invul '
+1/22/2007 8:15:11 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') used command 'add lich set cantwalk true'
+1/22/2007 8:15:12 PM: 68.60.118.181: Developer 0x8A "Katt" ('Katt') building at (5311, 666, 0) in Felucca: "lich" "set" "cantwalk" "true"
+1/22/2007 8:15:12 PM: 68.60.118.181: Serials: 0x293; 
+1/22/2007 10:51:37 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go britain'
+1/22/2007 10:51:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'hide '
+1/22/2007 10:51:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') hiding 0x1 "Stormwolf" ('Stormwolf')
+1/22/2007 10:51:49 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'chat '
