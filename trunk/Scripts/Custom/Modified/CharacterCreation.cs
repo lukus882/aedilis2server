@@ -62,9 +62,6 @@ namespace Server.Misc
 		{
 			BankBox bank = m.BankBox;
 
-			if ( bank == null )
-				return;
-
 			// The new AOS bankboxes don't have powerscrolls, they are automatically 'applied':
 
 			for ( int i = 0; i < PowerScroll.Skills.Length; ++i )
@@ -431,8 +428,6 @@ namespace Server.Misc
 
 			BankBox bank = m.BankBox;
 
-			if ( bank != null )
-			{
 				bank.DropItem( new BankCheck( 1000000 ) );
 
 				// Full spellbook
@@ -532,7 +527,6 @@ namespace Server.Misc
 
 				AddPowerScrolls( bank );
 			}
-		}
 
 		private static void AddPowerScrolls( BankBox bank )
 		{
@@ -690,7 +684,7 @@ namespace Server.Misc
 			if( TestCenter.Enabled )
 				FillBankbox( newChar );
 
-			if ( young && newChar.BankBox != null )
+			if ( young )
 			{
 				NewPlayerTicket ticket = new NewPlayerTicket();
 				ticket.Owner = newChar;
