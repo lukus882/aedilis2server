@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Dialog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Title="Quick Travel" AllowClose="false" Range="2" SpeechRange="6">
+  <Start>
+    <anyType xmlns:q1="http://microsoft.com/wsdl/types/" xsi:type="q1:guid">206bbdfd-f80a-41a7-aeea-ab1954698dd3</anyType>
+    <anyType xmlns:q2="http://microsoft.com/wsdl/types/" xsi:type="q2:guid">261f1805-96d7-4150-8226-3d6ff4d1fadb</anyType>
+  </Start>
+  <Init>
+    <anyType xsi:type="DialogInit" ReactToKeywords="false" ReactToDoubleClick="false" ReactToItemInBackpack="false" ReactToItemGiven="true" TypeGiven="gold" AmountBackpack="1" AmountGiven="500" Speech="206bbdfd-f80a-41a7-aeea-ab1954698dd3" />
+    <anyType xsi:type="DialogInit" ReactToKeywords="true" ReactToDoubleClick="true" ReactToItemInBackpack="false" ReactToItemGiven="false" AmountBackpack="1" AmountGiven="1" Speech="261f1805-96d7-4150-8226-3d6ff4d1fadb">
+      <Keywords>
+        <string>hello</string>
+        <string>hail</string>
+        <string>help</string>
+      </Keywords>
+    </anyType>
+  </Init>
+  <Speech>
+    <anyType xsi:type="DialogSpeech" ID="206bbdfd-f80a-41a7-aeea-ab1954698dd3" Parent="00000000-0000-0000-0000-000000000000" Text="&lt;p&gt;for choosing my services. Now please select where you wish to travel..." Title="Thank you...">
+      <Choices>
+        <anyType xmlns:q3="http://microsoft.com/wsdl/types/" xsi:type="q3:guid">8240cef0-6c6a-4dd3-bec1-ed82b873c4af</anyType>
+        <anyType xmlns:q4="http://microsoft.com/wsdl/types/" xsi:type="q4:guid">12a28be5-b860-4fb8-8936-2c1cac6ade96</anyType>
+      </Choices>
+    </anyType>
+    <anyType xsi:type="DialogSpeech" ID="261f1805-96d7-4150-8226-3d6ff4d1fadb" Parent="00000000-0000-0000-0000-000000000000" Text="&lt;p&gt;Hail traveler!&#xD;&#xA;&lt;p&gt;I provide basic traveling services. If you wish me to transport you magically to Britain or Trinsic please give me 500 gold coins." Title="Welcome!">
+      <Choices>
+        <anyType xmlns:q5="http://microsoft.com/wsdl/types/" xsi:type="q5:guid">2525ea95-3eff-4844-b585-8f377499934b</anyType>
+        <anyType xmlns:q6="http://microsoft.com/wsdl/types/" xsi:type="q6:guid">a30e3d38-6ae9-4f6b-9140-9eeb641978fe</anyType>
+      </Choices>
+    </anyType>
+  </Speech>
+  <Choice>
+    <anyType xsi:type="DialogChoice" ID="a30e3d38-6ae9-4f6b-9140-9eeb641978fe" Text="Maybe later..." ChoiceID="00000000-0000-0000-0000-000000000000" EndDialog="true" Invoke="false" />
+    <anyType xsi:type="DialogChoice" ID="2525ea95-3eff-4844-b585-8f377499934b" Text="Please take the money from my bank" ChoiceID="206bbdfd-f80a-41a7-aeea-ab1954698dd3" EndDialog="false" Invoke="true" InvokeType="Arya.DialogEditor.TravelHelper" InvokeFunction="TakeMoney" />
+    <anyType xsi:type="DialogChoice" ID="12a28be5-b860-4fb8-8936-2c1cac6ade96" Text="Trinsic" ChoiceID="00000000-0000-0000-0000-000000000000" EndDialog="true" Invoke="true" InvokeType="Arya.DialogEditor.TravelHelper" InvokeFunction="GoTrinsic" />
+    <anyType xsi:type="DialogChoice" ID="8240cef0-6c6a-4dd3-bec1-ed82b873c4af" Text="Britain" ChoiceID="00000000-0000-0000-0000-000000000000" EndDialog="true" Invoke="true" InvokeType="Arya.DialogEditor.TravelHelper" InvokeFunction="GoBritain" />
+  </Choice>
+</Dialog>

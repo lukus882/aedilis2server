@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<Dialog xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Title="A brief encounter..." AllowClose="false" Range="2" SpeechRange="6">
+  <Start>
+    <anyType xmlns:q1="http://microsoft.com/wsdl/types/" xsi:type="q1:guid">5cf18f49-8cd3-41ee-a9e7-6d919b13fda9</anyType>
+  </Start>
+  <Init>
+    <anyType xsi:type="DialogInit" ReactToKeywords="false" ReactToDoubleClick="false" ReactToItemInBackpack="true" ReactToItemGiven="false" TypeBackpack="Gold" AmountBackpack="5000" AmountGiven="1" Speech="5cf18f49-8cd3-41ee-a9e7-6d919b13fda9" />
+  </Init>
+  <Speech>
+    <anyType xsi:type="DialogSpeech" ID="bc1feb2b-4cdf-46e4-a56c-a265d92bac14" Parent="8c9e6fbb-1514-4adf-be20-296a0e875969" Text="&lt;p&gt;...not here within the town walls. Can't you see the eyes of the guards watching your every move?&#xD;&#xA;&lt;p&gt;Please kind sire, hear what I have to say to you." Title="But you can't...">
+      <Choices>
+        <anyType xmlns:q2="http://microsoft.com/wsdl/types/" xsi:type="q2:guid">789a8fb6-421c-407b-9ac6-5808032a634a</anyType>
+        <anyType xmlns:q3="http://microsoft.com/wsdl/types/" xsi:type="q3:guid">b11cef15-7243-4b3d-ba1c-38f660a59e08</anyType>
+      </Choices>
+    </anyType>
+    <anyType xsi:type="DialogSpeech" ID="140c77f5-084c-4bc6-a27a-30b4ba5c5c91" Parent="7d3e1970-d731-4513-8dd3-3bdf2b1c5912" Text="&lt;p&gt;...a humble peasant with a lot of children to feed.&#xD;&#xA;&lt;p&gt;Do you think a kind sould as yourself would be willing to help us out?" Title="I am just...">
+      <Choices>
+        <anyType xmlns:q4="http://microsoft.com/wsdl/types/" xsi:type="q4:guid">80f473c9-8924-4b25-9145-17ac0e34a46d</anyType>
+        <anyType xmlns:q5="http://microsoft.com/wsdl/types/" xsi:type="q5:guid">6122044c-5035-4ed3-bbbe-e209530f82c2</anyType>
+        <anyType xmlns:q6="http://microsoft.com/wsdl/types/" xsi:type="q6:guid">5fd85821-e0d0-489f-98bd-825f45ad3567</anyType>
+      </Choices>
+    </anyType>
+    <anyType xsi:type="DialogSpeech" ID="ee9e6665-9421-46f6-88b7-f63a34b76bfe" Parent="1e9375e0-6eba-4054-9e86-0fe20cc3aa43" Text="&lt;p&gt;Just a moment good sire, this will take only a minute... and it might help a poor soul such as myself..." Title="But but...">
+      <Choices>
+        <anyType xmlns:q7="http://microsoft.com/wsdl/types/" xsi:type="q7:guid">ede1c686-0bca-4a42-844c-01b278b9540e</anyType>
+        <anyType xmlns:q8="http://microsoft.com/wsdl/types/" xsi:type="q8:guid">d9b06b0c-12c8-41c0-8ce3-32d8c71cc6d2</anyType>
+      </Choices>
+    </anyType>
+    <anyType xsi:type="DialogSpeech" ID="5cf18f49-8cd3-41ee-a9e7-6d919b13fda9" Parent="00000000-0000-0000-0000-000000000000" Text="&lt;p&gt;Hello traveler, you look to me as the good kind... the kind with goods and with gold. Isn't it so?" Title="Hello traveler...">
+      <Choices>
+        <anyType xmlns:q9="http://microsoft.com/wsdl/types/" xsi:type="q9:guid">7d3e1970-d731-4513-8dd3-3bdf2b1c5912</anyType>
+        <anyType xmlns:q10="http://microsoft.com/wsdl/types/" xsi:type="q10:guid">180f02fe-dac8-49aa-bd2f-51107c969596</anyType>
+        <anyType xmlns:q11="http://microsoft.com/wsdl/types/" xsi:type="q11:guid">8c9e6fbb-1514-4adf-be20-296a0e875969</anyType>
+        <anyType xmlns:q12="http://microsoft.com/wsdl/types/" xsi:type="q12:guid">1e9375e0-6eba-4054-9e86-0fe20cc3aa43</anyType>
+        <anyType xmlns:q13="http://microsoft.com/wsdl/types/" xsi:type="q13:guid">043c0269-4928-4c0c-b222-b0763ec57445</anyType>
+      </Choices>
+    </anyType>
+  </Speech>
+  <Choice>
+    <anyType xsi:type="DialogChoice" ID="8c9e6fbb-1514-4adf-be20-296a0e875969" Text="Bug away before I take out my sword!" ChoiceID="bc1feb2b-4cdf-46e4-a56c-a265d92bac14" EndDialog="false" Invoke="false" />
+    <anyType xsi:type="DialogChoice" ID="1e9375e0-6eba-4054-9e86-0fe20cc3aa43" Text="I don't want to talk to you. Leave me alone." ChoiceID="ee9e6665-9421-46f6-88b7-f63a34b76bfe" EndDialog="false" Invoke="false" />
+    <anyType xsi:type="DialogChoice" ID="7d3e1970-d731-4513-8dd3-3bdf2b1c5912" Text="Who are you? What do you want from me?" ChoiceID="140c77f5-084c-4bc6-a27a-30b4ba5c5c91" EndDialog="false" Invoke="false" />
+    <anyType xsi:type="DialogChoice" ID="043c0269-4928-4c0c-b222-b0763ec57445" Text="You look hungry. Here take some gold..." ChoiceID="140c77f5-084c-4bc6-a27a-30b4ba5c5c91" EndDialog="false" Invoke="false" />
+    <anyType xsi:type="DialogChoice" ID="80f473c9-8924-4b25-9145-17ac0e34a46d" Text="Here take a little gold..." ChoiceID="00000000-0000-0000-0000-000000000000" EndDialog="true" Invoke="true" InvokeType="Arya.DialogEditor.ThiefHelper" InvokeFunction="GiveLittle" />
+    <anyType xsi:type="DialogChoice" ID="180f02fe-dac8-49aa-bd2f-51107c969596" Text="Yes indeed, my fortunes are great!" ChoiceID="140c77f5-084c-4bc6-a27a-30b4ba5c5c91" EndDialog="false" Invoke="false" />
+    <anyType xsi:type="DialogChoice" ID="789a8fb6-421c-407b-9ac6-5808032a634a" Text="Very well, but make it quick." ChoiceID="140c77f5-084c-4bc6-a27a-30b4ba5c5c91" EndDialog="false" Invoke="false" />
+    <anyType xsi:type="DialogChoice" ID="d9b06b0c-12c8-41c0-8ce3-32d8c71cc6d2" Text="Not interested. Get lost." ChoiceID="00000000-0000-0000-0000-000000000000" EndDialog="true" Invoke="true" InvokeType="Arya.DialogEditor.ThiefHelper" InvokeFunction="Steal" />
+    <anyType xsi:type="DialogChoice" ID="5fd85821-e0d0-489f-98bd-825f45ad3567" Text="Bug off beggar, find a job." ChoiceID="00000000-0000-0000-0000-000000000000" EndDialog="true" Invoke="true" InvokeType="Arya.DialogEditor.ThiefHelper" InvokeFunction="Steal" />
+    <anyType xsi:type="DialogChoice" ID="b11cef15-7243-4b3d-ba1c-38f660a59e08" Text="I don't care about you. Goodbye." ChoiceID="00000000-0000-0000-0000-000000000000" EndDialog="true" Invoke="true" InvokeType="Arya.DialogEditor.ThiefHelper" InvokeFunction="Steal" />
+    <anyType xsi:type="DialogChoice" ID="6122044c-5035-4ed3-bbbe-e209530f82c2" Text="Here's all the gold I have. Keep it." ChoiceID="00000000-0000-0000-0000-000000000000" EndDialog="true" Invoke="true" InvokeType="Arya.DialogEditor.ThiefHelper" InvokeFunction="GiveAll" />
+    <anyType xsi:type="DialogChoice" ID="ede1c686-0bca-4a42-844c-01b278b9540e" Text="Very well, speak." ChoiceID="140c77f5-084c-4bc6-a27a-30b4ba5c5c91" EndDialog="false" Invoke="false" />
+  </Choice>
+</Dialog>

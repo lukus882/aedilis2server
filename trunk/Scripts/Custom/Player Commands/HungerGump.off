@@ -1,0 +1,54 @@
+using System;
+using Server;
+using Server.Mobiles;
+using Server.Network;
+using Server.Gumps;
+
+namespace Server.Commands
+{
+  public class Hungry
+  {
+     public static void Initialize()
+     {
+        CommandSystem.Register( "Hunger", AccessLevel.Player, new CommandEventHandler( Hungry_OnCommand ) );
+        CommandSystem.Register( "Thirst", AccessLevel.Player, new CommandEventHandler( Hungry_OnCommand ) );
+     }
+
+     [Usage( "Hunger || Thirst" )]
+     [Description( "Post your level of food and Drink" )]
+     public static void Hungry_OnCommand( CommandEventArgs e )
+     {
+        Mobile from = e.Mobile;
+        from.SendGump( new gumpfaim ( from ) );
+
+     }
+
+  }
+}
+
+namespace Server.Gumps
+{
+public class gumpfaim : Gump
+{
+
+ public gumpfaim(Mobile from) : base(0,0)
+ {
+  Closable = true;
+  Dragable = true;
+
+  AddPage(0);
+
+  AddBackground( 0, 0, 295, 144, 5054);
+  AddBackground( 14, 27, 261, 100, 3500);
+  AddLabel( 60, 62, from.Hunger < 6 ? 33 : 0, string.Format( "Hunger: {0} / 20", from.Hunger));
+  AddLabel( 60, 81, from.Thirst < 6 ? 33 : 0, string.Format( "Thirst: {0} / 20", from.Thirst));
+  AddItem( 8, 78, 8093);
+  AddItem( 19, 60, 4155);
+ }
+
+ public override void OnResponse( Server.Network.NetState sender, RelayInfo info )
+ {
+
+ }
+}
+}
