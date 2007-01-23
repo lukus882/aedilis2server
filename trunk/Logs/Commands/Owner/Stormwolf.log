@@ -1,0 +1,589 @@
+1/5/2007 1:03:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'help '
+1/5/2007 1:04:50 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'xmlspawnerload C:\aedilis\xmlspawn.xml'
+1/5/2007 1:05:40 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'where '
+1/5/2007 1:05:40 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'where '
+1/5/2007 1:05:47 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set map felucca'
+1/5/2007 1:05:48 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'map' of 0x1 "Stormwolf" ('Stormwolf') to 'Felucca'
+1/5/2007 1:10:31 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'save '
+1/10/2007 10:40:48 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/10/2007 10:40:57 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'moongen '
+1/10/2007 10:41:04 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'decorate '
+1/10/2007 10:41:06 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'signgen '
+1/10/2007 10:41:25 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'doorgen '
+1/10/2007 10:41:38 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set map britain'
+1/10/2007 10:41:47 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set map felucca'
+1/10/2007 10:41:48 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'map' of 0x1 "Stormwolf" ('Stormwolf') to 'Felucca'
+1/10/2007 10:41:50 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go britian'
+1/10/2007 10:41:54 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go britain'
+1/10/2007 10:42:01 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'telgen '
+1/10/2007 10:42:54 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'help '
+1/10/2007 10:45:30 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'xmlspawnerload C:\aedilis\xmlspawn.xml'
+1/10/2007 10:50:25 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'help '
+1/10/2007 10:50:35 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'xmlimportmsf C:\aedilis\mega.msf'
+1/10/2007 10:51:58 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'save '
+1/15/2007 2:12:42 PM: 127.0.0.1: Owner 0x1454 "Stormwolfer" ('Stormwolf') used command 'props '
+1/16/2007 1:37:15 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/16/2007 1:37:35 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/16/2007 1:37:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'where '
+1/16/2007 1:38:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'decorate '
+1/16/2007 1:38:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/16/2007 1:38:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'moongen '
+1/16/2007 1:43:41 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'delete '
+1/16/2007 1:43:45 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'delete '
+1/16/2007 1:43:48 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/16/2007 1:43:51 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40000004 (RedBook)
+1/16/2007 1:45:38 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'save '
+1/16/2007 1:45:38 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/16/2007 1:45:41 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40000004 (RedBook)
+1/16/2007 1:46:40 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/16/2007 1:46:43 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'delete '
+1/16/2007 1:46:45 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40000017 (NecromancerSpellbook)
+1/16/2007 1:48:04 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add reagent'
+1/16/2007 1:48:10 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add ax'
+1/16/2007 1:48:33 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1441, 1695, 0) in Felucca: "ReagentAxe"
+1/16/2007 1:48:33 PM: 127.0.0.1: Serials: 0x400133D9; 
+1/16/2007 1:48:45 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'setallskills 120'
+1/16/2007 1:48:47 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'EverySkill.Base' of 0x1 "Stormwolf" ('Stormwolf') to '120'
+1/16/2007 1:48:54 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'speedboost '
+1/16/2007 1:54:32 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add ownerrobe'
+1/16/2007 1:54:34 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1444, 1678, 0) in Felucca: "ownerrobe"
+1/16/2007 1:54:34 PM: 127.0.0.1: Serials: 0x40012B3F; 
+1/16/2007 1:54:45 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/16/2007 1:54:47 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40000004 (RedBook)
+1/16/2007 1:54:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add dyetu'
+1/16/2007 1:54:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1445, 1679, 0) in Felucca: "CyclingDyetub"
+1/16/2007 1:54:56 PM: 127.0.0.1: Serials: 0x40012BF9; 
+1/16/2007 1:55:42 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/16/2007 1:55:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40012BF9 (CyclingDyetub)
+1/16/2007 1:55:50 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1152'
+1/16/2007 1:55:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40012B3F (OwnerRobe) to '1152'
+1/16/2007 1:55:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1154'
+1/16/2007 1:55:58 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40012B3F (OwnerRobe) to '1154'
+1/16/2007 1:56:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'kill '
+1/16/2007 1:56:13 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') killing 0x1 "Stormwolf" ('Stormwolf')
+1/16/2007 1:56:15 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'res '
+1/16/2007 1:56:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') resurrecting 0x1 "Stormwolf" ('Stormwolf')
+1/16/2007 1:56:28 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'dump '
+1/16/2007 1:56:37 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'dump '
+1/16/2007 1:57:21 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set allskills 120'
+1/16/2007 1:57:26 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'setallskills 120'
+1/16/2007 1:57:28 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'EverySkill.Base' of 0x1 "Stormwolf" ('Stormwolf') to '120'
+1/16/2007 1:57:31 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'save '
+1/16/2007 1:57:38 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'invul '
+1/16/2007 1:57:39 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'blessed' of 0x1 "Stormwolf" ('Stormwolf') to 'True'
+1/16/2007 1:57:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add gmetheral'
+1/16/2007 1:57:54 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1443, 1681, 0) in Felucca: "GMEthereal"
+1/16/2007 1:57:54 PM: 127.0.0.1: Serials: 0x400136BA; 
+1/16/2007 1:58:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/16/2007 1:58:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x400130BE (Corpse)
+1/16/2007 1:58:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/16/2007 1:58:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40000008 (BagOfNecroReagents)
+1/16/2007 1:58:23 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/16/2007 1:58:32 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'EthyType' of 0x400136BA (GMEthereal) to 'PolarBear'
+1/16/2007 1:58:39 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/16/2007 1:58:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'Hue' of 0x400136BA (GMEthereal) to '18'
+1/16/2007 1:58:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 18'
+1/16/2007 1:58:58 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40012B3F (OwnerRobe) to '18'
+1/16/2007 1:59:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1153'
+1/16/2007 1:59:04 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40012B3F (OwnerRobe) to '1153'
+1/16/2007 1:59:07 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1151'
+1/16/2007 1:59:09 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40012B3F (OwnerRobe) to '1151'
+1/16/2007 1:59:13 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1156'
+1/16/2007 1:59:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40012B3F (OwnerRobe) to '1156'
+1/16/2007 1:59:18 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1155'
+1/16/2007 1:59:19 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40012B3F (OwnerRobe) to '1155'
+1/16/2007 1:59:24 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1154'
+1/16/2007 1:59:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40012B3F (OwnerRobe) to '1154'
+1/16/2007 1:59:31 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1158'
+1/16/2007 1:59:33 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40012B3F (OwnerRobe) to '1158'
+1/16/2007 1:59:37 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1158'
+1/16/2007 1:59:39 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x400136BA (GMEthereal) to '1158'
+1/16/2007 1:59:47 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/16/2007 2:00:10 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'Name' of 0x40012B3F (OwnerRobe) to 'Admin Robe'
+1/16/2007 2:00:15 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add lantern'
+1/16/2007 2:00:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1441, 1695, 0) in Felucca: "lantern"
+1/16/2007 2:00:16 PM: 127.0.0.1: Serials: 0x40016369; 
+1/16/2007 2:00:19 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/16/2007 2:00:24 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'Burning' of 0x40016369 (Lantern) to 'True'
+1/16/2007 2:00:34 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/16/2007 2:00:57 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'Name' of 0x40016369 (Lantern) to 'A Staff Member's Lantern'
+1/16/2007 2:01:01 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'LootType' of 0x40016369 (Lantern) to 'Blessed'
+1/16/2007 2:01:08 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1149'
+1/16/2007 2:01:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40016369 (Lantern) to '1149'
+1/16/2007 2:01:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1140'
+1/16/2007 2:01:17 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x40016369 (Lantern) to '1140'
+1/16/2007 2:01:27 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add dyetu'
+1/16/2007 2:01:29 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1442, 1695, 0) in Felucca: "CyclingDyetub"
+1/16/2007 2:01:29 PM: 127.0.0.1: Serials: 0x40017155; 
+1/16/2007 2:02:30 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add sash'
+1/16/2007 2:02:34 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1443, 1695, 0) in Felucca: "BodySash"
+1/16/2007 2:02:34 PM: 127.0.0.1: Serials: 0x400188FC; 
+1/16/2007 2:02:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 46'
+1/16/2007 2:02:47 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x400188FC (BodySash) to '46'
+1/16/2007 2:03:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set bodyvalue 03db'
+1/16/2007 2:03:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set bodyvalue 03db'
+1/16/2007 2:03:28 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/16/2007 2:03:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set body 03db'
+1/16/2007 2:03:49 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/16/2007 2:04:19 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'BodyValue' of 0x1 "Stormwolf" ('Stormwolf') to '987'
+1/16/2007 2:04:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/16/2007 2:04:59 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x400188FC (BodySash)
+1/16/2007 2:05:27 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'chat '
+1/16/2007 2:06:30 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc '
+1/16/2007 2:06:39 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc '
+1/16/2007 2:07:35 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'i '
+1/16/2007 2:09:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'c '
+1/16/2007 2:10:34 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc '
+1/16/2007 2:13:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc '
+1/16/2007 2:15:20 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc '
+1/16/2007 2:15:34 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc hi'
+1/16/2007 2:21:58 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc hi'
+1/16/2007 2:22:04 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'chat '
+1/16/2007 2:22:48 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc test'
+1/16/2007 2:22:59 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'chat '
+1/16/2007 2:24:17 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc testing 123'
+1/16/2007 2:25:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc wheee'
+1/16/2007 2:28:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc Indeed'
+1/16/2007 2:29:31 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc Its not really him its me'
+1/16/2007 2:29:40 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc talking from uo'
+1/16/2007 2:30:01 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'chat '
+1/16/2007 3:01:58 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/16/2007 3:02:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/16/2007 3:03:13 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/16/2007 3:05:37 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/18/2007 1:13:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'telgen '
+1/18/2007 1:13:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add moongat'
+1/18/2007 1:13:47 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1414, 1669, 10) in Felucca: "PublicMoongate"
+1/18/2007 1:13:47 PM: 127.0.0.1: Serials: 0x40019A9A; 
+1/18/2007 1:14:05 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') starting facet clear of The Great Unknown (6217 objects)
+1/18/2007 1:14:05 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'clearfacet '
+1/18/2007 1:14:07 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 6217 objects
+1/18/2007 1:14:15 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'where '
+1/18/2007 1:14:18 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:53 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:53 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:54 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:55 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:55 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:57 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:57 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:58 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:58 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:14:59 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:00 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:01 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:01 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:03 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:03 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:04 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:05 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:05 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:07 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:08 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:09 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:09 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:10 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:10 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:13 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:13 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:13 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:15 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:15 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:17 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:17 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:18 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:19 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:19 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:20 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:24 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:27 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go '
+1/18/2007 1:15:32 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:34 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:38 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set z 0'
+1/18/2007 1:15:39 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'z' of 0x1 "Stormwolf" ('Stormwolf') to '0'
+1/18/2007 1:15:42 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:45 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:47 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:47 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:48 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:15:50 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:16:30 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/18/2007 1:16:35 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') shuting down server (Restart: True) (Save: True)
+1/18/2007 1:16:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'save '
+1/18/2007 1:18:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:18:50 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'where '
+1/18/2007 1:18:55 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 0 0 0'
+1/18/2007 1:18:57 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:18:59 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:19:01 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'where '
+1/18/2007 1:19:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 100 100 0'
+1/18/2007 1:19:09 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:19:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:22:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 1496, 1628, 10'
+1/18/2007 1:22:59 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 1496 1638 10'
+1/18/2007 1:23:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:03 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:04 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:07 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:08 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:09 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:10 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:10 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:23:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/18/2007 1:29:27 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'chat '
+1/18/2007 1:30:21 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'chat '
+1/18/2007 1:48:04 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/18/2007 1:49:31 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'chat '
+1/20/2007 9:53:57 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'where '
+1/20/2007 9:55:17 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go '
+1/20/2007 9:55:37 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'where '
+1/20/2007 10:05:31 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add housedeed'
+1/20/2007 10:05:33 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (2705, 2163, 0) in Felucca: "housedeed"
+1/20/2007 10:05:39 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add houseplacementtool'
+1/20/2007 10:05:40 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (2705, 2162, 0) in Felucca: "houseplacementtool"
+1/20/2007 10:05:40 AM: 127.0.0.1: Serials: 0x4001E0D9; 
+1/20/2007 10:05:47 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go britain'
+1/20/2007 10:05:55 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'speedboost '
+1/20/2007 10:06:11 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc want to make it 2 weeks?'
+1/20/2007 10:07:00 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add gold 30000'
+1/20/2007 10:07:01 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1678, 1497, 0) in Felucca: "gold" "30000"
+1/20/2007 10:07:01 AM: 127.0.0.1: Serials: 0x4001E12D; 
+1/20/2007 10:07:29 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'bank '
+1/20/2007 10:07:31 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') opening bank box of 0x1 "Stormwolf" ('Stormwolf')
+1/20/2007 10:09:24 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc nah not saying anything is even worse'
+1/20/2007 10:10:14 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'chat '
+1/20/2007 10:11:31 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc I said you could report others'
+1/20/2007 10:11:39 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc reading ftw'
+1/20/2007 10:12:19 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc '
+1/20/2007 10:14:17 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'irc keep it up'
+1/20/2007 10:22:12 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/20/2007 10:31:55 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'help '
+1/20/2007 10:39:22 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set inscribe 100'
+1/20/2007 10:39:29 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set scribe 100'
+1/20/2007 11:06:15 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add nightsheep'
+1/20/2007 11:06:16 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1678, 1496, 0) in Felucca: "nightsheep"
+1/20/2007 11:06:16 AM: 127.0.0.1: Serials: 0x3E89; 
+1/20/2007 11:10:31 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'ts '
+1/20/2007 11:15:22 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'bank '
+1/20/2007 11:15:23 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') opening bank box of 0x1 "Stormwolf" ('Stormwolf')
+1/20/2007 11:15:28 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add gold 25000'
+1/20/2007 11:15:30 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1673, 1496, 0) in Felucca: "gold" "25000"
+1/20/2007 11:15:30 AM: 127.0.0.1: Serials: 0x4001E5C2; 
+1/20/2007 11:16:06 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/20/2007 11:16:31 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 11:16:33 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x3E89 "a nightsheep" (no account)
+1/20/2007 11:16:37 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'res '
+1/20/2007 11:16:39 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') resurrecting 0x3D2B "Mogo" ('Stormwolf2')
+1/20/2007 11:10:59 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'who '
+1/20/2007 11:25:30 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 11:25:32 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x4001E162 (HMR)
+1/20/2007 11:25:33 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 11:25:35 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x4001E5DA (HMR)
+1/20/2007 11:25:39 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add ultimatehider'
+1/20/2007 11:25:40 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1679, 1499, 0) in Felucca: "ultimatehider"
+1/20/2007 11:25:40 AM: 127.0.0.1: Serials: 0x4001E689; 
+1/20/2007 11:25:47 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 11:25:53 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'AreaEffect' of 0x4001E689 (UltimateHider) to 'True'
+1/20/2007 11:26:02 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 11:26:13 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'HideEffectHue' of 0x4001E689 (UltimateHider) to '1158'
+1/20/2007 11:26:32 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'HideSaying' of 0x4001E689 (UltimateHider) to 'Stormwolf Poofs Into Nothingness'
+1/20/2007 11:26:45 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'UnHideSaying' of 0x4001E689 (UltimateHider) to 'Stormwolf Appears Before You'
+1/20/2007 11:26:54 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'UnHideSound' of 0x4001E689 (UltimateHider) to '0'
+1/20/2007 11:27:09 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'who '
+1/20/2007 11:27:11 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') going to 0x3E3F "Tera" ('Bell'), Location (1437, 1680, 10), Map Felucca
+1/20/2007 11:31:43 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add publicmoongate'
+1/20/2007 11:31:45 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1412, 1669, 10) in Felucca: "publicmoongate"
+1/20/2007 11:31:45 AM: 127.0.0.1: Serials: 0x4001E6E7; 
+1/20/2007 11:35:33 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'where '
+1/20/2007 11:35:38 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set map felucca'
+1/20/2007 11:35:40 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'map' of 0x1 "Stormwolf" ('Stormwolf') to 'Felucca'
+1/20/2007 11:35:44 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/20/2007 12:26:09 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/20/2007 12:26:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go destard'
+1/20/2007 12:26:21 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add nightsigt'
+1/20/2007 12:26:27 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (5241, 997, 0) in Felucca: "NightSightPotion"
+1/20/2007 12:26:27 PM: 127.0.0.1: Serials: 0x4001EAF7; 
+1/20/2007 12:26:51 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go '
+1/20/2007 12:27:03 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go shame'
+1/20/2007 12:28:55 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go doom'
+1/20/2007 12:29:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'gengauntlet '
+1/20/2007 12:29:42 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go covetous'
+1/20/2007 12:29:45 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go '
+1/20/2007 12:29:57 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go '
+1/20/2007 12:30:35 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 12:31:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 12:31:40 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go britain'
+1/20/2007 12:32:01 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 12:32:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'global interface XmlSpawner where CurrentCount 0'
+1/20/2007 12:32:43 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'global interface where XmlSpawner && CurrentCount == 0'
+1/20/2007 12:33:00 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'global interface where xmlspawner'
+1/20/2007 12:33:15 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'global interface where CurrentCount 0'
+1/20/2007 12:33:30 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'global inteface where XmlSpawner.CurrenCount 0'
+1/20/2007 12:34:40 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 217213550'
+1/20/2007 12:35:29 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 2172 1355 0'
+1/20/2007 12:35:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x40013E7A 'Spawner' [2172, 1355] (Felucca) : invasionorc to orc
+1/20/2007 12:35:50 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add orc'
+1/20/2007 12:35:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (2171, 1356, 0) in Felucca: "orc"
+1/20/2007 12:35:52 PM: 127.0.0.1: Serials: 0x3ED1; 
+1/20/2007 12:36:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go '
+1/20/2007 12:36:28 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 2170 1330 0'
+1/20/2007 12:36:39 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x40013E7C 'Spawner' [2170, 1330] (Felucca) : InvasionOrc to orc
+1/20/2007 12:36:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add treasurechest'
+1/20/2007 12:37:05 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (2171, 1329, 0) in Felucca: "MetalTreasureChest"
+1/20/2007 12:37:05 PM: 127.0.0.1: Serials: 0x4001EDC1; 
+1/20/2007 12:37:10 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 12:37:19 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add treasurechest'
+1/20/2007 12:37:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (2171, 1328, 0) in Felucca: "MetalTreasureChest"
+1/20/2007 12:37:22 PM: 127.0.0.1: Serials: 0x4001EDC3; 
+1/20/2007 12:37:26 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 12:37:35 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go '
+1/20/2007 12:37:50 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add metaltreasurechest'
+1/20/2007 12:37:51 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (6059, 93, 22) in Felucca: "metaltreasurechest"
+1/20/2007 12:37:51 PM: 127.0.0.1: Serials: 0x4001EDD1; 
+1/20/2007 12:37:55 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 12:38:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:38:03 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x4001EDD1 (MetalTreasureChest)
+1/20/2007 12:38:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 12:38:27 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:38:29 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40014729 (XmlSpawner)
+1/20/2007 12:38:33 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:38:34 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x4001472A (XmlSpawner)
+1/20/2007 12:38:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:38:37 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x400142E0 (XmlSpawner)
+1/20/2007 12:38:41 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:38:42 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x400142E1 (XmlSpawner)
+1/20/2007 12:40:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go '
+1/20/2007 12:40:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5475 3114 -40'
+1/20/2007 12:40:23 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:40:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013E80 (XmlSpawner)
+1/20/2007 12:40:35 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 999 763 -60'
+1/20/2007 12:41:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:41:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:41:08 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013E81 (XmlSpawner)
+1/20/2007 12:41:18 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5999 1327 10'
+1/20/2007 12:41:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:41:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add spider'
+1/20/2007 12:41:32 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') removed from XmlSpawner 0x40013E99 '#TriniscPassage5' [5999, 1327] (Felucca) : spiderlord
+1/20/2007 12:41:57 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5912 1326 0'
+1/20/2007 12:42:03 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') removed from XmlSpawner 0x40013E9B '#TriniscPassage3' [5912, 1326] (Felucca) : spiderlord
+1/20/2007 12:42:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 851 1695 0'
+1/20/2007 12:42:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:42:18 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:42:19 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013E9C (XmlSpawner)
+1/20/2007 12:42:28 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5940 1356 -2'
+1/20/2007 12:42:33 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'wipe '
+1/20/2007 12:42:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') wiping from (5933, 1352, 2) to (5943, 1355, 49) in Felucca (Items, Mobiles)
+1/20/2007 12:42:49 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 859 1678 0'
+1/20/2007 12:42:54 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:42:55 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013E9F (XmlSpawner)
+1/20/2007 12:43:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 840 1680 0'
+1/20/2007 12:43:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:43:07 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EA0 (XmlSpawner)
+1/20/2007 12:43:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go '
+1/20/2007 12:43:20 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 4564 3576 30'
+1/20/2007 12:43:24 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:43:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EA1 (XmlSpawner)
+1/20/2007 12:43:31 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 4583 3572 30'
+1/20/2007 12:43:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:43:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EA3 (XmlSpawner)
+1/20/2007 12:43:45 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 4583 3564 30'
+1/20/2007 12:43:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:43:47 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EA4 (XmlSpawner)
+1/20/2007 12:43:54 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 4593 3571 75'
+1/20/2007 12:43:57 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:43:57 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EA6 (XmlSpawner)
+1/20/2007 12:44:04 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 2593 522 15'
+1/20/2007 12:44:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:44:10 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EA7 (XmlSpawner)
+1/20/2007 12:44:23 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5456 143 20'
+1/20/2007 12:44:26 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:44:26 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EA8 (XmlSpawner)
+1/20/2007 12:44:29 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:44:30 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EF0 (XmlSpawner)
+1/20/2007 12:44:38 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5787 555 10'
+1/20/2007 12:44:41 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:44:42 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EAC (XmlSpawner)
+1/20/2007 12:44:49 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5787 539 10'
+1/20/2007 12:44:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:44:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EAD (XmlSpawner)
+1/20/2007 12:44:58 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5669 521 0'
+1/20/2007 12:45:01 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:45:03 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EAE (XmlSpawner)
+1/20/2007 12:45:05 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:45:05 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x4000F71C (MetalBox)
+1/20/2007 12:45:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5669 521 0'
+1/20/2007 12:45:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5716 559 20'
+1/20/2007 12:45:30 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:45:32 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EAF (XmlSpawner)
+1/20/2007 12:45:38 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5858 550 15'
+1/20/2007 12:45:41 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:45:42 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EB0 (XmlSpawner)
+1/20/2007 12:45:48 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 1263 1787 0'
+1/20/2007 12:45:50 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:45:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EB6 (XmlSpawner)
+1/20/2007 12:46:01 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 1933 2761 0'
+1/20/2007 12:46:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'wipe '
+1/20/2007 12:46:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') wiping from (1929, 2759, 0) to (1933, 2765, 33) in Felucca (Items, Mobiles)
+1/20/2007 12:46:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 1933 2761 0'
+1/20/2007 12:46:33 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 1200 1626 0'
+1/20/2007 12:46:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:46:38 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EBA (XmlSpawner)
+1/20/2007 12:46:53 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5699 83 0'
+1/20/2007 12:46:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:46:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013EC3 (XmlSpawner)
+1/20/2007 12:46:59 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 12:47:00 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x4000F39E (MetalChest)
+1/20/2007 12:47:41 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5697 60 0'
+1/20/2007 12:47:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 12:48:05 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'area remove where CurrentCount == 0'
+1/20/2007 12:51:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'help '
+1/20/2007 12:52:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'xmlfind '
+1/20/2007 12:52:48 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go greenacres'
+1/20/2007 12:52:49 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go '
+1/20/2007 12:52:59 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'xmlfind '
+1/20/2007 1:00:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 1:00:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40014603 (XmlSpawner)
+1/20/2007 1:02:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add xmlspawner'
+1/20/2007 1:02:18 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (5442, 1151, 0) in Felucca: "xmlspawner"
+1/20/2007 1:02:18 PM: 127.0.0.1: Serials: 0x4001EEEA; 
+1/20/2007 1:02:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 1:02:31 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 1:02:33 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x4001EEEA (XmlSpawner)
+1/20/2007 1:02:40 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go 5697 60 0'
+1/20/2007 1:02:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 1:03:59 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/20/2007 1:08:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'move '
+1/20/2007 1:08:58 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') moving 0x40014208 (XmlSpawner) to (3767, 1228, 0)
+1/20/2007 1:09:19 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'xmlfind '
+1/20/2007 1:10:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x400141ED '#Vendor_fletcher' [1473, 1579] (Felucca) : Bower to Bowyer
+1/20/2007 1:10:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x400141EE '#Vendor_fletcher' [2861, 811] (Felucca) : Bower to Bowyer
+1/20/2007 1:10:26 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x40014285 '#Vendor_bowyer' [591, 2206] (Felucca) : Bower to Bowyer
+1/20/2007 1:10:37 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x40014287 '#Vendor_fletcher' [3547, 1195] (Felucca) : Bower to Bowyer
+1/20/2007 1:11:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x40014294 '#Vendor_bowyer' [567, 970] (Felucca) : Bower to Bowyer
+1/20/2007 1:11:35 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x400149E8 '#Vendor_bowyer' [622, 1146] (Felucca) : Bower to Bowyer
+1/20/2007 1:11:43 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x40014ABC '#Vendor_bowyer' [3051, 3367] (Felucca) : Bower to Bowyer
+1/20/2007 1:12:37 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x40014390 'Spawner' [2291, 1258] (Felucca) : invasionorc to orc
+1/20/2007 1:12:49 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x4001439A 'Spawner' [2209, 1253] (Felucca) : invasionorc to orc
+1/20/2007 1:13:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') changed XmlSpawner 0x40014421 'Spawner' [2187, 1383] (Felucca) : InvasionOrc to orc
+1/20/2007 1:13:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'xmlfind '
+1/20/2007 1:16:28 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'xmlfind '
+1/20/2007 1:18:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go britain'
+1/20/2007 1:19:32 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 1:19:53 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add xmlspawner skeleton'
+1/20/2007 1:20:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') added to XmlSpawner 0x400144B9 'Spawner' [1368, 1491] (Felucca) : skeleton
+1/20/2007 1:20:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add xmlspawner skeleton'
+1/20/2007 1:20:17 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1357, 1467, 10) in Felucca: "xmlspawner" "skeleton"
+1/20/2007 1:20:17 PM: 127.0.0.1: Serials: 0x4001F0DF; 
+1/20/2007 1:20:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'SpawnRange' of 0x4001F0DF (XmlSpawner) to '20'
+1/20/2007 1:21:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add xmlspawner zombie'
+1/20/2007 1:21:23 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1386, 1458, 10) in Felucca: "xmlspawner" "zombie"
+1/20/2007 1:21:23 PM: 127.0.0.1: Serials: 0x4001F106; 
+1/20/2007 1:21:28 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add xmlspawner wraith'
+1/20/2007 1:21:32 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1370, 1461, 10) in Felucca: "xmlspawner" "wraith"
+1/20/2007 1:21:32 PM: 127.0.0.1: Serials: 0x4001F10E; 
+1/20/2007 1:21:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add xmlspawner skeleton'
+1/20/2007 1:21:45 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1387, 1476, 10) in Felucca: "xmlspawner" "skeleton"
+1/20/2007 1:21:45 PM: 127.0.0.1: Serials: 0x4001F114; 
+1/20/2007 1:21:55 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add xmlspawner zombie'
+1/20/2007 1:21:57 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1343, 1504, 20) in Felucca: "xmlspawner" "zombie"
+1/20/2007 1:21:57 PM: 127.0.0.1: Serials: 0x4001F118; 
+1/20/2007 1:22:01 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add xmlspawner skeleton'
+1/20/2007 1:22:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1342, 1496, 20) in Felucca: "xmlspawner" "skeleton"
+1/20/2007 1:22:02 PM: 127.0.0.1: Serials: 0x4001F127; 
+1/20/2007 1:22:38 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add door'
+1/20/2007 10:56:48 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'help '
+1/20/2007 10:57:26 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'ts '
+1/20/2007 11:08:42 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/20/2007 11:15:57 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/20/2007 11:20:03 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/20/2007 11:20:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') shuting down server (Restart: True) (Save: True)
+1/20/2007 11:20:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'save '
+1/20/2007 11:29:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'help '
+1/20/2007 11:30:16 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/20/2007 11:30:26 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') adding new account: Stormwolf3
+1/20/2007 11:37:52 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/20/2007 11:38:00 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') shuting down server (Restart: True) (Save: True)
+1/20/2007 11:38:01 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'save '
+1/20/2007 11:49:02 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/20/2007 11:49:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add disgus'
+1/20/2007 11:49:17 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1410, 1544, 30) in Felucca: "DisguiseKit"
+1/20/2007 11:49:17 PM: 127.0.0.1: Serials: 0x40013EC7; 
+1/20/2007 11:52:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:18 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:19 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:21 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:23 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:23 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:24 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:25 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:26 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:26 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:27 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:52:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'tele '
+1/20/2007 11:57:54 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add forgot'
+1/20/2007 11:57:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (739, 1352, -61) in Ilshenar: "ForgottenContainer"
+1/20/2007 11:57:56 PM: 127.0.0.1: Serials: 0x40013ED2; 
+1/20/2007 11:58:23 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'remove '
+1/20/2007 11:58:24 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') deleting 0x40013ED2 (ForgottenContainer)
+1/20/2007 11:58:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add transfer'
+1/20/2007 11:58:47 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (738, 1353, -59) in Ilshenar: "TwoTransferChestDeed"
+1/20/2007 11:58:47 PM: 127.0.0.1: Serials: 0x40014020; 
+1/21/2007 12:01:03 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go britain'
+1/21/2007 12:01:09 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add statuede'
+1/21/2007 12:01:12 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1484, 1630, 20) in Felucca: "BaseStatueDeed"
+1/21/2007 12:01:12 AM: 127.0.0.1: Serials: 0x40014042; 
+1/21/2007 12:02:02 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set hue 1158'
+1/21/2007 12:02:04 AM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'hue' of 0x4001404C (Item) to '1158'
+1/22/2007 7:50:03 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/22/2007 7:50:58 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') shuting down server (Restart: False) (Save: True)
+1/22/2007 7:51:00 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'save '
+1/22/2007 8:07:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/22/2007 8:07:56 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/22/2007 8:08:06 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'AccessLevel' of 0x8A "Katt" ('Katt') to 'Developer'
+1/22/2007 8:08:12 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'unhide '
+1/22/2007 8:08:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') unhiding 0x1 "Stormwolf" ('Stormwolf')
+1/22/2007 8:08:24 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add statuedeed'
+1/22/2007 8:08:27 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (1492, 1629, 13) in Felucca: "BaseStatueDeed"
+1/22/2007 8:08:27 PM: 127.0.0.1: Serials: 0x40017997; 
+1/22/2007 8:10:11 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'admin '
+1/22/2007 8:10:36 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'set str 100'
+1/22/2007 8:10:37 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'str' of 0x1 "Stormwolf" ('Stormwolf') to '100'
+1/22/2007 8:12:09 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'add nightsightpotion'
+1/22/2007 8:12:10 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') building at (5308, 665, 0) in Felucca: "nightsightpotion"
+1/22/2007 8:12:10 PM: 127.0.0.1: Serials: 0x40017B58; 
+1/22/2007 8:12:22 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/22/2007 8:13:21 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'invul '
+1/22/2007 8:13:23 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'blessed' of 0x1 "Stormwolf" ('Stormwolf') to 'True'
+1/22/2007 8:13:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'props '
+1/22/2007 8:14:14 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') set property 'Blessed' of 0x1 "Stormwolf" ('Stormwolf') to 'False'
+1/22/2007 8:14:51 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'invul '
+1/22/2007 10:51:37 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'go britain'
+1/22/2007 10:51:44 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'hide '
+1/22/2007 10:51:46 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') hiding 0x1 "Stormwolf" ('Stormwolf')
+1/22/2007 10:51:49 PM: 127.0.0.1: Owner 0x1 "Stormwolf" ('Stormwolf') used command 'chat '

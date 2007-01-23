@@ -1,0 +1,295 @@
+####################################
+Logging started on 1/20/2007 11:27:44 PM
+
+####################################
+Logging started on 1/20/2007 11:41:14 PM
+
+1/20/2007 11:47:59 PM: 127.0.0.1: 0x3D2B "Mogo" ('Stormwolf2'): guards
+1/20/2007 11:48:21 PM: 127.0.0.1: 0x3D2B "Mogo" ('Stormwolf2'): guards
+1/21/2007 12:01:58 AM: 127.0.0.1: 0x1 "Stormwolf" ('Stormwolf'): ``[set hue 1158
+1/21/2007 5:38:17 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set strength 100
+1/21/2007 5:41:08 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): bank
+1/21/2007 5:53:01 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): bank
+1/21/2007 5:57:45 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set focus 0
+1/21/2007 5:57:49 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set poisoning 120
+1/21/2007 5:57:53 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set poisoning 100
+1/21/2007 5:57:59 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set poisoning 100
+1/21/2007 5:58:02 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set poison 100
+1/21/2007 5:58:05 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): help
+1/21/2007 5:58:26 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set poisoning 100
+1/21/2007 5:58:29 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): das:das:ASD:
+1/21/2007 5:58:35 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): Set Poisoning 100
+1/21/2007 5:58:52 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): setskill poisoning 100
+1/21/2007 5:59:00 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): setskills poisoning 100
+1/21/2007 5:59:03 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): _DSsDAS_D:-.,sad-ads-,dsa-s-.-sda
+1/21/2007 5:59:09 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set alchemy 100
+1/21/2007 5:59:26 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set poisoning 20
+1/21/2007 6:01:34 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): bank
+1/21/2007 6:13:45 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): LOL
+1/21/2007 6:13:48 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): o.O
+1/21/2007 6:14:58 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set inscription 0
+1/21/2007 6:15:06 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set inscribe 0
+1/21/2007 6:15:11 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set taming 120
+1/21/2007 6:15:15 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set animaltaming 120
+1/21/2007 6:15:35 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set poisoning 0
+1/21/2007 6:15:49 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set animallore 100
+1/21/2007 6:15:57 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set anatomy 0
+1/21/2007 6:16:01 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set anatomy 0
+1/21/2007 6:16:03 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): help
+1/21/2007 6:16:09 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set Anatomy 0
+1/21/2007 6:16:18 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): set animallore 100
+1/21/2007 6:18:38 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set swords 100
+1/21/2007 6:18:55 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set healing 100
+1/21/2007 6:19:15 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set parry 100
+1/21/2007 6:19:52 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): help
+1/21/2007 6:20:19 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set anatomy 100
+1/21/2007 6:20:42 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set fishing 100
+1/21/2007 6:21:05 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set magery 50
+1/21/2007 6:21:26 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): help
+1/21/2007 6:22:55 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): all follow me
+1/21/2007 6:23:07 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set focus 80
+1/21/2007 6:23:16 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set focus 50
+1/21/2007 6:23:31 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): all guard
+1/21/2007 6:24:27 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): bamk
+1/21/2007 6:24:37 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): bank
+1/21/2007 6:25:15 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): banque
+1/21/2007 6:25:43 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): sacar 200
+1/21/2007 6:25:46 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): all stay
+1/21/2007 6:26:52 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): stable
+1/21/2007 6:27:02 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): banque
+1/21/2007 6:28:02 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): KICK ASS
+1/21/2007 6:29:31 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): all guard
+1/21/2007 6:33:29 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): *Diaf bitch*
+1/21/2007 6:33:32 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): rawr
+1/21/2007 6:35:33 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): bank
+1/21/2007 6:35:56 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): [set poisoning 100
+1/21/2007 6:36:38 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): Set Poisoning 100
+1/21/2007 6:36:54 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): all guard
+1/21/2007 6:37:02 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): bank
+1/21/2007 6:38:35 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): Set Hiding 100
+1/21/2007 6:38:40 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): Set Stealth 100
+1/21/2007 6:38:45 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): set stealth 120
+1/21/2007 6:39:59 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): all kill
+1/21/2007 6:40:25 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): Set ninjitsu 40
+1/21/2007 6:40:28 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): all guard
+1/21/2007 6:41:25 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): Set inteligence 50
+1/21/2007 6:41:37 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): set stat inteligence 50
+1/21/2007 6:42:03 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set anatomy 90
+1/21/2007 6:42:13 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): set swordsmanship 100
+1/21/2007 6:42:16 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): help
+1/21/2007 6:42:28 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): set swordsmanship 100
+1/21/2007 6:42:40 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): set Swordsmanship 100
+1/21/2007 6:42:58 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): set ninjitsu 100
+1/21/2007 6:42:59 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set magery 80
+1/21/2007 6:43:09 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set swords 90
+1/21/2007 6:43:21 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): help
+1/21/2007 6:44:19 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set chivalry 70
+1/21/2007 6:45:12 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set meditation 50
+1/21/2007 6:46:15 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): bank
+1/21/2007 6:46:48 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): [karma
+1/21/2007 6:46:49 AM: 84.249.219.31: 0x3D82 "Khemri" ('khemri'): [hunger
+1/21/2007 6:48:08 AM: 81.179.109.199: 0x1A4F "Ice" ('ferina'): set magery 60
+1/21/2007 6:49:25 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): set ninjitsu 110
+1/21/2007 6:50:06 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): help
+1/21/2007 6:50:41 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): help
+1/21/2007 6:50:55 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): set swords 100
+1/21/2007 6:51:11 AM: 24.253.6.169: 0x2A33 "Katsushiro" ('Charredbeef'): bank
+1/21/2007 8:48:12 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): bank
+1/21/2007 8:49:00 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): bank
+1/21/2007 8:49:36 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set int 125
+1/21/2007 8:49:41 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set str 100
+1/21/2007 8:49:45 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set dex 50
+1/21/2007 8:49:49 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set dex 40
+1/21/2007 8:49:55 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set dex 35
+1/21/2007 8:49:59 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set dex 30
+1/21/2007 8:50:06 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set dex 25
+1/21/2007 8:51:41 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set magery 120
+1/21/2007 8:51:46 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set evalint 120
+1/21/2007 8:51:53 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set magicresist 120
+1/21/2007 8:51:59 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): bank
+1/21/2007 8:53:10 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set ninjtsu 120
+1/21/2007 8:53:15 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set bushido 120
+1/21/2007 8:54:07 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set ninjtsu 120
+1/21/2007 8:54:17 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set ninjitsu 120
+1/21/2007 8:57:43 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set mace 120
+1/21/2007 8:57:48 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set macefight 120
+1/21/2007 8:57:51 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): help
+1/21/2007 8:58:00 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set macing 120
+1/21/2007 8:58:05 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set bushido 0
+1/21/2007 8:58:08 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set macing 120
+1/21/2007 9:29:27 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set anatomy 60
+1/21/2007 9:29:41 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set hiding 80
+1/21/2007 9:30:21 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set hiding 100
+1/21/2007 9:30:56 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set hiding 60
+1/21/2007 9:31:13 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set hiding 70
+1/21/2007 9:31:24 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set hiding 80
+1/21/2007 9:32:13 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set chivalry 70
+1/21/2007 9:32:42 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set hiding 0
+1/21/2007 9:32:57 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set bushido 100
+1/21/2007 9:33:17 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): bank
+1/21/2007 9:43:37 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set magery 60
+1/21/2007 9:43:47 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set magery 50
+1/21/2007 9:44:09 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set bushido 80
+1/21/2007 9:44:16 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set magery 60
+1/21/2007 9:47:31 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): set meditation 40
+1/21/2007 9:53:16 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): bank
+1/21/2007 9:53:45 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): hi
+1/21/2007 9:54:07 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): hi
+1/21/2007 9:54:16 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): bank
+1/21/2007 9:56:03 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): bank
+1/21/2007 9:57:51 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): i wish to secure this
+1/21/2007 9:58:32 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set ninjitsu 0
+1/21/2007 9:58:47 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set ninjitsu 0
+1/21/2007 9:58:53 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set meditatin 100
+1/21/2007 9:59:00 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): set meditation 100
+1/21/2007 9:59:02 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): bank
+1/21/2007 10:01:05 AM: 201.17.75.3: 0x394D "Murdoc" ('pei'): [
+1/21/2007 10:22:01 AM: 81.179.109.199: 0x3FEB "Ice" ('ferina'): bank
+1/21/2007 1:29:45 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): hello
+1/21/2007 1:29:46 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): hi
+1/21/2007 1:33:50 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): [bank
+1/21/2007 1:44:08 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): bank
+1/21/2007 1:52:42 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): what is my status
+1/21/2007 1:52:57 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): what is my status
+1/21/2007 1:55:33 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): [set arms lore 0
+1/21/2007 1:55:39 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set arms lore 0
+1/21/2007 1:55:48 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): [set arms lore 0
+1/21/2007 1:55:58 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): help
+1/21/2007 1:56:19 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set armslore 0
+1/21/2007 1:56:37 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set blacksmith 120
+1/21/2007 1:56:46 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 110
+1/21/2007 1:57:04 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set carpentry 100
+1/21/2007 1:57:20 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set lumberjacking 100
+1/21/2007 1:57:23 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set mining 120
+1/21/2007 1:57:30 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set mining 100
+1/21/2007 1:57:46 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set alchemy 120
+1/21/2007 1:57:49 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set alchemy 100
+1/21/2007 1:58:00 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tailoring 120
+1/21/2007 1:58:09 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set focus 0
+1/21/2007 1:58:15 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set bowcraft 120
+1/21/2007 1:58:23 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): help
+1/21/2007 1:58:29 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): help
+1/21/2007 1:58:57 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set fletching 120
+1/21/2007 1:59:00 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set fletching 100
+1/21/2007 1:59:22 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 100
+1/21/2007 1:59:56 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 60
+1/21/2007 2:00:32 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set meditation 0
+1/21/2007 2:01:16 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 100
+1/21/2007 2:01:21 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 0
+1/21/2007 2:01:33 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 100
+1/21/2007 2:01:44 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 60
+1/21/2007 2:01:53 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 40
+1/21/2007 2:01:58 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 70
+1/21/2007 2:02:05 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 60
+1/21/2007 2:02:15 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set lumberjacking 0
+1/21/2007 2:02:21 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set tinkering 100
+1/21/2007 2:02:26 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set magery 60
+1/21/2007 2:02:38 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set alchemy 0
+1/21/2007 2:03:05 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set magery 75
+1/21/2007 2:03:33 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set lumberjacking 25
+1/21/2007 2:03:50 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): set lumberjacking 85
+1/21/2007 2:04:21 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): bank
+1/21/2007 2:09:05 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): [props
+1/21/2007 2:09:13 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): bank
+1/21/2007 2:11:04 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): bank
+1/21/2007 2:24:12 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): [hunger
+1/21/2007 2:24:17 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): [thirst
+1/21/2007 3:55:10 PM: 201.17.75.3: 0x3C60 "BlondGuy" ('pei'): bank
+1/21/2007 3:56:28 PM: 201.17.75.3: 0x3C60 "BlondGuy" ('pei'): i wish to release this
+1/21/2007 3:57:02 PM: 201.17.75.3: 0x3C60 "BlondGuy" ('pei'): set necro 120
+1/21/2007 3:57:06 PM: 201.17.75.3: 0x3C60 "BlondGuy" ('pei'): set necromancy 120
+1/21/2007 3:57:41 PM: 201.17.75.3: 0x3C60 "BlondGuy" ('pei'): set spirtispik 120
+1/21/2007 3:57:48 PM: 201.17.75.3: 0x3C60 "BlondGuy" ('pei'): set swords 120
+1/21/2007 3:57:55 PM: 201.17.75.3: 0x3C60 "BlondGuy" ('pei'): set tatics 120
+1/21/2007 3:58:02 PM: 201.17.75.3: 0x3C60 "BlondGuy" ('pei'): set tactics 120
+1/21/2007 4:00:06 PM: 201.17.75.3: 0x3C60 "BlondGuy" ('pei'): set str 100
+1/21/2007 4:13:53 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): pm
+1/21/2007 4:13:55 PM: 76.172.117.193: 0x3BA9 "Artigiano Artisa" ('spiff'): msg
+1/21/2007 4:48:05 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): Set stealth 120
+1/21/2007 4:48:14 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): [get
+1/21/2007 4:48:16 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): [add
+1/21/2007 4:48:20 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): add
+1/21/2007 4:48:23 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): get
+1/21/2007 4:48:24 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): Get
+1/21/2007 4:48:26 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): Add
+1/21/2007 4:48:52 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): bank
+1/21/2007 4:49:10 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): Set bushido 120
+1/21/2007 4:49:17 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): Set Ninjutsu 120
+1/21/2007 4:49:24 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): Set ninjutsu 120
+1/21/2007 4:49:30 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set ninjitsu 120
+1/21/2007 4:50:00 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): Set meditation 100
+1/21/2007 4:50:17 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): Set swordsmanship 120
+1/21/2007 4:50:23 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): Set swordmanship 120
+1/21/2007 4:50:27 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): Set swords 120
+1/21/2007 4:50:34 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set tactics 120
+1/21/2007 4:51:00 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set bushido 0
+1/21/2007 4:51:11 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set stealth 50
+1/21/2007 4:51:16 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set hiding 100
+1/21/2007 4:51:29 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set swords 0
+1/21/2007 4:51:33 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set fencing 100
+1/21/2007 4:51:42 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set focus 100
+1/21/2007 4:51:59 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set healing 100
+1/21/2007 4:52:10 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set ninjitsu 100
+1/21/2007 4:52:46 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set
+1/21/2007 4:52:48 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set help
+1/21/2007 4:52:49 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): help
+1/21/2007 4:55:00 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set dexterity 100
+1/21/2007 4:55:24 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set stealth 0
+1/21/2007 4:55:27 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set tactics 100
+1/21/2007 4:55:42 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set meditation 0
+1/21/2007 4:55:45 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set tactics 100
+1/21/2007 4:55:49 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set anatomy 100
+1/21/2007 4:56:00 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): set anatomy 99
+1/21/2007 4:56:38 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): bank
+1/21/2007 5:00:25 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): ho
+1/21/2007 5:00:27 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): hello
+1/21/2007 5:00:32 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): hi!
+1/21/2007 5:00:34 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): greetings
+1/21/2007 5:00:57 PM: 81.164.227.209: 0x3CA8 "Roest" ('Brecht'): bank
+1/21/2007 6:51:32 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): [setallskills 120
+1/21/2007 6:51:37 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): aww nuts.
+1/21/2007 6:52:54 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): msg
+1/21/2007 6:52:59 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): 'msg
+1/21/2007 7:13:11 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): set skill
+1/21/2007 7:13:22 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): setskill
+1/21/2007 7:13:29 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): setskill swords
+1/21/2007 7:13:35 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): set skill swords
+1/21/2007 7:13:42 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): [set skill swords
+1/21/2007 7:13:44 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): ...
+1/21/2007 7:32:57 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): [who
+1/21/2007 7:33:00 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): >_<
+1/21/2007 7:33:05 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): set
+1/21/2007 7:50:53 PM: 12.215.194.215: 0x3BFA "Kiri" ('Althena'): guards
+1/22/2007 4:05:17 AM: 71.34.128.138: 0x3FBD "Taylor Swift" ('jess15'): bank
+1/22/2007 4:06:31 AM: 71.34.128.138: 0x3FBD "Taylor Swift" ('jess15'): bank
+1/22/2007 4:08:22 AM: 71.34.128.138: 0x3FBD "Taylor Swift" ('jess15'): bank
+1/22/2007 4:12:32 AM: 71.34.128.138: 0x3FBD "Taylor Swift" ('jess15'): `[msg
+1/22/2007 11:05:28 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set magery 120
+1/22/2007 11:05:31 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set evalint 120
+1/22/2007 11:05:37 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set meditation 120
+1/22/2007 11:06:04 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set magicresist 120
+1/22/2007 11:06:08 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set necromancy 120
+1/22/2007 11:06:13 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set spirit speak 120
+1/22/2007 11:06:19 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set spiritspeak 120
+1/22/2007 11:06:25 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set wrestling 0
+1/22/2007 11:06:31 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set spiritspeak 120
+1/22/2007 11:06:56 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set focus 0
+1/22/2007 11:07:01 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set spiritspeak 100
+1/22/2007 11:07:07 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set spiritspeak 120
+1/22/2007 11:07:14 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): bank
+1/22/2007 11:07:45 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set necromancy 100
+1/22/2007 11:07:49 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set spiritspeak 120
+1/22/2007 11:07:58 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set int 125
+1/22/2007 11:08:01 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set str 100
+1/22/2007 11:08:04 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set dex 40
+1/22/2007 11:08:07 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set dex 30
+1/22/2007 11:08:11 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set dex 25
+1/22/2007 11:11:42 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set magery 100
+1/22/2007 11:11:45 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set magery 0
+1/22/2007 11:11:49 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set balcksmith 120
+1/22/2007 11:11:54 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set blacksmith 120
+1/22/2007 11:15:41 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): bank
+1/22/2007 11:19:25 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set blacksmith 0
+1/22/2007 11:19:28 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set magery 120
+1/22/2007 11:22:01 AM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): set karma -15000
+1/22/2007 1:16:49 PM: 201.17.75.3: 0x3F2E "Toddy" ('pei'): help
