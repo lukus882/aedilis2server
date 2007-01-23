@@ -296,7 +296,7 @@ namespace Server.Mobiles
 				GenericBuyInfo buy = m_ArmorBuyInfo[i] as GenericBuyInfo;
 
 				if ( buy != null )
-					buy.DeleteDisplayObject();
+					buy.DeleteDisplayEntity();
 			}
 
 			SBInfos.Clear();
@@ -630,7 +630,7 @@ namespace Server.Mobiles
 
 				// NOTE: Only GBI supported; if you use another implementation of IBuyItemInfo, this will crash
 				GenericBuyInfo gbi = (GenericBuyInfo) buyItem;
-				IEntity disp = gbi.GetDisplayObject() as IEntity;
+				IEntity disp = gbi.GetDisplayEntity();
 
 				list.Add( new BuyItemState( buyItem.Name, cont.Serial, disp == null ? (Serial) 0x7FC0FFEE : disp.Serial, buyItem.Price, buyItem.Amount, buyItem.ItemID, buyItem.Hue ) );
 				count++;
@@ -835,11 +835,10 @@ namespace Server.Mobiles
 		{
 			IBuyItemInfo[] buyInfo = this.GetBuyInfo();
 
-			for ( int i = 0; i < buyInfo.Length; ++i )
-			{
-				GenericBuyInfo gbi = buyInfo[i] as GenericBuyInfo;
+			for ( int i = 0; i < buyInfo.Length; ++i ) {
+				GenericBuyInfo gbi = (GenericBuyInfo)buyInfo[i];
 
-				if ( gbi.GetDisplayObject() == obj )
+				if ( gbi.GetDisplayEntity() == obj )
 					return gbi;
 			}
 
@@ -882,7 +881,7 @@ namespace Server.Mobiles
 
 			bii.Amount -= amount;
 
-			object o = bii.GetObject();
+			IEntity o = bii.GetEntity();
 
 			if ( o is Item )
 			{
@@ -904,7 +903,7 @@ namespace Server.Mobiles
 
 					for (int i=1;i<amount;i++)
 					{
-						item = bii.GetObject() as Item;
+						item = bii.GetEntity() as Item;
 
 						if ( item != null )
 						{
@@ -929,7 +928,7 @@ namespace Server.Mobiles
 
 				for ( int i = 1; i < amount; ++i )
 				{
-					m = bii.GetObject() as Mobile;
+					m = bii.GetEntity() as Mobile;
 
 					if ( m != null )
 					{
@@ -1044,7 +1043,7 @@ namespace Server.Mobiles
 
 			if ( !bought && totalCost >= 2000 )
 			{
-				cont = buyer.BankBox;
+				cont = buyer.FindBankNoCreate();
 				if ( cont != null && cont.ConsumeTotal( typeof( Gold ), totalCost ) )
 				{
 					bought = true;
@@ -1521,7 +1520,7 @@ namespace Server
 	public interface IBuyItemInfo
 	{
 		//get a new instance of an object (we just bought it)
-		object GetObject();
+		IEntity GetEntity();
 
 		int ControlSlots{ get; }
 
