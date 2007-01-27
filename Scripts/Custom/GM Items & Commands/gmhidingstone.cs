@@ -1,9 +1,9 @@
 /*
 Script Name: GMHidingStone.cs
 Author: CEO
-Version: 1.1
+Version: 1.2
 Public Release: 06/05/04
-Updated Release: 10/06/05
+Updated Release: 01/27/07
 Purpose: A stone that allows for multiple hide/appear effects for counselors and above.
 */                                                            
 using System; 
@@ -17,7 +17,7 @@ namespace Server.Items
 	public enum StoneEffect
 	{
 		/*[s7]*/
-		Gate, /*[/s7]*/FlameStrike1, FlameStrike3, FlameStrikeLightningBolt, Sparkle1, Sparkle3, Explosion, ExplosionLightningBolt, DefaultRunUO, Snow, Glow, PoisonField, Fireball
+		Gate, /*[/s7]*/FlameStrike1, FlameStrike3, FlameStrikeLightningBolt, Sparkle1, Sparkle3, Explosion, ExplosionLightningBolt, DefaultRunUO, Snow, Glow, PoisonField, Fireball, FireStorm1, FireStorm2
 	}
 
 	public class GMHidingStone : Item
@@ -27,6 +27,7 @@ namespace Server.Items
 		private StoneEffect mHideEffect;
 		private int mAppearEffectHue;
 		private int mHideEffectHue;
+		private FireStormTimer m_Timer;
 
 		[CommandProperty(AccessLevel.Counselor)]
 		public StoneEffect AppearEffect
@@ -74,13 +75,13 @@ namespace Server.Items
 			{
 				if (m.Hidden)
 				{
-					m.Hidden = !(mAppearEffect != StoneEffect.Gate); //[s7]
+					ToggleHidden(m, mAppearEffect);
 					SendStoneEffects(mAppearEffect, mAppearEffectHue, m);
 				}
 				else
 				{
 					SendStoneEffects(mHideEffect, mHideEffectHue, m);
-					m.Hidden = (mHideEffect != StoneEffect.Gate); //[s7]
+					ToggleHidden(m, mHideEffect);
 				}
 			}
 			else
@@ -89,8 +90,25 @@ namespace Server.Items
 			}
 		}
 
-		public void SendStoneEffects(StoneEffect mStoneEffect, int effHue, Mobile m)
+		private void ToggleHidden(Mobile m, StoneEffect heffect)
 		{
+			switch (heffect)
+			{
+				case StoneEffect.Gate:
+					break;
+				case StoneEffect.FireStorm1:
+					break;
+				case StoneEffect.FireStorm2:
+					break;
+				default:
+					m.Hidden = !m.Hidden;
+					break;
+			}
+		}
+
+		private void SendStoneEffects(StoneEffect mStoneEffect, int effHue, Mobile m)
+		{
+			if (effHue > 0 ) effHue--; //Adjust the friggin hue to match true effect color
 			switch (mStoneEffect)
 			{
 				//[s7]
@@ -180,6 +198,71 @@ namespace Server.Items
 					Effects.SendLocationEffect(new Point3D(m.X, m.Y, m.Z + 1), m.Map, 0x3709, 15, effHue, 0);
 					Effects.PlaySound(new Point3D(m.X, m.Y, m.Z), m.Map, 0x15E);
 					break;
+				case StoneEffect.FireStorm1: //Added By Nitewender (further modifed by me to carry color effect to timer
+					m.PlaySound(520);
+					m.PlaySound(525);
+					m.Hidden = !m.Hidden;
+					Effects.SendLocationEffect(new Point3D(m.X + 1, m.Y, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					Effects.SendLocationEffect(new Point3D(m.X - 1, m.Y, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					Effects.SendLocationEffect(new Point3D(m.X, m.Y + 1, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					Effects.SendLocationEffect(new Point3D(m.X, m.Y - 1, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					Effects.SendLocationEffect(new Point3D(m.X, m.Y, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					m_Timer = new FireStormTimer(DateTime.Now, m, effHue, 0, 1);
+					m_Timer.Start();
+					break;
+				case StoneEffect.FireStorm2: //CEO Using above idea, this one does the firestorm outside->in
+					m.PlaySound(520);
+					m.PlaySound(525);
+					Effects.SendLocationEffect(new Point3D(m.X + 5, m.Y, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					Effects.SendLocationEffect(new Point3D(m.X - 5, m.Y, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					Effects.SendLocationEffect(new Point3D(m.X, m.Y + 5, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					Effects.SendLocationEffect(new Point3D(m.X, m.Y - 5, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					Effects.SendLocationEffect(new Point3D(m.X + 5, m.Y - 5, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					Effects.SendLocationEffect(new Point3D(m.X - 5, m.Y + 5, m.Z), m.Map, 0x3709, 17, effHue, 0);
+					m_Timer = new FireStormTimer(DateTime.Now, m, effHue, 5, -1);
+					m_Timer.Start();
+					break;
+			}
+		}
+
+		public class FireStormTimer : Timer
+		{
+			public Mobile m;
+			public int inc;
+			public int ehue;
+			public int fstart;
+			public int fdir;
+
+			public FireStormTimer(DateTime time, Mobile from, int hue, int start, int dir)
+				: base(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1))
+			{
+				Priority = TimerPriority.FiftyMS;
+				m = from;
+				ehue = hue;
+				fstart = start;
+				fdir = dir;
+				inc = start;
+			}
+
+			protected override void OnTick()
+			{
+				inc = inc + fdir;
+
+				Effects.SendLocationEffect(new Point3D(m.X + inc, m.Y, m.Z), m.Map, 0x3709, 17, ehue, 0);
+				Effects.SendLocationEffect(new Point3D(m.X - inc, m.Y, m.Z), m.Map, 0x3709, 17, ehue, 0);
+				Effects.SendLocationEffect(new Point3D(m.X, m.Y + inc, m.Z), m.Map, 0x3709, 17, ehue, 0);
+				Effects.SendLocationEffect(new Point3D(m.X, m.Y - inc, m.Z), m.Map, 0x3709, 17, ehue, 0);
+				Effects.SendLocationEffect(new Point3D(m.X + inc, m.Y - inc, m.Z), m.Map, 0x3709, 17, ehue, 0);
+				Effects.SendLocationEffect(new Point3D(m.X - inc, m.Y + inc, m.Z), m.Map, 0x3709, 17, ehue, 0);
+
+				if ((fdir == 1 && inc >= (fstart + 5)) || (fdir == -1 && inc < 0))
+				{
+					if (fdir == -1)
+					{
+						m.Hidden = !m.Hidden;
+					}
+					this.Stop();
+				}
 			}
 		}
 
@@ -189,7 +272,8 @@ namespace Server.Items
 			object[] args = arg as object[];
 			Mobile m = args[0] as Mobile;
 			int hue = (int)args[1];
-			if (m!=null) {
+			if (m != null)
+			{
 				m.Hidden = !m.Hidden;
 				Effects.SendLocationParticles(EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration), 0x376A, 9, 20, hue, 0, 5042, 0);
 				Effects.PlaySound(m.Location, m.Map, 0x201);
@@ -199,10 +283,12 @@ namespace Server.Items
 		private void InternalShowGate(object arg)
 		{
 			object[] args = arg as object[];
-			Mobile m = args[0] as Mobile;
-			int hue = (int)args[1];
-			if (m is Mobile)
+			if (args[0] is Mobile)
+			{
+				Mobile m = args[0] as Mobile;
+				int hue = (int)args[1];
 				Effects.SendLocationParticles(EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration), 8148, 9, 20, hue, 0, 8149, 0);
+			}
 		}
 		//[/s7]
 
@@ -225,9 +311,6 @@ namespace Server.Items
 		public override void Deserialize(GenericReader reader)
 		{
 			base.Deserialize(reader);
-
-
-
 			int version = reader.ReadInt();
 
 			switch (version)

@@ -642,6 +642,7 @@ namespace Server.Misc
 			newChar.Hue = newChar.Race.ClipSkinHue( args.Hue & 0x3FFF ) | 0x8000;
 
 			newChar.Hunger = 20;
+                        newChar.Thirst = 20;
 
 			bool young = false;
 
