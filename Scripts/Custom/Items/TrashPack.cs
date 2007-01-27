@@ -26,8 +26,8 @@ namespace Server.Items
 		[Constructable]
 		public TrashPack() : base( 0x9B2 )
 		{
-            Name = "Trash Bag";
-			Hue = 1166;
+            		Name = "Trash Bag";
+			Hue = 51;
 			Movable = true;
 		}
 
