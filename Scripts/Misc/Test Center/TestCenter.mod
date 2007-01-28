@@ -176,7 +176,7 @@ namespace Server.Misc
 				AddBackground( 0, 0, 160, 120, 5054 );
 
 				AddButton( 10, 10, 0xFB7, 0xFB9, 1, GumpButtonType.Reply, 0 );
-				AddLabel( 45, 10, 0x34, "RunUO.com" );
+				AddLabel( 45, 10, 0x34, "Aedilis Website" );
 
 				AddButton( 10, 35, 0xFB7, 0xFB9, 2, GumpButtonType.Reply, 0 );
 				AddLabel( 45, 35, 0x34, "List of skills" );
@@ -194,7 +194,7 @@ namespace Server.Misc
 				{
 					case 1: // RunUO.com
 					{
-						sender.LaunchBrowser( "http://www.RunUO.com" );
+						sender.LaunchBrowser( "http://www.aedilis.us" );
 						break;
 					}
 					case 2: // List of skills
