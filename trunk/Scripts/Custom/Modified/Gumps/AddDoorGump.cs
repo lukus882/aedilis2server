@@ -50,7 +50,7 @@ namespace Server.Gumps
 			}
 			else
 			{
-				AddBlueBack( 265, 145 );
+				AddBlueBack( 665, 145 );
 
 				for ( int i = 0; i < m_Types.Length; ++i )
 				{
@@ -104,10 +104,18 @@ namespace Server.Gumps
 		public static DoorInfo[] m_Types = new DoorInfo[]
 			{
 				new DoorInfo( typeof( MetalDoor ), 0x675 ),
+				new DoorInfo( typeof( MetalDoor2 ), 0x6C5 ),
+				new DoorInfo( typeof( BarredMetalDoor ), 0x685 ),
+				new DoorInfo( typeof( BarredMetalDoor2 ), 0x1FED ),
 				new DoorInfo( typeof( RattanDoor ), 0x695 ),
 				new DoorInfo( typeof( DarkWoodDoor ), 0x6A5 ),
+				new DoorInfo( typeof( MediumWoodDoor ), 0x6B5 ),
 				new DoorInfo( typeof( LightWoodDoor ), 0x6D5 ),
-				new DoorInfo( typeof( StrongWoodDoor ), 0x6E5 )
+				new DoorInfo( typeof( StrongWoodDoor ), 0x6E5 ),
+				new DoorInfo( typeof( IronGate ), 0x824 ),
+				new DoorInfo( typeof( IronGateShort ), 0x84c ),
+				new DoorInfo( typeof( LightWoodGate ), 0x839 ),
+				new DoorInfo( typeof( DarkWoodGate ), 0x866 ),
 			};
 	}
 
