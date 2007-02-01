@@ -96,29 +96,9 @@ namespace Server.Items
 		public CellarDeed()
 		{
                  Name = "Cellar Deed";
-              	 LootType = LootType.Blessed;
 		 Weight = 5.0;
                  Hue = 46;
 		}
-
-		public override void OnDoubleClick( Mobile from )
-		{
-			if (from.AccessLevel < AccessLevel.GameMaster)
-			{
-				from.SendMessage( "You require a Game Master's Help In Placing This Addon" );
-				return;
-			}
-
-			else if ( from.Z <= -20 )
-			{
-				from.SendMessage( "You can not make a cellar here - you are to deep" );
-				return;
-			}
-		
-			base.OnDoubleClick( from );
-				
-		}
-
 		public CellarDeed( Serial serial ) : base( serial )
 		{
 		}
