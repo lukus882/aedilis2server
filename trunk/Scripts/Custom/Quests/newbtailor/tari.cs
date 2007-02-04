@@ -37,7 +37,8 @@ namespace Server.Mobiles
             Name = "Tari";
             Body = 401;
             Hue = 33770;
-			CantWalk=true;
+	    CantWalk=true;
+            Blessed = true;
 
             VirtualArmor = 50;
 
@@ -152,9 +153,9 @@ namespace Server.Mobiles
 								case  1: mobile.AddToBackpack( new RunicSewingKit( CraftResource.HornedLeather, Core.AOS ? 20 : 20 ) );; break;
 								case  2: mobile.AddToBackpack( new RunicSewingKit( CraftResource.BarbedLeather, Core.AOS ? 20 : 20 ) );; break;
 								case  3: {BoltOfCloth boc = new BoltOfCloth (); 
-boc.Hue = Utility.RandomList( 0x481, 0x489, 0x48E, 0x494, 0x484, 0x48D, 0x497 ); 
-mobile.AddToBackpack( boc ); 
-};; break;
+								boc.Hue = Utility.RandomList( 0x481, 0x489, 0x48E, 0x494, 0x484, 0x48D, 0x497 ); 
+								mobile.AddToBackpack( boc ); 
+								};; break;
 								
 							
 						

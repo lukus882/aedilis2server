@@ -36,6 +36,7 @@ namespace Server.Mobiles
             Name = "Celegorm";
             Body = 400;
             Hue = 33770;
+            Blessed = true;
             VirtualArmor = 50;
 
             AddItem( new Server.Items.LongPants( Utility.RandomNeutralHue()) );
@@ -135,7 +136,8 @@ namespace Server.Mobiles
 							switch ( Utility.Random( 1 ) )
 							{
 								
-								case  0: mobile.AddToBackpack( new Nails( 500 ) );; break;
+								case  0: mobile.AddToBackpack( new Board( 500 ) );; break;
+								case  1: mobile.AddToBackpack( new Board( 1000 ) );; break;
 								
 							
 						

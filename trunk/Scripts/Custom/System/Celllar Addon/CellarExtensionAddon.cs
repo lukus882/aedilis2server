@@ -6,12 +6,12 @@ using Server.Multis;
 
 namespace Server.Items
 {
-	public class CellarAddon : BaseAddon, IChopable
+	public class CellarExtensionAddon : BaseAddon, IChopable
 	{
-		public override BaseAddonDeed Deed{ get{ return new CellarDeed(); } }
+		public override BaseAddonDeed Deed{ get{ return new CellarExtensionDeed(); } }
 
 		[Constructable]
-		public CellarAddon()
+		public CellarExtensionAddon()
 		{
                         AddComponent( new AddonComponent( 0x31F4 ), -1, -1, -40 );
 			AddComponent( new AddonComponent( 0x31F4 ),  0, -1, -40 );
@@ -64,11 +64,11 @@ namespace Server.Items
                         AddComponent( new AddonComponent( 0x31F4 ), 0, -3, -40 );
 			AddComponent( new AddonComponent( 0x31F4 ), -3, 0, -40 );
    
-                        AddComponent( new CellarTeleporter(), 0, 0, -39 );
-                        AddComponent( new CellarTeleporter1(), 0, 0, 0 );
+                        //AddComponent( new CellarTeleporter(), 0, 0, -99 );
+                        AddComponent( new AddonComponent( 0x1099 ), 0, 0, 0 );
 		}
 
-		public CellarAddon( Serial serial ) : base( serial )
+		public CellarExtensionAddon( Serial serial ) : base( serial )
 		{
 		}
 
@@ -87,15 +87,15 @@ namespace Server.Items
 		}
 	}
 
-	public class CellarDeed : BaseAddonDeed
+	public class CellarExtensionDeed : BaseAddonDeed
 	{
-		public override BaseAddon Addon{ get{ return new CellarAddon(); } }
+		public override BaseAddon Addon{ get{ return new CellarExtensionAddon(); } }
 	
 
 		[Constructable]
-		public CellarDeed()
+		public CellarExtensionDeed()
 		{
-                 Name = "Cellar Deed";
+                 Name = "Cellar Extension Deed";
 		 Weight = 5.0;
                  Hue = 46;
 		}
@@ -117,7 +117,7 @@ namespace Server.Items
 				
 		}
 
-		public CellarDeed( Serial serial ) : base( serial )
+		public CellarExtensionDeed( Serial serial ) : base( serial )
 		{
 		}
 
@@ -136,7 +136,7 @@ namespace Server.Items
 		}
 	}
  
-        public class CellarTeleporter1 : AddonComponent
+        /*public class CellarTeleporter1 : AddonComponent
 	{
 		[Constructable]
 		public CellarTeleporter1() : this( false )
@@ -144,11 +144,10 @@ namespace Server.Items
 		}
 
 		[Constructable]
-		public CellarTeleporter1( bool creatures ) : base( 0xAFA )
+		public CellarTeleporter1( bool creatures ) : base( 0xA97 )
 		{
 			Movable = false;
 			Visible = true;
-                        Hue = 336;
 		}
 
                 public override void OnDoubleClick( Mobile from )
@@ -160,7 +159,7 @@ namespace Server.Items
 			}
 			else
 			{
-				from.Z -= 40;
+				from.Z -= 100;
 			}
 		}
 
@@ -197,13 +196,12 @@ namespace Server.Items
 		{
 			Movable = false;
 			Visible = true;
-			
                 }
                 
                 public override bool OnMoveOver( Mobile m )
 		{
                        {
-                        m.Z += 40;
+                        m.Z += 100;
                         
                         return false;
                         }
@@ -227,5 +225,5 @@ namespace Server.Items
 			int version = reader.ReadInt();
 
 		}
-	}
+	}*/
 }

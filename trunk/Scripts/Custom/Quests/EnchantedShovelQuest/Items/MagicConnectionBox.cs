@@ -22,7 +22,7 @@ namespace Server.Items
 		{
 			Name = "A Magical Connection Box";
 			LootType = LootType.Blessed;
-			Hue = 1581;
+			Hue = 11;
 		}
 
 		public MagicConnectionBox ( Serial serial ) : base ( serial )

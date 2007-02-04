@@ -6,6 +6,7 @@ using Server.Network;
 using Server.Items;
 using Server.Mobiles;
 using Server.ContextMenus;
+using Server.Accounting;
 
 namespace Server.Mobiles
 {
@@ -45,7 +46,7 @@ namespace Server.Mobiles
                       
 			//Utility.AssignRandomHair( this );
 			HairItemID = 0x203B;  
-            HairHue = 1175;
+            		HairHue = 1175;
 			
 					
 			}
@@ -56,12 +57,26 @@ namespace Server.Mobiles
 			if ( m.Alive && m is PlayerMobile )
 			{
 				PlayerMobile pm = (PlayerMobile)m;
+				Account acct=(Account)m.Account;
+				bool BannerReceived = Convert.ToBoolean( acct.GetTag("BannerReceived") );
 
-				
+
 				if ( InRange( pm, 2 ) && !InRange( oldLocation, 2 ) )
 				{
+
+				 if ( BannerReceived ) //account tag check
+					
+		    		{
+		   		 m.SendMessage("You have already done this quest.");
+                  		}	
+
+           	   		 else
+					
+	            		{
 					
 					WormSilk ws = pm.Backpack.FindItemByType( typeof ( WormSilk ) ) as WormSilk;
+		   	
+
 		        
 
 					if ( ws == null )
@@ -79,7 +94,9 @@ namespace Server.Mobiles
 						
 						return;
 					}
+	            		}
 				}
+
 			}
 		}
 		public Ralph( Serial serial ) : base( serial )
@@ -100,9 +117,21 @@ namespace Server.Mobiles
 
 		public override bool OnDragDrop( Mobile from, Item dropped )
 		{          		
-         	Mobile m = from;
+         		Mobile m = from;
 			PlayerMobile mobile = m as PlayerMobile;
-           
+			Account acct=(Account)m.Account;
+			bool BannerReceived = Convert.ToBoolean( acct.GetTag("BannerReceived") );
+
+
+		    if ( BannerReceived ) //account tag check
+					
+		    {
+		    mobile.SendMessage("You have already done this quest.");
+                    }	
+
+           	    else
+					
+	            {
 			if ( mobile != null)
 			{
 				if( dropped is WormSilk )
@@ -118,6 +147,7 @@ namespace Server.Mobiles
          			}
          			
          			dropped.Delete(); 
+				acct.SetTag( "BannerReceived", "true" );
          			if( Utility.Random( 100 ) < 100 ) 
          			switch ( Utility.Random( 4 ) )
 			{ 
@@ -139,7 +169,9 @@ namespace Server.Mobiles
 					this.PrivateOverheadMessage( MessageType.Regular, 1153, false, "I have no need for that!", mobile.NetState );
      			}
 			}
+	            }
 			return false;
+
 		}
 	}
 }

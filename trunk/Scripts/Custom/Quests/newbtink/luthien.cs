@@ -37,6 +37,7 @@ namespace Server.Mobiles
             Body = 400;
             Hue = 33770;
             VirtualArmor = 50;
+            Blessed = true;
 
             AddItem( new Server.Items.LongPants( Utility.RandomNeutralHue()) );
 			AddItem( new Server.Items.FancyShirt( Utility.RandomNeutralHue()) );;

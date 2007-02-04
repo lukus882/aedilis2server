@@ -23,6 +23,8 @@ namespace Server.Mobiles
                         Title = "the Miners Wife";
 			Body = 0x191;
 			CantWalk = true;
+			Blessed = true;
+			
 			Hue = Utility.RandomSkinHue();
 
 			FancyDress fd = new FancyDress();
@@ -33,7 +35,8 @@ namespace Server.Mobiles
                         s.Hue = 1172;
                         AddItem( s );
                  
-                        AddItem( new LongHair(2213));
+			HairItemID = 0x203B;  
+            		HairHue = 1175;
 
 		}
 
@@ -79,11 +82,28 @@ namespace Server.Mobiles
 				
 				PlayerMobile mobile = (PlayerMobile) m_Mobile;
 
+
+                        Account acct=(Account)mobile.Account;
+			bool UnchargedEnchantedShovelRecieved = Convert.ToBoolean( acct.GetTag("UnchargedEnchantedShovelRecieved") );
+			bool MagicConnectionBoxRecieved = Convert.ToBoolean( acct.GetTag("MagicConnectionBoxRecieved") );
+
 				{
 					if ( ! mobile.HasGump( typeof( TherasaGump ) ) )
 					{
+						if (UnchargedEnchantedShovelRecieved  )
+		    				{
+		   				 mobile.SendMessage("You have already done this quest.");
+                  				}
+						else if (MagicConnectionBoxRecieved  )
+		    				{
+		   				 mobile.SendMessage("You have recieved your connection box, go find the shovel parts");
+                  				}
+						else
+						{
 						mobile.SendGump( new TherasaGump( mobile ));
 						mobile.AddToBackpack( new MagicConnectionBox() );
+						acct.SetTag( "MagicConnectionBoxRecieved", "true" );
+						}
 					} 
 				}
 			}
