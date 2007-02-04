@@ -37,6 +37,7 @@ namespace Server.Mobiles
             Body = 400;
             Hue = 33770;
             VirtualArmor = 50;
+            Blessed = true;
 
             AddItem( new Server.Items.LongPants( Utility.RandomNeutralHue()) );
 			AddItem( new Server.Items.FancyShirt( Utility.RandomNeutralHue()) );;
@@ -92,7 +93,7 @@ namespace Server.Mobiles
 		    public override void OnClick()
             {
                 
-                PlayerMobile mobile = (PlayerMobile)m_Mobile;
+                		PlayerMobile mobile = (PlayerMobile)m_Mobile;
 				Account acct=(Account)mobile.Account;
 				bool SmithItemsReceived = Convert.ToBoolean( acct.GetTag("SmithItemsReceived") );
             
@@ -132,13 +133,25 @@ namespace Server.Mobiles
 	         			 	acct.SetTag( "SmithItemsReceived", "true" );
 							
 							
-							switch ( Utility.Random( 4 ) )
+							switch ( Utility.Random( 13 ) )
 							{
 								
-								case  0: mobile.AddToBackpack( new RunicHammer( CraftResource.DullCopper, Core.AOS ? 20 : 20 ) );; break;
-								case  1: mobile.AddToBackpack( new RunicHammer( CraftResource.ShadowIron, Core.AOS ? 20 : 20 ) );; break;
-								case  2: mobile.AddToBackpack( new RunicHammer( CraftResource.Copper, Core.AOS ? 20 : 20 ) );; break;
-								case  3: mobile.AddToBackpack (new ValoriteIngot (100));; break;
+								
+								case  0: mobile.AddToBackpack (new ValoriteIngot (500));; break;
+								case  1: mobile.AddToBackpack (new IronIngot (1000));; break;
+								case  2: mobile.AddToBackpack (new VeriteIngot (500));; break;
+								case  3: mobile.AddToBackpack (new IronIngot (1000));; break;
+								case  4: mobile.AddToBackpack (new CopperIngot (500));; break;
+								case  5: mobile.AddToBackpack (new ShadowIronIngot (500));; break;
+								case  6: mobile.AddToBackpack (new DullCopperIngot (500));; break;
+								case  7: mobile.AddToBackpack (new AgapiteIngot (500));; break;
+								case  8: mobile.AddToBackpack (new GoldIngot (500));; break;
+								case  9: mobile.AddToBackpack (new BronzeIngot (500));; break;
+								case  10: mobile.AddToBackpack( new RunicHammer( CraftResource.DullCopper, Core.AOS ? 20 : 20 ) );; break;
+								case  11: mobile.AddToBackpack( new RunicHammer( CraftResource.ShadowIron, Core.AOS ? 20 : 20 ) );; break;
+								case  12: mobile.AddToBackpack( new RunicHammer( CraftResource.Copper, Core.AOS ? 20 : 20 ) );; break;
+
+								
 								
 							
 						

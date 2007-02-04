@@ -10,7 +10,7 @@ namespace Server.Items
 		public override HarvestSystem HarvestSystem{ get{ return Mining.System; } }
 
 		[Constructable]
-		public EnchantedShovel() : this( 1000000 )
+		public EnchantedShovel() : this( 500 )
 		{
 		}
 
@@ -19,7 +19,7 @@ namespace Server.Items
 		{
 			Name = "Enchanted Shovel";
 			Weight = 5.0;
-			Hue = 1581;
+			Hue = 11;
 		}
 		
 		public EnchantedShovel( Serial serial ) : base( serial )

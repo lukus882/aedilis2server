@@ -14,7 +14,7 @@ namespace Server.Items
 				Name = "The Arm Of An Enchanted Shovel";          
          		ItemID=3721;
          		Weight= 10.0;
-         		Hue = 1581;
+         		Hue = 11;
        	
        
       		} 

@@ -19,7 +19,7 @@ namespace Server.Items
 		private DateTime m_LastChanged;
 		private ArrayList m_RuneBooks = new ArrayList();
 		public Mobile m_Owner;
-		public bool m_RedsAnywhere = true;
+		public bool m_RedsAnywhere = false;
 		private int m_Cost = 25;
 		private long m_AmountCollected = 0;
 
