@@ -9,6 +9,7 @@ using Server.Factions;
 using Server.Spells.Seventh;
 using Server.Spells.Fifth;
 using Server.Spells.Necromancy;
+using Server.Engines.XmlSpawner2;
 
 namespace Server.SkillHandlers
 {
@@ -167,18 +168,24 @@ namespace Server.SkillHandlers
 					}
 				}
 				#endregion
-				else if ( si == null && ( toSteal.Parent == null || !toSteal.Movable ) )
+				//ARTEGORDONMOD
+				// allow stealing of STEALABLE items on the ground or in containers
+				else if ( si == null && ( toSteal.Parent == null || !toSteal.Movable ) && !ItemFlags.GetStealable(toSteal))
 				{
 					m_Thief.SendLocalizedMessage( 502710 ); // You can't steal that!
 				}
-				else if ( toSteal.LootType == LootType.Newbied || toSteal.CheckBlessed( root ) )
+				//ARTEGORDONMOD
+				// allow stealing of of STEALABLE newbied/blessed items
+				else if ( (toSteal.LootType == LootType.Newbied || toSteal.CheckBlessed( root ))&& !ItemFlags.GetStealable(toSteal) )
 				{
 					m_Thief.SendLocalizedMessage( 502710 ); // You can't steal that!
 				}
-				//else if ( Core.AOS && si == null && toSteal is Container )
-				//{
-				//	m_Thief.SendLocalizedMessage( 502710 ); // You can't steal that!
-				//}
+				//ARTEGORDONMOD
+				// allow stealing of STEALABLE containers 
+				else if ( Core.AOS && si == null && toSteal is Container && !ItemFlags.GetStealable(toSteal))
+				{
+					m_Thief.SendLocalizedMessage( 502710 ); // You can't steal that!
+				}
 				else if ( !m_Thief.InRange( toSteal.GetWorldLocation(), 1 ) )
 				{
 					m_Thief.SendLocalizedMessage( 502703 ); // You must be standing next to an item to steal it.
@@ -218,7 +225,11 @@ namespace Server.SkillHandlers
 					{
 						if ( toSteal.Stackable && toSteal.Amount > 1 )
 						{
-							int maxAmount = (int)((m_Thief.Skills[SkillName.Stealing].Value / 10.0) / toSteal.Weight);
+						    //ARTEGORDON
+						    // fix for zero-weight stackables
+                            int maxAmount = toSteal.Amount;
+                            if(toSteal.Weight > 0)
+                                maxAmount = (int)((m_Thief.Skills[SkillName.Stealing].Value / 10.0) / toSteal.Weight);
 
 							if ( maxAmount < 1 )
 								maxAmount = 1;
@@ -261,6 +272,15 @@ namespace Server.SkillHandlers
 						if ( stolen != null )
 						{
 							m_Thief.SendLocalizedMessage( 502724 ); // You succesfully steal the item.
+						    // ARTEGORDONMOD
+							// set the taken flag to trigger release from any controlling spawner
+                            ItemFlags.SetTaken(stolen, true);
+                            // clear the stealable flag so that the item can only be stolen once if it is later locked down.
+                            ItemFlags.SetStealable(stolen, false);
+                            // release it if it was locked down
+                            stolen.Movable = true;
+
+                            // End mod for stealable rares and other locked down items
 
 							if ( si != null )
 							{
