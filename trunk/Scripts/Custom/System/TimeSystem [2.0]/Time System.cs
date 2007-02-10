@@ -182,12 +182,13 @@ namespace Server.TimeSystem
         };
 
         private const string m_TimeFormatMoonPhase = "The moon is $mp$.";
-        private const string m_TimeFormatPreset1 = "The time is $hr-ap$.$mn-2$$ap$ on $mo-0$ $da$$nth-d$ in the year $yr$. The moon is $mp$.";
+        private const string m_TimeFormatPreset1 = "The time is $hr-ap$.$mn-2$$ap$ on $mo-0$ $da$$nth-d$ in the year $yr$.";
         private const string m_TimeFormatPreset2 = "$mo$/$da$/$yr$ $hr-ap$:$mn-2$ $ap$.";
         private const string m_TimeFormatPreset3 = "$da$/$mo$/$yr$ $hr-ap$:$mn-2$ $ap$.";
         private const string m_TimeFormatPreset4 = "$mo-0$ $da$, $yr$ $hr-ap$:$mn-2$ $ap$.";
         private const string m_TimeFormatPreset5 = "$mo-3$ $da$, $yr$ $hr-ap$:$mn-2$ $ap$.";
         private const string m_TimeFormatPreset6 = "It is $hr-ap$:$mn-2$ $ap$ on the $da$$nth-d$ of $mo-0$, $yr$.";
+		private const string DiscMessage = "the $da$$nth-d$ of $mo-0$ in the year $yr$";
 
         #endregion
 
@@ -1311,8 +1312,8 @@ namespace Server.TimeSystem
 
         private static void CheckTime( ref int minute, ref int hour, ref int day, ref int month, ref int year, ref int moonPhaseDay )
         {
-            while( minute >= m_MinutesPerHour ) // Tweaked section by Rincewind - www.discworld.plccontractor.com - msm = UK_Sparky
-            {									// added Discworld day/month`s
+            while( minute >= m_MinutesPerHour )
+            {
                 minute -= m_MinutesPerHour;
 
                 hour++;
@@ -1363,6 +1364,10 @@ namespace Server.TimeSystem
 			
 			if (hour == 6 && minute == 0 && MessAntispam == 0)	// At 6am we announce a start of a new day and display day and month info from the list
 			{
+				if (DayNum == 0)
+				{
+					DayNum = 1;
+				}
 				MessAntispam = 1;
 				switch(DayNum)
 				{
@@ -1405,10 +1410,9 @@ namespace Server.TimeSystem
 				}
 				else if(month == 8 && day == 6)
 				{
-					CommandHandlers.BroadcastMessage(AccessLevel.Player, 0x482, "Have a great Zanars day!" );
+					CommandHandlers.BroadcastMessage(AccessLevel.Player, 0x482, "Have a great Patrician`s day!" );
 				}
 
-						
 			
 				else if(minute > 0)
 				{
@@ -1416,91 +1420,6 @@ namespace Server.TimeSystem
 				}
 
 			}
-            #region SEASONS
-            // added for seasons by LIACS
-
-            if (month == 4 && day == 21 && hour == 0 && minute == 0) 
-            {
-            	Map map;
-                for (int i = 0; i < 5; i++)
-                {
-
-                    map = Map.AllMaps[i];
-                    map.Season = 0;
-
-                    foreach (NetState state in NetState.Instances)
-                    {
-                        Mobile m = state.Mobile;
-                        if (m != null)
-                        {
-                            state.Send(SeasonChange.Instantiate(m.GetSeason(), true));
-                            m.SendEverything();
-                        }
-                    }
-                }
-			}
-            if (month == 7 && day == 21 && hour == 0 && minute == 0)
-            {
-                Map map;
-
-                for (int i = 1; i < 5; i++)
-                {
-                    map = Map.AllMaps[i];
-                    map.Season = 1;
-
-                    foreach (NetState state in NetState.Instances)
-                    {
-                        Mobile m = state.Mobile;
-                        if (m != null)
-                        {
-                            state.Send(SeasonChange.Instantiate(m.GetSeason(), true));
-                            m.SendEverything();
-                        }
-                    }
-                }
-            }
-            if (month == 10 && day == 21 && hour == 0 && minute == 0)
-            {
-            	Map map;
-                for (int i = 1; i < 5; i++)
-                {
-
-                    map = Map.AllMaps[i];
-                    map.Season = 2;
-
-                    foreach (NetState state in NetState.Instances)
-                    {
-                        Mobile m = state.Mobile;
-                        if (m != null)
-                        {
-                            state.Send(SeasonChange.Instantiate(m.GetSeason(), true));
-                            m.SendEverything();
-                        }
-                    }
-                }
-            }
-            if (month == 13 && day == 21 && hour == 0 && minute == 0)
-            {
-            	Map map;
-                for (int i = 1; i < 5; i++)
-                {
-
-                    map = Map.AllMaps[i];
-                    map.Season = 3;
-
-                    foreach (NetState state in NetState.Instances)
-                    {
-                        Mobile m = state.Mobile;
-                        if (m != null)
-                        {
-                            state.Send(SeasonChange.Instantiate(m.GetSeason(), true));
-                            m.SendEverything();
-                        }
-                    }
-                }
-            }
-            // end added for seasons by LIACS
-            #endregion SEASONS
         }
 
         #endregion

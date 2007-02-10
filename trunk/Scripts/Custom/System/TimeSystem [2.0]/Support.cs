@@ -10,18 +10,19 @@ namespace Server.TimeSystem
 
         private enum m_MonthList
         {
-            January = 1,
-            February = 2,
-            March = 3,
-            April = 4,
-            May = 5,
-            June = 6,
-            July = 7,
-            August = 8,
-            September = 9,
-            October = 10,
-            November = 11,
-            December = 12
+			Ick = 1,
+			Offle = 2,
+			February = 3,
+			March = 4,
+			April = 5,
+			May = 6,
+			June = 7,
+			Grune = 8,
+			August = 9,
+			Spune = 10,
+			Sektober = 11,
+			Ember = 12,
+			December = 13,
         };
 
         #endregion

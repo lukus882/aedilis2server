@@ -1029,14 +1029,14 @@ namespace Server.Multis
 		{
 			Sector sector = Map.GetSector( p );
 
-			/*foreach( BaseMulti m in sector.Multis )
+			foreach( BaseMulti m in sector.Multis )
 			{
 				if ( m != this
 				&& m is Knives.TownHouses.TownHouse
 				&& ((Knives.TownHouses.TownHouse)m).ForSaleSign is Knives.TownHouses.RentalContract
 				&& ((Knives.TownHouses.TownHouse)m).IsInside( p, height ) )
 					return false;
-			}*/
+			}
 
 			return Region.Contains( p );
 		}
