@@ -11,7 +11,7 @@ using Server.Network;
 namespace Khazman.Logging {
 	public class SpeechLogging {
 		private const bool Enabled = true;
-		private static bool ConsoleEnabled = true;
+		private static bool ConsoleEnabled = false;
 
 		private static StreamWriter writer;
 		private static string LogPath = Path.Combine( "Logs\\Speech", String.Format( "{0}.log", DateTime.Now.ToLongDateString() ) );

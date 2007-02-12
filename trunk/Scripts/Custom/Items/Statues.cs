@@ -482,11 +482,14 @@ namespace Server.Items
 
         public void UpdateStatue()
         {
-            Sector sect = Map.GetSector( this );
-            if (sect.Active)
-            {
-                Animate(m_animation, m_framecount, 1, m_forward, false, 255);
-            }
+		if(this.Map != null)
+		{
+   		 Sector sect = Map.GetSector(this);
+  		  if(sect.Active)
+  		  {
+  		      Animate(m_animation, m_framecount, 1, m_forward, false, 255);
+  		  }
+		}
         }
 
         public override void Serialize(GenericWriter writer)
