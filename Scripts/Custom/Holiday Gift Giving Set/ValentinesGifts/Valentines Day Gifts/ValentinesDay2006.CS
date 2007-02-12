@@ -29,11 +29,6 @@ namespace Server.Misc
 
 			int random = Utility.Random( 100 );
 
-			if ( random < 30 )
-				box.DropItem( new CupidsBow() );
-			else
-				box.DropItem( new CupidsHarp() );
-
 			if ( random < 50 )
 				box.DropItem( new HeartShapedRugEastAddonDeed() );
 			else
