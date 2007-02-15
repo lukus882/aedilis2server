@@ -19,8 +19,8 @@ namespace Server.Items
 		private DateTime m_LastChanged;
 		private ArrayList m_RuneBooks = new ArrayList();
 		public Mobile m_Owner;
-		public bool m_RedsAnywhere = false;
-		private int m_Cost = 25;
+		public bool m_RedsAnywhere = true;
+		private int m_Cost = 0;
 		private long m_AmountCollected = 0;
 
 		// DecayTimer Stuff
