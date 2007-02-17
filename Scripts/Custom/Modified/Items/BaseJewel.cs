@@ -24,6 +24,8 @@ namespace Server.Items
 		private AosSkillBonuses m_AosSkillBonuses;
 		private CraftResource m_Resource;
 		private GemType m_GemType;
+		private bool m_Identified;
+		private Mobile m_Crafter;
 
 		[CommandProperty( AccessLevel.GameMaster )]
 		public AosAttributes Attributes
@@ -45,6 +47,21 @@ namespace Server.Items
 			get{ return m_AosSkillBonuses; }
 			set{}
 		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public bool Identified
+		{
+			get{ return m_Identified; }
+			set{ m_Identified = value; InvalidateProperties(); }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public Mobile Crafter
+		{
+			get{ return m_Crafter; }
+			set{ m_Crafter = value; InvalidateProperties(); }
+		}
+
 
 		[CommandProperty( AccessLevel.GameMaster )]
 		public CraftResource Resource
@@ -145,7 +162,28 @@ namespace Server.Items
 
 		public override void GetProperties( ObjectPropertyList list )
 		{
-			base.GetProperties( list );
+			    /************************************************************************/
+    /******************* Mod for ItemID skill ******************/
+    if(!Identified)
+    {
+        if (m_Crafter == null)
+        {
+            string name = String.Format("Unidentified");
+
+            base.GetProperties(list);
+            list.Add(name);
+
+            if (ArtifactRarity > 0)
+                list.Add(1061078, ArtifactRarity.ToString()); // artifact rarity ~1_val~
+        }
+        else
+        {
+            this.Identified = true;
+        }
+    }
+    else
+    {
+                base.GetProperties( list );
 
 			m_AosSkillBonuses.GetProperties( list );
 
@@ -224,16 +262,20 @@ namespace Server.Items
 				list.Add( 1060486, prop.ToString() ); // swing speed increase ~1_val~%
 
 			base.AddResistanceProperties( list );
-		}
+    }
+}
 
 		public override void Serialize( GenericWriter writer )
 		{
-			base.Serialize( writer );
+			base.Serialize( writer );		
 
-			writer.Write( (int) 2 ); // version
+
+			writer.Write( (int) 3 ); // version
+	
 
 			writer.WriteEncodedInt( (int) m_Resource );
 			writer.WriteEncodedInt( (int) m_GemType );
+                        writer.Write( m_Identified );
 
 			m_AosAttributes.Serialize( writer );
 			m_AosResistances.Serialize( writer );
@@ -248,6 +290,12 @@ namespace Server.Items
 
 			switch ( version )
 			{
+				case 3:
+				{
+				    m_Identified = reader.ReadBool();
+
+					goto case 2;
+				}
 				case 2:
 				{
 					m_Resource = (CraftResource)reader.ReadEncodedInt();
