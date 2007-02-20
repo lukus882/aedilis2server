@@ -1966,8 +1966,6 @@
 			</region>
 		</region>
 	</Facet>
-	<Facet name="Sanctuary">
-	</Facet>
 	<Facet name="Tokuno">
 		<region type="GuardedRegion" priority="50" name="Moongates">
 			<!-- Isamu-Jima -->

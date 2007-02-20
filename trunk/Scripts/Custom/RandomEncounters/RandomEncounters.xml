@@ -52,28 +52,15 @@ requires some planning on your behalf. GOOD LUCK.
 
 -->
 
-<!-- FOR TESTING
-<RandomEncounters 
-    skiphidden="true"
-    delay="5.0"
-    interval="15.0:15.0:15.0"
-    cleanup="15.0"
-    cleanupGrace="5"
-    debug="true"
-    debugEffect="false"
-    RTFM="true"
-    >
--->
-
 <RandomEncounters
     skiphidden="false"
     delay="60.0"
     interval="30.0:30.0:100.0"
     cleanup="1800.0"
     cleanupGrace="0"
-    debug="true"
+    debug="false"
     debugEffect="true"
-    RTFM="true"
+    RTFM="false"
     >
     <Facet name="Trammel">
         <Region name="Misc Dungeons" type="Dungeon">
