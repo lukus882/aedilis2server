@@ -2968,7 +2968,7 @@ namespace Server.Items
 {
     /************************************************************************/
     /******************* Mod by FireStorm for ItemID skill ******************/
-    if(!Identified)
+    if(!Identified && !PlayerConstructed)
     {
         if (m_Crafter == null)
         {
