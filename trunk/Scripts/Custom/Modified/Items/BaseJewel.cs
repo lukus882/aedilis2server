@@ -164,7 +164,7 @@ namespace Server.Items
 		{
 			    /************************************************************************/
     /******************* Mod for ItemID skill ******************/
-    if(!Identified)
+    if(!Identified )
     {
         if (m_Crafter == null)
         {
