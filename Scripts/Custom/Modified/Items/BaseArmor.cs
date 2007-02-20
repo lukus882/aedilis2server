@@ -1412,9 +1412,9 @@ namespace Server.Items
 
     /************************************************************************/
     /******************* Mod  for ItemID skill ******************/
-    if(!Identified && !PlayerConstructed)
+    if(!Identified)
     {
-        if (m_Crafter == null && !)
+        if (m_Crafter == null && !PlayerConstructed)
         {
             string name = String.Format("Unidentified");
 
