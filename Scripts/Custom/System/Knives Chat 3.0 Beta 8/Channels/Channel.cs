@@ -1,3 +1,4 @@
+// Channel needs a "FindByType" so IRC can be released from having that name
 // Chat karma titles, with settable points required for the title
 // Custom chat titles by staff
 // Change filter display to number based and staff can input number to remove them
@@ -399,7 +400,7 @@ namespace Knives.Chat3
         {
             ArrayList list = new ArrayList();
 
-            foreach (Mobile tolist in c_Mobiles)
+            foreach (Mobile tolist in new ArrayList(c_Mobiles))
             {
                 if (tolist.NetState == null)
                     continue;
@@ -409,6 +410,12 @@ namespace Knives.Chat3
 
                 if (Data.GetData(tolist).Status == OnlineStatus.Hidden && tolist.AccessLevel >= m.AccessLevel)
                     continue;
+
+                if (list.Contains(tolist))
+                {
+                    c_Mobiles.Remove(tolist);
+                    continue;
+                }
 
                 list.Add(tolist);
             }
@@ -445,12 +452,6 @@ namespace Knives.Chat3
         protected void Load(GenericReader reader)
         {
             int version = reader.ReadInt();
-
-            ArrayList list = new ArrayList();
-            foreach (Mobile mob in c_Mobiles)
-                if (!list.Contains(mob))
-                    list.Add(mob);
-            c_Mobiles = new ArrayList(list);
 
             c_Mobiles = reader.ReadMobileList();
             c_Filter = reader.ReadBool();
