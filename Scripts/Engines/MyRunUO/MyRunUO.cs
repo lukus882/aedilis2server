@@ -360,6 +360,10 @@ namespace Server.Engines.MyRunUO
 
 			string guildId = ( mob.Guild == null ? "NULL" : mob.Guild.Id.ToString() );
 
+            // ***********************
+            string bankaccount = (Banker.GetBalance(mob).ToString());
+            // ***********************
+
 			if ( Config.LoadDataInFile )
 			{
 				m_OpMobiles.Write( LineStart );
@@ -386,11 +390,18 @@ namespace Server.Engines.MyRunUO
 				m_OpMobiles.Write( mob.Hue );
 				m_OpMobiles.Write( EntrySep );
 				m_OpMobiles.Write( pubString );
+
+                // ******************************
+                m_OpMobiles.Write(EntrySep);
+                m_OpMobiles.Write(bankaccount);
+                // ******************************
+
 				m_OpMobiles.Write( LineEnd );
 			}
 			else
 			{
-				ExecuteNonQuery( "INSERT INTO myrunuo_characters (char_id, char_name, char_str, char_dex, char_int, char_female, char_counts, char_guild, char_guildtitle, char_nototitle, char_bodyhue, char_public ) VALUES ({0}, '{1}', {2}, {3}, {4}, {5}, {6}, {7}, {8}, '{9}', {10}, {11})", mob.Serial.Value.ToString(), SafeString( mob.Name ), mob.RawStr.ToString(), mob.RawDex.ToString(), mob.RawInt.ToString(), female, mob.Kills.ToString(), guildId, guildTitle, notoTitle, mob.Hue.ToString(), pubString );
+                // ***** Changes in this line too ****
+         ExecuteNonQuery("INSERT INTO myrunuo_characters (char_id, char_name, char_str, char_dex, char_int, char_female, char_counts, char_guild, char_guildtitle, char_nototitle, char_bodyhue, char_public, char_bankaccount ) VALUES ({0}, '{1}', {2}, {3}, {4}, {5}, {6}, {7}, {8}, '{9}', {10}, {11}, {12})", mob.Serial.Value.ToString(), SafeString(mob.Name), mob.RawStr.ToString(), mob.RawDex.ToString(), mob.RawInt.ToString(), female, mob.Kills.ToString(), guildId, guildTitle, notoTitle, mob.Hue.ToString(), pubString, Banker.GetBalance(mob).ToString());
 			}
 		}
 
