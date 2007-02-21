@@ -219,6 +219,8 @@ namespace Server.Items
 			if ( m_Marked )
 			{
 				string desc;
+				string sanct;
+				sanct = "Sanctuary Island";
 
 				if ( (desc = m_Description) == null || (desc = desc.Trim()).Length == 0 )
 					desc = "an unknown location";
@@ -226,7 +228,7 @@ namespace Server.Items
 				if ( m_TargetMap == Map.Tokuno )
 					list.Add( (House != null ? 1063260 : 1063259), RuneFormat, desc ); // ~1_val~ (Tokuno Islands)[(House)]
 				else if ( m_TargetMap == Map.Malas )
-					list.Add( (House != null ? 1062454 : 1060804), RuneFormat, desc ); // ~1_val~ (Sanctuary)[(House)]
+					list.Add( String.Format( RuneFormat, desc ), String.Format( RuneFormat, sanct ) );
 				else if ( m_TargetMap == Map.Felucca )
 					list.Add( (House != null ? 1062452 : 1060805), RuneFormat, desc ); // ~1_val~ (Felucca)[(House)]
 				else if ( m_TargetMap == Map.Trammel )
@@ -241,14 +243,16 @@ namespace Server.Items
 			if ( m_Marked )
 			{
 				string desc;
+				string sanct;
+				sanct = "Sanctuary Island";
 
 				if ( (desc = m_Description) == null || (desc = desc.Trim()).Length == 0 )
 					desc = "an unknown location";
 
 				if ( m_TargetMap == Map.Tokuno )
 					LabelTo( from, (House != null ? 1063260 : 1063259), String.Format( RuneFormat, desc ) ); // ~1_val~ (Tokuno Islands)[(House)]
-				//else if ( m_TargetMap == Map.Malas )
-				//	LabelTo( from, (House != null ? 1062454 : 1060804), String.Format( RuneFormat, desc ) ); // ~1_val~ (Malas)[(House)]
+				else if ( m_TargetMap == Map.Malas )
+					 LabelTo( from, String.Format( RuneFormat, desc ),String.Format( RuneFormat, sanct ) ); 
 				else if ( m_TargetMap == Map.Felucca )
 					LabelTo( from, (House != null ? 1062452 : 1060805), String.Format( RuneFormat, desc ) ); // ~1_val~ (Felucca)[(House)]
 				else if ( m_TargetMap == Map.Trammel )

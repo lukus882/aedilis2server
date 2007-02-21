@@ -290,7 +290,7 @@ namespace Server.Items
 		public static readonly PMList[] AOSLists		= new PMList[] { Trammel, Felucca, Ilshenar, Malas };
 		public static readonly PMList[] AOSListsYoung	= new PMList[] { Trammel, Ilshenar, Malas };
 		public static readonly PMList[] SELists			= new PMList[] { Felucca };
-		public static readonly PMList[] SEListsYoung	= new PMList[] { Trammel, Ilshenar, Malas, Tokuno };
+		public static readonly PMList[] SEListsYoung	= new PMList[] { Felucca };
 		public static readonly PMList[] RedLists		= new PMList[] { Felucca };
 		public static readonly PMList[] SigilLists		= new PMList[] { Felucca };
 	}
@@ -426,10 +426,10 @@ namespace Server.Items
 			{
 				m_Mobile.SendLocalizedMessage( 1019002 ); // You are too far away to use the gate.
 			}
-			else if ( m_Mobile.Player && m_Mobile.Kills >= 5 && list.Map != Map.Felucca )
-			{
-				m_Mobile.SendLocalizedMessage( 1019004 ); // You are not allowed to travel there.
-			}
+			//else if ( m_Mobile.Player && m_Mobile.Kills >= 5 && list.Map != Map.Felucca )
+			//{
+			//	m_Mobile.SendLocalizedMessage( 1019004 ); // You are not allowed to travel there.
+			//}
 			else if ( Factions.Sigil.ExistsOn( m_Mobile ) && list.Map != Factions.Faction.Facet )
 			{
 				m_Mobile.SendLocalizedMessage( 1019004 ); // You are not allowed to travel there.
