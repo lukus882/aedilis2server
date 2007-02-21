@@ -32,7 +32,7 @@ namespace Server.Commands
 
 			Register( "DropHolding", AccessLevel.Counselor, new CommandEventHandler( DropHolding_OnCommand ) );
 
-			Register( "GetFollowers", AccessLevel.GameMaster, new CommandEventHandler( GetFollowers_OnCommand ) );
+			Register( "GetFollowers", AccessLevel.Counselor, new CommandEventHandler( GetFollowers_OnCommand ) );
 
 			Register( "ClearFacet", AccessLevel.Administrator, new CommandEventHandler( ClearFacet_OnCommand ) );
 
@@ -50,7 +50,7 @@ namespace Server.Commands
 			Register( "Help", AccessLevel.Player, new CommandEventHandler( Server.Help.Variables.Help_OnCommand ) );
 			//Register( "Help", AccessLevel.Player, new CommandEventHandler( Help_OnCommand ) );
 
-			Register( "Save", AccessLevel.Administrator, new CommandEventHandler( Save_OnCommand ) );
+			Register( "Save", AccessLevel.GameMaster, new CommandEventHandler( Save_OnCommand ) );
 
 			Register( "Move", AccessLevel.GameMaster, new CommandEventHandler( Move_OnCommand ) );
 			Register( "Client", AccessLevel.Counselor, new CommandEventHandler( Client_OnCommand ) );
