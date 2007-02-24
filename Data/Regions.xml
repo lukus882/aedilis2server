@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ServerRegions>
 	<Facet name="Felucca">
 		<region type="GuardedRegion" priority="50" name="Moongates">
@@ -1966,7 +1966,6 @@
 			</region>
 		</region>
 	</Facet>
-<<<<<<< .mine
 
   <Facet name="Malas">
 
@@ -2019,10 +2018,7 @@
 <smartNoHousing active="true" />
     </region>
 
-</Facet>
-=======
->>>>>>> .r46
-	<Facet name="Tokuno">
+<Facet name="Tokuno">
 		<region type="GuardedRegion" priority="50" name="Moongates">
 			<!-- Isamu-Jima -->
 			<rect x="1167" y="996" width="4" height="4" />
