@@ -10,24 +10,17 @@ namespace Server.Misc
 		private static ArrayList AllowedDupes = new ArrayList(
 			new string[]
 				{
-					"Your",
-					"allowed duplicate",
-					"names",
-					"Here",
-					"like this",
-					"case is ignored"
+
+					"GM"
+
 				}
 			);
 
 		private static ArrayList Disallowed = new ArrayList(
 			new string[]
 				{
-					"Your",
-					"disallowed",
-					"names",
-					"Here",
-					"like this",
-					"case is ignored"
+					"Stormwolf"
+
 				}
 			);
 
@@ -44,6 +37,10 @@ namespace Server.Misc
 
 		public static bool CheckDupe( Mobile m, string name )
 		{
+
+			if (m.AccessLevel > AccessLevel.Player)
+				return true;
+
 			if( m == null || name == null || name.Length == 0 )
 				return false;
 

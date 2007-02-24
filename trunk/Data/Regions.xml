@@ -1918,6 +1918,7 @@
 				<logoutDelay active="false" />
 			</region>
 		</region>
+
 		<region priority="50" name="Juka Camp">
 			<rect x="1192" y="656" width="112" height="136" />
 			<go x="1248" y="724" z="0" />
@@ -1969,54 +1970,55 @@
 
   <Facet name="Malas">
 
-
     <region type="TownRegion" priority="49"  name="Maris">
       <rect x="644" y="372" width="281" height="233" />
-<go x="1258" y="1058" z="0" />
-<smartNoHousing active="true" />
+	<go x="723" y="455" z="0" />
+	<smartNoHousing active="true" />
     </region>
 
     <region type="TownRegion" priority="49" name="Voltumna">
       <rect x="1198" y="997" width="100" height="105" />
-<go x="1258" y="1058" z="0" />
-<smartNoHousing active="true" />
+	<go x="1258" y="1058" z="0" />
+	<smartNoHousing active="true" />
     </region>
     <region type="TownRegion" priority="50" name="Turan">
       <rect x="746" y="1322" width="198" height="107" />
-<go x="1258" y="1058" z="0" />
-<smartNoHousing active="true" />
+	<go x="864" y="1354" z="0" />
+	<smartNoHousing active="true" />
     </region>
 
     <region type="TownRegion" priority="50" name="Velchan">
       <rect x="186" y="1504" width="268" height="132" />
       <rect x="241" y="1636" width="291" height="71" />
-<go x="1258" y="1058" z="0" />
-<smartNoHousing active="true" />
+	<go x="373" y="1571" z="0" />
+	<smartNoHousing active="true" />
     </region>
 
     <region type="TownRegion" priority="50" name="Feronia">
       <rect x="1650" y="1172" width="159" height="107" />
-<go x="1258" y="1058" z="0" />
-<smartNoHousing active="true" />
+	<go x="1700" y="1208" z="0" />
+	<smartNoHousing active="true" />
     </region>
 
     <region type="TownRegion" priority="50" name="Thesan">
       <rect x="104" y="828" width="274" height="163" />
-<go x="1258" y="1058" z="0" />
-<smartNoHousing active="true" />
+	<go x="272" y="950" z="0" />
+	<smartNoHousing active="true" />
     </region>
 
     <region type="TownRegion" priority="50" name="Nethuns">
       <rect x="1285" y="1649" width="170" height="231" />
-<go x="1258" y="1058" z="0" />
-<smartNoHousing active="true" />
+	<go x="1334" y="1779" z="0" />
+	<smartNoHousing active="true" />
     </region>
 
     <region type="TownRegion" priority="0" name="Nortia">
       <rect x="1674" y="778" width="88" height="84" />
-<go x="1258" y="1058" z="0" />
-<smartNoHousing active="true" />
+	<go x="1710" y="796" z="0" />
+	<smartNoHousing active="true" />
     </region>
+
+</Facet>
 
 <Facet name="Tokuno">
 		<region type="GuardedRegion" priority="50" name="Moongates">
