@@ -37,7 +37,7 @@ namespace Server.Misc
 
 			if (m.AccessLevel > AccessLevel.Player)
 			PackItem( new StaffLantern() );
-			PackItem( new GMEthreal() );
+			PackItem( new GMEthereal() );
 			PackItem( new GMHidingStone() );
 
 			if (m.AccessLevel == AccessLevel.Counselor)
