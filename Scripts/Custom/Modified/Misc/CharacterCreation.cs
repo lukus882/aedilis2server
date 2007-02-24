@@ -27,12 +27,33 @@ namespace Server.Misc
 				m.AddItem( pack );
 			}
 
+						
 			PackItem( new RedBook( "a book", m.Name, 20, true ) );
 			PackItem( new Gold( 1000 ) ); // Starting gold can be customized here
 			PackItem( new Dagger() );
 			PackItem( new AedilisLantern() );
 			PackItem( new TrashPack() );
 			PackItem( new WelcomeBook() );
+
+			if (m.AccessLevel > AccessLevel.Player)
+			PackItem( new StaffLantern() );
+			PackItem( new GMEthreal() );
+			PackItem( new GMHidingStone() );
+
+			if (m.AccessLevel == AccessLevel.Counselor)
+			PackItem( new CounselorRobe() );
+
+			if (m.AccessLevel == AccessLevel.GameMaster)
+			PackItem( new GMRobe() );
+
+			if (m.AccessLevel == AccessLevel.Administrator)
+			PackItem( new GMRobe() );
+
+			if (m.AccessLevel == AccessLevel.Developer)
+			PackItem( new DeveloperRobe() );
+
+			if (m.AccessLevel == AccessLevel.Owner)
+			PackItem( new OwnerRobe() );
 		}
 
 		private static Item MakeNewbie( Item item )
@@ -643,6 +664,7 @@ namespace Server.Misc
 
 			newChar.Hunger = 20;
                         newChar.Thirst = 20;
+			newChar.SkillsCap = 8000;
 
 			bool young = false;
 
