@@ -26,6 +26,9 @@ namespace Server.Items
 		ExplosionLesser,
 		Explosion,
 		ExplosionGreater,
+		Invisibility,
+		FlameStrikeLesser,
+		FlameStrike,
 		#region FS:ATS Edits
 		PetResurrect,
 		PetShrink,
