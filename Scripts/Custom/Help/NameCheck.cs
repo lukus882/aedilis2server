@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using Server.Prompts;
+using Server.Network;
+using Server.Items;
 using Server.Mobiles;
+using Server.Gumps;
 
 namespace Server.Misc
 {
@@ -75,6 +78,9 @@ namespace Server.Misc
 			{
 				from.SendMessage( "Your chosen name {0} is already in use or is unacceptable for use on this shard.", from.Name );
 				from.SendMessage( "Please type a new name now." );
+
+				from.SendGump ( new NameGump() );
+				
 				from.Name = "Generic Player";
 			}
 
