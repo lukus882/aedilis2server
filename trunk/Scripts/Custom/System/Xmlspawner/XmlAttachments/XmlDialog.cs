@@ -66,25 +66,29 @@ namespace Server.Engines.XmlSpawner2
 			}
 		}
 
+		public static int defProximityRange = 3;
+		public static TimeSpan defResetTime = TimeSpan.FromSeconds(60);
+		public static int defSpeechPace = 10;
+
 		private const string NPCDataSetName = "XmlQuestNPC";
 		private const string NPCPointName = "NPC";
 		private const string SpeechPointName = "SpeechEntry";
-		public const string DefsDir = "XmlQuestNPC";
+		public static string DefsDir = "XmlQuestNPC";
 
 		private ArrayList m_SpeechEntries = new ArrayList();  // contains the list of speech entries
 		private int m_CurrentEntryNumber = -1;         // used to determine which entry will be subject to modification by various entry editing calls
 		private SpeechEntry m_CurrentEntry;
 		private bool m_Running = true;
-		private int m_ProximityRange = 3;
+		private int m_ProximityRange = defProximityRange;
 		private bool m_AllowGhostTriggering = false;
 		private AccessLevel m_TriggerAccessLevel = AccessLevel.Player;
 		private DateTime m_LastInteraction;
-		private TimeSpan m_ResetTime = TimeSpan.FromMinutes(1);
+		private TimeSpan m_ResetTime = defResetTime;
 		private bool m_IsActive = false;
 		private InternalTimer m_Timer;
 		private string m_ConfigFile;
 		private Mobile m_ActivePlayer;  // keep track of the player that is currently engaged in conversation so that other players speech can be ignored.
-		private int m_SpeechPace = 10;   // used for automatic prepause delay calculation.  delayinsecs = speechlength/speechpace + 1
+		private int m_SpeechPace = defSpeechPace;   // used for automatic prepause delay calculation.  delayinsecs = speechlength/speechpace + 1
 		bool m_HoldProcessing;
 		private string m_ItemTriggerName;
 		private string m_NoItemTriggerName;
@@ -1798,9 +1802,30 @@ namespace Server.Engines.XmlSpawner2
 				}
 			}
 		}
-        
+
+		public static void AssignSettings(string argname, string value)
+		{
+			switch (argname)
+			{
+				case "XmlQuestNPCDir":
+					DefsDir = value;
+					break;
+				case "defResetTime":
+					defResetTime = TimeSpan.FromSeconds(XmlSpawner.ConvertToInt(value));
+					break;
+				case "defProximityRange":
+					defProximityRange = XmlSpawner.ConvertToInt(value);
+					break;
+				case "defSpeechPace":
+					defSpeechPace = XmlSpawner.ConvertToInt(value);
+					break;
+			}
+		}
+
 		public new static void Initialize()
 		{
+			XmlSpawner.LoadSettings(new XmlSpawner.AssignSettingsHandler(AssignSettings), "XmlDialog");
+
 			CommandSystem.Register( "SaveNPC", AccessLevel.Administrator, new CommandEventHandler( SaveNPC_OnCommand ) );
 			CommandSystem.Register("LoadNPC", AccessLevel.Administrator, new CommandEventHandler(LoadNPC_OnCommand));
 		}

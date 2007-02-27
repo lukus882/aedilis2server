@@ -43,7 +43,7 @@ If you comment out this line then you will NOT be able to edit spawner entries u
 
 
 STEP 4: (recommended but not required)
-To take advantage of the stealable rares/artifacts system and the support for eliminating issues of maintained spawner control over items, either replace the 1.0.0 distribution files container.cs (Scripts/Items/Containers/Container.cs) and stealing.cs (Scripts/Skills/Stealing.cs) with the versions found in xmlspawner2-support.zip (always keep backups of the originals), or the simpler way is to just change the extension of the distro files to something other than .cs
+To take advantage of the stealable rares/artifacts system and the support for eliminating issues of maintained spawner control over items, either replace the default distribution files container.cs (Scripts/Items/Containers/Container.cs) and stealing.cs (Scripts/Skills/Stealing.cs) with the versions found in xmlspawner2-support.zip (always keep backups of the originals), or the simpler way is to just change the extension of the distro files to something other than .cs
 
 
 STEP 5: (recommended but not required)
