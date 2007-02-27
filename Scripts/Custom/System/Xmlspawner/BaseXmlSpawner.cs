@@ -226,6 +226,7 @@ namespace Server.Mobiles
             POISON,
             DAMAGE,
             EFFECT,
+            MEFFECT,
             SOUND,
             WAITUNTIL,
             WHILE,
@@ -477,6 +478,7 @@ namespace Server.Mobiles
             AddTypeKeyword("DAMAGE");
             AddTypeKeyword("SOUND");
             AddTypeKeyword("EFFECT");
+            AddTypeKeyword("MEFFECT");
             AddTypeKeyword("MUSIC");
             AddTypeKeyword("WAITUNTIL");
             AddTypeKeyword("WHILE");
@@ -3185,7 +3187,11 @@ namespace Server.Mobiles
                                 int effect = -1;
                                 int duration = 0;
                                 int speed = 1;
-                                // syntax is MEFFECT,itemid[,speed]
+                                Point3D eloc1 = new Point3D(0, 0, 0);
+                                Point3D eloc2 = new Point3D(0, 0, 0);
+                                Map emap = Map.Internal;
+                                bool hasloc = false;
+                                // syntax is MEFFECT,itemid[,speed][,x,y,z][,x2,y2,z2]
 
 
                                 // try to get the effect argument
@@ -3211,12 +3217,75 @@ namespace Server.Mobiles
                                     catch { status_str = "Improper effect speed format"; no_error = false; }
                                 }
 
-                                if (effect >= 0 && refobject is IEntity && o is IEntity)
+                                // by default just use the spawn location
+
+                                if (o is Mobile)
                                 {
-                                    //Effects.SendLocationEffect(eloc, emap, effect, duration);
-                                    //public static void SendMovingEffect( IEntity from, IEntity to, int itemID, int speed, int duration, bool fixedDirection, bool explodes )
-                                    Effects.SendMovingEffect((IEntity)refobject, (IEntity)o, effect, speed, duration, false, false);
+                                    eloc2 = ((Mobile)o).Location;
+                                    emap = ((Mobile)o).Map;
                                 }
+                                else if (o is Item)
+                                {
+                                    eloc2 = ((Item)o).Location;
+                                    emap = ((Item)o).Map;
+                                }
+
+                                if (keywordargs.Length > 8)
+                                {
+
+                                    int x = 0;
+                                    int y = 0;
+                                    int z = 0;
+                                    try
+                                    {
+                                        x = int.Parse(keywordargs[3]);
+                                        y = int.Parse(keywordargs[4]);
+                                        z = int.Parse(keywordargs[5]);
+                                    }
+                                    catch { status_str = "Improper effect location format"; }
+                                    eloc1 = new Point3D(x, y, z);
+
+                                    try
+                                    {
+                                        x = int.Parse(keywordargs[6]);
+                                        y = int.Parse(keywordargs[7]);
+                                        z = int.Parse(keywordargs[8]);
+                                    }
+                                    catch { status_str = "Improper effect location format"; }
+                                    eloc2 = new Point3D(x, y, z);
+                                    hasloc = true;
+
+                                }
+                                else
+                                    if (keywordargs.Length > 5)
+                                    {
+
+                                        int x = 0;
+                                        int y = 0;
+                                        int z = 0;
+                                        try
+                                        {
+                                            x = int.Parse(keywordargs[3]);
+                                            y = int.Parse(keywordargs[4]);
+                                            z = int.Parse(keywordargs[5]);
+                                        }
+                                        catch { status_str = "Improper effect location format"; }
+                                        eloc1 = new Point3D(x, y, z);
+                                        hasloc = true;
+
+                                    }
+
+                                if (effect >= 0 && hasloc && emap != Map.Internal)
+                                {
+                                    Effects.SendPacket(eloc1, emap, new HuedEffect(EffectType.Moving, -1, -1, effect, eloc1, eloc2, speed, duration, false, false, 0, 0));
+                                }
+                                else
+                                    if (effect >= 0 && refobject is IEntity && o is IEntity)
+                                    {
+                                        //Effects.SendLocationEffect(eloc, emap, effect, duration);
+                                        //public static void SendMovingEffect( IEntity from, IEntity to, int itemID, int speed, int duration, bool fixedDirection, bool explodes )
+                                        Effects.SendMovingEffect((IEntity)refobject, (IEntity)o, effect, speed, duration, false, false);
+                                    }
                                 if (arglist.Length < 2) break;
                                 remainder = singlearglist[1];
                             }
@@ -4145,7 +4214,7 @@ namespace Server.Mobiles
                                 foreach (object nearbyobj in nearbylist)
                                 {
                                     string getvalue = GetPropertyValue(spawner, nearbyobj, propname, out ptype);
-                                     return ParseGetValue(getvalue, ptype);
+                                    return ParseGetValue(getvalue, ptype);
                                 }
                             }
                             else
@@ -5051,6 +5120,14 @@ namespace Server.Mobiles
 
         #region Search object methods
 
+        private static bool CheckNameMatch(string targetname, string name)
+        {
+            // a "*" targetname will match anything
+            // a null or empty targetname will match a null name
+            // otherwise the strings must match
+            return (targetname == "*") || (name == targetname) || (targetname != null && targetname.Length == 0 && name == null);
+        }
+
         private static void GetItemsIn(Item source, string targetname, Type targettype, string typestr, ref ArrayList nearbylist)
         {
             if (source != null && source.Items != null && nearbylist != null)
@@ -5061,7 +5138,7 @@ namespace Server.Mobiles
 
                     Type itemtype = i.GetType();
 
-                    if (!i.Deleted && ((targetname.Length == 0 || String.Compare(i.Name, targetname, true) == 0)) && (typestr == null ||
+                    if (!i.Deleted && CheckNameMatch(targetname, i.Name) && (typestr == null ||
                         (itemtype != null && targettype != null && (itemtype.Equals(targettype) || itemtype.IsSubclassOf(targettype)))))
                     {
                         nearbylist.Add(i);
@@ -5075,6 +5152,7 @@ namespace Server.Mobiles
 
             }
         }
+
         private static ArrayList GetNearbyObjects(object invoker, string targetname, Type targettype, string typestr, int range, bool searchcontainers)
         {
             IPooledEnumerable itemlist = null;
@@ -5109,7 +5187,7 @@ namespace Server.Mobiles
                                 GetItemsIn(i, targetname, targettype, typestr, ref nearbylist);
                         }
                         else
-                            if (!i.Deleted && ((targetname == null || targetname.Length == 0 || String.Compare(i.Name, targetname, true) == 0)) && (typestr == null ||
+                            if (!i.Deleted && CheckNameMatch(targetname, i.Name) && (typestr == null ||
                                 (itemtype != null && targettype != null && (itemtype.Equals(targettype) || itemtype.IsSubclassOf(targettype)))))
                             {
                                 nearbylist.Add(i);
@@ -5144,7 +5222,7 @@ namespace Server.Mobiles
                         // check the type and name
                         Type mobtype = m.GetType();
 
-                        if (!m.Deleted && ((targetname == null || targetname.Length == 0 || String.Compare(m.Name, targetname, true) == 0)) && (typestr == null ||
+                        if (!m.Deleted && CheckNameMatch(targetname, m.Name) && (typestr == null ||
                             (mobtype != null && targettype != null && (mobtype.Equals(targettype) || mobtype.IsSubclassOf(targettype)))))
                         {
                             nearbylist.Add(m);
@@ -5187,7 +5265,7 @@ namespace Server.Mobiles
                         }
                         // test the item name against the trigger string
                         // if a typestring has been specified then check against that as well
-                        if ((item.Name == targetName) || (targetName != null && targetName.Length == 0 && item.Name == null))
+                        if (CheckNameMatch(targetName, item.Name))
                         {
 
                             if ((typeStr == null || CheckType(item, typeStr)))
@@ -5210,7 +5288,7 @@ namespace Server.Mobiles
                         if (itemTarget != null) return itemTarget;
                     }
                     // test the item name against the trigger string
-                    if ((held.Name == targetName) || (targetName != null && targetName.Length == 0 && held.Name == null))
+                    if (CheckNameMatch(targetName, held.Name))
                     {
                         if (typeStr == null || CheckType(held, typeStr))
                         {
@@ -5339,7 +5417,7 @@ namespace Server.Mobiles
                             if (itemTarget != null) return itemTarget;
                         }
                         // test the item name against the trigger string
-                        if ((item.Name == targetName) || (targetName != null && targetName.Length == 0 && item.Name == null))
+                        if (CheckNameMatch(targetName, item.Name))
                         {
                             if (targettype == null || (item.GetType().Equals(targettype) || item.GetType().IsSubclassOf(targettype)))
                             {
@@ -5729,6 +5807,7 @@ namespace Server.Mobiles
                 }
                 objoffset++;
             }
+
 
             Item testitem = SearchMobileForItem(m, itemname, typestr, false);
 
@@ -9637,6 +9716,81 @@ namespace Server.Mobiles
 
                             TheSpawn.SpawnedObjects.Add(new KeywordTag(substitutedtypeName, spawner));
 
+                            break;
+                        }
+                    //
+                    //  MEFFECT keyword
+                    //
+                    case typeKeyword.MEFFECT:
+                        {
+                            string[] arglist = ParseSlashArgs(substitutedtypeName, 3);
+                            if (arglist.Length > 0)
+                            {
+                                string[] keywordargs = ParseString(arglist[0], 9, ",");
+
+                                if (keywordargs.Length < 9)
+                                {
+                                    status_str = "Missing args";
+                                }
+                                else
+                                {
+                                    int effect = -1;
+                                    int duration = 0;
+                                    int speed = 1;
+                                    Point3D eloc1 = new Point3D(0, 0, 0);
+                                    Point3D eloc2 = new Point3D(0, 0, 0);
+                                    Map emap = Map.Internal;
+
+                                    // syntax is MEFFECT,itemid,speed,x,y,z,x2,y2,z2
+
+                                    // try to get the effect argument
+
+                                    try
+                                    {
+                                        effect = int.Parse(keywordargs[1]);
+                                    }
+                                    catch { status_str = "Improper effect number format"; }
+
+                                    try
+                                    {
+                                        speed = int.Parse(keywordargs[2]);
+                                    }
+                                    catch { status_str = "Improper effect speed format"; }
+
+
+                                    int x = 0;
+                                    int y = 0;
+                                    int z = 0;
+                                    try
+                                    {
+                                        x = int.Parse(keywordargs[3]);
+                                        y = int.Parse(keywordargs[4]);
+                                        z = int.Parse(keywordargs[5]);
+                                    }
+                                    catch { status_str = "Improper effect location format"; }
+                                    eloc1 = new Point3D(x, y, z);
+
+                                    try
+                                    {
+                                        x = int.Parse(keywordargs[6]);
+                                        y = int.Parse(keywordargs[7]);
+                                        z = int.Parse(keywordargs[8]);
+                                    }
+                                    catch { status_str = "Improper effect location format"; }
+                                    eloc2 = new Point3D(x, y, z);
+
+
+                                    if (effect >= 0 && emap != Map.Internal)
+                                    {
+                                        Effects.SendPacket(eloc1, emap, new HuedEffect(EffectType.Moving, -1, -1, effect, eloc1, eloc2, speed, duration, false, false, 0, 0));
+                                    }
+                                }
+                                if (status_str != null)
+                                {
+                                    return false;
+                                }
+                            }
+                            TheSpawn.SpawnedObjects.Add(new KeywordTag(substitutedtypeName, spawner));
                             break;
                         }
                     case typeKeyword.EFFECT:

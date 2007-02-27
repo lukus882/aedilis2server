@@ -20,6 +20,10 @@ namespace Server.Engines.XmlSpawner2
         private TimeSpan m_Refractory = TimeSpan.Zero;
         private DateTime m_EndTime;
         private bool m_RequireLOS = false;
+        private bool m_AllowCarried = true;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool AllowCarried { get { return m_AllowCarried; } set { m_AllowCarried = value; } }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool RequireLOS { get { return m_RequireLOS; } set { m_RequireLOS = value; } }
@@ -80,7 +84,9 @@ namespace Server.Engines.XmlSpawner2
         {
             base.Serialize(writer);
 
-            writer.Write((int)0);
+            writer.Write((int)1);
+            // version 1
+            writer.Write(m_AllowCarried);
             // version 0
             writer.Write(m_RequireLOS);
             writer.Write(m_MaxRange);
@@ -103,6 +109,9 @@ namespace Server.Engines.XmlSpawner2
             int version = reader.ReadInt();
             switch (version)
             {
+                case 1:
+                    m_AllowCarried = reader.ReadBool();
+                    break;
                 case 0:
                     // version 0
                     m_RequireLOS = reader.ReadBool();
@@ -257,6 +266,23 @@ namespace Server.Engines.XmlSpawner2
             Point3D loc = ((IEntity)target).Location;
 
             if (map != from.Map) return false;
+
+            // check for allowed use in pack
+            if (target is Item)
+            {
+                Item targetitem = (Item)target;
+                // is it carried by the user?
+                if (targetitem.RootParent == from)
+                {
+                    return AllowCarried;
+                }
+                else
+                    // block use in other containers or on other mobiles
+                    if (targetitem.Parent != null)
+                    {
+                        return false;
+                    }
+            }
 
             bool haslos = true;
             if (RequireLOS)

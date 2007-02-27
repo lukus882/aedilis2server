@@ -85,6 +85,7 @@ namespace Server.Mobiles
 				"MUSIC,musicname[,range]\n" +
 				"SOUND,value[,range]\n" +
 				"EFFECT,itemid,duration[,x,y,z]\n" +
+                "MEFFECT,itemid[,speed][,x,y,z][,x2,y2,z2]" +
 				"RESURRECT[,range][,PETS]\n" +
 				"POISON,level[,range][,playeronly]\n" +
 				"DAMAGE,dmg,phys,fire,cold,pois,energy[,range][,playeronly]\n" +
@@ -150,6 +151,7 @@ namespace Server.Mobiles
 				"MUSIC,musicname[,range]\n" +
 				"SOUND,value\n" +
 				"EFFECT,itemid,duration[,x,y,z]\n" +
+                "MEFFECT,itemid[,speed][,x,y,z]" +
 				"POISON,level[,range][,playeronly]\n" +
 				"DAMAGE,dmg,phys,fire,cold,pois,energy[,range][,playeronly]\n" +
 				"INC,value or INC,min,max\n" +
