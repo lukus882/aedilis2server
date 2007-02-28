@@ -58,6 +58,9 @@ namespace Server.Mobiles
 				}
 				
 			}
+
+		if (version < 1) m_Settings = new MobileSettings(this);
+
 			
 		}
 

@@ -2796,13 +2796,7 @@ namespace Server.Mobiles
 			base.GetProperties( list );
 
             if (m_Settings != null)
-				{
                 m_Settings.OnBeforeGetProperties(list);
-				}
-			else if (m_Settings == null)
-				{
-				m_Settings = new MobileSettings(this);
-				}
 
 			if ( Map == Faction.Facet )
 			{

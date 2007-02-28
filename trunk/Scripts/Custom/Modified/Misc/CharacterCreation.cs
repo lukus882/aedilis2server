@@ -37,7 +37,11 @@ namespace Server.Misc
 
 			if (m.AccessLevel > AccessLevel.Player)
 			PackItem( new StaffLantern() );
+
+			if (m.AccessLevel > AccessLevel.Player)
 			PackItem( new GMEthereal() );
+
+			if (m.AccessLevel > AccessLevel.Player)
 			PackItem( new GMHidingStone() );
 
 			if (m.AccessLevel == AccessLevel.Counselor)
@@ -1048,17 +1052,17 @@ namespace Server.Misc
 				}
 				case 4: // Necromancer
 				{
-					Container regs = new BagOfNecroReagents( 50 );
+					//Container regs = new BagOfNecroReagents( 50 );
 
-					if ( !Core.AOS )
-					{
-						foreach ( Item item in regs.Items )
-							item.LootType = LootType.Newbied;
-					}
+					//if ( !Core.AOS )
+					//{
+					//	foreach ( Item item in regs.Items )
+					//		item.LootType = LootType.Newbied;
+					//}
 
-					PackItem( regs );
+					//PackItem( regs );
 
-					regs.LootType = LootType.Regular;
+					//regs.LootType = LootType.Regular;
 
 					
 					EquipItem( new BoneHelm() );
@@ -1086,13 +1090,13 @@ namespace Server.Misc
 						EquipItem( new Sandals( 0x8FD ) );
 					}
 
-					Spellbook book = new NecromancerSpellbook( (ulong)0x8981 ); // animate dead, evil omen, pain spike, summon familiar, wraith form
+					//Spellbook book = new NecromancerSpellbook( (ulong)0x8981 ); // animate dead, evil omen, pain spike, summon familiar, wraith form
 
-					PackItem( book );
+					//PackItem( book );
 
-					book.LootType = LootType.Blessed;
+					//book.LootType = LootType.Blessed;
 
-					addSkillItems = false;
+					//addSkillItems = false;
 
 					break;
 				}
@@ -1121,11 +1125,11 @@ namespace Server.Misc
 						EquipItem( new BodySash( 0xCF ) );
 					}
 
-					Spellbook book = new BookOfChivalry( (ulong)0x3FF );
+					//Spellbook book = new BookOfChivalry( (ulong)0x3FF );
 
-					PackItem( book );
+					//PackItem( book );
 
-					book.LootType = LootType.Blessed;
+					//book.LootType = LootType.Blessed;
 
 					break;
 				}
