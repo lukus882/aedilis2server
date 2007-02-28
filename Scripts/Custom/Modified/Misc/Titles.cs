@@ -212,7 +212,7 @@ namespace Server.Misc
 			{
 				title.AppendFormat( " {0}", customTitle );
 			}
-            else if (SkillTitles.Enabled)
+            else if (SkillTitles.Enabled && beheld is PlayerMobile)
             {
                 PlayerMobile pm = (PlayerMobile)beheld;
 
