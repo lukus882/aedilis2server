@@ -55,7 +55,7 @@ namespace Server.Items
 			else
 			{
 				from.SendMessage( "You must have 10 animal taming to use a hitching post." );
-				from.SendMessage( "Try using a pet shriking potion." );
+				from.SendMessage( "Try using a pet shrinking potion." );
 			}
 		}
 
@@ -106,6 +106,9 @@ namespace Server.Items
 
             			else if ( target == from ) 
                				from.SendMessage( "You cant shrink yourself!" );
+
+				else if ( target is BaseHire )
+					from.SendMessage( "That person gives you a dirty look." );
 
 				else if ( target is PlayerMobile )
 					from.SendMessage( "That person gives you a dirty look." );

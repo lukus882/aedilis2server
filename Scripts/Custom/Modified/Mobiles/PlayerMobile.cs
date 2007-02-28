@@ -1780,10 +1780,6 @@ namespace Server.Mobiles
 
 			if ( this.Alive && !wasAlive )
 			{
-				Item deathRobe = new DeathRobe();
-
-				if ( !EquipItem( deathRobe ) )
-					deathRobe.Delete();
 			}
 		}
 

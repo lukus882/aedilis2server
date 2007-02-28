@@ -70,8 +70,17 @@ namespace Server.Items
          		protected override void OnTarget( Mobile from, object target ) 
          		{ 
 
+				if (target == null)
+					return;
+
             			if ( target == from ) 
                				from.SendMessage( "You cant shrink yourself!" );
+
+				else if ( target is BaseHire )
+					from.SendMessage( "That person gives you a dirty look." );
+
+				else if ( target is NightSheep )
+					from.SendMessage( "That Sheep is too volatile to be shrunk.");
 
 				else if ( target is PlayerMobile )
 					from.SendMessage( "That person gives you a dirty look." );
@@ -88,6 +97,12 @@ namespace Server.Items
           			else if ( target is BaseCreature ) 
           			{ 
           				BaseCreature c = (BaseCreature)target;	
+
+					if (!c.Tamable)
+					{
+						from.SendMessage("This pet is not able to be shrinked");
+						return;
+					}
 
 					bool packanimal = false;
 					Type typ = c.GetType();

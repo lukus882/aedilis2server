@@ -35,6 +35,12 @@ namespace Server.Misc
 			PackItem( new TrashPack() );
 			PackItem( new WelcomeBook() );
 
+			IDWand SID = new IDWand();
+                        SID.Charges = 10;
+			SID.Name = "Starter ID Wand";
+			SID.Identified = true;
+                        PackItem( SID );
+
 			if (m.AccessLevel > AccessLevel.Player)
 			PackItem( new StaffLantern() );
 
