@@ -2548,6 +2548,8 @@ namespace Server.Mobiles
 				}
 			}
 
+			if (m_Settings == null) m_Settings = new MobileSettings(this);
+
 			// Professions weren't verified on 1.0 RC0
 			if ( !CharacterCreation.VerifyProfession( m_Profession ) )
 				m_Profession = 0;
