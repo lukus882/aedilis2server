@@ -90,7 +90,7 @@ namespace Server
 		public static readonly bool EnablePetBreeding = false;
 
 		// Turns on/off Pet Leveling (NOTE: If you disable this disable breeding as well.)
-		public static readonly bool EnablePetLeveling = true;
+		public static readonly bool EnablePetLeveling = false;
 
 		// Turns on/off Taming BODs
 		public static readonly bool EnableTamingBODs = false;
