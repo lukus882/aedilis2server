@@ -40,11 +40,15 @@ namespace Server.Items
 			from.SendMessage( 53, "ERROR: Addon no longer in use. A new addon deed has been added to your backpack" );
 			
 			if ( this.ItemID == 0x14E7 )
+                        {
 				from.AddToBackpack( new NewHitchingPostEastDeed() );
+                                this.Delete();
+                         }
 			else if ( this.ItemID == 0x14E8 )
+                        {
 				from.AddToBackpack( new NewHitchingPostSouthDeed() );
-
 			this.Delete();
+		}
 		}
 
 		public override void AddNameProperties( ObjectPropertyList list )
@@ -89,6 +93,9 @@ namespace Server.Items
 
             			if ( target == from ) 
                				from.SendMessage( "You cant shrink yourself!" );
+
+				else if ( target is BaseHire )
+					from.SendMessage( "That person gives you a dirty look." );
 
 				else if ( target is PlayerMobile )
 					from.SendMessage( "That person gives you a dirty look." );
@@ -261,6 +268,7 @@ namespace Server.Items
 			from.SendMessage( 53, "ERROR: Addon no longer in use. A new addon deed has been added to your backpack" );
 			
 			from.AddToBackpack( new NewHitchingPostSouthDeed() );
+                        this.Delete();
 		}
 
 		#region Serialization
@@ -299,6 +307,7 @@ namespace Server.Items
 			from.SendMessage( 53, "ERROR: Addon no longer in use. A new addon deed has been added to your backpack" );
 			
 			from.AddToBackpack( new NewHitchingPostEastDeed() );
+                        this.Delete();
 		}
 
 		#region Serialization

@@ -1964,6 +1964,13 @@ namespace Server.Items
 					m_PetMed = reader.ReadDouble();
 					break;
 				}
+
+			}
+
+			if ( m_Mob != null && !m_Mob.Tamable )
+			{
+				m_Mob.Delete();
+				this.Delete();
 			}
       		}
    	}
