@@ -1,7 +1,6 @@
 using System;
 using Server;
 using Server.Mobiles;
-using Server.RateDef;
 
 namespace Server.Misc
 {
@@ -82,7 +81,8 @@ namespace Server.Misc
 			Mobile.SkillCheckDirectTargetHandler = new SkillCheckDirectTargetHandler( XmlSpawnerSkillCheck.Mobile_SkillCheckDirectTarget );
 			// End mod to enable XmlSpawner skill triggering
 
-         //here is gainrates 4 each skill
+//*********EDIT THESE LINES TO SET THE BASE PERCENT CHANCE TO GAIN FOR EACH INDIVIDUAL SKILL***********************//
+			//This Table used to set the base chance to gain skill between 40 and 70
          //for instance .15 would be a 15% chance to gain in the particular skill
 
          SkillInfo.Table[0].GainFactor = .12;// Alchemy = 0, 
@@ -145,11 +145,6 @@ namespace Server.Misc
 
         public static bool Mobile_SkillCheckLocation(Mobile from, SkillName skillName, double minSkill, double maxSkill)
         {
-            return Mobile_SkillCheckLocation(from, skillName, minSkill, maxSkill, maxSkill);
-        }
-
-        public static bool Mobile_SkillCheckLocation(Mobile from, SkillName skillName, double minSkill, double maxSkill, double maxSkillGain)
-        {
             Skill skill = from.Skills[skillName];
 
             if (skill == null)
@@ -159,17 +154,13 @@ namespace Server.Misc
 
             if (value < minSkill)
                 return false; // Too difficult
-            else if (value >= maxSkill && maxSkill >= maxSkillGain)
+			else if ( value >= maxSkill )
                 return true; // No challenge
 
             double chance = (value - minSkill) / (maxSkill - minSkill);
-            double chanceG = (value - minSkill) / (maxSkillGain - minSkill);
 
             Point2D loc = new Point2D(from.Location.X / LocationSize, from.Location.Y / LocationSize);
-
-            CheckSkill(from, skill, loc, chanceG);
-
-            return chance >= Utility.RandomDouble();
+			return CheckSkill( from, skill, loc, chance );
         }
 
 		public static bool Mobile_SkillCheckDirectLocation( Mobile from, SkillName skillName, double chance )
@@ -191,67 +182,41 @@ namespace Server.Misc
         public static bool CheckSkill(Mobile from, Skill skill, object amObj, double chance)
         {
             if (from.Skills.Cap == 0)
-                return false;
-            bool success = (chance >= Utility.RandomDouble());
+				return false;
 
-            //here is modifications 2 skillgains
-            double BaseSkillGain = skill.Info.GainFactor;
-            double LowSkillMod = .10;
-            double aSkillMod = .03;
-            double bSkillMod = .05;
-            double cSkillMod = .06;
-            double dSkillMod = .07;
-            double eSkillMod = .08;
-            double fSkillMod = .085;
-            double gSkillMod = .09;
-            double hSkillMod = .095;
-            double iSkillMod = .096;
-            double jSkillMod = .097;
-            double kSkillMod = .098;
+			bool success = ( chance >= Utility.RandomDouble() );
 
-            //Example: Player Skill is 85.3 - We would take the 12% base chance and subtract 8% - Player now has a 4% chance to gain.
+//**********EDIT THESE LINES FOR MODIFICATIONS TO BASE PERCENTAGE AT DIFFERENT SKILL LEVELS************************//
+			double LowSkillMod = .25; // percent added to skill gain for skill between 0 - 40
+			double BaseSkillGain = skill.Info.GainFactor;  // base percent to gain at skill between 40 - 70 set in table above.
+			double HighSkillMod = .05; // percent subtracted from base gain for skill between 70 - 100
+			double AboveGmSkillMod = .07; // percent subtracted from base gain for skill over 100
+			//Example: Player Skill is 85.3 - We would take the 15% base chance and subtract 8% - Player now has a 7% chance to gain.
             //*****************************************************************************************************************//
-            double ComputedSkillMod = 0; // holds the percent chance to gain after checking players skill
+           
+			double ComputedSkillMod = 0; // holds the percent chance to gain after checking players skill
 
-            //here is modding gainrates. i.c. under lv 20% lowskillmod added 2 gain rate. from 20 to 40 askillmod substracted from it
-
-            if (skill.Base < 20.0)
+			if ( skill.Base < 40.1 ) 
                 ComputedSkillMod = BaseSkillGain + LowSkillMod;
-            else if (skill.Base < 40.0)
-                ComputedSkillMod = BaseSkillGain - aSkillMod;
-            else if (skill.Base < 80.0)
-                ComputedSkillMod = BaseSkillGain - bSkillMod;
-            else if (skill.Base < 90.0)
-                ComputedSkillMod = BaseSkillGain - cSkillMod;
-            else if (skill.Base < 100.0)
-                ComputedSkillMod = BaseSkillGain - dSkillMod;
-            else if (skill.Base < 110.0)
-                ComputedSkillMod = BaseSkillGain - eSkillMod;
-            else if (skill.Base < 120.0)
-                ComputedSkillMod = BaseSkillGain - fSkillMod;
-            else if (skill.Base < 130.0)
-                ComputedSkillMod = BaseSkillGain - gSkillMod;
-            else if (skill.Base < 140.0)
-                ComputedSkillMod = BaseSkillGain - hSkillMod;
-            else if (skill.Base < 160.0)
-                ComputedSkillMod = BaseSkillGain - iSkillMod;
-            else if (skill.Base < 180.0)
-                ComputedSkillMod = BaseSkillGain - jSkillMod;
-            else if (skill.Base >= 200.0)
-                ComputedSkillMod = BaseSkillGain - kSkillMod;
+			else if ( skill.Base < 70.1 ) 
+				ComputedSkillMod = BaseSkillGain;                 
+			else if ( skill.Base < 100.1 ) 
+				ComputedSkillMod = BaseSkillGain - HighSkillMod;                
+			else if ( skill.Base > 100.0 ) 
+				ComputedSkillMod = BaseSkillGain - AboveGmSkillMod;  
 
-            //if u make substraction larger than skill gain rate
-            if (ComputedSkillMod < 0.001)
-                ComputedSkillMod = 0.001;
+			if ( ComputedSkillMod < 0.01 ) 
+				ComputedSkillMod = 0.01;
 
             //following line used to see chance to gain ingame
             if (from.AccessLevel > AccessLevel.Player)
 	    from.SendMessage( "Your chance to gain {0} is {1}",skill.Name, ComputedSkillMod );
             if (from is BaseCreature && ((BaseCreature)from).Controlled)
                 ComputedSkillMod *= 2;
-            ComputedSkillMod *= RateDefinitions.ratebonus;
+
             if (from.Alive && ((ComputedSkillMod >= Utility.RandomDouble() && AllowGain(from, skill, amObj)) || skill.Base < 10.0))
                 Gain(from, skill);
+
             return success;
         }
 
@@ -313,23 +278,10 @@ namespace Server.Misc
             if (skill.Base < skill.Cap && skill.Lock == SkillLock.Up)
             {
                 int toGain = 1;
-                if (skill.Base < 20.0)
-                    toGain = Utility.Random(8) + 7;
-                else if (skill.Base < 40.0)
-                    toGain = Utility.Random(7) + 6;
-                else if (skill.Base < 60.0)
-                    toGain = Utility.Random(6) + 5;
-                else if (skill.Base < 80.0)
-                    toGain = Utility.Random(5) + 4;
-                else if (skill.Base < 100.0)
-                    toGain = Utility.Random(4) + 3;
-                else if (skill.Base < 120.0)
-                    toGain = Utility.Random(3) + 2;
-                else if (skill.Base < 150.0)
-                    toGain = Utility.Random(2) + 1;
-                else if (skill.Base < 200.0)
-                    toGain = Utility.Random(1) + 1;
-                toGain *= RateDefinitions.gainbonus;
+
+				if ( skill.Base <= 10.0 )
+					toGain = Utility.Random( 4 ) + 1;
+
                 Skills skills = from.Skills;
                 if ((skills.Total / skills.Cap) >= Utility.RandomDouble())//( skills.Total >= skills.Cap )
                 {
@@ -343,31 +295,39 @@ namespace Server.Misc
                         }
                     }
                 }
+
                 if ((skills.Total + toGain) <= skills.Cap)
                 {
                     skill.BaseFixedPoint += toGain;
                 }
             }
+
             if (skill.Lock == SkillLock.Up)
             {
                 SkillInfo info = skill.Info;
-                if (from.StrLock == StatLockType.Up && ((info.StrGain / 10.0) + RateDefinitions.StatGainBonus) > Utility.RandomDouble())
+
+//*****EDIT THIS LINE TO MAKE STATS GAIN FASTER, NUMBER MUST BE BETWEEN 0.00 and 1.00, THIS IS ADDED TO THE CHANCE TO GAIN IN A STAT********//
+				double StatGainBonus = .15; //Extra chance to gain in stats. Left at 0 would be default runuo gains.
+//**************************************************  **************************************************  **************************************//
+
+				if ( from.StrLock == StatLockType.Up && ((info.StrGain / 33.3) + StatGainBonus) > Utility.RandomDouble() )
                 {
                     if (info.StrGain != 0)
                         GainStat(from, Stat.Str);
                 }
-                else if (from.DexLock == StatLockType.Up && ((info.DexGain / 8.0) + RateDefinitions.StatGainBonus) > Utility.RandomDouble())
+				else if ( from.DexLock == StatLockType.Up && ((info.DexGain / 33.3) + StatGainBonus) > Utility.RandomDouble() )
                 {
                     if (info.DexGain != 0)
                         GainStat(from, Stat.Dex);
                 }
-                else if (from.IntLock == StatLockType.Up && ((info.IntGain / 13.0) + RateDefinitions.StatGainBonus) > Utility.RandomDouble())
+				else if ( from.IntLock == StatLockType.Up && ((info.IntGain / 33.3) + StatGainBonus) > Utility.RandomDouble() )
                 {
                     if (info.IntGain != 0)
                         GainStat(from, Stat.Int);
                 }
                 //following line used to show chance to gain stats ingame
-                //from.SendMessage( "Str: {0} Dex: {1} Int: {2}",((info.StrGain / 33.3) + RateDefinitions.StatGainBonus),((info.DexGain / 33.3) + RateDefinitions.StatGainBonus),((info.IntGain / 33.3) + RateDefinitions.StatGainBonus) );
+if (from.AccessLevel > AccessLevel.Player)
+from.SendMessage( "Str: {0} Dex: {1} Int: {2}",((info.StrGain / 33.3) + StatGainBonus),((info.DexGain / 33.3) + StatGainBonus),((info.IntGain / 33.3) + StatGainBonus) );
             }
         }
 
@@ -455,37 +415,14 @@ namespace Server.Misc
 			}
 		}
 
-		private static TimeSpan m_StatGainDelay = TimeSpan.FromMinutes( 5.0 );
+		private static TimeSpan m_StatGainDelay = TimeSpan.FromMinutes( 10.0 );
 
 		public static void GainStat( Mobile from, Stat stat )
 		{
-			switch( stat )
-			{
-				case Stat.Str:
-				{
-					if( (from.LastStrGain + m_StatGainDelay) >= DateTime.Now )
+			if ( (from.LastStatGain + m_StatGainDelay) >= DateTime.Now )
 						return;
 
-					from.LastStrGain = DateTime.Now;
-					break;
-				}
-				case Stat.Dex:
-				{
-					if( (from.LastDexGain + m_StatGainDelay) >= DateTime.Now )
-						return;
-
-					from.LastDexGain = DateTime.Now;
-					break;
-				}
-				case Stat.Int:
-				{
-					if( (from.LastIntGain + m_StatGainDelay) >= DateTime.Now )
-						return;
-
-					from.LastIntGain = DateTime.Now;
-					break;
-				}
-			}
+			from.LastStatGain = DateTime.Now;
 
 			bool atrophy = ( (from.RawStatTotal / (double)from.StatCap) >= Utility.RandomDouble() );
 
