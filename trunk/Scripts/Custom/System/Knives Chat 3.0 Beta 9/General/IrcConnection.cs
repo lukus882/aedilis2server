@@ -346,7 +346,7 @@ namespace Knives.Chat3
                 if (str.Length > 300)
                     return;
 
-                if (str.IndexOf("PRIVMSG") != -1)
+                if (str.IndexOf("PRIVMSG") != -1 && str.IndexOf("!") != -1)
                 {
                     string parOne = str.Substring(1, str.IndexOf("!") - 1);
 

@@ -6728,7 +6728,7 @@ namespace Server.Items
     {
         [Constructable]
         public BrightBlueCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Bright Blue Century Plant";
             Hue = 0x5;
@@ -6760,7 +6760,7 @@ namespace Server.Items
     {
         [Constructable]
         public BlackCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Black Century Plant";
             Hue = 0x455;
@@ -6792,7 +6792,7 @@ namespace Server.Items
     {
         [Constructable]
         public WhiteCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative White Century Plant";
             Hue = 0x481;
@@ -6824,7 +6824,7 @@ namespace Server.Items
     {
         [Constructable]
         public PinkCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Pink Century Plant";
             Hue = 0x483;
@@ -6856,7 +6856,7 @@ namespace Server.Items
     {
         [Constructable]
         public MagentaCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Magenta Century Plant";
             Hue = 0x486;
@@ -6888,7 +6888,7 @@ namespace Server.Items
     {
         [Constructable]
         public AquaCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Aqua Century Plant";
             Hue = 0x495;
@@ -6920,7 +6920,7 @@ namespace Server.Items
     {
         [Constructable]
         public FireRedCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Fire Red Century Plant";
             Hue = 0x489;
@@ -6952,7 +6952,7 @@ namespace Server.Items
     {
         [Constructable]
         public CenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Century Plant";
             Hue = 0x0;
@@ -6984,7 +6984,7 @@ namespace Server.Items
     {
         [Constructable]
         public RedCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Red Century Plant";
             Hue = 0x66D;
@@ -7016,7 +7016,7 @@ namespace Server.Items
     {
         [Constructable]
         public BlueCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Blue Century Plant";
             Hue = 0x53D;
@@ -7048,7 +7048,7 @@ namespace Server.Items
     {
         [Constructable]
         public PurpleCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Purple Century Plant";
             Hue = 0xD;
@@ -7080,7 +7080,7 @@ namespace Server.Items
     {
         [Constructable]
         public YellowCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Yellow Century Plant";
             Hue = 0x8A5;
@@ -7112,7 +7112,7 @@ namespace Server.Items
     {
         [Constructable]
         public OrangeCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Orange Century Plant";
             Hue = 0x46F;
@@ -7144,7 +7144,7 @@ namespace Server.Items
     {
         [Constructable]
         public GreenCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Green Century Plant";
             Hue = 0x59B;
@@ -7176,7 +7176,7 @@ namespace Server.Items
     {
         [Constructable]
         public BrightRedCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Bright Red Century Plant";
             Hue = 0x21;
@@ -7208,7 +7208,7 @@ namespace Server.Items
     {
         [Constructable]
         public BrightPurpleCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Bright Purple Century Plant";
             Hue = 0x10;
@@ -7240,7 +7240,7 @@ namespace Server.Items
     {
         [Constructable]
         public BrightYellowCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Bright Yellow Century Plant";
             Hue = 0x38;
@@ -7272,7 +7272,7 @@ namespace Server.Items
     {
         [Constructable]
         public BrightOrangeCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Bright Orange Century Plant";
             Hue = 0x2B;
@@ -7304,7 +7304,7 @@ namespace Server.Items
     {
         [Constructable]
         public BrightGreenCenturyPlant()
-            : base(0xDB1)
+            : base(0xD31)
         {
             Name = "Decorative Bright Green Century Plant";
             Hue = 0x42;
