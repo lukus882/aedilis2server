@@ -76,33 +76,33 @@ namespace Server.Items
 		}
 
 		public static void GetTime( Map map, int x, int y, out int hours, out int minutes, out int totalMinutes )
-		{
-		// ** EDIT ** Time System
+{
 
-   			if (TimeSystem.System.Enabled)
-    			{
-        		totalMinutes = 0;
+// ** EDIT ** Time System
 
-        		TimeSystem.System.GetTime(x, out hours, out minutes);
-    			}
-    			else
-    			{
-        		TimeSpan timeSpan = DateTime.Now - WorldStart;
+	totalMinutes = 0;
 
-        		totalMinutes = (int)(timeSpan.TotalSeconds / SecondsPerUOMinute);
+	TimeSystem.TimeEngine.GetTimeMinHour(map, x, out minutes, out hours);
 
-        		if ( map != null )
-            		totalMinutes += map.MapIndex * 320;
+	/*
+	TimeSpan timeSpan = DateTime.Now - WorldStart;
 
-        		// Really on OSI this must be by subserver
-        		totalMinutes += x / 16;
+	totalMinutes = (int)(timeSpan.TotalSeconds / SecondsPerUOMinute);
 
-        		hours = (totalMinutes / 60) % 24;
-        		minutes = totalMinutes % 60;
-    			}
-			// ** END ***
+	if ( map != null )
+		totalMinutes += map.MapIndex * 320;
 
-		}
+	// Really on OSI this must be by subserver
+	totalMinutes += x / 16;
+
+	hours = (totalMinutes / 60) % 24;
+	minutes = totalMinutes % 60;
+	*/
+
+// ** END *** Time System
+
+}
+
 
 		public static void GetTime( out int generalNumber, out string exactTime )
 		{
@@ -155,31 +155,26 @@ namespace Server.Items
 		}
 
 		public override void OnDoubleClick( Mobile from )
-		{
-		// ** EDIT ** Time System
+{
 
-    			if (TimeSystem.System.Enabled)
-    			{
-        			NetState state = from.NetState;
+// ** EDIT ** Time System
 
-        			MessageType type = Network.MessageType.Regular;
-        			int hue = 0x3B2;
-        			string text = TimeSystem.System.GetTime(from.X, true);
+	TimeSystem.Support.SendClockData(this, from);
 
-        			state.Send(new UnicodeMessage( Serial, ItemID, type, hue, 3, "ENU", Name, text ));
-    			}
-    			else
-    			{
-      				int genericNumber;
-        			string exactTime;
+	/*
+	int genericNumber;
+	string exactTime;
 
-        			GetTime( from, out genericNumber, out exactTime );
+	GetTime( from, out genericNumber, out exactTime );
 
-        			SendLocalizedMessageTo( from, genericNumber );
-        			SendLocalizedMessageTo( from, 1042958, exactTime ); // ~1_TIME~ to be exact
-    			}
-			// ** END ***
-		}		
+	SendLocalizedMessageTo( from, genericNumber );
+	SendLocalizedMessageTo( from, 1042958, exactTime ); // ~1_TIME~ to be exact
+	*/
+
+// ** END *** Time System
+
+}
+	
 
 
 		public override void Serialize( GenericWriter writer )

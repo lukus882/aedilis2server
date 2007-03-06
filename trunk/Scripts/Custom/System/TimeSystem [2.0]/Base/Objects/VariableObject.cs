@@ -1,6 +1,5 @@
 using System;
 using Server;
-using System.Collections;
 
 namespace Server.TimeSystem
 {
@@ -18,26 +17,14 @@ namespace Server.TimeSystem
 
         public bool Success
         {
-            get
-            {
-                return m_Success;
-            }
-            set
-            {
-                m_Success = value;
-            }
+            get { return m_Success; }
+            set { m_Success = value; }
         }
 
         public string Message
         {
-            get
-            {
-                return m_Message;
-            }
-            set
-            {
-                m_Message = value;
-            }
+            get { return m_Message; }
+            set { m_Message = value; }
         }
 
         #endregion
