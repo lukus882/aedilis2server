@@ -59,9 +59,9 @@ namespace Server.Items
 			PlayerMobile pm = from as PlayerMobile;
 			Container bank = pm.BankBox;
 			
-			from.SolidHueOverride = 0;
-			from.NameHue = 0;
-			from.HueMod = 0;
+			from.SolidHueOverride = -1;
+			from.NameHue = -1;
+			from.HueMod = -1;
 			from.NameMod = null;
 			
 			if ( m_Gift )
