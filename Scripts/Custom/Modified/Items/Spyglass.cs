@@ -19,21 +19,22 @@ namespace Server.Items
 			Weight = 3.0;
 		}
 
-		public override void OnDoubleClick( Mobile from )
+public override void OnDoubleClick( Mobile from )
 {
-// ** EDIT ** Time System
-    if (TimeSystem.System.Enabled)
-    {
-        from.LocalOverheadMessage(MessageType.Regular, 0x3B2, false, String.Format("You peer into the sky and see the moon is {0}.", TimeSystem.System.GetMoonPhaseName(from.X)));
-    }
-    else
-    {
-        from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1008155); // You peer into the heavens, seeking the moons...
 
-        from.Send(new MessageLocalizedAffix(from.Serial, from.Body, MessageType.Regular, 0x3B2, 3, 1008146 + (int)Clock.GetMoonPhase(Map.Trammel, from.X, from.Y), "", AffixType.Prepend, "Trammel : ", ""));
-        from.Send(new MessageLocalizedAffix(from.Serial, from.Body, MessageType.Regular, 0x3B2, 3, 1008146 + (int)Clock.GetMoonPhase(Map.Felucca, from.X, from.Y), "", AffixType.Prepend, "Felucca : ", ""));
-    }
-// ** END ***
+// ** EDIT ** Time System
+
+	TimeSystem.Support.SendSpyglassData(from);
+
+	/*
+	from.LocalOverheadMessage( MessageType.Regular, 0x3B2, 1008155 ); // You peer into the heavens, seeking the moons...
+
+	from.Send( new MessageLocalizedAffix( from.Serial, from.Body, MessageType.Regular, 0x3B2, 3, 1008146 + (int)Clock.GetMoonPhase( Map.Trammel, from.X, from.Y ), "", AffixType.Prepend, "Trammel : ", "" ) );
+	from.Send( new MessageLocalizedAffix( from.Serial, from.Body, MessageType.Regular, 0x3B2, 3, 1008146 + (int)Clock.GetMoonPhase( Map.Felucca, from.X, from.Y ), "", AffixType.Prepend, "Felucca : ", "" ) );
+	*/
+
+// ** END *** Time System
+
 	PlayerMobile player = from as PlayerMobile;
 
 	if ( player != null )
@@ -63,6 +64,7 @@ namespace Server.Items
 		}
 	}
 }
+
 
 
 		public Spyglass( Serial serial ) : base( serial )
