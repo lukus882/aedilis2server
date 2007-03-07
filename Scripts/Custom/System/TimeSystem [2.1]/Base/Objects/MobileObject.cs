@@ -5,9 +5,20 @@ namespace Server.TimeSystem
 {
     public class MobileObject
     {
+        #region Constructor
+
+        public MobileObject()
+        {
+            m_UpdateTimeStamp = DateTime.Now;
+        }
+
+        #endregion
+
         #region Private Variables
 
         private Mobile m_Mobile;
+
+        private DateTime m_UpdateTimeStamp;
 
         private int m_LightLevel;
 
@@ -22,6 +33,8 @@ namespace Server.TimeSystem
         #region Public Variables
 
         public Mobile Mobile { get { return m_Mobile; } set { m_Mobile = value; } }
+
+        public DateTime UpdateTimeStamp { get { return m_UpdateTimeStamp; } set { m_UpdateTimeStamp = value; } }
 
         public int LightLevel { get { return m_LightLevel; } set { m_LightLevel = value; } }
 

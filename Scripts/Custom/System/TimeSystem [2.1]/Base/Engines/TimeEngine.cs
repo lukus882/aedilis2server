@@ -251,11 +251,7 @@ namespace Server.TimeSystem
 
         public static int CalculateLightLevel(object o)
         {
-            if (LightCycle.LevelOverride > int.MinValue)
-            {
-                return LightCycle.LevelOverride;
-            }
-            else if (!Data.Enabled)
+            if (!Data.Enabled)
             {
                 return Data.DayLevel;
             }
@@ -279,14 +275,18 @@ namespace Server.TimeSystem
             {
                 mo = Support.GetMobileObject((Mobile)o);
 
-                if (DateTime.Now - Data.UpdateTimeStamp < TimeSpan.FromMilliseconds(Data.UpdateInterval))
-                {
-                    return mo.LightLevel;
-                }
-
                 if (mo != null)
                 {
+                    if (DateTime.Now - mo.UpdateTimeStamp < TimeSpan.FromMilliseconds(Data.UpdateInterval))
+                    {
+                        return mo.LightLevel;
+                    }
+
                     mo.IsDarkestHour = false;
+                }
+                else
+                {
+                    return Data.DayLevel;
                 }
             }
 
@@ -297,7 +297,7 @@ namespace Server.TimeSystem
             {
                 bool isDarkestHour = IsDarkestHour(minute, hour);
 
-                if (o is Mobile && mo != null)
+                if (mo != null)
                 {
                     mo.IsDarkestHour = isDarkestHour;
                 }
@@ -373,7 +373,7 @@ namespace Server.TimeSystem
             {
                 if (mo != null)
                 {
-                    Data.UpdateTimeStamp = DateTime.Now;
+                    mo.UpdateTimeStamp = DateTime.Now;
 
                     mo.LightLevel = currentLevel;
 

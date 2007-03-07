@@ -1803,7 +1803,7 @@ namespace Server.Engines.XmlSpawner2
 			}
 		}
 
-		public static void AssignSettings(string argname, string value)
+		public static bool AssignSettings(string argname, string value)
 		{
 			switch (argname)
 			{
@@ -1819,7 +1819,11 @@ namespace Server.Engines.XmlSpawner2
 				case "defSpeechPace":
 					defSpeechPace = XmlSpawner.ConvertToInt(value);
 					break;
+                default:
+                    return false;
 			}
+
+            return true;
 		}
 
 		public new static void Initialize()

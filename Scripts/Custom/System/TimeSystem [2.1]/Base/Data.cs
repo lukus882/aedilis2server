@@ -12,7 +12,7 @@ namespace Server.TimeSystem
     {
         #region Constant Variables
 
-        public const string Version = "2.0.0"; // Current version of the Time System.
+        public const string Version = "2.0.1"; // Current version of the Time System.
         public const int BinaryVersion = 3; // The version number used in the data file.
 
         public static readonly bool ForceScriptSettings = false; // Set to true to have settings configured by script only.  The settings can no longer be configured in-game.
@@ -147,8 +147,6 @@ namespace Server.TimeSystem
         private static StreamWriter m_LogWriter;
         private static bool m_Logging = true;
 
-        private static DateTime m_UpdateTimeStamp;
-
         private static int m_BaseLightLevel;
 
         private static Hashtable m_MobilesTable = new Hashtable();
@@ -236,8 +234,6 @@ namespace Server.TimeSystem
 
         public static StreamWriter LogWriter { get { return m_LogWriter; } set { m_LogWriter = value; } }
         public static bool Logging { get { return m_Logging; } set { m_Logging = value; } }
-
-        public static DateTime UpdateTimeStamp { get { return m_UpdateTimeStamp; } set { m_UpdateTimeStamp = value; } }
 
         public static int BaseLightLevel { get { return m_BaseLightLevel; } set { m_BaseLightLevel = value; } }
 
@@ -590,6 +586,9 @@ namespace Server.TimeSystem
                     }
                 }
             }
+
+            Support.ReIndexArray(EffectsMapArray);
+            Support.ReIndexArray(EffectsExclusionMapArray);
         }
 
         #endregion

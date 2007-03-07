@@ -44,7 +44,6 @@ namespace Server.TimeSystem
         UseSeasons,
         UseNightSightDarkestHourOverride,
         UseNightSightOverride,
-        NightSightLevelReduction,
         TimeFormat,
         ClockTimeFormat,
         SpyglassFormat

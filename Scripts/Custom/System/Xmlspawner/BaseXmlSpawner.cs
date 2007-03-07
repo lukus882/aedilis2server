@@ -219,6 +219,7 @@ namespace Server.Mobiles
             TAKE,
             GUMP,
             TAKEBYTYPE,
+            BROWSER,
             SENDMSG,
             SENDASCIIMSG,
             MUSIC,
@@ -444,6 +445,35 @@ namespace Server.Mobiles
             itemKeywordHash.Add(name, (itemKeyword)Enum.Parse(typeof(itemKeyword), name));
         }
 
+        public static void RemoveKeyword(string name)
+        {
+            if (name == null) return;
+
+            name = name.Trim().ToUpper();
+
+            if (IsTypeKeyword(name))
+            {
+                typeKeywordHash.Remove(name);
+            }
+            if (IsTypemodKeyword(name))
+            {
+                typemodKeywordHash.Remove(name);
+            }
+            if (IsValueKeyword(name))
+            {
+                valueKeywordHash.Remove(name);
+            }
+            if (IsValuemodKeyword(name))
+            {
+                valuemodKeywordHash.Remove(name);
+            }
+            if (IsSpecialItemKeyword(name))
+            {
+                itemKeywordHash.Remove(name);
+            }
+        }
+
+
         public static void InitializeHash()
         {
             // set up the keyword hash tables
@@ -471,6 +501,7 @@ namespace Server.Mobiles
             AddTypeKeyword("TAKE");
             AddTypeKeyword("GUMP");
             AddTypeKeyword("TAKEBYTYPE");
+            AddTypeKeyword("BROWSER");
             AddTypeKeyword("SENDMSG");
             AddTypeKeyword("SENDASCIIMSG");
             AddTypeKeyword("RESURRECT");
@@ -3592,7 +3623,7 @@ namespace Server.Mobiles
                             }
                             else if (kw == typemodKeyword.SENDMSG)
                             {
-                                // syntax is SENDMSG[,probability][,hue]
+                                // syntax is SENDMSG[,probability][,hue]/msg
 
                                 // if the object is a mobile then display a msg over the mob or item
                                 double drop_probability = 1;
@@ -8008,10 +8039,6 @@ namespace Server.Mobiles
             catch { }
         }
 
-        #endregion
-
-        #region Spawn methods
-
         public static void SendBoltEffect(IEntity e, int sound, int hue)
         {
             Map map = e.Map;
@@ -8059,6 +8086,11 @@ namespace Server.Mobiles
 
             eable.Free();
         }
+
+        #endregion
+
+        #region Spawn methods
+
 
         public static void AddSpawnItem(XmlSpawner spawner, XmlSpawner.SpawnObject theSpawn, Item item, Point3D location, Map map, Mobile trigmob, bool requiresurface,
     string propertyString, out string status_str)
@@ -9213,6 +9245,36 @@ namespace Server.Mobiles
                                 }
                             }
                             TheSpawn.SpawnedObjects.Add(newtag);
+
+                            break;
+                        }
+                    case typeKeyword.BROWSER:
+                        {
+                            // the syntax is BROWSER/url
+                            string[] arglist = ParseSlashArgs(substitutedtypeName, 2);
+                            string url;
+
+                            if (arglist.Length > 1)
+                            {
+                                if (arglist[1] != null && arglist[1].Length > 0 && arglist[1][0] == '@')
+                                {
+                                    url = arglist[1].Substring(1);
+                                }
+                                else
+                                    url = arglist[1];
+                            }
+                            else
+                            {
+                                status_str = "invalid BROWSER specification";
+                                return false;
+                            }
+
+                            if (triggermob != null && !triggermob.Deleted && (triggermob is PlayerMobile))
+                            {
+                                triggermob.LaunchBrowser(url);
+                            }
+
+                            TheSpawn.SpawnedObjects.Add(new KeywordTag(substitutedtypeName, spawner));
 
                             break;
                         }

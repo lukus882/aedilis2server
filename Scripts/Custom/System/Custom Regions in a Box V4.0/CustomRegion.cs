@@ -19,46 +19,31 @@ namespace Server.Regions
         public CustomRegion(RegionControl control): base(control.RegionName, control.Map, control.RegionPriority, control.RegionArea)
         {
             Disabled = !control.IsGuarded;
+            Music = control.Music;
             m_Controller = control;
         }
 
         private Timer m_Timer;
 
-		public override bool OnBeforeDeath( Mobile m )
+        public override void OnDeath( Mobile m )
         {
             bool toreturn = true;
 
             if ( m != null && !m.Deleted)
             {
+
                 if (m is PlayerMobile && m_Controller.NoPlayerItemDrop)
                 {
                     if (m.Female)
                     {
                         m.FixedParticles(0x374A, 10, 30, 5013, 1153, 2, EffectLayer.Waist);
-                        m.Body = 403; // human female ghost
+                        m.Body = 403;
                         m.Hidden = true;
                     }
                     else
                     {
                         m.FixedParticles(0x374A, 10, 30, 5013, 1153, 2, EffectLayer.Waist);
-                        m.Body = 402;  // human male ghost
-                        m.Hidden = true;
-                    }
-                    m.Hidden = false;
-                    toreturn = false;
-                }
-                else if (m is PlayerMobile && m_Controller.NoPlayerItemDrop)
-                {
-                    if (m.Female)
-                    {
-                        m.FixedParticles(0x374A, 10, 30, 5013, 1153, 2, EffectLayer.Waist);
-                        m.Body = 608; // elf female ghost
-                        m.Hidden = true;
-                    }
-                    else
-                    {
-                        m.FixedParticles(0x374A, 10, 30, 5013, 1153, 2, EffectLayer.Waist);
-                        m.Body = 607; // elf male ghost
+                        m.Body = 402;
                         m.Hidden = true;
                     }
                     m.Hidden = false;
@@ -69,35 +54,18 @@ namespace Server.Regions
                     if (m.Female)
                     {
                         m.FixedParticles(0x374A, 10, 30, 5013, 1153, 2, EffectLayer.Waist);
-                        m.Body = 403; // human female ghost
+                        m.Body = 403;
                         m.Hidden = true;
                     }
                     else
                     {
                         m.FixedParticles(0x374A, 10, 30, 5013, 1153, 2, EffectLayer.Waist);
-                        m.Body = 402; // human male ghost
+                        m.Body = 402;
                         m.Hidden = true;
                     }
                     m.Hidden = false;
                     toreturn = false;
                 }
-                else if ( !(m is PlayerMobile) && m_Controller.NoNPCItemDrop)
-                {
-                    if (m.Female)
-                    {
-                        m.FixedParticles(0x374A, 10, 30, 5013, 1153, 2, EffectLayer.Waist);
-                        m.Body = 608; // elf female ghost
-                        m.Hidden = true;
-                    }
-                    else
-                    {
-                        m.FixedParticles(0x374A, 10, 30, 5013, 1153, 2, EffectLayer.Waist);
-                        m.Body = 607; // elf male ghost
-                        m.Hidden = true;
-                    }
-                    m.Hidden = false;
-                    toreturn = false;
-                }				
                 else
                     toreturn = true;
 
@@ -106,9 +74,11 @@ namespace Server.Regions
                 m_Timer = new MovePlayerTimer(m, m_Controller);
                 m_Timer.Start();
 
-                return base.OnBeforeDeath(m);
+                return; // base.OnDeath(m);
             }
-            return toreturn;
+
+            return;// toreturn;
+
         }
 
         private class MovePlayerTimer : Timer
@@ -116,7 +86,8 @@ namespace Server.Regions
             private Mobile m;
             private RegionControl m_Controller;
 
-            public MovePlayerTimer(Mobile m_Mobile, RegionControl controller) : base(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0))
+            public MovePlayerTimer(Mobile m_Mobile, RegionControl controller)
+                : base(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0))
             {
                 Priority = TimerPriority.FiftyMS;
                 m = m_Mobile;
@@ -165,6 +136,7 @@ namespace Server.Regions
                         }
                     }
                 }
+
                 Mobile newnpc = null;   
 
                 // Resurrects Players
@@ -192,6 +164,7 @@ namespace Server.Regions
                         }
                     }
                 }
+
                 // Deletes the corpse 
                 if ( m is PlayerMobile )
                 {
@@ -210,6 +183,7 @@ namespace Server.Regions
                         m.Corpse.Delete();
                     }
                 }           
+
                 // Move Mobiles
                 if ( m is PlayerMobile )
                 {
@@ -230,16 +204,16 @@ namespace Server.Regions
                         newnpc.Location = m_Controller.MoveNPCToLoc;
                     }
                 }
+                 
                 Stop();
+
             }
         }
 
         public override bool IsDisabled()
         {
-			if( base.Disabled != !m_Controller.GetFlag( RegionFlag.IsGuarded ) )
-			{
-				m_Controller.IsGuarded = !Disabled;
-			}
+            if (!m_Controller.IsGuarded != Disabled)
+                m_Controller.IsGuarded = !Disabled;
 
 			return Disabled;
         }
@@ -251,6 +225,7 @@ namespace Server.Regions
                 from.SendMessage("You cannot perform benificial acts on your target.");
                 return false;
             }
+
             return base.AllowBeneficial(from, target);
         }
 
@@ -261,6 +236,7 @@ namespace Server.Regions
                 from.SendMessage("You cannot perform harmful acts on your target.");
                 return false;
             }
+
             return base.AllowHarmful(from, target);
         }
 
@@ -287,9 +263,9 @@ namespace Server.Regions
             {
                 m.SendMessage("You cannot be damaged here.");
             }
+
             return m_Controller.CanBeDamaged;
         }
-		
         public override bool OnResurrect(Mobile m)
         {
             if (!m_Controller.CanRessurect && m.AccessLevel == AccessLevel.Player)
@@ -307,6 +283,7 @@ namespace Server.Regions
                     from.SendMessage("You cannot cast that spell here.");
                     return false;
                 }
+
                 //if ( s is EtherealSpell && !CanMountEthereal ) Grr, EthereealSpell is private :<
                 if (!m_Controller.CanMountEthereal && ((Spell)s).Info.Name == "Ethereal Mount") //Hafta check with a name compare of the string to see if ethy
                 {
@@ -314,7 +291,9 @@ namespace Server.Regions
                     return false;
                 }
             }
+
             //Console.WriteLine( m_Controller.GetRegistryNumber( s ) );
+
             //return base.OnBeginSpellCast( from, s );
             return true;	//Let users customize spells, not rely on weather it's guarded or not.
         }
@@ -330,6 +309,7 @@ namespace Server.Regions
             {
                 m.SendMessage("You cannot be healed here.");
             }
+
             return m_Controller.CanHeal;
         }
 
@@ -341,6 +321,7 @@ namespace Server.Regions
                 m.SendMessage("You cannot use that skill here.");
                 return false;
             }
+
             return base.OnSkillUse(m, skill);
         }
 
@@ -350,6 +331,7 @@ namespace Server.Regions
                 m.SendMessage("You have left {0}", this.Name);
 
             base.OnExit(m);
+
         }
 
         public override void OnEnter(Mobile m)
@@ -367,6 +349,7 @@ namespace Server.Regions
                 m.SendMessage("You cannot enter this area.");
                 return false;
             }
+
             return true;
         }
 
@@ -385,6 +368,7 @@ namespace Server.Regions
                 m.SendMessage("You cannot drink potions here.");
                 return false;
             }
+
             if (o is Corpse)
             {
                 Corpse c = (Corpse)o;
@@ -406,8 +390,10 @@ namespace Server.Regions
                     m.SendMessage("This is unlootable but you are able to open that with your Godly powers.");
                     return true;
                 }
+
                 return canLoot;
             }
+
             return base.OnDoubleClick(m, o);
         }
 
@@ -418,5 +404,43 @@ namespace Server.Regions
             else
                 base.AlterLightLevel(m, ref global, ref personal);
         }
+
+        /*public override bool CheckAccessibility(Item item, Mobile from)
+        {
+
+            if (item is BasePotion && !m_Controller.CanUsePotions)
+            {
+                from.SendMessage("You cannot drink potions here.");
+                return false;
+            }
+
+            if (item is Corpse)
+            {
+                Corpse c = item as Corpse;
+
+                bool canLoot;
+
+                if (c.Owner == from)
+                    canLoot = m_Controller.CanLootOwnCorpse;
+                else if (c.Owner is PlayerMobile)
+                    canLoot = m_Controller.CanLootPlayerCorpse;
+                else
+                    canLoot = m_Controller.CanLootNPCCorpse;
+
+                if (!canLoot)
+                    from.SendMessage("You cannot loot that corpse here.");
+
+                if (from.AccessLevel >= AccessLevel.GameMaster && !canLoot)
+                {
+                    from.SendMessage("This is unlootable but you are able to open that with your Godly powers.");
+                    return true;
+                }
+
+                return canLoot;
+            }
+
+            return base.CheckAccessibility(item, from);
+        }*/
+
     }
 }
