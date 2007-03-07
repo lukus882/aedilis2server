@@ -111,7 +111,7 @@ namespace Server.Engines.XmlSpawner2
             {
                 case 1:
                     m_AllowCarried = reader.ReadBool();
-                    break;
+                    goto case 0;
                 case 0:
                     // version 0
                     m_RequireLOS = reader.ReadBool();

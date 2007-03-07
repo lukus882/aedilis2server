@@ -1,3 +1,14 @@
+v2.0.1:
+*   Fixed a bug where [TS GET would not be able to retrieve the UseNightSightDarkestHourOverride and UseNightSightOverride variables.
+*   Removed NightSightLevelReduction from the Variables list, as this is set per EMO, not system wide.
+*   Fixed a bug where the default configuration was not calling to "Support.ReIndexArray()" to index the EMO and EEMO arrays.  This resulted in the [TS SETEMO and GETEMO commands reporting incorrect indexes.
+*   Fixed a bug when setting the timerspeed via [TS SET TIMERSPEED, it would crash the shard as the low and high values being passed into the method were int and not double.
+*   Fixed a bug in the CalculateLightLevel() method that was not checking if a MobileObject was null before attempting to use a property of the object.
+*   Added a couple lines of code at the end of the Load() method to reindex the EMO and EEMO arrays after loading has completed.
+*   Removed an unnecessary check in the CalculateLightLevel() method.
+*   Fixed a bug where the system was configured to use an UpdateTimeStamp variable at the system level instead of the mobile level, resulting in only one mobile receiving light level updates.
+
+
 v2.0.0:
 
 *   Massive update... too many changes to keep track of.

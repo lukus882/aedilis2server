@@ -25,8 +25,8 @@ using Server.Engines.XmlSpawner2;
 
 /*
 ** XmlSpawner2
-** version 3.19
-** updated 2/27/07
+** version 3.20
+** updated 3/06/07
 ** ArteGordon
 ** Modification of the original XmlSpawner written by bobsmart
 */
@@ -74,7 +74,7 @@ namespace Server.Mobiles
 
 		#region Constant declarations
 
-		public const string Version = "3.19";
+		public const string Version = "3.20";
 		//private const double SpawnIdleTime = 72.0;              // time in hours after which idle spawns will be relocated. A value < 0 disables this feature. This does not work properly under RunUO 2.0
 		private const int ShowBoundsItemId = 14089;             // 14089 Fire Column // 3555 Campfire // 8708 Skull Pole
 		private const string SpawnDataSetName = "Spawns";
@@ -3243,7 +3243,7 @@ public static void _TraceEnd(int index)
 
 		#region Initialization
 
-		public static void AssignSettings(string argname, string value)
+		public static bool AssignSettings(string argname, string value)
 		{
 			switch (argname)
 			{
@@ -3287,10 +3287,26 @@ public static void _TraceEnd(int index)
 				case "defHomeRange":
 					defHomeRange = ConvertToInt(value);
 					break;
+                case "BlockKeyword":
+                    // parse the keyword list and remove them from the keyword hashtables
+                    string[] keywordlist = value.Split(',');
+
+                    if (keywordlist != null && keywordlist.Length > 0)
+                    {
+                        for (int i = 0; i < keywordlist.Length; i++)
+                        {
+                            BaseXmlSpawner.RemoveKeyword(keywordlist[i]);
+                        }
+                    }
+                    break;
+                default:
+                    return false;
 			}
+
+            return true;
 		}
 
-		public delegate void AssignSettingsHandler(string argname, string value);
+		public delegate bool AssignSettingsHandler(string argname, string value);
 
 		// load in settings from the xmlspawner2.cfg file in the Data directory
 		public static void LoadSettings(AssignSettingsHandler settingshandler, string section)
@@ -3344,8 +3360,10 @@ public static void _TraceEnd(int index)
 
 						try
 						{
-							settingshandler(argname, value);
-							nsettings++;
+                            if (settingshandler(argname, value))
+                                nsettings++;
+                            else
+                                Console.WriteLine("'{0}' setting is invalid in section [{1}]", argname, currentsection);
 							
 						}
 						catch
@@ -7999,7 +8017,7 @@ public static void _TraceEnd(int index)
 			for (int i = 0; i < m_SpawnObjects.Count; i++)
 			{
 				SpawnObject s = (SpawnObject)m_SpawnObjects[i];
-				if (s.SubGroup > 0 && s.Ignore) continue;
+				if (s.SubGroup > 0 && (s.Ignore || s.Disabled)) continue;
 
 				totalcount += s.SpawnedObjects.Count;
 				if (s.SubGroup > 0 && s.SpawnedObjects.Count >= s.MaxCount)
@@ -8017,7 +8035,7 @@ public static void _TraceEnd(int index)
 			{
 				SpawnObject s = (SpawnObject)m_SpawnObjects[i];
 
-				if (s.SubGroup > 0 && s.Ignore) continue;
+				if (s.SubGroup > 0 && (s.Ignore || s.Disabled)) continue;
 
 				if ((s.MaxCount > s.SpawnedObjects.Count) && (sgroup < 0 || sgroup == s.SubGroup)
 					&& (sgrouplist == null || !sgrouplist.Contains(s.SubGroup)) && (s.SubGroup <= 0 || SubGroupCount(s.SubGroup) + totalcount <= MaxCount))
@@ -8045,7 +8063,7 @@ public static void _TraceEnd(int index)
 				for (int i = 0; i < m_SpawnObjects.Count; i++)
 				{
 					SpawnObject s = (SpawnObject)m_SpawnObjects[i];
-					if (s.SubGroup > 0 && s.Ignore) continue;
+					if (s.SubGroup > 0 && (s.Ignore || s.Disabled)) continue;
 
 					// keep track of the number of spawn objects that are not at max (hence available for spawning)
 					if (s.Available)
@@ -8131,7 +8149,7 @@ public static void _TraceEnd(int index)
 			for (int j = 0; j < m_SpawnObjects.Count; j++)
 			{
 				SpawnObject s = (SpawnObject)m_SpawnObjects[j];
-				if (s.SubGroup > 0 && s.Ignore) continue;
+				if (s.SubGroup > 0 && (s.Ignore || s.Disabled)) continue;
 
 				int thisgroup = s.SubGroup;
 

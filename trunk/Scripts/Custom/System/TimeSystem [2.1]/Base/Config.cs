@@ -66,7 +66,7 @@ namespace Server.TimeSystem
             Data.DarkestHourScaleTimeMinutes = 30;
             Data.DarkestHourLength = 120;
 
-            Data.UseRealTime = true;
+            Data.UseRealTime = false;
 
             Data.UseTimeZones = true;
             Data.TimeZoneXDivisor = 16;
@@ -170,6 +170,8 @@ namespace Server.TimeSystem
                 emo.InnerLatitudePercent = 0.10;
 
                 Data.EffectsMapArray.Add(emo);
+
+                Support.ReIndexArray(Data.EffectsMapArray);
             }
         }
 
@@ -179,6 +181,7 @@ namespace Server.TimeSystem
 
             lock (Data.EffectsExclusionMapArray)
             {
+                Support.ReIndexArray(Data.EffectsExclusionMapArray);
             }
         }
 
@@ -383,7 +386,7 @@ namespace Server.TimeSystem
                             o = Convert.ToDouble(o);
                         }
 
-                        if (SetVariable(o, variable, Data.MinTimerValue, Data.MinutesPerHour, typeof(double), ref success, ref message))
+                        if (SetVariable(o, variable, (double)Data.MinTimerValue, (double)Data.MinutesPerHour, typeof(double), ref success, ref message))
                         {
                             Data.TimerSpeed = (double)o;
                         }
@@ -1315,6 +1318,22 @@ namespace Server.TimeSystem
                 case Variable.UseSeasons:
                     {
                         message = Formatting.VariableMessageFormatter(variable.ToString(), Data.UseSeasons.ToString());
+
+                        success = true;
+
+                        break;
+                    }
+                case Variable.UseNightSightDarkestHourOverride:
+                    {
+                        message = Formatting.VariableMessageFormatter(variable.ToString(), Data.UseNightSightDarkestHourOverride.ToString());
+
+                        success = true;
+
+                        break;
+                    }
+                case Variable.UseNightSightOverride:
+                    {
+                        message = Formatting.VariableMessageFormatter(variable.ToString(), Data.UseNightSightOverride.ToString());
 
                         success = true;
 

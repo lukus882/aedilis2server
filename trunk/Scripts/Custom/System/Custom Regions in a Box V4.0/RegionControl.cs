@@ -11,7 +11,7 @@ using Server.Gumps;
 
 namespace Server.Items 
 {
-    public enum RegionFlag
+    public enum RegionFlag : uint
     {
         None                =   0x00000000,
         AllowBenefitPlayer  =   0x00000001,
@@ -59,7 +59,7 @@ namespace Server.Items
         MovePlayerOnDeath   =   0x020000000,
         
         NoPlayerItemDrop    =   0x040000000,
-        NoNPCItemDrop       =   0x00000001C
+        NoNPCItemDrop       =   0x080000000
     }
 
 	public class RegionControl : Item
@@ -92,7 +92,9 @@ namespace Server.Items
             if (value)
                 m_Flags |= flag;
             else
+            {     
                 m_Flags &= ~flag;
+            }
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -234,14 +236,14 @@ namespace Server.Items
         public bool IsGuarded
         {
             get
-            {
-                return GetFlag(RegionFlag.IsGuarded);
-            }
+            { return GetFlag(RegionFlag.IsGuarded); }
             set
             {
                 SetFlag(RegionFlag.IsGuarded, value);
+                if (m_Region != null)
+                    m_Region.Disabled = !value;
 
-                UpdateRegion();
+                Timer.DelayCall(TimeSpan.FromSeconds(2.0), new TimerCallback(UpdateRegion));
             }
         }
 
@@ -373,9 +375,11 @@ namespace Server.Items
             get { return m_Region; }
         }
 
+        [CommandProperty(AccessLevel.GameMaster)]
         public Rectangle3D[] RegionArea
         {
             get { return m_RegionArea; }
+            set { m_RegionArea = value; }
         }
 
         # endregion
@@ -526,6 +530,20 @@ namespace Server.Items
                     m_MovePlayerToLoc = value;
                 else
                     SetFlag(RegionFlag.MovePlayerOnDeath, false);
+            }
+        }
+
+        private Point3D m_CustomGoLocation;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Point3D CustomGoLocation
+        {
+            get { return m_Region.GoLocation; }
+            set 
+            { 
+                m_Region.GoLocation = value;
+                m_CustomGoLocation = value;
+                UpdateRegion();           
             }
         }
 
@@ -693,6 +711,7 @@ namespace Server.Items
                 if (this != null && this.RegionArea != null && this.RegionArea.Length > 0)
                 {
                     m_Region = new CustomRegion(this);
+                    m_Region.GoLocation = m_CustomGoLocation;
                     m_Region.Register();
                 }
                 else
@@ -858,12 +877,6 @@ namespace Server.Items
                 m.SendMessage("Don't forget to props this object for more options!");
                 m.CloseGump(typeof(RemoveAreaGump));
                 m.SendGump(new RemoveAreaGump(this));
-
-                if(m_AllControls != null)
-                {
-                    foreach (RegionControl control in m_AllControls)
-                        Console.WriteLine("" + control);
-                }
             }
         }
 
@@ -969,7 +982,9 @@ namespace Server.Items
 		{
 			base.Serialize( writer );
 
-			writer.Write( (int) 4 ); // version
+			writer.Write( (int) 5 ); // version
+
+            writer.Write((Point3D)CustomGoLocation);
 
             WriteRect3DArray(writer, m_RegionArea);
             
@@ -998,9 +1013,15 @@ namespace Server.Items
 
             int version = reader.ReadInt();
 
+            Point3D customGoLoc = new Point3D(0,0,0);
             switch (version)
             {
-                // New RunUO 2.0 Version (case 4)
+                // New RunUO 2.0 Version (case 5 and 4)
+                case 5:
+                {
+                    customGoLoc = reader.ReadPoint3D();
+                    goto case 4;
+                }
                 case 4:
                 {
                     m_RegionArea = ReadRect3DArray(reader);
@@ -1119,6 +1140,9 @@ namespace Server.Items
             if(RegionNameTaken(m_RegionName))
                 m_RegionName = FindNewName(m_RegionName);
 
+            UpdateRegion();
+            m_CustomGoLocation = customGoLoc;
+            CustomGoLocation = customGoLoc;
             UpdateRegion();
 		}
 	}

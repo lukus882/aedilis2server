@@ -72,9 +72,9 @@ namespace Server.TimeSystem
 
             mo.Mobile = mobile;
 
-            Data.MobilesTable.Add(mobile, mo);
-
             mo.IsNightSightOn = !mobile.CanBeginAction(typeof(LightCycle));
+
+            Data.MobilesTable.Add(mobile, mo);
         }
 
         public static void OnDisconnected(DisconnectedEventArgs args)
@@ -107,8 +107,6 @@ namespace Server.TimeSystem
         {
             Data.Enabled = true;
 
-            Data.UpdateTimeStamp = DateTime.Now;
-
             m_TimeSystemTimer = new TimeSystemTimer();
             m_TimeSystemTimer.Start();
         }
@@ -131,13 +129,11 @@ namespace Server.TimeSystem
             TimeEngine.CalculateBaseTime();
             LightsEngine.CheckLights();
 
-            for (int i = 0; i < NetState.Instances.Count; i++)
+            foreach (MobileObject mo in Data.MobilesTable.Values)
             {
-                Mobile mobile = ((NetState)NetState.Instances[i]).Mobile;
-
-                if (mobile != null)
+                if (mo != null)
                 {
-                    mobile.CheckLightLevels(false);
+                    mo.Mobile.CheckLightLevels(false);
                 }
             }
         }
