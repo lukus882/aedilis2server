@@ -12,12 +12,13 @@ namespace Server.TimeSystem
     {
         #region Constant Variables
 
-        public const string Version = "2.0.1"; // Current version of the Time System.
-        public const int BinaryVersion = 3; // The version number used in the data file.
+        public const string Version = "2.0.3"; // Current version of the Time System.
+        public const int BinaryVersion = 4; // The version number used in the data file.
 
         public static readonly bool ForceScriptSettings = false; // Set to true to have settings configured by script only.  The settings can no longer be configured in-game.
 
         public static readonly string DataDirectory = Path.Combine(Core.BaseDirectory, @"Data\Custom\Time System");
+        public static readonly string LogDirectory = Path.Combine(Core.BaseDirectory, @"Data\Custom\Time System");
 
         public const string DataFileName = "Time System.dat";
         public const string LogFileName = "Time System.log";
@@ -82,6 +83,7 @@ namespace Server.TimeSystem
         // your changes to the Set Variables region.
 
         private static bool m_Enabled;
+        private static bool m_Logging = false;
 
         private static double m_TimerSpeed; // How many seconds between ticks.
         private static int m_MinutesPerTick; // Minutes added per tick of timer
@@ -127,7 +129,12 @@ namespace Server.TimeSystem
         private static bool m_UseSeasons;
 
         private static bool m_UseNightSightDarkestHourOverride;
+
         private static bool m_UseNightSightOverride;
+
+        private static bool m_UseLightLevelOverride;
+
+        private static bool m_UseMurdererDarkestHourBonus;
 
         private static string m_TimeFormat;
         private static string m_ClockTimeFormat;
@@ -145,7 +152,6 @@ namespace Server.TimeSystem
         private static bool m_DataFileInUse;
 
         private static StreamWriter m_LogWriter;
-        private static bool m_Logging = true;
 
         private static int m_BaseLightLevel;
 
@@ -158,6 +164,23 @@ namespace Server.TimeSystem
         #region Public Variables
 
         public static bool Enabled { get { return m_Enabled; } set { m_Enabled = value; } }
+        public static bool Logging
+        {
+            get { return m_Logging; }
+            set
+            {
+                if (!m_Logging && value)
+                {
+                    Support.OpenLogFile();
+                }
+                else if (m_Logging && !value)
+                {
+                    Support.ConsoleWriteLine("Time System: Logging is disabled.");
+                }
+
+                m_Logging = value;
+            }
+        }
 
         public static double TimerSpeed { get { return m_TimerSpeed; } set { m_TimerSpeed = value; } }
         public static int MinutesPerTick { get { return m_MinutesPerTick; } set { m_MinutesPerTick = value; } }
@@ -215,7 +238,12 @@ namespace Server.TimeSystem
         public static bool UseSeasons { get { return m_UseSeasons; } set { m_UseSeasons = value; } }
 
         public static bool UseNightSightDarkestHourOverride { get { return m_UseNightSightDarkestHourOverride; } set { m_UseNightSightDarkestHourOverride = value; } }
+
         public static bool UseNightSightOverride { get { return m_UseNightSightOverride; } set { m_UseNightSightOverride = value; } }
+
+        public static bool UseLightLevelOverride { get { return m_UseLightLevelOverride; } set { m_UseLightLevelOverride = value; } }
+
+        public static bool UseMurdererDarkestHourBonus { get { return m_UseMurdererDarkestHourBonus; } set { m_UseMurdererDarkestHourBonus = value; } }
 
         public static string TimeFormat { get { return m_TimeFormat; } set { m_TimeFormat = value; } }
         public static string ClockTimeFormat { get { return m_ClockTimeFormat; } set { m_ClockTimeFormat = value; } }
@@ -233,7 +261,6 @@ namespace Server.TimeSystem
         public static bool DataFileInUse { get { return m_DataFileInUse; } set { m_DataFileInUse = value; } }
 
         public static StreamWriter LogWriter { get { return m_LogWriter; } set { m_LogWriter = value; } }
-        public static bool Logging { get { return m_Logging; } set { m_Logging = value; } }
 
         public static int BaseLightLevel { get { return m_BaseLightLevel; } set { m_BaseLightLevel = value; } }
 
@@ -321,9 +348,13 @@ namespace Server.TimeSystem
 
         public static bool Load()
         {
-            if (!Support.CheckPaths())
+            if (!Support.CheckDataPath())
             {
                 Support.ConsoleWriteLine(String.Format("Time System: \"{0}\" not found!  Creating a new file using the current settings.", DataFileName));
+
+                Config.SetDefaults(true);
+
+                Engine.Restart();
 
                 Save();
 
@@ -346,200 +377,233 @@ namespace Server.TimeSystem
                             return LegacySupport.Load(reader, version);
                         }
 
-                        m_Enabled = reader.ReadBoolean();
-
-                        m_TimerSpeed = reader.ReadDouble();
-                        m_MinutesPerTick = reader.ReadInt32();
-
-                        m_UpdateInterval = reader.ReadInt32();
-
-                        m_DayLevel = reader.ReadInt32();
-                        m_NightLevel = reader.ReadInt32();
-                        m_DarkestHourLevel = reader.ReadInt32();
-                        m_LightsOnLevel = reader.ReadInt32();
-                        m_MoonLevelAdjust = reader.ReadInt32();
-
-                        m_MinutesPerHour = reader.ReadInt32();
-                        m_HoursPerDay = reader.ReadInt32();
-
-                        m_NightStartHour = reader.ReadInt32();
-                        m_NightStartMinute = reader.ReadInt32();
-                        m_DayStartHour = reader.ReadInt32();
-                        m_DayStartMinute = reader.ReadInt32();
-                        m_ScaleTimeMinutes = reader.ReadInt32();
-
-                        m_Minute = reader.ReadInt32();
-                        m_Hour = reader.ReadInt32();
-                        m_Day = reader.ReadInt32();
-                        m_Month = reader.ReadInt32();
-                        m_Year = reader.ReadInt32();
-
-                        m_UseDarkestHour = reader.ReadBoolean();
-                        m_DarkestHourMinutesAfterNight = reader.ReadInt32();
-                        m_DarkestHourScaleTimeMinutes = reader.ReadInt32();
-                        m_DarkestHourLength = reader.ReadInt32();
-
-                        m_UseRealTime = reader.ReadBoolean();
-
-                        m_UseTimeZones = reader.ReadBoolean();
-                        m_TimeZoneXDivisor = reader.ReadInt32();
-                        m_TimeZoneScaleMinutes = reader.ReadInt32();
-
-                        m_UseAutoLighting = reader.ReadBoolean();
-                        m_UseRandomLightOutage = reader.ReadBoolean();
-                        m_LightOutageChancePerTick = reader.ReadInt32();
-
-                        m_UseSeasons = reader.ReadBoolean();
-
-                        m_UseNightSightDarkestHourOverride = reader.ReadBoolean();
-                        m_UseNightSightOverride = reader.ReadBoolean();
-
-                        m_TimeFormat = reader.ReadString();
-                        m_ClockTimeFormat = reader.ReadString();
-                        m_SpyglassFormat = reader.ReadString();
-
-                        // Custom Months
-
-                        lock (m_MonthsArray)
+                        switch (version)
                         {
-                            int recordCount = reader.ReadInt32();
+                            case 4:
+                                {
+                                    m_Logging = reader.ReadBoolean();
 
-                            for (int i = 0; i < recordCount; i++)
-                            {
-                                MonthPropsObject mpo = new MonthPropsObject();
+                                    m_UseLightLevelOverride = reader.ReadBoolean();
 
-                                mpo.Name = reader.ReadString();
-                                mpo.TotalDays = reader.ReadInt32();
+                                    m_UseMurdererDarkestHourBonus = reader.ReadBoolean();
 
-                                m_MonthsArray.Add(mpo);
-                            }
-                        }
+                                    goto case 3;
+                                }
+                            case 3:
+                                {
+                                    m_Enabled = reader.ReadBoolean();
 
-                        // Custom Moons
+                                    m_TimerSpeed = reader.ReadDouble();
+                                    m_MinutesPerTick = reader.ReadInt32();
 
-                        lock (m_MoonsArray)
-                        {
-                            int recordCount = reader.ReadInt32();
+                                    m_UpdateInterval = reader.ReadInt32();
 
-                            for (int i = 0; i < recordCount; i++)
-                            {
-                                MoonPropsObject mpo = new MoonPropsObject();
+                                    m_DayLevel = reader.ReadInt32();
+                                    m_NightLevel = reader.ReadInt32();
+                                    m_DarkestHourLevel = reader.ReadInt32();
+                                    m_LightsOnLevel = reader.ReadInt32();
+                                    m_MoonLevelAdjust = reader.ReadInt32();
 
-                                mpo.Name = reader.ReadString();
+                                    m_MinutesPerHour = reader.ReadInt32();
+                                    m_HoursPerDay = reader.ReadInt32();
 
-                                mpo.TotalDays = reader.ReadInt32();
-                                mpo.CurrentDay = reader.ReadInt32();
+                                    m_NightStartHour = reader.ReadInt32();
+                                    m_NightStartMinute = reader.ReadInt32();
+                                    m_DayStartHour = reader.ReadInt32();
+                                    m_DayStartMinute = reader.ReadInt32();
+                                    m_ScaleTimeMinutes = reader.ReadInt32();
 
-                                mpo.LastUpdateDay = reader.ReadInt32();
+                                    m_Minute = reader.ReadInt32();
+                                    m_Hour = reader.ReadInt32();
+                                    m_Day = reader.ReadInt32();
+                                    m_Month = reader.ReadInt32();
+                                    m_Year = reader.ReadInt32();
 
-                                m_MoonsArray.Add(mpo);
-                            }
-                        }
+                                    m_UseDarkestHour = reader.ReadBoolean();
+                                    m_DarkestHourMinutesAfterNight = reader.ReadInt32();
+                                    m_DarkestHourScaleTimeMinutes = reader.ReadInt32();
+                                    m_DarkestHourLength = reader.ReadInt32();
 
-                        // Facet Adjustments
+                                    m_UseRealTime = reader.ReadBoolean();
 
-                        lock (m_FacetArray)
-                        {
-                            int recordCount = reader.ReadInt32();
+                                    m_UseTimeZones = reader.ReadBoolean();
+                                    m_TimeZoneXDivisor = reader.ReadInt32();
+                                    m_TimeZoneScaleMinutes = reader.ReadInt32();
 
-                            for (int i = 0; i < recordCount; i++)
-                            {
-                                FacetPropsObject fpo = new FacetPropsObject();
+                                    m_UseAutoLighting = reader.ReadBoolean();
+                                    m_UseRandomLightOutage = reader.ReadBoolean();
+                                    m_LightOutageChancePerTick = reader.ReadInt32();
 
-                                fpo.Map = Support.GetMapFromName(reader.ReadString(), false);
+                                    m_UseSeasons = reader.ReadBoolean();
 
-                                fpo.Adjustment = reader.ReadInt32();
+                                    m_UseNightSightDarkestHourOverride = reader.ReadBoolean();
 
-                                Data.FacetArray.Add(fpo);
-                            }
-                        }
+                                    m_UseNightSightOverride = reader.ReadBoolean();
 
-                        // Effects Maps
+                                    m_TimeFormat = reader.ReadString();
+                                    m_ClockTimeFormat = reader.ReadString();
+                                    m_SpyglassFormat = reader.ReadString();
 
-                        lock (m_EffectsMapArray)
-                        {
-                            int recordCount = reader.ReadInt32();
+                                    // Custom Months
 
-                            for (int i = 0; i < recordCount; i++)
-                            {
-                                int priority = reader.ReadInt32();
+                                    lock (m_MonthsArray)
+                                    {
+                                        int recordCount = reader.ReadInt32();
 
-                                Map map = Support.GetMapFromName(reader.ReadString(), false);
+                                        for (int i = 0; i < recordCount; i++)
+                                        {
+                                            MonthPropsObject mpo = new MonthPropsObject();
 
-                                int x1 = reader.ReadInt32();
-                                int y1 = reader.ReadInt32();
-                                int x2 = reader.ReadInt32();
-                                int y2 = reader.ReadInt32();
+                                            mpo.Name = reader.ReadString();
+                                            mpo.TotalDays = reader.ReadInt32();
 
-                                EffectsMapObject emo = new EffectsMapObject(map, x1, y1, x2, y2);
+                                            m_MonthsArray.Add(mpo);
+                                        }
+                                    }
 
-                                emo.Priority = priority;
+                                    // Custom Moons
 
-                                emo.UseLatitude = reader.ReadBoolean();
+                                    lock (m_MoonsArray)
+                                    {
+                                        int recordCount = reader.ReadInt32();
 
-                                emo.OuterLatitudePercent = reader.ReadDouble();
-                                emo.InnerLatitudePercent = reader.ReadDouble();
+                                        for (int i = 0; i < recordCount; i++)
+                                        {
+                                            MoonPropsObject mpo = new MoonPropsObject();
 
-                                emo.Index = reader.ReadInt32();
+                                            mpo.Name = reader.ReadString();
 
-                                emo.UseSeasons = reader.ReadBoolean();
+                                            mpo.TotalDays = reader.ReadInt32();
+                                            mpo.CurrentDay = reader.ReadInt32();
 
-                                emo.SeasonProps = new SeasonPropsObject();
+                                            mpo.LastUpdateDay = reader.ReadInt32();
 
-                                emo.SeasonProps.StaticSeason = (Season)reader.ReadInt32();
+                                            m_MoonsArray.Add(mpo);
+                                        }
+                                    }
 
-                                emo.SeasonProps.SpringDate.Month = reader.ReadInt32();
-                                emo.SeasonProps.SpringDate.Day = reader.ReadInt32();
+                                    // Facet Adjustments
 
-                                emo.SeasonProps.SummerDate.Month = reader.ReadInt32();
-                                emo.SeasonProps.SummerDate.Day = reader.ReadInt32();
+                                    lock (m_FacetArray)
+                                    {
+                                        int recordCount = reader.ReadInt32();
 
-                                emo.SeasonProps.FallDate.Month = reader.ReadInt32();
-                                emo.SeasonProps.FallDate.Day = reader.ReadInt32();
+                                        for (int i = 0; i < recordCount; i++)
+                                        {
+                                            FacetPropsObject fpo = new FacetPropsObject();
 
-                                emo.SeasonProps.WinterDate.Month = reader.ReadInt32();
-                                emo.SeasonProps.WinterDate.Day = reader.ReadInt32();
+                                            fpo.Map = Support.GetMapFromName(reader.ReadString(), false);
 
-                                emo.NightSightProps = new NightSightPropsObject();
+                                            fpo.Adjustment = reader.ReadInt32();
 
-                                emo.NightSightProps.UseNightSightDarkestHourOverride = reader.ReadBoolean();
-                                emo.NightSightProps.UseNightSightOverride = reader.ReadBoolean();
-                                emo.NightSightProps.NightSightLevelReduction = reader.ReadInt32();
+                                            Data.FacetArray.Add(fpo);
+                                        }
+                                    }
 
-                                Data.EffectsMapArray.Add(emo);
-                            }
-                        }
+                                    // Effects Maps
 
-                        // Effects Exclusion Maps
+                                    lock (m_EffectsMapArray)
+                                    {
+                                        int recordCount = reader.ReadInt32();
 
-                        lock (m_EffectsExclusionMapArray)
-                        {
-                            int recordCount = reader.ReadInt32();
+                                        for (int i = 0; i < recordCount; i++)
+                                        {
+                                            int priority = reader.ReadInt32();
 
-                            for (int i = 0; i < recordCount; i++)
-                            {
-                                int priority = reader.ReadInt32();
+                                            Map map = Support.GetMapFromName(reader.ReadString(), false);
 
-                                Map map = Support.GetMapFromName(reader.ReadString(), false);
+                                            int x1 = reader.ReadInt32();
+                                            int y1 = reader.ReadInt32();
+                                            int x2 = reader.ReadInt32();
+                                            int y2 = reader.ReadInt32();
 
-                                int x1 = reader.ReadInt32();
-                                int y1 = reader.ReadInt32();
-                                int x2 = reader.ReadInt32();
-                                int y2 = reader.ReadInt32();
+                                            EffectsMapObject emo = new EffectsMapObject(map, x1, y1, x2, y2);
 
-                                EffectsExclusionMapObject eemo = new EffectsExclusionMapObject(map, x1, y1, x2, y2);
+                                            emo.Priority = priority;
 
-                                eemo.Priority = priority;
+                                            emo.UseLatitude = reader.ReadBoolean();
 
-                                eemo.UseLatitude = reader.ReadBoolean();
+                                            emo.OuterLatitudePercent = reader.ReadDouble();
+                                            emo.InnerLatitudePercent = reader.ReadDouble();
 
-                                eemo.OuterLatitudePercent = reader.ReadDouble();
-                                eemo.InnerLatitudePercent = reader.ReadDouble();
+                                            emo.Index = reader.ReadInt32();
 
-                                eemo.Index = reader.ReadInt32();
+                                            emo.UseSeasons = reader.ReadBoolean();
 
-                                Data.EffectsExclusionMapArray.Add(eemo);
-                            }
+                                            emo.StaticSeason = (Season)reader.ReadInt32();
+
+                                            emo.SpringDate.Month = reader.ReadInt32();
+                                            emo.SpringDate.Day = reader.ReadInt32();
+
+                                            emo.SummerDate.Month = reader.ReadInt32();
+                                            emo.SummerDate.Day = reader.ReadInt32();
+
+                                            emo.FallDate.Month = reader.ReadInt32();
+                                            emo.FallDate.Day = reader.ReadInt32();
+
+                                            emo.WinterDate.Month = reader.ReadInt32();
+                                            emo.WinterDate.Day = reader.ReadInt32();
+
+                                            emo.UseNightSightDarkestHourOverride = reader.ReadBoolean();
+
+                                            if (version > 3)
+                                            {
+                                                emo.NightSightDarkestHourReduction = reader.ReadInt32();
+                                            }
+
+                                            emo.UseNightSightOverride = reader.ReadBoolean();
+                                            emo.NightSightLevelReduction = reader.ReadInt32();
+
+                                            if (version > 3)
+                                            {
+                                                emo.UseLightLevelOverride = reader.ReadBoolean();
+                                                emo.LightLevelOverrideAdjust = reader.ReadInt32();
+
+                                                emo.UseMurdererDarkestHourBonus = reader.ReadBoolean();
+                                                emo.MurdererDarkestHourLevelBonus = reader.ReadInt32();
+                                            }
+
+                                            Data.EffectsMapArray.Add(emo);
+                                        }
+                                    }
+
+                                    // Effects Exclusion Maps
+
+                                    lock (m_EffectsExclusionMapArray)
+                                    {
+                                        int recordCount = reader.ReadInt32();
+
+                                        for (int i = 0; i < recordCount; i++)
+                                        {
+                                            int priority = reader.ReadInt32();
+
+                                            Map map = Support.GetMapFromName(reader.ReadString(), false);
+
+                                            int x1 = reader.ReadInt32();
+                                            int y1 = reader.ReadInt32();
+                                            int x2 = reader.ReadInt32();
+                                            int y2 = reader.ReadInt32();
+
+                                            EffectsExclusionMapObject eemo = new EffectsExclusionMapObject(map, x1, y1, x2, y2);
+
+                                            eemo.Priority = priority;
+
+                                            if (version > 3)
+                                            {
+                                                reader.ReadBoolean();
+
+                                                reader.ReadDouble();
+                                                reader.ReadDouble();
+                                            }
+
+                                            eemo.Index = reader.ReadInt32();
+
+                                            Data.EffectsExclusionMapArray.Add(eemo);
+                                        }
+                                    }
+
+                                    break;
+                                }
                         }
 
                         reader.Close();
@@ -547,6 +611,9 @@ namespace Server.TimeSystem
                         Support.ConsoleWriteLine("Time System: Loading complete.");
 
                         m_DataFileInUse = false;
+
+                        Support.ReIndexArray(EffectsMapArray);
+                        Support.ReIndexArray(EffectsExclusionMapArray);
 
                         return true;
                     }
@@ -586,9 +653,6 @@ namespace Server.TimeSystem
                     }
                 }
             }
-
-            Support.ReIndexArray(EffectsMapArray);
-            Support.ReIndexArray(EffectsExclusionMapArray);
         }
 
         #endregion
@@ -597,7 +661,7 @@ namespace Server.TimeSystem
 
         public static bool Save()
         {
-            Support.CheckPaths();
+            Support.CheckDataPath();
 
             using (BinaryWriter writer = new BinaryWriter(File.Open(DataFile, FileMode.Create)))
             {
@@ -606,6 +670,12 @@ namespace Server.TimeSystem
                     m_DataFileInUse = true;
 
                     writer.Write(BinaryVersion);
+
+                    writer.Write(m_Logging);
+
+                    writer.Write(m_UseLightLevelOverride);
+
+                    writer.Write(m_UseMurdererDarkestHourBonus);
 
                     writer.Write(m_Enabled);
 
@@ -729,23 +799,31 @@ namespace Server.TimeSystem
 
                             writer.Write(m_EffectsMapArray[i].UseSeasons);
 
-                            writer.Write((int)m_EffectsMapArray[i].SeasonProps.StaticSeason);
+                            writer.Write((int)m_EffectsMapArray[i].StaticSeason);
 
-                            writer.Write(m_EffectsMapArray[i].SeasonProps.SpringDate.Month);
-                            writer.Write(m_EffectsMapArray[i].SeasonProps.SpringDate.Day);
+                            writer.Write(m_EffectsMapArray[i].SpringDate.Month);
+                            writer.Write(m_EffectsMapArray[i].SpringDate.Day);
 
-                            writer.Write(m_EffectsMapArray[i].SeasonProps.SummerDate.Month);
-                            writer.Write(m_EffectsMapArray[i].SeasonProps.SummerDate.Day);
+                            writer.Write(m_EffectsMapArray[i].SummerDate.Month);
+                            writer.Write(m_EffectsMapArray[i].SummerDate.Day);
 
-                            writer.Write(m_EffectsMapArray[i].SeasonProps.FallDate.Month);
-                            writer.Write(m_EffectsMapArray[i].SeasonProps.FallDate.Day);
+                            writer.Write(m_EffectsMapArray[i].FallDate.Month);
+                            writer.Write(m_EffectsMapArray[i].FallDate.Day);
 
-                            writer.Write(m_EffectsMapArray[i].SeasonProps.WinterDate.Month);
-                            writer.Write(m_EffectsMapArray[i].SeasonProps.WinterDate.Day);
+                            writer.Write(m_EffectsMapArray[i].WinterDate.Month);
+                            writer.Write(m_EffectsMapArray[i].WinterDate.Day);
 
-                            writer.Write(m_EffectsMapArray[i].NightSightProps.UseNightSightDarkestHourOverride);
-                            writer.Write(m_EffectsMapArray[i].NightSightProps.UseNightSightOverride);
-                            writer.Write(m_EffectsMapArray[i].NightSightProps.NightSightLevelReduction);
+                            writer.Write(m_EffectsMapArray[i].UseNightSightDarkestHourOverride);
+                            writer.Write(m_EffectsMapArray[i].NightSightDarkestHourReduction);
+
+                            writer.Write(m_EffectsMapArray[i].UseNightSightOverride);
+                            writer.Write(m_EffectsMapArray[i].NightSightLevelReduction);
+
+                            writer.Write(m_EffectsMapArray[i].UseLightLevelOverride);
+                            writer.Write(m_EffectsMapArray[i].LightLevelOverrideAdjust);
+
+                            writer.Write(m_EffectsMapArray[i].UseMurdererDarkestHourBonus);
+                            writer.Write(m_EffectsMapArray[i].MurdererDarkestHourLevelBonus);
                         }
                     }
 
@@ -765,11 +843,6 @@ namespace Server.TimeSystem
                             writer.Write(m_EffectsExclusionMapArray[i].Y1);
                             writer.Write(m_EffectsExclusionMapArray[i].X2);
                             writer.Write(m_EffectsExclusionMapArray[i].Y2);
-
-                            writer.Write(m_EffectsExclusionMapArray[i].UseLatitude);
-
-                            writer.Write(m_EffectsExclusionMapArray[i].OuterLatitudePercent);
-                            writer.Write(m_EffectsExclusionMapArray[i].InnerLatitudePercent);
 
                             writer.Write(m_EffectsExclusionMapArray[i].Index);
                         }

@@ -28,7 +28,7 @@ namespace Server.Items
 			int version = reader.ReadInt();
 		}
 
-		public override void Drink( Mobile from )
+public override void Drink( Mobile from )
 {
 	if ( from.BeginAction( typeof( LightCycle ) ) )
 	{

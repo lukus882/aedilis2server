@@ -10,7 +10,7 @@ namespace Server.TimeSystem
     {
         #region Constant Variables
 
-        public const bool ForceScriptSettings = false; // Set to true to have settings configured by script only.  The settings can no longer be configured in-game with exception to setting current date and time.
+        public const bool ForceScriptSettings = true; // Set to true to have settings configured by script only.  The settings can no longer be configured in-game with exception to setting current date and time.
 
         #endregion
 
@@ -32,13 +32,18 @@ namespace Server.TimeSystem
         {
             Data.Enabled = true;
 
+            if (!Data.Loading)
+            {
+                Data.Logging = true;
+            }
+
             Data.TimerSpeed = 5.0;
             Data.MinutesPerTick = 1;
 
-            Data.UpdateInterval = 500;
+            Data.UpdateInterval = 1000;
 
-            Data.DayLevel = 0;
-            Data.NightLevel = 18;
+            Data.DayLevel = 8;
+            Data.NightLevel = 22;
             Data.DarkestHourLevel = 28;
             Data.LightsOnLevel = 9;
             Data.MoonLevelAdjust = 6;
@@ -46,9 +51,9 @@ namespace Server.TimeSystem
             Data.MinutesPerHour = 60;
             Data.HoursPerDay = 24;
 
-            Data.NightStartHour = 20;
+            Data.NightStartHour = 16;
             Data.NightStartMinute = 0;
-            Data.DayStartHour = 6;
+            Data.DayStartHour = 8;
             Data.DayStartMinute = 0;
             Data.ScaleTimeMinutes = 60;
 
@@ -62,13 +67,13 @@ namespace Server.TimeSystem
             }
 
             Data.UseDarkestHour = true;
-            Data.DarkestHourMinutesAfterNight = 150;
+            Data.DarkestHourMinutesAfterNight = 120;
             Data.DarkestHourScaleTimeMinutes = 30;
-            Data.DarkestHourLength = 120;
+            Data.DarkestHourLength = 180;
 
-            Data.UseRealTime = false;
+            Data.UseRealTime = true;
 
-            Data.UseTimeZones = true;
+            Data.UseTimeZones = false;
             Data.TimeZoneXDivisor = 16;
             Data.TimeZoneScaleMinutes = 60;
 
@@ -78,8 +83,13 @@ namespace Server.TimeSystem
 
             Data.UseSeasons = true;
 
-            Data.UseNightSightDarkestHourOverride = true;
-            Data.UseNightSightOverride = false;
+            Data.UseNightSightDarkestHourOverride = false;
+
+            Data.UseNightSightOverride = true;
+
+            Data.UseLightLevelOverride = true;
+
+            Data.UseMurdererDarkestHourBonus = false;
 
             Data.TimeFormat = String.Format("{0} {1}", Data.TimeFormatPreset6, Data.TimeFormatMoonPhase);
             Data.ClockTimeFormat = Data.TimeFormatPreset1;
@@ -126,10 +136,10 @@ namespace Server.TimeSystem
                 // Adjustments in minutes from BaseTime.
 
                 Data.FacetArray.Add(new FacetPropsObject(Map.Felucca, 0));
-                Data.FacetArray.Add(new FacetPropsObject(Map.Trammel, 720));
-                Data.FacetArray.Add(new FacetPropsObject(Map.Ilshenar, 360));
-                Data.FacetArray.Add(new FacetPropsObject(Map.Malas, 1080));
-                Data.FacetArray.Add(new FacetPropsObject(Map.Tokuno, 1800));
+                Data.FacetArray.Add(new FacetPropsObject(Map.Trammel, 0));
+                Data.FacetArray.Add(new FacetPropsObject(Map.Ilshenar, 0));
+                Data.FacetArray.Add(new FacetPropsObject(Map.Malas, 0));
+                Data.FacetArray.Add(new FacetPropsObject(Map.Tokuno, 0));
             }
         }
 
@@ -171,6 +181,30 @@ namespace Server.TimeSystem
 
                 Data.EffectsMapArray.Add(emo);
 
+                emo = new EffectsMapObject(Map.Ilshenar, 0, 0, 2304, 1600);
+                emo.Priority = 0;
+                emo.UseLatitude = true;
+                emo.OuterLatitudePercent = 0.10;
+                emo.InnerLatitudePercent = 0.10;
+
+                Data.EffectsMapArray.Add(emo);
+
+                emo = new EffectsMapObject(Map.Malas, 512, 0, 2560, 2048);
+                emo.Priority = 0;
+                emo.UseLatitude = true;
+                emo.OuterLatitudePercent = 0.10;
+                emo.InnerLatitudePercent = 0.10;
+
+                Data.EffectsMapArray.Add(emo);
+
+                emo = new EffectsMapObject(Map.Tokuno, 0, 0, 1448, 1448);
+                emo.Priority = 0;
+                emo.UseLatitude = true;
+                emo.OuterLatitudePercent = 0.10;
+                emo.InnerLatitudePercent = 0.10;
+
+                Data.EffectsMapArray.Add(emo);
+
                 Support.ReIndexArray(Data.EffectsMapArray);
             }
         }
@@ -181,6 +215,56 @@ namespace Server.TimeSystem
 
             lock (Data.EffectsExclusionMapArray)
             {
+                EffectsExclusionMapObject eemo = new EffectsExclusionMapObject(Map.Ilshenar, 1750, 940, 1870, 1005);
+                eemo.Priority = 100;
+
+                Data.EffectsExclusionMapArray.Add(eemo);
+
+                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 1840, 0, 2280, 250);
+                eemo.Priority = 100;
+
+                Data.EffectsExclusionMapArray.Add(eemo);
+
+                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 1700, 0, 1839, 120);
+                eemo.Priority = 100;
+
+                Data.EffectsExclusionMapArray.Add(eemo);
+
+                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 1900, 800, 2304, 1600);
+                eemo.Priority = 100;
+
+                Data.EffectsExclusionMapArray.Add(eemo);
+
+                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 0, 0, 500, 170);
+                eemo.Priority = 100;
+
+                Data.EffectsExclusionMapArray.Add(eemo);
+
+                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 0, 600, 210, 800);
+                eemo.Priority = 100;
+
+                Data.EffectsExclusionMapArray.Add(eemo);
+
+                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 0, 805, 220, 1210);
+                eemo.Priority = 100;
+
+                Data.EffectsExclusionMapArray.Add(eemo);
+
+                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 0, 1215, 190, 1600);
+                eemo.Priority = 100;
+
+                Data.EffectsExclusionMapArray.Add(eemo);
+
+                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 200, 1490, 560, 1600);
+                eemo.Priority = 100;
+
+                Data.EffectsExclusionMapArray.Add(eemo);
+
+                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 570, 1420, 1500, 1600);
+                eemo.Priority = 100;
+
+                Data.EffectsExclusionMapArray.Add(eemo);
+
                 Support.ReIndexArray(Data.EffectsExclusionMapArray);
             }
         }
@@ -213,11 +297,17 @@ namespace Server.TimeSystem
             emo.OuterLatitudePercent = 0.10;
             emo.InnerLatitudePercent = 0.10;
 
-            emo.NightSightProps = new NightSightPropsObject();
+            emo.UseNightSightDarkestHourOverride = true;
+            emo.NightSightDarkestHourReduction = 100;
 
-            emo.NightSightProps.UseNightSightDarkestHourOverride = true;
-            emo.NightSightProps.UseNightSightOverride = false;
-            emo.NightSightProps.NightSightLevelReduction = 0;
+            emo.UseNightSightOverride = false;
+            emo.NightSightLevelReduction = 0;
+
+            emo.UseLightLevelOverride = false;
+            emo.LightLevelOverrideAdjust = 0;
+
+            emo.UseMurdererDarkestHourBonus = false;
+            emo.MurdererDarkestHourLevelBonus = 0;
 
             return emo;
         }
@@ -233,10 +323,6 @@ namespace Server.TimeSystem
             eemo.X2 = -1;
             eemo.Y2 = -1;
 
-            eemo.UseLatitude = true;
-            eemo.OuterLatitudePercent = 0.10;
-            eemo.InnerLatitudePercent = 0.10;
-
             return eemo;
         }
 
@@ -244,7 +330,7 @@ namespace Server.TimeSystem
         {
             emo.UseSeasons = true;
 
-            emo.SeasonProps.StaticSeason = Season.None;
+            emo.StaticSeason = Season.None;
             emo.SetSpringDate(3, 21);
             emo.SetSummerDate(6, 21);
             emo.SetFallDate(9, 21);
@@ -261,7 +347,7 @@ namespace Server.TimeSystem
         {
             bool wrongType = true;
 
-            if (o.GetType().Name == typeExpected.Name)
+            if (o != null && o.GetType().Name == typeExpected.Name)
             {
                 wrongType = false;
 
@@ -299,7 +385,7 @@ namespace Server.TimeSystem
             }
             else
             {
-                string variableName = e.GetString(1).ToLower();
+                string variableName = e.GetString(1);
                 string value = null;
 
                 if (e.Length > 2)
@@ -378,6 +464,15 @@ namespace Server.TimeSystem
                         vo.Message = "The time system has been reset to its default configuration.";
 
                         return vo;
+                    }
+                case Variable.Logging:
+                    {
+                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        {
+                            Data.Logging = (bool)o;
+                        }
+
+                        break;
                     }
                 case Variable.TimerSpeed:
                     {
@@ -925,6 +1020,24 @@ namespace Server.TimeSystem
 
                         break;
                     }
+                case Variable.UseLightLevelOverride:
+                    {
+                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        {
+                            Data.UseLightLevelOverride = (bool)o;
+                        }
+
+                        break;
+                    }
+                case Variable.UseMurdererDarkestHourBonus:
+                    {
+                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        {
+                            Data.UseMurdererDarkestHourBonus = (bool)o;
+                        }
+
+                        break;
+                    }
                 case Variable.TimeFormat:
                     {
                         Type typeExpected = typeof(string);
@@ -1334,6 +1447,22 @@ namespace Server.TimeSystem
                 case Variable.UseNightSightOverride:
                     {
                         message = Formatting.VariableMessageFormatter(variable.ToString(), Data.UseNightSightOverride.ToString());
+
+                        success = true;
+
+                        break;
+                    }
+                case Variable.UseLightLevelOverride:
+                    {
+                        message = Formatting.VariableMessageFormatter(variable.ToString(), Data.UseLightLevelOverride.ToString());
+
+                        success = true;
+
+                        break;
+                    }
+                case Variable.UseMurdererDarkestHourBonus:
+                    {
+                        message = Formatting.VariableMessageFormatter(variable.ToString(), Data.UseMurdererDarkestHourBonus.ToString());
 
                         success = true;
 

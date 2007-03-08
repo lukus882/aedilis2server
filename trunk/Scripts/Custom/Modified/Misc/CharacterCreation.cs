@@ -34,6 +34,12 @@ namespace Server.Misc
 			PackItem( new AedilisLantern() );
 			PackItem( new TrashPack() );
 			PackItem( new WelcomeBook() );
+			
+			WristWatch SWW = new WristWatch();
+			SWW.Name = "Time Keeper's Watch";
+			SWW.Hue = 46;
+			SWW.LootType = LootType.Blessed;
+                        PackItem( SWW );
 
 			IDWand SID = new IDWand();
                         SID.Charges = 10;
@@ -719,12 +725,12 @@ namespace Server.Misc
 			if( TestCenter.Enabled )
 				FillBankbox( newChar );
 
-			if ( young )
-			{
-				NewPlayerTicket ticket = new NewPlayerTicket();
-				ticket.Owner = newChar;
-				newChar.BankBox.DropItem( ticket );
-			}
+			//if ( young )
+			//{
+			//	NewPlayerTicket ticket = new NewPlayerTicket();
+			//	ticket.Owner = newChar;
+			//	newChar.BankBox.DropItem( ticket );
+			//}
 
 			//CityInfo city = GetStartLocation( args, young );
 			CityInfo city = new CityInfo( "Britain", "Sweet Dreams Inn", 1496, 1628, 10, Map.Felucca );

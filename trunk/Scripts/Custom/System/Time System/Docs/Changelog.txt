@@ -1,3 +1,27 @@
+v2.0.3:
+*   Fixed a bug where the CalculateLightLevel() method was not checking to see if eo.EffectsMap was null before attempting to use a property.
+
+
+v2.0.2:
+*   Removed an unnecessary command that I left in 2.0.1 by accident to do some debugging.
+*   When using [TS ADDEMO and [TS ADDEEMO, instead of defaulting to Map.Internal, it will now set the EMO to be on the map of the person who typed in the command.
+*   Fixed a bug where after the data file is loaded, the EMO and EEMO arrays were not being reindexed.
+*   Consolidated some ObjectProps classes into the EMO.
+*   Added EMO props: UseLightLevelOverride and LightLevelOverrideAdjust.  When UseLightLevelOverride is enabled, the light level for the EMO that has priority would be the LightLevelOverrideAdjust value.
+*   Added EMO props: UseMurdererDarkestHourBonus and MurdererDarkestHourLevelBonus.  When UseMurdererDarkestHourBonus is enabled, any players that are murderers, instead of the evil spirits taking away their light level, it will be increased by the MurdererDarkestHourLevelBonus value.
+*   Moved the UseLatitude, OuterLatitudePercent, and InnerLatitudePercent from MapObject into EffectsMapObject since this is only used in an EMO, not an EEMO.
+*   Added NightSightDarkestHourReduction that is enabled/disabled by UseNightSightDarkestHourOverride.  This is a percentage of how well nightsight will work during Darkest Hour.  If it is set to 100%, then the nightsight effect will be consumed as it is now with UseNightSightDarkestHourOverride set to true.
+*   Optimized the CalculateLightLevel() method and made changes for the new features added.
+*   When UseNightSightOverride is enabled and NightSightLevelReduction is at 100%, it will now consume the nightsight effect and prevent it from being reapplied.
+*   Fixed a bug where on a fresh install or if the data directory is missing, it would fail to set default configuration upon load failure.
+*   Added an additional variable in Data.cs so that you can specify the location of the logs directory.
+*   Logging can now be disabled/enabled in game via [TS SET LOGGING true/false.  However, you must still set the m_Logging variable in Data.cs if you wish to capture logs of the loading process.
+*   Fixed a bug in the SetNightSightOff(MobileObject) method where it would not check to see if mo was null before trying to use the props of the object.
+*   Fixed a bug when using [TS SET <variable>, when forgetting to type in a value, it would throw a null reference exception.
+*   Added default EMOs for Ilshenar, Malas, and Tokuno.
+*   Changed default UpdateInterval from 500ms to 1000ms.
+
+
 v2.0.1:
 *   Fixed a bug where [TS GET would not be able to retrieve the UseNightSightDarkestHourOverride and UseNightSightOverride variables.
 *   Removed NightSightLevelReduction from the Variables list, as this is set per EMO, not system wide.

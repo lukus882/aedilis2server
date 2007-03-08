@@ -164,7 +164,7 @@ namespace Server.TimeSystem
 
         #region Update Methods
 
-        public static void IncrementMoonPhaseDay(int value, int day)
+        public static void IncrementMoonDay(int value, int day)
         {
             if (Data.MoonsArray.Count != 0)
             {

@@ -94,10 +94,12 @@ namespace Server.TimeSystem
         {
             if (!Data.Logging)
             {
+                ConsoleWriteLine("Time System: Logging is disabled.");
+
                 return;
             }
 
-            CheckPaths();
+            CheckLogPath();
 
             try
             {
@@ -108,7 +110,10 @@ namespace Server.TimeSystem
 
                 Data.LogWriter = new StreamWriter(Data.LogFile, true);
 
-                WriteToLogFile(String.Format("Time System: Version {0} loading...", Data.Version), true);
+                if (Data.Loading)
+                {
+                    WriteToLogFile(String.Format("Time System: Version {0} loading...", Data.Version), true);
+                }
 
                 ConsoleWriteLine("Time System: Logging is enabled.");
             }
@@ -692,7 +697,7 @@ namespace Server.TimeSystem
 
         #region Check Methods
 
-        public static bool CheckPaths()
+        public static bool CheckDataPath()
         {
             if (!Directory.Exists(Data.DataDirectory))
             {
@@ -704,6 +709,25 @@ namespace Server.TimeSystem
             else if (!File.Exists(Data.DataFile))
             {
                 File.Create(Data.DataFile).Close();
+
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool CheckLogPath()
+        {
+            if (!Directory.Exists(Data.LogDirectory))
+            {
+                Directory.CreateDirectory(Data.LogDirectory);
+                File.Create(Data.LogFile).Close();
+
+                return false;
+            }
+            else if (!File.Exists(Data.LogFile))
+            {
+                File.Create(Data.LogFile).Close();
 
                 return false;
             }
