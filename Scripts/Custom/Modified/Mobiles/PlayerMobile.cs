@@ -483,6 +483,7 @@ public override void ComputeBaseLightLevels( out int global, out int personal )
 }
 
 
+
 		public override void CheckLightLevels( bool forceResend )
 		{
 			NetState ns = this.NetState;

@@ -28,8 +28,11 @@ namespace Server.TimeSystem
 
         public static void SetNightSightOff(MobileObject mo)
         {
-            mo.IsNightSightOn = false;
-            mo.OldLightLevel = 0;
+            if (mo != null)
+            {
+                mo.IsNightSightOn = false;
+                mo.OldLightLevel = 0;
+            }
         }
 
         #endregion
@@ -109,25 +112,48 @@ namespace Server.TimeSystem
             }
 
             EffectsObject eo = GetEffects(mobile, false);
+            MobileObject mo = Support.GetMobileObject(mobile);
 
             if (Data.UseNightSightDarkestHourOverride)
             {
-                if (eo.EffectsMap != null && eo.EffectsMap.NightSightProps.UseNightSightDarkestHourOverride && TimeEngine.IsDarkestHour(mobile))
+                if (eo.EffectsMap != null && eo.EffectsMap.UseNightSightDarkestHourOverride)
                 {
-                    level = -1;
+                    if (mo != null && mo.IsDarkestHour)
+                    {
+                        if (eo.EffectsMap.NightSightDarkestHourReduction < 100)
+                        {
+                            level = (int)((double)level * ((double)(100 - eo.EffectsMap.NightSightDarkestHourReduction) / 100));
+
+                            if (level < 0)
+                            {
+                                level = 0;
+                            }
+                        }
+                        else
+                        {
+                            level = -1;
+                        }
+                    }
                 }
             }
 
             if (level > -1 && Data.UseNightSightOverride)
             {
-                if (eo.EffectsMap != null && eo.EffectsMap.NightSightProps.UseNightSightOverride)
+                if (eo.EffectsMap != null && eo.EffectsMap.UseNightSightOverride)
                 {
-                    level = (int)((double)level * ((double)(100 - eo.EffectsMap.NightSightProps.NightSightLevelReduction) / 100));
-                }
+                    if (eo.EffectsMap.NightSightLevelReduction < 100)
+                    {
+                        level = (int)((double)level * ((double)(100 - eo.EffectsMap.NightSightLevelReduction) / 100));
 
-                if (level < 0)
-                {
-                    level = 0;
+                        if (level < 0)
+                        {
+                            level = 0;
+                        }
+                    }
+                    else
+                    {
+                        level = -1;
+                    }
                 }
             }
 
@@ -232,86 +258,101 @@ namespace Server.TimeSystem
 
         #region Check Methods
 
-        public static void CheckEffects(object o, bool checkSeason, bool checkNightSight)
+        public static void CheckEffects(MobileObject mo, EffectsObject eo, bool checkSeason, bool checkNightSight)
         {
-            if (o is Mobile)
+            Mobile mobile = mo.Mobile;
+
+            if (eo.EffectsMap != null)
             {
-                Mobile mobile = (Mobile)o;
-
-                EffectsObject eo = GetEffects(o, checkSeason);
-
-                MobileObject mo = Support.GetMobileObject(mobile);
-
-                if (mo != null)
+                if (checkSeason && Data.UseSeasons && eo.EffectsMap.UseSeasons)
                 {
-                    if (eo.EffectsMap != null)
+                    if (mo.Season != eo.Season)
                     {
-                        if (checkSeason && Data.UseSeasons && eo.EffectsMap.UseSeasons)
-                        {
-                            if (mo.Season != eo.Season)
-                            {
-                                mo.Season = eo.Season;
+                        mo.Season = eo.Season;
 
-                                if (eo.Season == Season.Winter)
+                        if (eo.Season == Season.Winter)
+                        {
+                            mobile.Send(new SeasonChange(4)); // Send Desolation packet for Winter instead of Winter due to Winter adding blocky snow tiles which don't look right.
+                        }
+                        else
+                        {
+                            mobile.Send(new SeasonChange((int)eo.Season - 1));
+                        }
+
+                        Support.SendLightLevelUpdate(mo);
+                    }
+                }
+
+                if (checkNightSight)
+                {
+                    if (mo.IsNightSightOn)
+                    {
+                        if (Data.UseNightSightDarkestHourOverride && eo.EffectsMap.UseNightSightDarkestHourOverride)
+                        {
+                            if (mo.IsDarkestHour)
+                            {
+                                if (eo.EffectsMap.NightSightDarkestHourReduction < 100)
                                 {
-                                    mobile.Send(new SeasonChange(4)); // Send Desolation packet for Winter instead of Winter due to Winter adding blocky snow tiles which don't look right.
+                                    int adjustment = (int)((double)mo.OldLightLevel * ((double)(100 - eo.EffectsMap.NightSightDarkestHourReduction) / 100));
+
+                                    if (adjustment >= 0 && mobile.LightLevel != adjustment)
+                                    {
+                                        mobile.LightLevel = adjustment;
+                                    }
                                 }
                                 else
                                 {
-                                    mobile.Send(new SeasonChange((int)eo.Season - 1));
-                                }
+                                    mobile.EndAction(typeof(LightCycle));
+                                    mobile.LightLevel = 0;
+                                    BuffInfo.RemoveBuff(mobile, BuffIcon.NightSight);
 
-                                Support.SendLightLevelUpdate(mo);
+                                    SetNightSightOff(mo);
+
+                                    mobile.SendMessage("The evil in the air draws energy from your nightsight effect!");
+                                }
                             }
                         }
 
-                        if (checkNightSight)
+                        if (!mo.IsDarkestHour && Data.UseNightSightOverride && mo.IsNightSightOn)
                         {
-                            if (mo.IsNightSightOn)
+                            if (eo.EffectsMap.UseNightSightOverride)
                             {
-                                if (Data.UseNightSightDarkestHourOverride && eo.EffectsMap.NightSightProps.UseNightSightDarkestHourOverride)
+                                if (eo.EffectsMap.NightSightLevelReduction < 100)
                                 {
-                                    if (mo.IsDarkestHour)
+                                    int adjustment = (int)((double)mo.OldLightLevel * ((double)(100 - eo.EffectsMap.NightSightLevelReduction) / 100));
+
+                                    if (adjustment >= 0 && mobile.LightLevel != adjustment)
                                     {
-                                        mobile.EndAction(typeof(LightCycle));
-                                        mobile.LightLevel = 0;
-                                        BuffInfo.RemoveBuff(mobile, BuffIcon.NightSight);
-
-                                        SetNightSightOff(mo);
-
-                                        mobile.SendMessage("The evil in the air draws energy from your nightsight effect!");
+                                        mobile.LightLevel = adjustment;
                                     }
                                 }
-
-                                if (!mo.IsDarkestHour && Data.UseNightSightOverride)
+                                else
                                 {
-                                    if (eo.EffectsMap.NightSightProps.UseNightSightOverride)
-                                    {
-                                        int adjustment = (int)((double)mo.OldLightLevel * ((double)(100 - eo.EffectsMap.NightSightProps.NightSightLevelReduction) / 100));
+                                    mobile.EndAction(typeof(LightCycle));
+                                    mobile.LightLevel = 0;
+                                    BuffInfo.RemoveBuff(mobile, BuffIcon.NightSight);
 
-                                        if (adjustment >= 0 && mobile.LightLevel != adjustment)
-                                        {
-                                            mobile.LightLevel = adjustment;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (mobile.LightLevel < mo.OldLightLevel)
-                                        {
-                                            mobile.LightLevel = mo.OldLightLevel;
-                                        }
-                                    }
+                                    SetNightSightOff(mo);
+
+                                    mobile.SendMessage("An unknown magical disturbance has consumed your nightsight effect!");
+                                }
+                            }
+                            else
+                            {
+                                if (mobile.LightLevel < mo.OldLightLevel)
+                                {
+                                    mobile.LightLevel = mo.OldLightLevel;
                                 }
                             }
                         }
                     }
-                    else
-                    {
-                        if (checkNightSight && mo.IsNightSightOn && mobile.LightLevel < mo.OldLightLevel)
-                        {
-                            mobile.LightLevel = mo.OldLightLevel;
-                        }
-                    }
+                }
+            }
+            else
+            {
+                if (checkNightSight && mo.IsNightSightOn && mobile.LightLevel < mo.OldLightLevel)
+                {
+                    mobile.LightLevel = mo.OldLightLevel;
                 }
             }
         }

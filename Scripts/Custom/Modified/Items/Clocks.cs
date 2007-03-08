@@ -75,7 +75,7 @@ namespace Server.Items
 			GetTime( map, x, y, out hours, out minutes, out totalMinutes );
 		}
 
-		public static void GetTime( Map map, int x, int y, out int hours, out int minutes, out int totalMinutes )
+public static void GetTime( Map map, int x, int y, out int hours, out int minutes, out int totalMinutes )
 {
 
 // ** EDIT ** Time System
@@ -102,6 +102,7 @@ namespace Server.Items
 // ** END *** Time System
 
 }
+
 
 
 		public static void GetTime( out int generalNumber, out string exactTime )
@@ -154,7 +155,7 @@ namespace Server.Items
 			exactTime = String.Format( "{0}:{1:D2}", hours, minutes );
 		}
 
-		public override void OnDoubleClick( Mobile from )
+public override void OnDoubleClick( Mobile from )
 {
 
 // ** EDIT ** Time System
@@ -174,6 +175,7 @@ namespace Server.Items
 // ** END *** Time System
 
 }
+
 	
 
 

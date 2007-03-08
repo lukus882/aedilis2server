@@ -1240,7 +1240,7 @@ namespace Server.TimeSystem
 
         #region Effects Maps
 
-        public static VariableObject AddEmo()
+        public static VariableObject AddEmo(Mobile mobile)
         {
             VariableObject vo = new VariableObject();
 
@@ -1266,7 +1266,7 @@ namespace Server.TimeSystem
 
             lock (Data.EffectsMapArray)
             {
-                emo = Config.SetDefaultEffectsValues(new EffectsMapObject(Map.Internal, -1, -1, -1, -1));
+                emo = Config.SetDefaultEffectsValues(new EffectsMapObject(mobile.Map, -1, -1, -1, -1));
 
                 index = Data.EffectsMapArray.Count;
 
@@ -1301,14 +1301,14 @@ namespace Server.TimeSystem
             sb.Append(String.Format("Upper Outer Range: {0} - {1}\n", upperOuterLowRange, upperOuterHighRange));
             sb.Append(String.Format("Lower Outer Range: {0} - {1}\n", lowerOuterLowRange, lowerOuterHighRange));
             sb.Append(String.Format("Inner Range: {0} - {1}\n", innerLowRange, innerHighRange));
-            sb.Append(String.Format("UseSeasons: {0}\nStatic Season: {1}\n", emo.UseSeasons, emo.SeasonProps.StaticSeason));
-            sb.Append(String.Format("Spring Date: {0}/{1}\n", emo.SeasonProps.SpringDate.Month, emo.SeasonProps.SpringDate.Day));
-            sb.Append(String.Format("Summer Date: {0}/{1}\n", emo.SeasonProps.SummerDate.Month, emo.SeasonProps.SummerDate.Day));
-            sb.Append(String.Format("Fall Date: {0}/{1}\n", emo.SeasonProps.FallDate.Month, emo.SeasonProps.FallDate.Day));
-            sb.Append(String.Format("Winter Date: {0}/{1}\n", emo.SeasonProps.WinterDate.Month, emo.SeasonProps.WinterDate.Day));
-            sb.Append(String.Format("UseNightSightDarkestHourOverride: {0}\n", emo.NightSightProps.UseNightSightDarkestHourOverride));
-            sb.Append(String.Format("UseNightSightOverride: {0}\n", emo.NightSightProps.UseNightSightOverride));
-            sb.Append(String.Format("NightSightLevelReduction: {0}%\n", emo.NightSightProps.NightSightLevelReduction));
+            sb.Append(String.Format("UseSeasons: {0}\nStatic Season: {1}\n", emo.UseSeasons, emo.StaticSeason));
+            sb.Append(String.Format("Spring Date: {0}/{1}\n", emo.SpringDate.Month, emo.SpringDate.Day));
+            sb.Append(String.Format("Summer Date: {0}/{1}\n", emo.SummerDate.Month, emo.SummerDate.Day));
+            sb.Append(String.Format("Fall Date: {0}/{1}\n", emo.FallDate.Month, emo.FallDate.Day));
+            sb.Append(String.Format("Winter Date: {0}/{1}\n", emo.WinterDate.Month, emo.WinterDate.Day));
+            sb.Append(String.Format("UseNightSightDarkestHourOverride: {0}\n", emo.UseNightSightDarkestHourOverride));
+            sb.Append(String.Format("UseNightSightOverride: {0}\n", emo.UseNightSightOverride));
+            sb.Append(String.Format("NightSightLevelReduction: {0}%\n", emo.NightSightLevelReduction));
 
             message = sb.ToString();
 
@@ -1958,7 +1958,7 @@ namespace Server.TimeSystem
 
                             success = true;
 
-                            emo.SeasonProps.StaticSeason = season;
+                            emo.StaticSeason = season;
 
                             message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), season.ToString());
 
@@ -1993,7 +1993,7 @@ namespace Server.TimeSystem
                                     {
                                         success = true;
 
-                                        emo.SeasonProps.SpringDate.Month = value;
+                                        emo.SpringDate.Month = value;
 
                                         message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Spring Date Month", value.ToString());
                                     }
@@ -2024,7 +2024,7 @@ namespace Server.TimeSystem
 
                                 Type typeExpected = typeof(int);
 
-                                MonthPropsObject mpo = Data.MonthsArray[emo.SeasonProps.SpringDate.Month - 1];
+                                MonthPropsObject mpo = Data.MonthsArray[emo.SpringDate.Month - 1];
 
                                 int lowValue = 1;
                                 int highValue = mpo.TotalDays;
@@ -2040,7 +2040,7 @@ namespace Server.TimeSystem
                                     {
                                         success = true;
 
-                                        emo.SeasonProps.SpringDate.Day = value;
+                                        emo.SpringDate.Day = value;
 
                                         StringBuilder sb = new StringBuilder();
 
@@ -2116,7 +2116,7 @@ namespace Server.TimeSystem
                                     {
                                         success = true;
 
-                                        emo.SeasonProps.SummerDate.Month = value;
+                                        emo.SummerDate.Month = value;
 
                                         message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Summer Date Month", value.ToString());
                                     }
@@ -2147,7 +2147,7 @@ namespace Server.TimeSystem
 
                                 Type typeExpected = typeof(int);
 
-                                MonthPropsObject mpo = Data.MonthsArray[emo.SeasonProps.SummerDate.Month - 1];
+                                MonthPropsObject mpo = Data.MonthsArray[emo.SummerDate.Month - 1];
 
                                 int lowValue = 1;
                                 int highValue = mpo.TotalDays;
@@ -2163,7 +2163,7 @@ namespace Server.TimeSystem
                                     {
                                         success = true;
 
-                                        emo.SeasonProps.SummerDate.Day = value;
+                                        emo.SummerDate.Day = value;
 
                                         StringBuilder sb = new StringBuilder();
 
@@ -2239,7 +2239,7 @@ namespace Server.TimeSystem
                                     {
                                         success = true;
 
-                                        emo.SeasonProps.FallDate.Month = value;
+                                        emo.FallDate.Month = value;
 
                                         message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Fall Date Month", value.ToString());
                                     }
@@ -2270,7 +2270,7 @@ namespace Server.TimeSystem
 
                                 Type typeExpected = typeof(int);
 
-                                MonthPropsObject mpo = Data.MonthsArray[emo.SeasonProps.FallDate.Month - 1];
+                                MonthPropsObject mpo = Data.MonthsArray[emo.FallDate.Month - 1];
 
                                 int lowValue = 1;
                                 int highValue = mpo.TotalDays;
@@ -2286,7 +2286,7 @@ namespace Server.TimeSystem
                                     {
                                         success = true;
 
-                                        emo.SeasonProps.FallDate.Day = value;
+                                        emo.FallDate.Day = value;
 
                                         StringBuilder sb = new StringBuilder();
 
@@ -2362,7 +2362,7 @@ namespace Server.TimeSystem
                                     {
                                         success = true;
 
-                                        emo.SeasonProps.WinterDate.Month = value;
+                                        emo.WinterDate.Month = value;
 
                                         message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Winter Date Month", value.ToString());
                                     }
@@ -2393,7 +2393,7 @@ namespace Server.TimeSystem
 
                                 Type typeExpected = typeof(int);
 
-                                MonthPropsObject mpo = Data.MonthsArray[emo.SeasonProps.WinterDate.Month - 1];
+                                MonthPropsObject mpo = Data.MonthsArray[emo.WinterDate.Month - 1];
 
                                 int lowValue = 1;
                                 int highValue = mpo.TotalDays;
@@ -2409,7 +2409,7 @@ namespace Server.TimeSystem
                                     {
                                         success = true;
 
-                                        emo.SeasonProps.WinterDate.Day = value;
+                                        emo.WinterDate.Day = value;
 
                                         StringBuilder sb = new StringBuilder();
 
@@ -2482,9 +2482,61 @@ namespace Server.TimeSystem
 
                                 success = true;
 
-                                emo.NightSightProps.UseNightSightDarkestHourOverride = value;
+                                emo.UseNightSightDarkestHourOverride = value;
 
                                 message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
+                            }
+                            else
+                            {
+                                StringBuilder sb = new StringBuilder();
+
+                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
+
+                                message = sb.ToString();
+                            }
+
+                            break;
+                        }
+                    case EffectsMapType.NightSightDarkestHourReduction:
+                        {
+                            if (valueTwo != null)
+                            {
+                                success = false;
+                                message = Syntax.GetSyntax(true, Command.SetEmo);
+
+                                break;
+                            }
+
+                            object o = Support.GetValue(valueOne);
+
+                            Type typeExpected = typeof(int);
+
+                            int lowValue = 1;
+                            int highValue = 100;
+
+                            string minValue = Convert.ToString(lowValue);
+                            string maxValue = Convert.ToString(highValue);
+
+                            if (o is int)
+                            {
+                                int value = (int)o;
+
+                                if (value >= lowValue && value <= highValue)
+                                {
+                                    success = true;
+
+                                    emo.NightSightDarkestHourReduction = value;
+
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), String.Format("{0}%", value));
+                                }
+                                else
+                                {
+                                    StringBuilder sb = new StringBuilder();
+
+                                    sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue));
+
+                                    message = sb.ToString();
+                                }
                             }
                             else
                             {
@@ -2523,7 +2575,7 @@ namespace Server.TimeSystem
 
                                 success = true;
 
-                                emo.NightSightProps.UseNightSightOverride = value;
+                                emo.UseNightSightOverride = value;
 
                                 message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
                             }
@@ -2552,7 +2604,7 @@ namespace Server.TimeSystem
 
                             Type typeExpected = typeof(int);
 
-                            int lowValue = 0;
+                            int lowValue = 1;
                             int highValue = 100;
 
                             string minValue = Convert.ToString(lowValue);
@@ -2566,9 +2618,195 @@ namespace Server.TimeSystem
                                 {
                                     success = true;
 
-                                    emo.NightSightProps.NightSightLevelReduction = value;
+                                    emo.NightSightLevelReduction = value;
 
                                     message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), String.Format("{0}%", value));
+                                }
+                                else
+                                {
+                                    StringBuilder sb = new StringBuilder();
+
+                                    sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue));
+
+                                    message = sb.ToString();
+                                }
+                            }
+                            else
+                            {
+                                StringBuilder sb = new StringBuilder();
+
+                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
+
+                                message = sb.ToString();
+                            }
+
+                            break;
+                        }
+                    case EffectsMapType.UseLightLevelOverride:
+                        {
+                            if (valueTwo != null)
+                            {
+                                success = false;
+                                message = Syntax.GetSyntax(true, Command.SetEmo);
+
+                                break;
+                            }
+
+                            object o = Support.GetValue(valueOne);
+
+                            Type typeExpected = typeof(bool);
+
+                            bool lowValue = false;
+                            bool highValue = true;
+
+                            string minValue = Convert.ToString(lowValue);
+                            string maxValue = Convert.ToString(highValue);
+
+                            if (o is bool)
+                            {
+                                bool value = (bool)o;
+
+                                success = true;
+
+                                emo.UseLightLevelOverride = value;
+
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
+                            }
+                            else
+                            {
+                                StringBuilder sb = new StringBuilder();
+
+                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
+
+                                message = sb.ToString();
+                            }
+
+                            break;
+                        }
+                    case EffectsMapType.LightLevelOverrideAdjust:
+                        {
+                            if (valueTwo != null)
+                            {
+                                success = false;
+                                message = Syntax.GetSyntax(true, Command.SetEmo);
+
+                                break;
+                            }
+
+                            object o = Support.GetValue(valueOne);
+
+                            Type typeExpected = typeof(int);
+
+                            int lowValue = Data.MinLightLevel;
+                            int highValue = Data.MaxLightLevel;
+
+                            string minValue = Convert.ToString(lowValue);
+                            string maxValue = Convert.ToString(highValue);
+
+                            if (o is int)
+                            {
+                                int value = (int)o;
+
+                                if (value >= lowValue && value <= highValue)
+                                {
+                                    success = true;
+
+                                    emo.LightLevelOverrideAdjust = value;
+
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
+                                }
+                                else
+                                {
+                                    StringBuilder sb = new StringBuilder();
+
+                                    sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue));
+
+                                    message = sb.ToString();
+                                }
+                            }
+                            else
+                            {
+                                StringBuilder sb = new StringBuilder();
+
+                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
+
+                                message = sb.ToString();
+                            }
+
+                            break;
+                        }
+                    case EffectsMapType.UseMurdererDarkestHourBonus:
+                        {
+                            if (valueTwo != null)
+                            {
+                                success = false;
+                                message = Syntax.GetSyntax(true, Command.SetEmo);
+
+                                break;
+                            }
+
+                            object o = Support.GetValue(valueOne);
+
+                            Type typeExpected = typeof(bool);
+
+                            bool lowValue = false;
+                            bool highValue = true;
+
+                            string minValue = Convert.ToString(lowValue);
+                            string maxValue = Convert.ToString(highValue);
+
+                            if (o is bool)
+                            {
+                                bool value = (bool)o;
+
+                                success = true;
+
+                                emo.UseMurdererDarkestHourBonus = value;
+
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
+                            }
+                            else
+                            {
+                                StringBuilder sb = new StringBuilder();
+
+                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
+
+                                message = sb.ToString();
+                            }
+
+                            break;
+                        }
+                    case EffectsMapType.MurdererDarkestHourLevelBonus:
+                        {
+                            if (valueTwo != null)
+                            {
+                                success = false;
+                                message = Syntax.GetSyntax(true, Command.SetEmo);
+
+                                break;
+                            }
+
+                            object o = Support.GetValue(valueOne);
+
+                            Type typeExpected = typeof(int);
+
+                            int lowValue = Data.MinLightLevel;
+                            int highValue = Data.MaxLightLevel;
+
+                            string minValue = Convert.ToString(lowValue);
+                            string maxValue = Convert.ToString(highValue);
+
+                            if (o is int)
+                            {
+                                int value = (int)o;
+
+                                if (value >= lowValue && value <= highValue)
+                                {
+                                    success = true;
+
+                                    emo.MurdererDarkestHourLevelBonus = value;
+
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
                                 }
                                 else
                                 {
@@ -2727,14 +2965,14 @@ namespace Server.TimeSystem
                             sb.Append(String.Format("Upper Outer Range: {0} - {1}\n", upperOuterLowRange, upperOuterHighRange));
                             sb.Append(String.Format("Lower Outer Range: {0} - {1}\n", lowerOuterLowRange, lowerOuterHighRange));
                             sb.Append(String.Format("Inner Range: {0} - {1}\n", innerLowRange, innerHighRange));
-                            sb.Append(String.Format("UseSeasons: {0}\nStatic Season: {1}\n", emo.UseSeasons, emo.SeasonProps.StaticSeason));
-                            sb.Append(String.Format("Spring Date: {0}/{1}\n", emo.SeasonProps.SpringDate.Month, emo.SeasonProps.SpringDate.Day));
-                            sb.Append(String.Format("Summer Date: {0}/{1}\n", emo.SeasonProps.SummerDate.Month, emo.SeasonProps.SummerDate.Day));
-                            sb.Append(String.Format("Fall Date: {0}/{1}\n", emo.SeasonProps.FallDate.Month, emo.SeasonProps.FallDate.Day));
-                            sb.Append(String.Format("Winter Date: {0}/{1}\n", emo.SeasonProps.WinterDate.Month, emo.SeasonProps.WinterDate.Day));
-                            sb.Append(String.Format("UseNightSightDarkestHourOverride: {0}\n", emo.NightSightProps.UseNightSightDarkestHourOverride));
-                            sb.Append(String.Format("UseNightSightOverride: {0}\n", emo.NightSightProps.UseNightSightOverride));
-                            sb.Append(String.Format("NightSightLevelReduction: {0}%\n", emo.NightSightProps.NightSightLevelReduction));
+                            sb.Append(String.Format("UseSeasons: {0}\nStatic Season: {1}\n", emo.UseSeasons, emo.StaticSeason));
+                            sb.Append(String.Format("Spring Date: {0}/{1}\n", emo.SpringDate.Month, emo.SpringDate.Day));
+                            sb.Append(String.Format("Summer Date: {0}/{1}\n", emo.SummerDate.Month, emo.SummerDate.Day));
+                            sb.Append(String.Format("Fall Date: {0}/{1}\n", emo.FallDate.Month, emo.FallDate.Day));
+                            sb.Append(String.Format("Winter Date: {0}/{1}\n", emo.WinterDate.Month, emo.WinterDate.Day));
+                            sb.Append(String.Format("UseNightSightDarkestHourOverride: {0}\n", emo.UseNightSightDarkestHourOverride));
+                            sb.Append(String.Format("UseNightSightOverride: {0}\n", emo.UseNightSightOverride));
+                            sb.Append(String.Format("NightSightLevelReduction: {0}%\n", emo.NightSightLevelReduction));
 
                             message = sb.ToString();
                         }
@@ -2846,7 +3084,7 @@ namespace Server.TimeSystem
 
         #region Effects Exclusion Maps
 
-        public static VariableObject AddEemo()
+        public static VariableObject AddEemo(Mobile mobile)
         {
             VariableObject vo = new VariableObject();
 
@@ -2872,7 +3110,7 @@ namespace Server.TimeSystem
 
             lock (Data.EffectsExclusionMapArray)
             {
-                eemo = Config.SetDefaultEffectsExclusionValues(new EffectsExclusionMapObject(Map.Internal, -1, -1, -1, -1));
+                eemo = Config.SetDefaultEffectsExclusionValues(new EffectsExclusionMapObject(mobile.Map, -1, -1, -1, -1));
 
                 index = Data.EffectsExclusionMapArray.Count;
 
@@ -2883,30 +3121,10 @@ namespace Server.TimeSystem
                 success = true;
             }
 
-            int height = eemo.Y2 - eemo.Y1;
-
-            int outerLatitudeHeight = (int)(height * eemo.OuterLatitudePercent);
-            int innerLatitudeHeight = (int)(height * eemo.InnerLatitudePercent);
-            int middleLatitude = eemo.Y1 + (int)(height / 2);
-
-            int upperOuterLowRange = eemo.Y1;
-            int upperOuterHighRange = eemo.Y1 + outerLatitudeHeight;
-
-            int lowerOuterLowRange = eemo.Y1 + (height - outerLatitudeHeight);
-            int lowerOuterHighRange = eemo.Y1 + height;
-
-            int innerLowRange = middleLatitude - innerLatitudeHeight;
-            int innerHighRange = middleLatitude + innerLatitudeHeight;
-
             StringBuilder sb = new StringBuilder();
 
             sb.Append(String.Format("EEMO #{0} has been added!\n", index));
             sb.Append(String.Format("[Priority: {0}]: Bounds: ({1}, {2}) to ({3}, {4}) on map '{5}'.\n", eemo.Priority, eemo.X1, eemo.Y1, eemo.X2, eemo.Y2, eemo.Map));
-            sb.Append(String.Format("UseLatitude: {0}\nOuter Percent: {1}%\nInner Percent: {2}%\n", eemo.UseLatitude, eemo.OuterLatitudePercent * 100, eemo.InnerLatitudePercent * 100));
-            sb.Append(String.Format("Middle Latitude: {0}\n", middleLatitude));
-            sb.Append(String.Format("Upper Outer Range: {0} - {1}\n", upperOuterLowRange, upperOuterHighRange));
-            sb.Append(String.Format("Lower Outer Range: {0} - {1}\n", lowerOuterLowRange, lowerOuterHighRange));
-            sb.Append(String.Format("Inner Range: {0} - {1}\n", innerLowRange, innerHighRange));
 
             message = sb.ToString();
 
@@ -3320,178 +3538,6 @@ namespace Server.TimeSystem
 
                             break;
                         }
-                    case EffectsExclusionMapType.UseLatitude:
-                        {
-                            if (valueTwo != null)
-                            {
-                                success = false;
-                                message = Syntax.GetSyntax(true, Command.SetEmo);
-
-                                break;
-                            }
-
-                            object o = Support.GetValue(valueOne);
-
-                            Type typeExpected = typeof(bool);
-
-                            bool lowValue = false;
-                            bool highValue = true;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is bool)
-                            {
-                                bool value = (bool)o;
-
-                                success = true;
-
-                                eemo.UseLatitude = value;
-
-                                message = Formatting.VariableMessageFormatter(String.Format("EEMO #{0}", eemo.Index), eemoType.ToString(), value.ToString());
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter("Use Latitude", o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
-                            }
-
-                            break;
-                        }
-                    case EffectsExclusionMapType.OuterInnerLatitude:
-                        {
-                            if (valueTwo == null)
-                            {
-                                success = false;
-                                message = Syntax.GetSyntax(true, Command.SetEmo);
-
-                                break;
-                            }
-
-                            {
-                                object o = Support.GetValue(valueOne);
-
-                                Type typeExpected = typeof(double);
-
-                                double lowValue = 0;
-                                double highValue = 100;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
-                                {
-                                    o = Convert.ToDouble(o);
-                                }
-
-                                if (o is double)
-                                {
-                                    double value = (double)o;
-
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        eemo.OuterLatitudePercent = value / 100;
-
-                                        message = Formatting.VariableMessageFormatter(String.Format("EEMO #{0}", eemo.Index), "OuterLatitudePercent", String.Format("{0}%", value));
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("OuterLatitudePercent", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("OuterLatitudePercent", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
-                                }
-                            }
-
-                            if (success)
-                            {
-                                success = false;
-
-                                object o = Support.GetValue(valueTwo);
-
-                                Type typeExpected = typeof(double);
-
-                                double lowValue = 0;
-                                double highValue = 100;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
-                                {
-                                    o = Convert.ToDouble(o);
-                                }
-
-                                if (o is double)
-                                {
-                                    double value = (double)o;
-
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        eemo.InnerLatitudePercent = value / 100;
-
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.VariableMessageFormatter(String.Format("EEMO #{0}", eemo.Index), "InnerLatitudePercent", String.Format("{0}%", value)));
-
-                                        message = sb.ToString();
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("InnerLatitudePercent", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    if (message != null)
-                                    {
-                                        sb.Append(message);
-                                        sb.Append("\n");
-                                    }
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("InnerLatitudePercent", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
-                                }
-                            }
-
-                            break;
-                        }
                 }
 
                 if (success)
@@ -3592,29 +3638,9 @@ namespace Server.TimeSystem
 
                             eemo = Data.EffectsExclusionMapArray[value];
 
-                            int height = eemo.Y2 - eemo.Y1;
-
-                            int outerLatitudeHeight = (int)(height * eemo.OuterLatitudePercent);
-                            int innerLatitudeHeight = (int)(height * eemo.InnerLatitudePercent);
-                            int middleLatitude = eemo.Y1 + (int)(height / 2);
-
-                            int upperOuterLowRange = eemo.Y1;
-                            int upperOuterHighRange = eemo.Y1 + outerLatitudeHeight;
-
-                            int lowerOuterLowRange = eemo.Y1 + (height - outerLatitudeHeight);
-                            int lowerOuterHighRange = eemo.Y1 + height;
-
-                            int innerLowRange = middleLatitude - innerLatitudeHeight;
-                            int innerHighRange = middleLatitude + innerLatitudeHeight;
-
                             StringBuilder sb = new StringBuilder();
 
                             sb.Append(String.Format("EEMO #{0} [Priority: {1}]: Bounds: ({2}, {3}) to ({4}, {5}) on map '{6}'.\n", eemo.Index, eemo.Priority, eemo.X1, eemo.Y1, eemo.X2, eemo.Y2, eemo.Map));
-                            sb.Append(String.Format("UseLatitude: {0}\nOuter Percent: {1}%\nInner Percent: {2}%\n", eemo.UseLatitude, eemo.OuterLatitudePercent * 100, eemo.InnerLatitudePercent * 100));
-                            sb.Append(String.Format("Middle Latitude: {0}\n", middleLatitude));
-                            sb.Append(String.Format("Upper Outer Range: {0} - {1}\n", upperOuterLowRange, upperOuterHighRange));
-                            sb.Append(String.Format("Lower Outer Range: {0} - {1}\n", lowerOuterLowRange, lowerOuterHighRange));
-                            sb.Append(String.Format("Inner Range: {0} - {1}\n", innerLowRange, innerHighRange));
 
                             message = sb.ToString();
 
@@ -3696,7 +3722,7 @@ namespace Server.TimeSystem
 
                         Support.ReIndexArray(Data.EffectsExclusionMapArray);
 
-                        message = String.Format("EEMO #{0} has been reemoved.  All succeeding EEMO indexes have moved up.", value);
+                        message = String.Format("EEMO #{0} has been removed.  All succeeding EEMO indexes have moved up.", value);
                     }
                     else
                     {

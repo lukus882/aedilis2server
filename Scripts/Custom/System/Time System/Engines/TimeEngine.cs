@@ -210,7 +210,7 @@ namespace Server.TimeSystem
             {
                 if (hour == Data.NightStartHour && minute == Data.NightStartMinute)
                 {
-                    MoonEngine.IncrementMoonPhaseDay(1, day);
+                    MoonEngine.IncrementMoonDay(1, day);
                 }
             }
         }
@@ -256,20 +256,8 @@ namespace Server.TimeSystem
                 return Data.DayLevel;
             }
 
-            int x = Support.GetXAxis(o);
-
-            int minute = Data.Minute + GetAdjustments(o, false);
-            int hour = Data.Hour;
-            int day = Data.Day;
-            int month = Data.Month;
-            int year = Data.Year;
-
-            if (o != null)
-            {
-                CheckTime(ref minute, ref hour, ref day, ref month, ref year, false);
-            }
-
             MobileObject mo = null;
+            EffectsObject eo = null;
 
             if (o is Mobile)
             {
@@ -283,6 +271,8 @@ namespace Server.TimeSystem
                     }
 
                     mo.IsDarkestHour = false;
+
+                    eo = EffectsEngine.GetEffects(o, true);
                 }
                 else
                 {
@@ -291,78 +281,118 @@ namespace Server.TimeSystem
             }
 
             int currentLevel = Data.BaseLightLevel;
-            int nightLevelAdjust = MoonEngine.GetNightLevelAdjust();
 
-            if (IsNightTime(minute, hour)) // Night time.
+            if (Data.UseLightLevelOverride && eo != null && eo.EffectsMap != null && eo.EffectsMap.UseLightLevelOverride)
             {
-                bool isDarkestHour = IsDarkestHour(minute, hour);
+                currentLevel = eo.EffectsMap.LightLevelOverrideAdjust;
+            }
+            else
+            {
+                int nightLevelAdjust = MoonEngine.GetNightLevelAdjust();
 
-                if (mo != null)
+                int x = Support.GetXAxis(o);
+
+                int minute = Data.Minute + GetAdjustments(o, false);
+                int hour = Data.Hour;
+                int day = Data.Day;
+                int month = Data.Month;
+                int year = Data.Year;
+
+                if (o != null)
                 {
-                    mo.IsDarkestHour = isDarkestHour;
+                    CheckTime(ref minute, ref hour, ref day, ref month, ref year, false);
                 }
 
-                int minutesAfterNight = GetMinutesAfterNight(minute, hour);
-
-                if (Data.ScaleTimeMinutes - minutesAfterNight >= 0)
+                if (IsNightTime(minute, hour)) // Night time.
                 {
-                    currentLevel = (int)(nightLevelAdjust * ((double)minutesAfterNight / (double)Data.ScaleTimeMinutes));
+                    bool isDarkestHour = IsDarkestHour(minute, hour);
+
+                    if (mo != null)
+                    {
+                        mo.IsDarkestHour = isDarkestHour;
+                    }
+
+                    int minutesAfterNight = GetMinutesAfterNight(minute, hour);
+
+                    if (Data.ScaleTimeMinutes - minutesAfterNight >= 0)
+                    {
+                        currentLevel = (int)(nightLevelAdjust * ((double)minutesAfterNight / (double)Data.ScaleTimeMinutes));
+                    }
+                    else if (Data.UseDarkestHour && isDarkestHour)
+                    {
+                        if (o is BaseLight)
+                        {
+                            LightsEngine.CalculateLightOutage((BaseLight)o);
+                        }
+
+                        int bonus = 0;
+
+                        if (mo != null && eo != null && eo.EffectsMap != null)
+                        {
+                            if (Data.UseMurdererDarkestHourBonus && eo.EffectsMap.UseMurdererDarkestHourBonus && mo.IsMurderer)
+                            {
+                                bonus = eo.EffectsMap.MurdererDarkestHourLevelBonus;
+                            }
+                        }
+
+                        int minutesAfterDarkestHour = minutesAfterNight - Data.DarkestHourStartMinutes;
+
+                        if (minutesAfterDarkestHour <= Data.DarkestHourScaleTimeMinutes)
+                        {
+                            currentLevel = (int)(nightLevelAdjust + ((Data.DarkestHourLevel - bonus - nightLevelAdjust) * ((double)minutesAfterDarkestHour / (double)Data.DarkestHourScaleTimeMinutes)));
+                        }
+                        else if (minutesAfterDarkestHour > Data.DarkestHourScaleTimeMinutes && minutesAfterDarkestHour <= (Data.DarkestHourLength + Data.DarkestHourScaleTimeMinutes))
+                        {
+                            currentLevel = Data.DarkestHourLevel - bonus;
+                        }
+                        else if (minutesAfterDarkestHour > (Data.DarkestHourLength + Data.DarkestHourScaleTimeMinutes) && minutesAfterDarkestHour <= Data.DarkestHourTotalMinutes)
+                        {
+                            currentLevel = (int)(nightLevelAdjust + ((Data.DarkestHourLevel - bonus - nightLevelAdjust) * ((double)(Data.DarkestHourTotalMinutes - minutesAfterDarkestHour) / (double)Data.DarkestHourScaleTimeMinutes)));
+                        }
+                    }
+                    else
+                    {
+                        currentLevel = nightLevelAdjust;
+                    }
+
+                    if (!isDarkestHour && Data.UseAutoLighting)
+                    {
+                        if (o is BaseLight)
+                        {
+                            LightsEngine.UpdateManagedLight((BaseLight)o, currentLevel);
+                        }
+                    }
                 }
-                else if (Data.UseDarkestHour && isDarkestHour)
+                else // Day time.
                 {
-                    if (o is BaseLight)
+                    int minutesAfterDay = GetMinutesAfterDay(minute, hour);
+
+                    if (Data.ScaleTimeMinutes - minutesAfterDay >= 0)
                     {
-                        LightsEngine.CalculateLightOutage((BaseLight)o);
+                        currentLevel = (int)((nightLevelAdjust - Data.DayLevel) - ((nightLevelAdjust - Data.DayLevel) * ((double)minutesAfterDay / (double)Data.ScaleTimeMinutes)));
+                    }
+                    else
+                    {
+                        currentLevel = Data.DayLevel;
                     }
 
-                    int minutesAfterDarkestHour = minutesAfterNight - Data.DarkestHourStartMinutes;
-
-                    if (minutesAfterDarkestHour <= Data.DarkestHourScaleTimeMinutes)
+                    if (Data.UseAutoLighting)
                     {
-                        currentLevel = (int)(nightLevelAdjust + ((Data.DarkestHourLevel - nightLevelAdjust) * ((double)minutesAfterDarkestHour / (double)Data.DarkestHourScaleTimeMinutes)));
-                    }
-                    else if (minutesAfterDarkestHour > Data.DarkestHourScaleTimeMinutes && minutesAfterDarkestHour <= (Data.DarkestHourLength + Data.DarkestHourScaleTimeMinutes))
-                    {
-                        currentLevel = Data.DarkestHourLevel;
-                    }
-                    else if (minutesAfterDarkestHour > (Data.DarkestHourLength + Data.DarkestHourScaleTimeMinutes) && minutesAfterDarkestHour <= Data.DarkestHourTotalMinutes)
-                    {
-                        currentLevel = (int)(nightLevelAdjust + ((Data.DarkestHourLevel - nightLevelAdjust) * ((double)(Data.DarkestHourTotalMinutes - minutesAfterDarkestHour) / (double)Data.DarkestHourScaleTimeMinutes)));
-                    }
-                }
-                else
-                {
-                    currentLevel = nightLevelAdjust;
-                }
-
-                if (!isDarkestHour && Data.UseAutoLighting)
-                {
-                    if (o is BaseLight)
-                    {
-                        LightsEngine.UpdateManagedLight((BaseLight)o, currentLevel);
+                        if (o is BaseLight)
+                        {
+                            LightsEngine.UpdateManagedLight((BaseLight)o, currentLevel);
+                        }
                     }
                 }
             }
-            else // Day time.
+
+            if(currentLevel > Data.MaxLightLevel)
             {
-                int minutesAfterDay = GetMinutesAfterDay(minute, hour);
-
-                if (Data.ScaleTimeMinutes - minutesAfterDay >= 0)
-                {
-                    currentLevel = (int)((nightLevelAdjust - Data.DayLevel) - ((nightLevelAdjust - Data.DayLevel) * ((double)minutesAfterDay / (double)Data.ScaleTimeMinutes)));
-                }
-                else
-                {
-                    currentLevel = Data.DayLevel;
-                }
-
-                if (Data.UseAutoLighting)
-                {
-                    if (o is BaseLight)
-                    {
-                        LightsEngine.UpdateManagedLight((BaseLight)o, currentLevel);
-                    }
-                }
+                currentLevel = Data.MaxLightLevel;
+            }
+            else if(currentLevel < Data.MinLightLevel)
+            {
+                currentLevel = Data.MinLightLevel;
             }
 
             if (o == null)
@@ -377,7 +407,7 @@ namespace Server.TimeSystem
 
                     mo.LightLevel = currentLevel;
 
-                    EffectsEngine.CheckEffects(o, true, true);
+                    EffectsEngine.CheckEffects(mo, eo, true, true);
                 }
             }
 

@@ -10,6 +10,7 @@ namespace Server.TimeSystem
         None,
         Defaults,
 
+        Logging,
         TimerSpeed,
         MinutesPerTick,
         UpdateInterval,
@@ -44,6 +45,8 @@ namespace Server.TimeSystem
         UseSeasons,
         UseNightSightDarkestHourOverride,
         UseNightSightOverride,
+        UseLightLevelOverride,
+        UseMurdererDarkestHourBonus,
         TimeFormat,
         ClockTimeFormat,
         SpyglassFormat
@@ -153,8 +156,13 @@ namespace Server.TimeSystem
         FallDate,
         WinterDate,
         UseNightSightDarkestHourOverride,
+        NightSightDarkestHourReduction,
         UseNightSightOverride,
-        NightSightLevelReduction
+        NightSightLevelReduction,
+        UseLightLevelOverride,
+        LightLevelOverrideAdjust,
+        UseMurdererDarkestHourBonus,
+        MurdererDarkestHourLevelBonus
     };
 
     public enum EffectsExclusionMapType
@@ -164,9 +172,7 @@ namespace Server.TimeSystem
         Priority,
         Map,
         X1Y1,
-        X2Y2,
-        UseLatitude,
-        OuterInnerLatitude
+        X2Y2
     };
 
     #endregion

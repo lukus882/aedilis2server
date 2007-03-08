@@ -19,7 +19,6 @@ namespace Server.TimeSystem
             CommandSystem.Register(CompareTimeCommand, AccessLevel.GameMaster, new CommandEventHandler(CompareTime_OnCommand));
             CommandSystem.Register(XTimeCommand, AccessLevel.GameMaster, new CommandEventHandler(XTime_OnCommand));
             CommandSystem.Register(SeasonCommand, AccessLevel.GameMaster, new CommandEventHandler(Season_OnCommand));
-            CommandSystem.Register(CheckMOHashtableCommand, AccessLevel.GameMaster, new CommandEventHandler(CheckMOHashtable_OnCommand));
         }
 
         #endregion
@@ -32,7 +31,6 @@ namespace Server.TimeSystem
         public const string CompareTimeCommand = "CompareTime";
         public const string XTimeCommand = "XTime";
         public const string SeasonCommand = "Season";
-        public const string CheckMOHashtableCommand = "CheckMOTable";
 
         #endregion
 
@@ -657,7 +655,7 @@ namespace Server.TimeSystem
                         {
                             if (e.Length == 1)
                             {
-                                vo = Custom.AddEmo();
+                                vo = Custom.AddEmo(mobile);
 
                                 Support.SendStream(mobile, vo.Message);
                             }
@@ -755,7 +753,7 @@ namespace Server.TimeSystem
                         {
                             if (e.Length == 1)
                             {
-                                vo = Custom.AddEemo();
+                                vo = Custom.AddEemo(mobile);
 
                                 Support.SendStream(mobile, vo.Message);
                             }
@@ -913,24 +911,6 @@ namespace Server.TimeSystem
             else
             {
                 mobile.SendMessage("You are not in an area that is under any effects!");
-            }
-        }
-
-        [Usage("CheckMOTable")]
-        [Description("Checks to see if you are in the MobileObject hashtable.")]
-        private static void CheckMOHashtable_OnCommand(CommandEventArgs e)
-        {
-            Mobile mobile = e.Mobile;
-
-            MobileObject mo = Support.GetMobileObject(mobile);
-
-            if (mo != null)
-            {
-                mobile.SendMessage("You are in the MobileObject Hashtable!");
-            }
-            else
-            {
-                mobile.SendMessage("You are NOT in the MobileObject Hashtable!");
             }
         }
 

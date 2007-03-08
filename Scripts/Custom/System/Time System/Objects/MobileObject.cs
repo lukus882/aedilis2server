@@ -45,5 +45,17 @@ namespace Server.TimeSystem
         public int OldLightLevel { get { return m_OldLightLevel; } set { m_OldLightLevel = value; } }
 
         #endregion
+
+        #region Calculated Variables
+
+        public bool IsMurderer
+        {
+            get
+            {
+                return m_Mobile.Kills >= 5;
+            }
+        }
+
+        #endregion
     }
 }
