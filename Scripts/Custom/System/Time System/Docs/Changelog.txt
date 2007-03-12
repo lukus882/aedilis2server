@@ -1,3 +1,32 @@
+v2.0.5:
+*   Fixed a bug when logging on, then off, then back on rather quickly, the m_LoginQueue would process first and would try to add you back into the MobilesTable when you haven't been removed yet.  The m_LogoutQueue will now process first, but also a try/catch wrapper has been placed around MobilesTable.Add to prevent a duplicate key being inserted (it was still possible to crash after changing the order).
+
+
+v2.0.4:
+*   Added EvilSpawners that will now spawn evil spirits during the darkest hour.  You must add the spawners manually using RunUO's [ADD command, then [PROPS to configure their properties.  The spawner will only function if you [TS SET UseEvilSpawners true AND the EMO it is located in must have UseEvilSpawners set to true.
+*   Fixed [TS ADDEMO and [TS GETEMO # to show all of the properties of the EMO (some were missing).
+*   Fixed a bug in the CalculateLightLevel() method where it was not using timezone scaling even if UseTimeZones = true, therefore Darkest Hour, Light Levels, and auto lighting were not functioning as they should (i.e. changing too late).
+*   Fixed a bug where if a player logged off right in the middle of a system tick, it would throw an exception because the collection was modified (removing their MobileObject from the hashtable) while the for loop was still enumerating.  This has been changed to enumerate through NetState.Instances instead.
+*   Added login/logout queues and a timer that checks/manages the queues once every 5 seconds.
+*   Made a separate timer for polling the lights (default 5 seconds).  The timer speed can me changed by using [TS SET LightsEngineTimerSpeed <value>.  This was necessary as changing the master timer speed would also affect how often the lights outage effect in darkest hour.
+*   Fixed a bug in the Load() method in Data.cs that was incorrectly checking the version and would result in a failed load attempt everytime.
+*   Fixed a bug when wearing an item with nightsight with both UseNightSightDarksetHourOverride and UseNightSightOverride set to true, whichever reduction was a higher % between the NightSightDarkestHourReduction and NightSightLevelReduction would take precedence during the Darkest Hour, when it should always be the NightSightDarkestHourReduction.
+*   Fixed a bug in the IsDarkestHour() method that was not checking to see if UseDarkestHour was true/false before returning it's calculation.
+*   Fixed a bug when upgrading to a newer version, the default settings were not being set for any new settings introduced in the newer version.
+*   Fixed a bug that [TS ADDEMO and [TS ADDEEMO were still defaulting to Map.Internal instead of mobile.Map.
+*   Made UseDarkestHour, UseAutoLighting, UseRandomLightOutage, and LightOutageChancePerTick EMO based instead of system-wide.
+*   Massive changes made to the lights engine to reflect the new EMO changes, plus some optimizations that reduced CPU usage.
+*   Fixed a bug when changing an EMO's map using [TS SETEMO # MAP <map>, if typing an invalid map name it would result in a crash.
+*   Added ability to enable/disable an EMO and EEMO.  The new commands are [TS TOGGLEEMO <#> and [TS TOGGLEEEMO <#>.
+*   Changed the SetVariable() method in Config.cs that is used for checking the variables to CheckVariable().
+*   Cleaned up a bunch of code in Custom.cs by consolidating and using Config.CheckVariable() method for checking on variables before assigning them.
+*   Fixed a bug when using [TS ClearMonths it would cause the server to crash because no months would exist in the array.  I have changed it to remove all but the 1st month.
+*   Fixed a bug in the CheckTime() method which was not properly handling the day/month checks and could result in a crash in certain situations.
+*   Fixed a bug in the CheckTime() method which would not properly calculate the day/months depending on if you had a huge facet adjustment.
+*   Fixed a bug in the CheckAlreadyExistsInArray() method which was not properly checking the array.
+*   Changed the MobilesTable from being a Hashtable to a generic Dictionary.
+
+
 v2.0.3:
 *   Fixed a bug where the CalculateLightLevel() method was not checking to see if eo.EffectsMap was null before attempting to use a property.
 

@@ -12,6 +12,7 @@ namespace Server.TimeSystem
 
         Logging,
         TimerSpeed,
+        LightsEngineTimerSpeed,
         MinutesPerTick,
         UpdateInterval,
         DayLevel,
@@ -41,12 +42,12 @@ namespace Server.TimeSystem
         TimeZoneScaleMinutes,
         UseAutoLighting,
         UseRandomLightOutage,
-        LightOutageChancePerTick,
         UseSeasons,
         UseNightSightDarkestHourOverride,
         UseNightSightOverride,
         UseLightLevelOverride,
         UseMurdererDarkestHourBonus,
+        UseEvilSpawners,
         TimeFormat,
         ClockTimeFormat,
         SpyglassFormat
@@ -109,10 +110,12 @@ namespace Server.TimeSystem
         SetEmo,
         GetEmo,
         RemoveEmo,
+        ToggleEmo,
         AddEemo,
         SetEemo,
         GetEemo,
-        RemoveEemo
+        RemoveEemo,
+        ToggleEemo
     }
 
     public enum CommandType
@@ -155,6 +158,10 @@ namespace Server.TimeSystem
         SummerDate,
         FallDate,
         WinterDate,
+        UseDarkestHour,
+        UseAutoLighting,
+        UseRandomLightOutage,
+        LightOutageChancePerTick,
         UseNightSightDarkestHourOverride,
         NightSightDarkestHourReduction,
         UseNightSightOverride,
@@ -162,7 +169,8 @@ namespace Server.TimeSystem
         UseLightLevelOverride,
         LightLevelOverrideAdjust,
         UseMurdererDarkestHourBonus,
-        MurdererDarkestHourLevelBonus
+        MurdererDarkestHourLevelBonus,
+        UseEvilSpawners
     };
 
     public enum EffectsExclusionMapType

@@ -10,7 +10,7 @@ namespace Server.TimeSystem
     {
         #region Constant Variables
 
-        public const bool ForceScriptSettings = true; // Set to true to have settings configured by script only.  The settings can no longer be configured in-game with exception to setting current date and time.
+        public const bool ForceScriptSettings = false; // Set to true to have settings configured by script only.  The settings can no longer be configured in-game with exception to setting current date and time.
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace Server.TimeSystem
             SetDefaultSeasons();
         }
 
-        private static void SetDefaultSettings(bool forceUpdate)
+        public static void SetDefaultSettings(bool forceUpdate)
         {
             Data.Enabled = true;
 
@@ -40,13 +40,15 @@ namespace Server.TimeSystem
             Data.TimerSpeed = 5.0;
             Data.MinutesPerTick = 1;
 
+            Data.LightsEngineTimerSpeed = 5.0;
+
             Data.UpdateInterval = 1000;
 
             Data.DayLevel = 8;
-            Data.NightLevel = 22;
+            Data.NightLevel = 24;
             Data.DarkestHourLevel = 28;
-            Data.LightsOnLevel = 9;
-            Data.MoonLevelAdjust = 6;
+            Data.LightsOnLevel = 10;
+            Data.MoonLevelAdjust = 15;
 
             Data.MinutesPerHour = 60;
             Data.HoursPerDay = 24;
@@ -59,9 +61,9 @@ namespace Server.TimeSystem
 
             if (forceUpdate || !Config.ForceScriptSettings)
             {
-                Data.Year = 100;
-                Data.Month = 1;
-                Data.Day = 1;
+                Data.Year = 2007;
+                Data.Month = 3;
+                Data.Day = 12;
                 Data.Hour = 0;
                 Data.Minute = 0;
             }
@@ -79,17 +81,18 @@ namespace Server.TimeSystem
 
             Data.UseAutoLighting = true;
             Data.UseRandomLightOutage = true;
-            Data.LightOutageChancePerTick = 10;
 
             Data.UseSeasons = true;
 
-            Data.UseNightSightDarkestHourOverride = false;
+            Data.UseNightSightDarkestHourOverride = true;
 
-            Data.UseNightSightOverride = true;
+            Data.UseNightSightOverride = false;
 
             Data.UseLightLevelOverride = true;
 
             Data.UseMurdererDarkestHourBonus = false;
+
+            Data.UseEvilSpawners = true;
 
             Data.TimeFormat = String.Format("{0} {1}", Data.TimeFormatPreset6, Data.TimeFormatMoonPhase);
             Data.ClockTimeFormat = Data.TimeFormatPreset1;
@@ -145,128 +148,11 @@ namespace Server.TimeSystem
 
         public static void SetDefaultEffects()
         {
-            Data.EffectsMapArray = new List<EffectsMapObject>();
-
-            lock (Data.EffectsMapArray)
-            {
-                EffectsMapObject emo = new EffectsMapObject(Map.Felucca, 0, 0, 5118, 4096);
-                emo.Priority = 0;
-                emo.UseLatitude = true;
-                emo.OuterLatitudePercent = 0.10;
-                emo.InnerLatitudePercent = 0.10;
-
-                Data.EffectsMapArray.Add(emo);
-
-                emo = new EffectsMapObject(Map.Felucca, 5119, 2303, 6144, 4096);
-                emo.Priority = 0;
-                emo.UseLatitude = true;
-                emo.OuterLatitudePercent = 0.10;
-                emo.InnerLatitudePercent = 0.10;
-
-                Data.EffectsMapArray.Add(emo);
-
-                emo = new EffectsMapObject(Map.Trammel, 0, 0, 5118, 4096);
-                emo.Priority = 0;
-                emo.UseLatitude = true;
-                emo.OuterLatitudePercent = 0.10;
-                emo.InnerLatitudePercent = 0.10;
-
-                Data.EffectsMapArray.Add(emo);
-
-                emo = new EffectsMapObject(Map.Trammel, 5119, 2303, 6144, 4096);
-                emo.Priority = 0;
-                emo.UseLatitude = true;
-                emo.OuterLatitudePercent = 0.10;
-                emo.InnerLatitudePercent = 0.10;
-
-                Data.EffectsMapArray.Add(emo);
-
-                emo = new EffectsMapObject(Map.Ilshenar, 0, 0, 2304, 1600);
-                emo.Priority = 0;
-                emo.UseLatitude = true;
-                emo.OuterLatitudePercent = 0.10;
-                emo.InnerLatitudePercent = 0.10;
-
-                Data.EffectsMapArray.Add(emo);
-
-                emo = new EffectsMapObject(Map.Malas, 512, 0, 2560, 2048);
-                emo.Priority = 0;
-                emo.UseLatitude = true;
-                emo.OuterLatitudePercent = 0.10;
-                emo.InnerLatitudePercent = 0.10;
-
-                Data.EffectsMapArray.Add(emo);
-
-                emo = new EffectsMapObject(Map.Tokuno, 0, 0, 1448, 1448);
-                emo.Priority = 0;
-                emo.UseLatitude = true;
-                emo.OuterLatitudePercent = 0.10;
-                emo.InnerLatitudePercent = 0.10;
-
-                Data.EffectsMapArray.Add(emo);
-
-                Support.ReIndexArray(Data.EffectsMapArray);
-            }
+            
         }
 
         public static void SetDefaultEffectsExclusions()
         {
-            Data.EffectsExclusionMapArray = new List<EffectsExclusionMapObject>();
-
-            lock (Data.EffectsExclusionMapArray)
-            {
-                EffectsExclusionMapObject eemo = new EffectsExclusionMapObject(Map.Ilshenar, 1750, 940, 1870, 1005);
-                eemo.Priority = 100;
-
-                Data.EffectsExclusionMapArray.Add(eemo);
-
-                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 1840, 0, 2280, 250);
-                eemo.Priority = 100;
-
-                Data.EffectsExclusionMapArray.Add(eemo);
-
-                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 1700, 0, 1839, 120);
-                eemo.Priority = 100;
-
-                Data.EffectsExclusionMapArray.Add(eemo);
-
-                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 1900, 800, 2304, 1600);
-                eemo.Priority = 100;
-
-                Data.EffectsExclusionMapArray.Add(eemo);
-
-                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 0, 0, 500, 170);
-                eemo.Priority = 100;
-
-                Data.EffectsExclusionMapArray.Add(eemo);
-
-                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 0, 600, 210, 800);
-                eemo.Priority = 100;
-
-                Data.EffectsExclusionMapArray.Add(eemo);
-
-                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 0, 805, 220, 1210);
-                eemo.Priority = 100;
-
-                Data.EffectsExclusionMapArray.Add(eemo);
-
-                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 0, 1215, 190, 1600);
-                eemo.Priority = 100;
-
-                Data.EffectsExclusionMapArray.Add(eemo);
-
-                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 200, 1490, 560, 1600);
-                eemo.Priority = 100;
-
-                Data.EffectsExclusionMapArray.Add(eemo);
-
-                eemo = new EffectsExclusionMapObject(Map.Ilshenar, 570, 1420, 1500, 1600);
-                eemo.Priority = 100;
-
-                Data.EffectsExclusionMapArray.Add(eemo);
-
-                Support.ReIndexArray(Data.EffectsExclusionMapArray);
-            }
         }
 
         public static void SetDefaultSeasons()
@@ -286,16 +172,17 @@ namespace Server.TimeSystem
         {
             emo.Priority = 0;
 
-            emo.Map = Map.Internal;
-
-            emo.X1 = -1;
-            emo.Y1 = -1;
-            emo.X2 = -1;
-            emo.Y2 = -1;
+            emo.Enabled = true;
 
             emo.UseLatitude = true;
             emo.OuterLatitudePercent = 0.10;
             emo.InnerLatitudePercent = 0.10;
+
+            emo.UseDarkestHour = true;
+
+            emo.UseAutoLighting = true;
+            emo.UseRandomLightOutage = true;
+            emo.LightOutageChancePerTick = 10;
 
             emo.UseNightSightDarkestHourOverride = true;
             emo.NightSightDarkestHourReduction = 100;
@@ -309,6 +196,8 @@ namespace Server.TimeSystem
             emo.UseMurdererDarkestHourBonus = false;
             emo.MurdererDarkestHourLevelBonus = 0;
 
+            emo.UseEvilSpawners = true;
+
             return emo;
         }
 
@@ -316,12 +205,7 @@ namespace Server.TimeSystem
         {
             eemo.Priority = 0;
 
-            eemo.Map = Map.Internal;
-
-            eemo.X1 = -1;
-            eemo.Y1 = -1;
-            eemo.X2 = -1;
-            eemo.Y2 = -1;
+            eemo.Enabled = true;
 
             return eemo;
         }
@@ -342,40 +226,6 @@ namespace Server.TimeSystem
         #endregion
 
         #region Set Variables
-
-        private static bool SetVariable(object o, Variable variable, object lowValue, object highValue, Type typeExpected, ref bool success, ref string message)
-        {
-            bool wrongType = true;
-
-            if (o != null && o.GetType().Name == typeExpected.Name)
-            {
-                wrongType = false;
-
-                if (o is int && (int)o >= (int)lowValue && (int)o <= (int)highValue)
-                {
-                    success = true;
-                }
-                else if (o is double && (double)o >= (double)lowValue && (double)o <= (double)highValue)
-                {
-                    success = true;
-                }
-                else if (o is bool)
-                {
-                    success = true;
-                }
-            }
-
-            if (wrongType)
-            {
-                message = Formatting.ErrorMessageFormatter(variable.ToString(), o, lowValue.ToString(), highValue.ToString(), typeExpected);
-            }
-            else if (!success)
-            {
-                message = Formatting.ErrorMessageFormatter(variable.ToString(), o, lowValue.ToString(), highValue.ToString());
-            }
-
-            return success;
-        }
 
         public static void SetVariable(Mobile mobile, CommandEventArgs e, bool append)
         {
@@ -467,7 +317,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.Logging:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.Logging = (bool)o;
                         }
@@ -481,7 +331,7 @@ namespace Server.TimeSystem
                             o = Convert.ToDouble(o);
                         }
 
-                        if (SetVariable(o, variable, (double)Data.MinTimerValue, (double)Data.MinutesPerHour, typeof(double), ref success, ref message))
+                        if (CheckVariable(o, variable, (double)Data.MinTimerValue, (double)Data.MinutesPerHour, typeof(double), ref success, ref message))
                         {
                             Data.TimerSpeed = (double)o;
                         }
@@ -490,16 +340,30 @@ namespace Server.TimeSystem
                     }
                 case Variable.MinutesPerTick:
                     {
-                        if (SetVariable(o, variable, 1, Data.MinutesPerHour, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, 1, Data.MinutesPerHour, typeof(int), ref success, ref message))
                         {
                             Data.MinutesPerTick = (int)o;
                         }
 
                         break;
                     }
+                case Variable.LightsEngineTimerSpeed:
+                    {
+                        if (o is int)
+                        {
+                            o = Convert.ToDouble(o);
+                        }
+
+                        if (CheckVariable(o, variable, (double)Data.MinTimerValue, (double)Data.MinutesPerHour, typeof(double), ref success, ref message))
+                        {
+                            Data.LightsEngineTimerSpeed = (double)o;
+                        }
+
+                        break;
+                    }
                 case Variable.UpdateInterval:
                     {
-                        if (SetVariable(o, variable, Data.MinUpdateInterval, Data.MaxUpdateInterval, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, Data.MinUpdateInterval, Data.MaxUpdateInterval, typeof(int), ref success, ref message))
                         {
                             Data.UpdateInterval = (int)o;
                         }
@@ -508,7 +372,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.DayLevel:
                     {
-                        if (SetVariable(o, variable, Data.MinLightLevel, Data.NightLevel - Data.MinLightLevelDifference, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, Data.MinLightLevel, Data.NightLevel - Data.MinLightLevelDifference, typeof(int), ref success, ref message))
                         {
                             Data.DayLevel = (int)o;
                         }
@@ -524,7 +388,7 @@ namespace Server.TimeSystem
                             highValue = Data.DarkestHourLevel - Data.MinDarkestHourNightLevelDifference;
                         }
 
-                        if (SetVariable(o, variable, Data.DayLevel + Data.MinLightLevelDifference, highValue, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, Data.DayLevel + Data.MinLightLevelDifference, highValue, typeof(int), ref success, ref message))
                         {
                             Data.NightLevel = (int)o;
                         }
@@ -533,7 +397,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.DarkestHourLevel:
                     {
-                        if (SetVariable(o, variable, Data.NightLevel + Data.MinDarkestHourNightLevelDifference, Data.MaxLightLevel, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, Data.NightLevel + Data.MinDarkestHourNightLevelDifference, Data.MaxLightLevel, typeof(int), ref success, ref message))
                         {
                             Data.DarkestHourLevel = (int)o;
                         }
@@ -542,7 +406,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.LightsOnLevel:
                     {
-                        if (SetVariable(o, variable, Data.MinLightLevel, Data.MaxLightLevel, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, Data.MinLightLevel, Data.MaxLightLevel, typeof(int), ref success, ref message))
                         {
                             Data.LightsOnLevel = (int)o;
                         }
@@ -551,7 +415,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.MoonLevelAdjust:
                     {
-                        if (SetVariable(o, variable, Data.MinLightLevel, Data.NightLevel, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, Data.MinLightLevel, Data.NightLevel, typeof(int), ref success, ref message))
                         {
                             Data.MoonLevelAdjust = (int)o;
                         }
@@ -560,7 +424,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.MinutesPerHour:
                     {
-                        if (SetVariable(o, variable, Data.MinMinutesPerHour, Data.MaxMinutesPerHour, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, Data.MinMinutesPerHour, Data.MaxMinutesPerHour, typeof(int), ref success, ref message))
                         {
                             Data.MinutesPerHour = (int)o;
                         }
@@ -569,7 +433,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.HoursPerDay:
                     {
-                        if (SetVariable(o, variable, Data.MinHoursPerDay, Data.MaxHoursPerDay, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, Data.MinHoursPerDay, Data.MaxHoursPerDay, typeof(int), ref success, ref message))
                         {
                             Data.HoursPerDay = (int)o;
 
@@ -701,7 +565,7 @@ namespace Server.TimeSystem
                             highValue = nightMinutesMinusDarkestHour;
                         }
 
-                        if (SetVariable(o, variable, lowValue, highValue, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, lowValue, highValue, typeof(int), ref success, ref message))
                         {
                             Data.NightStartMinute = (int)o;
                         }
@@ -816,7 +680,7 @@ namespace Server.TimeSystem
                             highValue = Data.NightStartMinute;
                         }
 
-                        if (SetVariable(o, variable, lowValue, highValue, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, lowValue, highValue, typeof(int), ref success, ref message))
                         {
                             Data.DayStartMinute = (int)o;
                         }
@@ -836,7 +700,7 @@ namespace Server.TimeSystem
                             highValue = Data.NightMinutes - Data.DayMinutes;
                         }
 
-                        if (SetVariable(o, variable, 0, highValue, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, 0, highValue, typeof(int), ref success, ref message))
                         {
                             Data.ScaleTimeMinutes = (int)o;
                         }
@@ -845,7 +709,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.Minute:
                     {
-                        if (SetVariable(o, variable, 0, Data.MinutesPerHour - 1, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, 0, Data.MinutesPerHour - 1, typeof(int), ref success, ref message))
                         {
                             Data.Minute = (int)o;
                         }
@@ -854,7 +718,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.Hour:
                     {
-                        if (SetVariable(o, variable, 0, Data.HoursPerDay - 1, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, 0, Data.HoursPerDay - 1, typeof(int), ref success, ref message))
                         {
                             Data.Hour = (int)o;
                         }
@@ -865,7 +729,7 @@ namespace Server.TimeSystem
                     {
                         MonthPropsObject mpo = Data.MonthsArray[Data.Month - 1];
 
-                        if (SetVariable(o, variable, 1, mpo.TotalDays, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, 1, mpo.TotalDays, typeof(int), ref success, ref message))
                         {
                             Data.Day = (int)o;
                         }
@@ -874,7 +738,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.Month:
                     {
-                        if (SetVariable(o, variable, 1, Data.MonthsArray.Count, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, 1, Data.MonthsArray.Count, typeof(int), ref success, ref message))
                         {
                             Data.Month = (int)o;
                         }
@@ -883,7 +747,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.Year:
                     {
-                        if (SetVariable(o, variable, 0, int.MaxValue, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, 0, int.MaxValue, typeof(int), ref success, ref message))
                         {
                             Data.Year = (int)o;
                         }
@@ -892,7 +756,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.UseDarkestHour:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.UseDarkestHour = (bool)o;
                         }
@@ -901,7 +765,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.DarkestHourMinutesAfterNight:
                     {
-                        if (SetVariable(o, variable, 0, Data.NightMinutes - Data.DarkestHourTotalMinutes, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, 0, Data.NightMinutes - Data.DarkestHourTotalMinutes, typeof(int), ref success, ref message))
                         {
                             Data.DarkestHourMinutesAfterNight = (int)o;
                         }
@@ -912,7 +776,7 @@ namespace Server.TimeSystem
                     {
                         int highValue = Convert.ToInt32((((double)Data.NightMinutes - Data.DarkestHourLength) / 2.0) - Data.DarkestHourMinutesAfterNight);
 
-                        if (SetVariable(o, variable, 0, highValue, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, 0, highValue, typeof(int), ref success, ref message))
                         {
                             Data.DarkestHourScaleTimeMinutes = (int)o;
                         }
@@ -923,7 +787,7 @@ namespace Server.TimeSystem
                     {
                         int highValue = Data.NightMinutes - (Data.ScaleTimeMinutes * 2) - Data.DarkestHourMinutesAfterNight;
 
-                        if (SetVariable(o, variable, 0, highValue, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, 0, highValue, typeof(int), ref success, ref message))
                         {
                             Data.DarkestHourLength = (int)o;
                         }
@@ -932,7 +796,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.UseRealTime:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.UseRealTime = (bool)o;
                         }
@@ -941,7 +805,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.UseTimeZones:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.UseTimeZones = (bool)o;
                         }
@@ -950,7 +814,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.TimeZoneXDivisor:
                     {
-                        if (SetVariable(o, variable, Data.MinTimeZoneXDivisor, Data.MaxTimeZoneXDivisor, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, Data.MinTimeZoneXDivisor, Data.MaxTimeZoneXDivisor, typeof(int), ref success, ref message))
                         {
                             Data.TimeZoneXDivisor = (int)o;
                         }
@@ -959,7 +823,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.TimeZoneScaleMinutes:
                     {
-                        if (SetVariable(o, variable, Data.MinTimeZoneScaleMinutes, Data.MaxTimeZoneScaleMinutes, typeof(int), ref success, ref message))
+                        if (CheckVariable(o, variable, Data.MinTimeZoneScaleMinutes, Data.MaxTimeZoneScaleMinutes, typeof(int), ref success, ref message))
                         {
                             Data.TimeZoneScaleMinutes = (int)o;
                         }
@@ -968,7 +832,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.UseAutoLighting:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.UseAutoLighting = (bool)o;
                         }
@@ -977,25 +841,16 @@ namespace Server.TimeSystem
                     }
                 case Variable.UseRandomLightOutage:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.UseRandomLightOutage = (bool)o;
                         }
 
                         break;
                     }
-                case Variable.LightOutageChancePerTick:
-                    {
-                        if (SetVariable(o, variable, 1, 100, typeof(int), ref success, ref message))
-                        {
-                            Data.LightOutageChancePerTick = (int)o;
-                        }
-
-                        break;
-                    }
                 case Variable.UseSeasons:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.UseSeasons = (bool)o;
                         }
@@ -1004,7 +859,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.UseNightSightDarkestHourOverride:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.UseNightSightDarkestHourOverride = (bool)o;
                         }
@@ -1013,7 +868,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.UseNightSightOverride:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.UseNightSightOverride = (bool)o;
                         }
@@ -1022,7 +877,7 @@ namespace Server.TimeSystem
                     }
                 case Variable.UseLightLevelOverride:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.UseLightLevelOverride = (bool)o;
                         }
@@ -1031,9 +886,25 @@ namespace Server.TimeSystem
                     }
                 case Variable.UseMurdererDarkestHourBonus:
                     {
-                        if (SetVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
                         {
                             Data.UseMurdererDarkestHourBonus = (bool)o;
+                        }
+
+                        break;
+                    }
+                case Variable.UseEvilSpawners:
+                    {
+                        if (CheckVariable(o, variable, false, true, typeof(bool), ref success, ref message))
+                        {
+                            bool enabled = (bool)o;
+
+                            if (!enabled && Data.UseEvilSpawners)
+                            {
+                                EffectsEngine.TurnOffAllEvilSpawners();
+                            }
+
+                            Data.UseEvilSpawners = enabled;
                         }
 
                         break;
@@ -1191,6 +1062,14 @@ namespace Server.TimeSystem
                 case Variable.MinutesPerTick:
                     {
                         message = Formatting.VariableMessageFormatter(variable.ToString(), Data.MinutesPerTick.ToString());
+
+                        success = true;
+
+                        break;
+                    }
+                case Variable.LightsEngineTimerSpeed:
+                    {
+                        message = Formatting.VariableMessageFormatter(variable.ToString(), Data.LightsEngineTimerSpeed.ToString());
 
                         success = true;
 
@@ -1420,14 +1299,6 @@ namespace Server.TimeSystem
 
                         break;
                     }
-                case Variable.LightOutageChancePerTick:
-                    {
-                        message = Formatting.VariableMessageFormatter(variable.ToString(), Data.LightOutageChancePerTick.ToString());
-
-                        success = true;
-
-                        break;
-                    }
                 case Variable.UseSeasons:
                     {
                         message = Formatting.VariableMessageFormatter(variable.ToString(), Data.UseSeasons.ToString());
@@ -1463,6 +1334,14 @@ namespace Server.TimeSystem
                 case Variable.UseMurdererDarkestHourBonus:
                     {
                         message = Formatting.VariableMessageFormatter(variable.ToString(), Data.UseMurdererDarkestHourBonus.ToString());
+
+                        success = true;
+
+                        break;
+                    }
+                case Variable.UseEvilSpawners:
+                    {
+                        message = Formatting.VariableMessageFormatter(variable.ToString(), Data.UseEvilSpawners.ToString());
 
                         success = true;
 
@@ -1504,6 +1383,57 @@ namespace Server.TimeSystem
             vo.Message = message;
 
             return vo;
+        }
+
+        #endregion
+
+        #region Check Methods
+
+        public static bool CheckVariable(object o, object var, object lowValue, object highValue, Type typeExpected, ref bool success, ref string message)
+        {
+            bool wrongType = true;
+
+            success = false;
+
+            if (o != null && o.GetType().Name == typeExpected.Name)
+            {
+                wrongType = false;
+
+                if (o is int && (int)o >= (int)lowValue && (int)o <= (int)highValue)
+                {
+                    success = true;
+                }
+                else if (o is double && (double)o >= (double)lowValue && (double)o <= (double)highValue)
+                {
+                    success = true;
+                }
+                else if (o is bool)
+                {
+                    success = true;
+                }
+            }
+
+            string variable = String.Empty;
+
+            if (var is Variable)
+            {
+                variable = ((Variable)var).ToString();
+            }
+            else if (var is string)
+            {
+                variable = (string)var;
+            }
+
+            if (wrongType)
+            {
+                message = Formatting.ErrorMessageFormatter(variable, o, lowValue.ToString(), highValue.ToString(), typeExpected);
+            }
+            else if (!success)
+            {
+                message = Formatting.ErrorMessageFormatter(variable, o, lowValue.ToString(), highValue.ToString());
+            }
+
+            return success;
         }
 
         #endregion

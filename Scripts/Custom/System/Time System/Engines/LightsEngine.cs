@@ -7,18 +7,26 @@ namespace Server.TimeSystem
 {
     public class LightsEngine
     {
-        #region Defrag Lights
+        #region Get Methods
 
-        public static bool DefragLightsList(BaseLight baseLight)
+        private static bool IsDefraggable(BaseLight baseLight)
         {
-            if (baseLight == null || baseLight.Deleted || (baseLight is TSBaseLight && !((TSBaseLight)baseLight).UseAutoLighting))
+            if (baseLight == null || baseLight.Deleted)
             {
-                Data.LightsList.Remove(baseLight);
-
                 return true;
             }
 
             return false;
+        }
+
+        private static bool IsControllable(BaseLight baseLight, EffectsObject eo)
+        {
+            if (!Data.UseAutoLighting || eo == null || eo.EffectsMap == null || !eo.EffectsMap.UseAutoLighting || (baseLight is TSBaseLight && !((TSBaseLight)baseLight).UseAutoLighting))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
@@ -32,37 +40,41 @@ namespace Server.TimeSystem
                 return;
             }
 
-            if (Data.UseTimeZones)
+            bool defragged = false;
+
+            lock (Data.LightsList)
             {
-                lock (Data.LightsList)
+                for (int i = 0; i < Data.LightsList.Count; i++)
                 {
-                    bool defragged = false;
+                    BaseLight baseLight = Data.LightsList[i];
 
-                    for (int i = 0; i < Data.LightsList.Count; i++)
+                    EffectsObject eo = EffectsEngine.GetEffects(baseLight, false);
+
+                    if (IsDefraggable(baseLight))
                     {
-                        BaseLight baseLight = (BaseLight)Data.LightsList[i];
+                        defragged = true;
 
-                        if (DefragLightsList(baseLight))
-                        {
-                            defragged = true;
+                        Data.LightsList.Remove(baseLight);
 
-                            i--;
-                        }
-                        else
+                        i--;
+                    }
+                    else if (!IsControllable(baseLight, eo))
+                    {
+                        if (!baseLight.Burning)
                         {
-                            TimeEngine.CalculateLightLevel(baseLight);
+                            baseLight.Ignite();
                         }
                     }
-
-                    if (defragged)
+                    else
                     {
-                        Data.LightsList.TrimExcess();
+                        TimeEngine.CalculateLightLevel(baseLight, eo);
                     }
                 }
             }
-            else
+
+            if (defragged)
             {
-                UpdateAllManagedLights();
+                Data.LightsList.TrimExcess();
             }
         }
 
@@ -86,31 +98,11 @@ namespace Server.TimeSystem
                             {
                                 BaseLight baseLight = (BaseLight)item;
 
-                                bool addLight = true;
-
-                                if (baseLight is TSBaseLight && !((TSBaseLight)baseLight).UseAutoLighting)
-                                {
-                                    addLight = false;
-                                }
-
-                                if (addLight)
-                                {
-                                    Data.LightsList.Add(baseLight);
-
-                                    if (Data.UseTimeZones)
-                                    {
-                                        TimeEngine.CalculateLightLevel(baseLight);
-                                    }
-                                }
+                                Data.LightsList.Add(baseLight);
                             }
                         }
                     }
                 }
-            }
-
-            if (!Data.UseTimeZones)
-            {
-                UpdateAllManagedLights();
             }
 
             Support.ConsoleWriteLine(String.Format("Time System: Calculated managed lights list and found {0} light{1}.", Data.LightsList.Count, Data.LightsList.Count == 1 ? "" : "s"));
@@ -118,11 +110,6 @@ namespace Server.TimeSystem
 
         public static void UpdateManagedLight(BaseLight baseLight, int currentLevel)
         {
-            if (DefragLightsList(baseLight))
-            {
-                return;
-            }
-
             if (currentLevel >= Data.LightsOnLevel && !baseLight.Burning)
             {
                 baseLight.Ignite();
@@ -133,114 +120,19 @@ namespace Server.TimeSystem
             }
         }
 
-        public static void UpdateAllManagedLights()
-        {
-            if (Data.LightsList == null)
-            {
-                return;
-            }
-
-            TimeEngine.CalculateLightLevel(null);
-
-            if (Data.BaseLightLevel >= Data.LightsOnLevel)
-            {
-                lock (Data.LightsList)
-                {
-                    bool defragged = false;
-
-                    for (int i = 0; i < Data.LightsList.Count; i++)
-                    {
-                        BaseLight baseLight = (BaseLight)Data.LightsList[i];
-
-                        if (DefragLightsList(baseLight))
-                        {
-                            defragged = true;
-
-                            i--;
-                        }
-                        else
-                        {
-                            if (!baseLight.Burning)
-                            {
-                                baseLight.Ignite();
-                            }
-                        }
-                    }
-
-                    if (defragged)
-                    {
-                        Data.LightsList.TrimExcess();
-                    }
-                }
-            }
-            else if (Data.BaseLightLevel < Data.LightsOnLevel)
-            {
-                lock (Data.LightsList)
-                {
-                    bool defragged = false;
-
-                    for (int i = 0; i < Data.LightsList.Count; i++)
-                    {
-                        BaseLight baseLight = (BaseLight)Data.LightsList[i];
-
-                        if (DefragLightsList(baseLight))
-                        {
-                            defragged = true;
-
-                            i--;
-                        }
-                        else
-                        {
-                            if (baseLight.Burning)
-                            {
-                                baseLight.Douse();
-                            }
-                        }
-                    }
-
-                    if (defragged)
-                    {
-                        Data.LightsList.TrimExcess();
-                    }
-                }
-            }
-        }
-
-        public static void TurnOnAllWorldLights()
-        {
-            foreach (Item item in World.Items.Values)
-            {
-                if (item is BaseLight)
-                {
-                    for (int i = 0; i < Data.ItemLightTypes.Length; i++)
-                    {
-                        if (item.GetType() == Data.ItemLightTypes[i])
-                        {
-                            BaseLight baseLight = (BaseLight)item;
-
-                            if (!baseLight.Deleted)
-                            {
-                                baseLight.Ignite();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         #endregion
 
         #region Calculation Methods
 
-        public static void CalculateLightOutage(BaseLight baseLight)
+        public static void CalculateLightOutage(BaseLight baseLight, EffectsObject eo)
         {
-            if (baseLight == null || !Data.UseAutoLighting || !Data.UseRandomLightOutage || DefragLightsList(baseLight) || (baseLight is TSBaseLight && !((TSBaseLight)baseLight).UseRandomLightOutage))
+            if (!Data.UseRandomLightOutage || IsDefraggable(baseLight) || !IsControllable(baseLight, eo) || !eo.EffectsMap.UseRandomLightOutage || (baseLight is TSBaseLight && !((TSBaseLight)baseLight).UseRandomLightOutage))
             {
                 return;
             }
 
-            int lowNumber = Support.GetRandom(0, (100 - Data.LightOutageChancePerTick));
-            int highNumber = lowNumber + Data.LightOutageChancePerTick;
+            int lowNumber = Support.GetRandom(0, (100 - eo.EffectsMap.LightOutageChancePerTick));
+            int highNumber = lowNumber + eo.EffectsMap.LightOutageChancePerTick;
 
             int randomChance = Support.GetRandom(0, 100);
 
