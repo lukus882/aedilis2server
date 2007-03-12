@@ -19,11 +19,15 @@ namespace Server.TimeSystem
 
         private int m_Index;
 
+        private bool m_Enabled;
+
         #endregion
 
         #region Public Variables
 
         public int Index { get { return m_Index; } set { m_Index = value; } }
+
+        public bool Enabled { get { return m_Enabled; } set { m_Enabled = value; } }
 
         #endregion
     }

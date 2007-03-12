@@ -12,8 +12,6 @@ namespace Server.TimeSystem
         {
             try
             {
-                int useless = 0;
-
                 Config.SetDefaults(true);
 
                 if (version >= 1)
@@ -27,17 +25,17 @@ namespace Server.TimeSystem
 
                     Data.UseAutoLighting = reader.ReadBoolean();
                     Data.UseRandomLightOutage = reader.ReadBoolean();
-                    Data.LightOutageChancePerTick = reader.ReadInt32();
-                    useless = reader.ReadInt32();
-                    useless = reader.ReadInt32();
+                    reader.ReadInt32();
+                    reader.ReadInt32();
+                    reader.ReadInt32();
 
                     Data.TimerSpeed = reader.ReadDouble();
                     Data.MinutesPerTick = reader.ReadInt32();
 
                     Data.MinutesPerHour = reader.ReadInt32();
                     Data.HoursPerDay = reader.ReadInt32();
-                    useless = reader.ReadInt32();
-                    useless = reader.ReadInt32();
+                    reader.ReadInt32();
+                    reader.ReadInt32();
 
                     Data.NightStartHour = reader.ReadInt32();
                     Data.DayStartHour = reader.ReadInt32();
@@ -48,8 +46,8 @@ namespace Server.TimeSystem
                     Data.DarkestHourScaleTimeMinutes = reader.ReadInt32();
                     Data.DarkestHourLength = reader.ReadInt32();
 
-                    useless = reader.ReadInt32();
-                    useless = reader.ReadInt32();
+                    reader.ReadInt32();
+                    reader.ReadInt32();
                     Data.MoonLevelAdjust = reader.ReadInt32();
 
                     Data.Year = reader.ReadInt32();
@@ -84,7 +82,7 @@ namespace Server.TimeSystem
 
                 Data.DataFileInUse = false;
 
-                Support.ConsoleWriteLine(String.Format("Time System: \"{0}\" is corrupt.  Creating a new file using the current settings.", Data.DataFileName));
+                Support.ConsoleWriteLine(String.Format("Time System: \"{0}\" is corrupt.  Creating a new file using the current settings.\r\n\r\nException:\r\n\r\n{1}\r\n", Data.DataFileName, e.ToString()));
 
                 Config.SetDefaults(true);
 
@@ -102,7 +100,7 @@ namespace Server.TimeSystem
 
                 Data.DataFileInUse = false;
 
-                Support.ConsoleWriteLine(String.Format("Time System: Unable to load data from file \"{0}\"!  Creating a new file using the current settings.\r\n\r\nException:\r\n\r\n{1}", Data.DataFileName, e.ToString()));
+                Support.ConsoleWriteLine(String.Format("Time System: Unable to load data from file \"{0}\"!  Creating a new file using the current settings.\r\n\r\nException:\r\n\r\n{1}\r\n", Data.DataFileName, e.ToString()));
 
                 Config.SetDefaults(true);
 

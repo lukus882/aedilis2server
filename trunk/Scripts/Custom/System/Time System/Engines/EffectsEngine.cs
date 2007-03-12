@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Server;
+using Server.Mobiles;
 using Server.Network;
 
 namespace Server.TimeSystem
@@ -35,6 +36,19 @@ namespace Server.TimeSystem
             }
         }
 
+        public static void TurnOffAllEvilSpawners()
+        {
+            for (int i = 0; i < Data.EvilSpawnersList.Count; i++)
+            {
+                EvilSpawner es = Data.EvilSpawnersList[i];
+
+                if (es.Active)
+                {
+                    es.Active = false;
+                }
+            }
+        }
+
         #endregion
 
         #region Get Methods
@@ -55,14 +69,14 @@ namespace Server.TimeSystem
             eo.EffectsMap = null;
             eo.EffectsExclusionMap = null;
 
-            List<EffectsMapObject> emoArray = GetEffectsMapArray(map, x, y);
+            List<EffectsMapObject> emoArray = GetEffectsMapArray(map, x, y, false);
 
             if (emoArray.Count > 0)
             {
                 eo.EffectsMap = emoArray[0];
             }
 
-            List<EffectsExclusionMapObject> eemoArray = GetEffectsExclusionMapArray(map, x, y);
+            List<EffectsExclusionMapObject> eemoArray = GetEffectsExclusionMapArray(map, x, y, false);
 
             if (eemoArray.Count > 0)
             {
@@ -114,12 +128,16 @@ namespace Server.TimeSystem
             EffectsObject eo = GetEffects(mobile, false);
             MobileObject mo = Support.GetMobileObject(mobile);
 
+            bool setLevel = false;
+
             if (Data.UseNightSightDarkestHourOverride)
             {
                 if (eo.EffectsMap != null && eo.EffectsMap.UseNightSightDarkestHourOverride)
                 {
                     if (mo != null && mo.IsDarkestHour)
                     {
+                        setLevel = true;
+
                         if (eo.EffectsMap.NightSightDarkestHourReduction < 100)
                         {
                             level = (int)((double)level * ((double)(100 - eo.EffectsMap.NightSightDarkestHourReduction) / 100));
@@ -137,7 +155,7 @@ namespace Server.TimeSystem
                 }
             }
 
-            if (level > -1 && Data.UseNightSightOverride)
+            if (!setLevel && Data.UseNightSightOverride)
             {
                 if (eo.EffectsMap != null && eo.EffectsMap.UseNightSightOverride)
                 {
@@ -160,7 +178,7 @@ namespace Server.TimeSystem
             return level;
         }
 
-        public static List<EffectsMapObject> GetEffectsMapArray(Map map, int x, int y)
+        public static List<EffectsMapObject> GetEffectsMapArray(Map map, int x, int y, bool includeDisabled)
         {
             List<EffectsMapObject> emoArray = new List<EffectsMapObject>();
 
@@ -170,7 +188,10 @@ namespace Server.TimeSystem
 
                 if (emo.IsIn(map, x, y))
                 {
-                    emoArray.Add(emo);
+                    if ((includeDisabled && !emo.Enabled) || emo.Enabled)
+                    {
+                        emoArray.Add(emo);
+                    }
                 }
             }
 
@@ -179,7 +200,7 @@ namespace Server.TimeSystem
             return emoArray;
         }
 
-        public static List<EffectsExclusionMapObject> GetEffectsExclusionMapArray(Map map, int x, int y)
+        public static List<EffectsExclusionMapObject> GetEffectsExclusionMapArray(Map map, int x, int y, bool includeDisabled)
         {
             List<EffectsExclusionMapObject> eemoArray = new List<EffectsExclusionMapObject>();
 
@@ -189,7 +210,10 @@ namespace Server.TimeSystem
 
                 if (eemo.IsIn(map, x, y))
                 {
-                    eemoArray.Add(eemo);
+                    if ((includeDisabled && !eemo.Enabled) || eemo.Enabled)
+                    {
+                        eemoArray.Add(eemo);
+                    }
                 }
             }
 
@@ -262,7 +286,7 @@ namespace Server.TimeSystem
         {
             Mobile mobile = mo.Mobile;
 
-            if (eo.EffectsMap != null)
+            if (eo != null && eo.EffectsMap != null)
             {
                 if (checkSeason && Data.UseSeasons && eo.EffectsMap.UseSeasons)
                 {
@@ -313,7 +337,7 @@ namespace Server.TimeSystem
                             }
                         }
 
-                        if (!mo.IsDarkestHour && Data.UseNightSightOverride && mo.IsNightSightOn)
+                        if (Data.UseNightSightOverride && !mo.IsDarkestHour && mo.IsNightSightOn)
                         {
                             if (eo.EffectsMap.UseNightSightOverride)
                             {
@@ -350,9 +374,51 @@ namespace Server.TimeSystem
             }
             else
             {
-                if (checkNightSight && mo.IsNightSightOn && mobile.LightLevel < mo.OldLightLevel)
+                if (checkNightSight && mo.IsNightSightOn && mobile.LightLevel != mo.OldLightLevel)
                 {
                     mobile.LightLevel = mo.OldLightLevel;
+                }
+            }
+        }
+
+        public static void CheckEvilSpawners()
+        {
+            if (!Data.UseEvilSpawners)
+            {
+                return;
+            }
+
+            lock (Data.EvilSpawnersList)
+            {
+                for (int i = 0; i < Data.EvilSpawnersList.Count; i++)
+                {
+                    EvilSpawner es = Data.EvilSpawnersList[i];
+
+                    if (es.Enabled)
+                    {
+                        EffectsObject eo = GetEffects(es, false);
+
+                        if (eo.EffectsMap != null && eo.EffectsMap.UseEvilSpawners)
+                        {
+                            bool isDarkestHour = TimeEngine.IsDarkestHour(es, eo);
+
+                            if (isDarkestHour && !es.Active)
+                            {
+                                es.Active = true;
+                            }
+                            else if (!isDarkestHour && es.Active)
+                            {
+                                es.Active = false;
+                            }
+                        }
+                        else
+                        {
+                            if (es.Active)
+                            {
+                                es.Active = false;
+                            }
+                        }
+                    }
                 }
             }
         }

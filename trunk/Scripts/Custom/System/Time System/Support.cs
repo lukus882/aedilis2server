@@ -596,13 +596,18 @@ namespace Server.TimeSystem
             {
                 Map map = Map.Maps[i];
 
-                string name = map.Name.ToLower();
+                string name = String.Empty;
 
-                if (name == mapName.ToLower())
+                if (map != null)
                 {
-                    if ((map != Map.Internal) || (map == Map.Internal && includeInternal))
+                    name = map.Name.ToLower();
+
+                    if (name == mapName.ToLower())
                     {
-                        return map;
+                        if ((map != Map.Internal) || (map == Map.Internal && includeInternal))
+                        {
+                            return map;
+                        }
                     }
                 }
             }
@@ -618,9 +623,7 @@ namespace Server.TimeSystem
             {
                 Map map = Map.Maps[i];
 
-                string name = map.Name.ToLower();
-
-                if ((map != Map.Internal) || (map == Map.Internal && includeInternal))
+                if (map != null && (map != Map.Internal || (map == Map.Internal && includeInternal)))
                 {
                     list.Add(map.Name);
                 }
@@ -681,16 +684,14 @@ namespace Server.TimeSystem
 
         public static MobileObject GetMobileObject(Mobile mobile)
         {
-            object mo = Data.MobilesTable[mobile];
+            MobileObject mo = null;
 
-            if (mo != null)
+            if (mobile.NetState != null)
             {
-                return (MobileObject)mo;
+                Data.MobilesTable.TryGetValue(mobile, out mo);
             }
-            else
-            {
-                return null;
-            }
+
+            return mo;
         }
 
         #endregion
@@ -749,7 +750,9 @@ namespace Server.TimeSystem
 
         public static bool CheckForceScriptSettings(ref VariableObject vo, string reference)
         {
-            if (Config.ForceScriptSettings)
+            bool forceScriptSettings = Config.ForceScriptSettings;
+
+            if (forceScriptSettings)
             {
                 vo.Success = false;
                 vo.Message = String.Format("ForceScriptSettings is set to true.  You are unable to make changes to [{0}] in-game.", reference);
@@ -834,12 +837,12 @@ namespace Server.TimeSystem
                     }
                 }
 
-                if (o is MonthPropsObject && lo is MonthPropsObject)
+                if (lo is MonthPropsObject && o is string)
                 {
-                    MonthPropsObject oValue = (MonthPropsObject)o;
+                    string oValue = (string)o;
                     MonthPropsObject loValue = (MonthPropsObject)lo;
 
-                    if (oValue.Name.ToLower() == loValue.Name.ToLower())
+                    if ((!caseSensitive && oValue.ToLower() == loValue.Name.ToLower()) || (caseSensitive && oValue == loValue.Name))
                     {
                         vo.Success = false;
 
@@ -849,12 +852,12 @@ namespace Server.TimeSystem
                     }
                 }
 
-                if (o is MoonPropsObject && lo is MoonPropsObject)
+                if (lo is MoonPropsObject && o is string)
                 {
-                    MoonPropsObject oValue = (MoonPropsObject)o;
+                    string oValue = (string)o;
                     MoonPropsObject loValue = (MoonPropsObject)lo;
 
-                    if (oValue.Name.ToLower() == loValue.Name.ToLower())
+                    if ((!caseSensitive && oValue.ToLower() == loValue.Name.ToLower()) || (caseSensitive && oValue == loValue.Name))
                     {
                         vo.Success = false;
 
@@ -974,7 +977,7 @@ namespace Server.TimeSystem
             {
                 BaseLight baseLight = (BaseLight)Data.LightsList[i];
 
-                if (LightsEngine.DefragLightsList(baseLight))
+                if (baseLight == null || baseLight.Deleted)
                 {
                     i--;
                 }

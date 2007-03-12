@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Server;
+using Server.Mobiles;
 using Server.Network;
 using Server.Items;
 
@@ -12,8 +13,8 @@ namespace Server.TimeSystem
     {
         #region Constant Variables
 
-        public const string Version = "2.0.3"; // Current version of the Time System.
-        public const int BinaryVersion = 4; // The version number used in the data file.
+        public const string Version = "2.0.5"; // Current version of the Time System.
+        public const int BinaryVersion = 5; // The version number used in the data file.
 
         public static readonly bool ForceScriptSettings = false; // Set to true to have settings configured by script only.  The settings can no longer be configured in-game.
 
@@ -83,10 +84,12 @@ namespace Server.TimeSystem
         // your changes to the Set Variables region.
 
         private static bool m_Enabled;
-        private static bool m_Logging = false;
+        private static bool m_Logging = true;
 
-        private static double m_TimerSpeed; // How many seconds between ticks.
-        private static int m_MinutesPerTick; // Minutes added per tick of timer
+        private static double m_TimerSpeed; // How many seconds between ticks on master timer.
+        private static int m_MinutesPerTick; // Minutes added per tick of timer.
+
+        private static double m_LightsEngineTimerSpeed; // How many seconds between ticks on lights engine timer.
 
         private static int m_UpdateInterval; // How many milliseconds are allowed between updates.  Reduces lag.
 
@@ -124,7 +127,6 @@ namespace Server.TimeSystem
 
         private static bool m_UseAutoLighting; // If true, specific lampposts will turn on/off when light level >= m_LightsOnLevel.
         private static bool m_UseRandomLightOutage; // If true, random lights turn on/off during the darkest hour.
-        private static int m_LightOutageChancePerTick;
 
         private static bool m_UseSeasons;
 
@@ -135,6 +137,8 @@ namespace Server.TimeSystem
         private static bool m_UseLightLevelOverride;
 
         private static bool m_UseMurdererDarkestHourBonus;
+
+        private static bool m_UseEvilSpawners;
 
         private static string m_TimeFormat;
         private static string m_ClockTimeFormat;
@@ -155,9 +159,10 @@ namespace Server.TimeSystem
 
         private static int m_BaseLightLevel;
 
-        private static Hashtable m_MobilesTable = new Hashtable();
+        private static Dictionary<Mobile, MobileObject> m_MobilesTable = new Dictionary<Mobile, MobileObject>();
 
         private static List<BaseLight> m_LightsList;
+        private static List<EvilSpawner> m_EvilSpawnersList = new List<EvilSpawner>();
 
         #endregion
 
@@ -184,6 +189,8 @@ namespace Server.TimeSystem
 
         public static double TimerSpeed { get { return m_TimerSpeed; } set { m_TimerSpeed = value; } }
         public static int MinutesPerTick { get { return m_MinutesPerTick; } set { m_MinutesPerTick = value; } }
+
+        public static double LightsEngineTimerSpeed { get { return m_LightsEngineTimerSpeed; } set { m_LightsEngineTimerSpeed = value; } }
 
         public static int UpdateInterval { get { return m_UpdateInterval; } set { m_UpdateInterval = value; } }
 
@@ -219,21 +226,8 @@ namespace Server.TimeSystem
         public static int TimeZoneXDivisor { get { return m_TimeZoneXDivisor; } set { m_TimeZoneXDivisor = value; } }
         public static int TimeZoneScaleMinutes { get { return m_TimeZoneScaleMinutes; } set { m_TimeZoneScaleMinutes = value; } }
 
-        public static bool UseAutoLighting
-        {
-            get { return m_UseAutoLighting; }
-            set
-            {
-                m_UseAutoLighting = value;
-
-                if (!value)
-                {
-                    LightsEngine.TurnOnAllWorldLights();
-                }
-            }
-        }
+        public static bool UseAutoLighting { get { return m_UseAutoLighting; } set { m_UseAutoLighting = value; } }
         public static bool UseRandomLightOutage { get { return m_UseRandomLightOutage; } set { m_UseRandomLightOutage = value; } }
-        public static int LightOutageChancePerTick { get { return m_LightOutageChancePerTick; } set { m_LightOutageChancePerTick = value; } }
 
         public static bool UseSeasons { get { return m_UseSeasons; } set { m_UseSeasons = value; } }
 
@@ -244,6 +238,8 @@ namespace Server.TimeSystem
         public static bool UseLightLevelOverride { get { return m_UseLightLevelOverride; } set { m_UseLightLevelOverride = value; } }
 
         public static bool UseMurdererDarkestHourBonus { get { return m_UseMurdererDarkestHourBonus; } set { m_UseMurdererDarkestHourBonus = value; } }
+
+        public static bool UseEvilSpawners { get { return m_UseEvilSpawners; } set { m_UseEvilSpawners = value; } }
 
         public static string TimeFormat { get { return m_TimeFormat; } set { m_TimeFormat = value; } }
         public static string ClockTimeFormat { get { return m_ClockTimeFormat; } set { m_ClockTimeFormat = value; } }
@@ -264,9 +260,10 @@ namespace Server.TimeSystem
 
         public static int BaseLightLevel { get { return m_BaseLightLevel; } set { m_BaseLightLevel = value; } }
 
-        public static Hashtable MobilesTable { get { return m_MobilesTable; } set { m_MobilesTable = value; } }
+        public static Dictionary<Mobile, MobileObject> MobilesTable { get { return m_MobilesTable; } set { m_MobilesTable = value; } }
 
         public static List<BaseLight> LightsList { get { return m_LightsList; } set { m_LightsList = value; } }
+        public static List<EvilSpawner> EvilSpawnersList { get { return m_EvilSpawnersList; } set { m_EvilSpawnersList = value; } }
 
         #endregion
 
@@ -370,6 +367,8 @@ namespace Server.TimeSystem
 
                         Support.WipeAllArrays();
 
+                        Config.SetDefaultSettings(true);
+
                         int version = reader.ReadInt32();
 
                         if (version < 3)
@@ -379,6 +378,14 @@ namespace Server.TimeSystem
 
                         switch (version)
                         {
+                            case 5:
+                                {
+                                    m_LightsEngineTimerSpeed = reader.ReadDouble();
+
+                                    m_UseEvilSpawners = reader.ReadBoolean();
+
+                                    goto case 4;
+                                }
                             case 4:
                                 {
                                     m_Logging = reader.ReadBoolean();
@@ -432,7 +439,11 @@ namespace Server.TimeSystem
 
                                     m_UseAutoLighting = reader.ReadBoolean();
                                     m_UseRandomLightOutage = reader.ReadBoolean();
-                                    m_LightOutageChancePerTick = reader.ReadInt32();
+
+                                    if (version < 5)
+                                    {
+                                        reader.ReadInt32();
+                                    }
 
                                     m_UseSeasons = reader.ReadBoolean();
 
@@ -517,16 +528,26 @@ namespace Server.TimeSystem
                                             int x2 = reader.ReadInt32();
                                             int y2 = reader.ReadInt32();
 
-                                            EffectsMapObject emo = new EffectsMapObject(map, x1, y1, x2, y2);
+                                            EffectsMapObject emo = Config.SetDefaultEffectsValues(new EffectsMapObject(map, x1, y1, x2, y2));
 
                                             emo.Priority = priority;
+
+                                            if (version > 4)
+                                            {
+                                                emo.Index = reader.ReadInt32();
+
+                                                emo.Enabled = reader.ReadBoolean();
+                                            }
 
                                             emo.UseLatitude = reader.ReadBoolean();
 
                                             emo.OuterLatitudePercent = reader.ReadDouble();
                                             emo.InnerLatitudePercent = reader.ReadDouble();
 
-                                            emo.Index = reader.ReadInt32();
+                                            if (version < 5)
+                                            {
+                                                emo.Index = reader.ReadInt32();
+                                            }
 
                                             emo.UseSeasons = reader.ReadBoolean();
 
@@ -543,6 +564,15 @@ namespace Server.TimeSystem
 
                                             emo.WinterDate.Month = reader.ReadInt32();
                                             emo.WinterDate.Day = reader.ReadInt32();
+
+                                            if (version > 4)
+                                            {
+                                                emo.UseDarkestHour = reader.ReadBoolean();
+
+                                                emo.UseAutoLighting = reader.ReadBoolean();
+                                                emo.UseRandomLightOutage = reader.ReadBoolean();
+                                                emo.LightOutageChancePerTick = reader.ReadInt32();
+                                            }
 
                                             emo.UseNightSightDarkestHourOverride = reader.ReadBoolean();
 
@@ -561,6 +591,11 @@ namespace Server.TimeSystem
 
                                                 emo.UseMurdererDarkestHourBonus = reader.ReadBoolean();
                                                 emo.MurdererDarkestHourLevelBonus = reader.ReadInt32();
+                                            }
+
+                                            if (version > 4)
+                                            {
+                                                emo.UseEvilSpawners = reader.ReadBoolean();
                                             }
 
                                             Data.EffectsMapArray.Add(emo);
@@ -584,11 +619,18 @@ namespace Server.TimeSystem
                                             int x2 = reader.ReadInt32();
                                             int y2 = reader.ReadInt32();
 
-                                            EffectsExclusionMapObject eemo = new EffectsExclusionMapObject(map, x1, y1, x2, y2);
+                                            EffectsExclusionMapObject eemo = Config.SetDefaultEffectsExclusionValues(new EffectsExclusionMapObject(map, x1, y1, x2, y2));
 
                                             eemo.Priority = priority;
 
-                                            if (version > 3)
+                                            if (version > 4)
+                                            {
+                                                eemo.Index = reader.ReadInt32();
+
+                                                eemo.Enabled = reader.ReadBoolean();
+                                            }
+
+                                            if (version < 4)
                                             {
                                                 reader.ReadBoolean();
 
@@ -596,7 +638,10 @@ namespace Server.TimeSystem
                                                 reader.ReadDouble();
                                             }
 
-                                            eemo.Index = reader.ReadInt32();
+                                            if (version < 5)
+                                            {
+                                                eemo.Index = reader.ReadInt32();
+                                            }
 
                                             Data.EffectsExclusionMapArray.Add(eemo);
                                         }
@@ -623,7 +668,7 @@ namespace Server.TimeSystem
 
                         reader.Close();
 
-                        Support.ConsoleWriteLine(String.Format("Time System: \"{0}\" is corrupt!  Creating a new file using the current settings.", DataFileName));
+                        Support.ConsoleWriteLine(String.Format("Time System: \"{0}\" is corrupt!  Creating a new file using the current settings.\r\n\r\nException:\r\n\r\n{1}\r\n", DataFileName, e.ToString()));
 
                         Config.SetDefaults(true);
 
@@ -641,7 +686,7 @@ namespace Server.TimeSystem
 
                         reader.Close();
 
-                        Support.ConsoleWriteLine(String.Format("Time System: Unable to load data from file \"{0}\"!  Creating a new file using the current settings.\r\n\r\nException:\r\n\r\n{1}", DataFileName, e.ToString()));
+                        Support.ConsoleWriteLine(String.Format("Time System: Unable to load data from file \"{0}\"!  Creating a new file using the current settings.\r\n\r\nException:\r\n\r\n{1}\r\n", DataFileName, e.ToString()));
 
                         Config.SetDefaults(true);
 
@@ -670,6 +715,10 @@ namespace Server.TimeSystem
                     m_DataFileInUse = true;
 
                     writer.Write(BinaryVersion);
+
+                    writer.Write(m_LightsEngineTimerSpeed);
+
+                    writer.Write(m_UseEvilSpawners);
 
                     writer.Write(m_Logging);
 
@@ -718,11 +767,11 @@ namespace Server.TimeSystem
 
                     writer.Write(m_UseAutoLighting);
                     writer.Write(m_UseRandomLightOutage);
-                    writer.Write(m_LightOutageChancePerTick);
 
                     writer.Write(m_UseSeasons);
 
                     writer.Write(m_UseNightSightDarkestHourOverride);
+
                     writer.Write(m_UseNightSightOverride);
 
                     writer.Write(m_TimeFormat);
@@ -790,12 +839,14 @@ namespace Server.TimeSystem
                             writer.Write(m_EffectsMapArray[i].X2);
                             writer.Write(m_EffectsMapArray[i].Y2);
 
+                            writer.Write(m_EffectsMapArray[i].Index);
+
+                            writer.Write(m_EffectsMapArray[i].Enabled);
+
                             writer.Write(m_EffectsMapArray[i].UseLatitude);
 
                             writer.Write(m_EffectsMapArray[i].OuterLatitudePercent);
                             writer.Write(m_EffectsMapArray[i].InnerLatitudePercent);
-
-                            writer.Write(m_EffectsMapArray[i].Index);
 
                             writer.Write(m_EffectsMapArray[i].UseSeasons);
 
@@ -813,6 +864,12 @@ namespace Server.TimeSystem
                             writer.Write(m_EffectsMapArray[i].WinterDate.Month);
                             writer.Write(m_EffectsMapArray[i].WinterDate.Day);
 
+                            writer.Write(m_EffectsMapArray[i].UseDarkestHour);
+
+                            writer.Write(m_EffectsMapArray[i].UseAutoLighting);
+                            writer.Write(m_EffectsMapArray[i].UseRandomLightOutage);
+                            writer.Write(m_EffectsMapArray[i].LightOutageChancePerTick);
+
                             writer.Write(m_EffectsMapArray[i].UseNightSightDarkestHourOverride);
                             writer.Write(m_EffectsMapArray[i].NightSightDarkestHourReduction);
 
@@ -824,6 +881,8 @@ namespace Server.TimeSystem
 
                             writer.Write(m_EffectsMapArray[i].UseMurdererDarkestHourBonus);
                             writer.Write(m_EffectsMapArray[i].MurdererDarkestHourLevelBonus);
+
+                            writer.Write(m_EffectsMapArray[i].UseEvilSpawners);
                         }
                     }
 
@@ -845,9 +904,12 @@ namespace Server.TimeSystem
                             writer.Write(m_EffectsExclusionMapArray[i].Y2);
 
                             writer.Write(m_EffectsExclusionMapArray[i].Index);
+
+                            writer.Write(m_EffectsExclusionMapArray[i].Enabled);
                         }
                     }
 
+                    writer.Flush();
                     writer.Close();
 
                     Support.ConsoleWriteLine("Time System: Saving complete.");

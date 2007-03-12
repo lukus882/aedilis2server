@@ -21,6 +21,16 @@ namespace Server.TimeSystem
             m_LastUpdateDay = 0;
         }
 
+        public MoonPropsObject(string name, int totalDays, int currentDay)
+        {
+            m_Name = name;
+
+            m_TotalDays = totalDays;
+            m_CurrentDay = currentDay;
+
+            m_LastUpdateDay = 0;
+        }
+
         #endregion
 
         #region Private Variables

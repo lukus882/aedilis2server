@@ -28,6 +28,8 @@ namespace Server.TimeSystem
 
         private int m_Index;
 
+        private bool m_Enabled;
+
         private bool m_UseLatitude;
 
         private double m_OuterLatitudePercent;
@@ -42,6 +44,12 @@ namespace Server.TimeSystem
         private DatePropsObject m_FallDate;
         private DatePropsObject m_WinterDate;
 
+        private bool m_UseDarkestHour;
+
+        private bool m_UseAutoLighting;
+        private bool m_UseRandomLightOutage;
+        private int m_LightOutageChancePerTick;
+
         private bool m_UseNightSightDarkestHourOverride;
         private int m_NightSightDarkestHourReduction;
 
@@ -54,11 +62,15 @@ namespace Server.TimeSystem
         private bool m_UseMurdererDarkestHourBonus;
         private int m_MurdererDarkestHourLevelBonus;
 
+        private bool m_UseEvilSpawners;
+
         #endregion
 
         #region Public Variables
 
         public int Index { get { return m_Index; } set { m_Index = value; } }
+
+        public bool Enabled { get { return m_Enabled; } set { m_Enabled = value; } }
 
         public bool UseLatitude { get { return m_UseLatitude; } set { m_UseLatitude = value; } }
 
@@ -74,6 +86,12 @@ namespace Server.TimeSystem
         public DatePropsObject FallDate { get { return m_FallDate; } set { m_FallDate = value; } }
         public DatePropsObject WinterDate { get { return m_WinterDate; } set { m_WinterDate = value; } }
 
+        public bool UseDarkestHour { get { return m_UseDarkestHour; } set { m_UseDarkestHour = value; } }
+
+        public bool UseAutoLighting { get { return m_UseAutoLighting; } set { m_UseAutoLighting = value; } }
+        public bool UseRandomLightOutage { get { return m_UseRandomLightOutage; } set { m_UseRandomLightOutage = value; } }
+        public int LightOutageChancePerTick { get { return m_LightOutageChancePerTick; } set { m_LightOutageChancePerTick = value; } }
+
         public bool UseNightSightDarkestHourOverride { get { return m_UseNightSightDarkestHourOverride; } set { m_UseNightSightDarkestHourOverride = value; } }
         public int NightSightDarkestHourReduction { get { return m_NightSightDarkestHourReduction; } set { m_NightSightDarkestHourReduction = value; } }
 
@@ -85,6 +103,8 @@ namespace Server.TimeSystem
 
         public bool UseMurdererDarkestHourBonus { get { return m_UseMurdererDarkestHourBonus; } set { m_UseMurdererDarkestHourBonus = value; } }
         public int MurdererDarkestHourLevelBonus { get { return m_MurdererDarkestHourLevelBonus; } set { m_MurdererDarkestHourLevelBonus = value; } }
+
+        public bool UseEvilSpawners { get { return m_UseEvilSpawners; } set { m_UseEvilSpawners = value; } }
 
         #endregion
 

@@ -70,32 +70,11 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(index);
 
-                    Type typeExpected = typeof(int);
-
-                    int lowValue = 1;
-                    int highValue = Data.MonthsArray.Count;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Number", 1, Data.MonthsArray.Count, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
-
-                            monthIndex = value - 1;
-                        }
-                        else
-                        {
-                            message = Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue);
-                        }
-                    }
-                    else
-                    {
-                        message = Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue, typeExpected);
+                        monthIndex = value - 1;
                     }
                 }
                 else // Adding, so increment index by 1.
@@ -109,42 +88,17 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(setMonthDays);
 
-                    Type typeExpected = typeof(int);
-
-                    success = false;
-
-                    int lowValue = 1;
-                    int highValue = int.MaxValue;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Days", 1, int.MaxValue, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
-
-                            newMonthDays = value;
-                        }
-                        else
-                        {
-                            message = Formatting.ErrorMessageFormatter("Days", o, minValue, maxValue);
-                        }
-                    }
-                    else
-                    {
-                        message = Formatting.ErrorMessageFormatter("Days", o, minValue, maxValue, typeExpected);
+                        newMonthDays = value;
                     }
                 }
 
                 if (success) // If successful then finalize.
                 {
-                    MonthPropsObject mpo = new MonthPropsObject();
-                    mpo.Name = setMonthName;
-                    mpo.TotalDays = newMonthDays;
+                    MonthPropsObject mpo = new MonthPropsObject(setMonthName, newMonthDays);
 
                     switch (ct)
                     {
@@ -201,38 +155,15 @@ namespace Server.TimeSystem
             lock (Data.MonthsArray)
             {
                 bool success = false;
-                string minValue = null;
-                string maxValue = null;
                 string message = null;
 
-                Type typeExpected = typeof(int);
-
-                int lowValue = 1;
-                int highValue = Data.MonthsArray.Count;
-
-                minValue = Convert.ToString(lowValue);
-                maxValue = Convert.ToString(highValue);
-
-                if (o is int)
+                if (Config.CheckVariable(o, "Number", 1, Data.MonthsArray.Count, typeof(int), ref success, ref message))
                 {
                     int value = (int)o;
 
-                    if (value >= lowValue && value <= highValue)
-                    {
-                        success = true;
+                    MonthPropsObject mpo = Data.MonthsArray[value - 1];
 
-                        MonthPropsObject mpo = Data.MonthsArray[value - 1];
-
-                        message = String.Format("Month #{0} '{1}' has '{2}' day{3}.", value, mpo.Name, mpo.TotalDays, mpo.TotalDays == 1 ? "" : "s");
-                    }
-                    else
-                    {
-                        message = Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue);
-                    }
-                }
-                else
-                {
-                    message = Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue, typeExpected);
+                    message = String.Format("Month #{0} '{1}' has '{2}' day{3}.", value, mpo.Name, mpo.TotalDays, mpo.TotalDays == 1 ? "" : "s");
                 }
 
                 vo.Success = success;
@@ -272,17 +203,7 @@ namespace Server.TimeSystem
             lock (Data.MonthsArray)
             {
                 bool success = false;
-                string minValue = null;
-                string maxValue = null;
                 string message = null;
-
-                Type typeExpected = typeof(int);
-
-                int lowValue = 1;
-                int highValue = Data.MonthsArray.Count;
-
-                minValue = Convert.ToString(lowValue);
-                maxValue = Convert.ToString(highValue);
 
                 if (o is string)
                 {
@@ -292,41 +213,31 @@ namespace Server.TimeSystem
 
                         if (mpo.Name.ToLower() == index.ToLower())
                         {
-                            o = Support.GetValue((++i).ToString());
+                            o = Support.GetValue((i + 1).ToString());
+
+                            break;
                         }
                     }
                 }
 
-                if (o is int)
+                if (Config.CheckVariable(o, "Number", 1, Data.MonthsArray.Count, typeof(int), ref success, ref message))
                 {
                     int value = (int)o;
 
-                    if (value >= lowValue && value <= highValue)
-                    {
-                        success = true;
+                    MonthPropsObject mpo = Data.MonthsArray[value - 1];
 
-                        MonthPropsObject mpo = Data.MonthsArray[value - 1];
+                    Data.MonthsArray.RemoveAt(value - 1);
+                    Data.MonthsArray.TrimExcess();
 
-                        Data.MonthsArray.RemoveAt(value - 1);
-                        Data.MonthsArray.TrimExcess();
+                    message = String.Format("Month #{0} '{1}' has been removed.  All succeeding months indexes have moved up.", value, mpo.Name);
 
-                        message = String.Format("Month #{0} '{1}' has been removed.  All succeeding months indexes have moved up.", value, mpo.Name);
-                    }
-                    else
-                    {
-                        StringBuilder sb = new StringBuilder();
-
-                        sb.Append(Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue));
-                        sb.Append("\r\nYou may also specify the month name instead of the number.");
-
-                        message = sb.ToString();
-                    }
+                    Engine.Restart();
                 }
                 else
                 {
                     StringBuilder sb = new StringBuilder();
 
-                    sb.Append(Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue, typeExpected));
+                    sb.Append(message);
                     sb.Append("\r\nYou may also specify the month name instead of the number.");
 
                     message = sb.ToString();
@@ -369,14 +280,6 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(index);
 
-                    Type typeExpected = typeof(int);
-
-                    int lowValue = 1;
-                    int highValue = Data.MonthsArray.Count;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
                     if (o is string)
                     {
                         for (int i = 0; i < Data.MonthsArray.Count; i++)
@@ -385,42 +288,30 @@ namespace Server.TimeSystem
 
                             if (mpo.Name.ToLower() == index.ToLower())
                             {
-                                o = Support.GetValue((++i).ToString());
+                                o = Support.GetValue((i + 1).ToString());
+
+                                break;
                             }
                         }
                     }
 
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Number", 1, Data.MonthsArray.Count, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
+                        monthIndex = value - 1;
 
-                            monthIndex = value - 1;
+                        index = value.ToString();
 
-                            index = value.ToString();
+                        MonthPropsObject mpo = Data.MonthsArray[monthIndex];
 
-                            MonthPropsObject mpo = Data.MonthsArray[monthIndex];
-
-                            monthName = mpo.Name;
-                        }
-                        else
-                        {
-                            StringBuilder sb = new StringBuilder();
-
-                            sb.Append(Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue));
-                            sb.Append("\r\nYou may also specify the month name instead of the number.");
-
-                            message = sb.ToString();
-                        }
+                        monthName = mpo.Name;
                     }
                     else
                     {
                         StringBuilder sb = new StringBuilder();
 
-                        sb.Append(Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue, typeExpected));
+                        sb.Append(message);
                         sb.Append("\r\nYou may also specify the month name instead of the number.");
 
                         message = sb.ToString();
@@ -431,42 +322,17 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(setMonthDays);
 
-                    Type typeExpected = typeof(int);
-
-                    success = false;
-
-                    int lowValue = 1;
-                    int highValue = int.MaxValue;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Days", 1, int.MaxValue, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
-
-                            newMonthDays = value;
-                        }
-                        else
-                        {
-                            message = Formatting.ErrorMessageFormatter("Days", o, minValue, maxValue);
-                        }
-                    }
-                    else
-                    {
-                        message = Formatting.ErrorMessageFormatter("Days", o, minValue, maxValue, typeExpected);
+                        newMonthDays = value;
                     }
                 }
 
                 if (success)
                 {
-                    MonthPropsObject mpo = new MonthPropsObject();
-                    mpo.Name = monthName;
-                    mpo.TotalDays = newMonthDays;
+                    MonthPropsObject mpo = new MonthPropsObject(monthName, newMonthDays);
 
                     Data.MonthsArray[monthIndex] = mpo;
 
@@ -480,6 +346,27 @@ namespace Server.TimeSystem
             }
 
             return vo;
+        }
+
+        public static void ClearMonths()
+        {
+            lock (Data.MonthsArray)
+            {
+                for (int i = 1; i < Data.MonthsArray.Count; i++)
+                {
+                    Data.MonthsArray.RemoveAt(i);
+
+                    i--;
+                }
+
+                if (Data.Day > 30)
+                {
+                    Data.Day = 30;
+                }
+
+                Data.MonthsArray[0].Name = "NewMonth";
+                Data.MonthsArray[0].TotalDays = 30;
+            }
         }
 
         #endregion
@@ -548,32 +435,11 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(index);
 
-                    Type typeExpected = typeof(int);
-
-                    int lowValue = 1;
-                    int highValue = Data.MoonsArray.Count;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Number", 1, Data.MoonsArray.Count, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
-
-                            moonIndex = value - 1;
-                        }
-                        else
-                        {
-                            message = Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue);
-                        }
-                    }
-                    else
-                    {
-                        message = Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue, typeExpected);
+                        moonIndex = value - 1;
                     }
                 }
                 else // Adding, so increment index by 1.
@@ -587,34 +453,11 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(setMoonTotalDays);
 
-                    Type typeExpected = typeof(int);
-
-                    success = false;
-
-                    int lowValue = Enum.GetNames(typeof(MoonPhase)).Length;
-                    int highValue = int.MaxValue;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Total Phase Days", Enum.GetNames(typeof(MoonPhase)).Length, int.MaxValue, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
-
-                            newMoonTotalDays = value;
-                        }
-                        else
-                        {
-                            message = Formatting.ErrorMessageFormatter("Total Phase Days", o, minValue, maxValue);
-                        }
-                    }
-                    else
-                    {
-                        message = Formatting.ErrorMessageFormatter("Total Phase Days", o, minValue, maxValue, typeExpected);
+                        newMoonTotalDays = value;
                     }
                 }
 
@@ -624,45 +467,18 @@ namespace Server.TimeSystem
                     {
                         object o = Support.GetValue(setMoonCurrentDay);
 
-                        Type typeExpected = typeof(int);
-
-                        success = false;
-
-                        int lowValue = 1;
-                        int highValue = newMoonTotalDays;
-
-                        string minValue = Convert.ToString(lowValue);
-                        string maxValue = Convert.ToString(highValue);
-
-                        if (o is int)
+                        if (Config.CheckVariable(o, "Current Phase Day", 1, newMoonTotalDays, typeof(int), ref success, ref message))
                         {
                             int value = (int)o;
 
-                            if (value >= lowValue && value <= highValue)
-                            {
-                                success = true;
-
-                                newMoonCurrentDay = value;
-                            }
-                            else
-                            {
-                                message = Formatting.ErrorMessageFormatter("Current Phase Day", o, minValue, maxValue);
-                            }
-                        }
-                        else
-                        {
-                            message = Formatting.ErrorMessageFormatter("Current Phase Day", o, minValue, maxValue, typeExpected);
+                            newMoonCurrentDay = value;
                         }
                     }
                 }
 
                 if (success) // If successful then finalize.
                 {
-                    MoonPropsObject mpo = new MoonPropsObject();
-                    mpo.Name = setMoonName;
-                    mpo.TotalDays = newMoonTotalDays;
-                    mpo.CurrentDay = newMoonCurrentDay;
-                    mpo.LastUpdateDay = 0;
+                    MoonPropsObject mpo = new MoonPropsObject(setMoonName, newMoonTotalDays, newMoonCurrentDay);
 
                     switch (ct)
                     {
@@ -719,38 +535,15 @@ namespace Server.TimeSystem
             lock (Data.MoonsArray)
             {
                 bool success = false;
-                string minValue = null;
-                string maxValue = null;
                 string message = null;
 
-                Type typeExpected = typeof(int);
-
-                int lowValue = 1;
-                int highValue = Data.MoonsArray.Count;
-
-                minValue = Convert.ToString(lowValue);
-                maxValue = Convert.ToString(highValue);
-
-                if (o is int)
+                if (Config.CheckVariable(o, "Number", 1, Data.MoonsArray.Count, typeof(int), ref success, ref message))
                 {
                     int value = (int)o;
 
-                    if (value >= lowValue && value <= highValue)
-                    {
-                        success = true;
+                    MoonPropsObject mpo = Data.MoonsArray[value - 1];
 
-                        MoonPropsObject mpo = Data.MoonsArray[value - 1];
-
-                        message = String.Format("Moon #{0} '{1}' has '{2}' total phase day{3} and current phase day is '{4}'.", value, mpo.Name, mpo.TotalDays, mpo.TotalDays == 1 ? "" : "s", mpo.CurrentDay);
-                    }
-                    else
-                    {
-                        message = Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue);
-                    }
-                }
-                else
-                {
-                    message = Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue, typeExpected);
+                    message = String.Format("Moon #{0} '{1}' has '{2}' total phase day{3} and current phase day is '{4}'.", value, mpo.Name, mpo.TotalDays, mpo.TotalDays == 1 ? "" : "s", mpo.CurrentDay);
                 }
 
                 vo.Success = success;
@@ -790,17 +583,7 @@ namespace Server.TimeSystem
             lock (Data.MoonsArray)
             {
                 bool success = false;
-                string minValue = null;
-                string maxValue = null;
                 string message = null;
-
-                Type typeExpected = typeof(int);
-
-                int lowValue = 1;
-                int highValue = Data.MoonsArray.Count;
-
-                minValue = Convert.ToString(lowValue);
-                maxValue = Convert.ToString(highValue);
 
                 if (o is string)
                 {
@@ -810,43 +593,31 @@ namespace Server.TimeSystem
 
                         if (mpo.Name.ToLower() == index.ToLower())
                         {
-                            o = Support.GetValue((++i).ToString());
+                            o = Support.GetValue((i + 1).ToString());
+
+                            break;
                         }
                     }
                 }
 
-                if (o is int)
+                if (Config.CheckVariable(o, "Number", 1, Data.MoonsArray.Count, typeof(int), ref success, ref message))
                 {
                     int value = (int)o;
 
-                    if (value >= lowValue && value <= highValue)
-                    {
-                        success = true;
+                    MoonPropsObject mpo = Data.MoonsArray[value - 1];
 
-                        MoonPropsObject mpo = Data.MoonsArray[value - 1];
+                    Data.MoonsArray.RemoveAt(value - 1);
+                    Data.MoonsArray.TrimExcess();
 
-                        Data.MoonsArray.RemoveAt(value - 1);
-                        Data.MoonsArray.TrimExcess();
+                    message = String.Format("Moon #{0} '{1}' has been removed.  All succeeding moons indexes have moved up.", value, mpo.Name);
 
-                        message = String.Format("Moon #{0} '{1}' has been removed.  All succeeding moons indexes have moved up.", value, mpo.Name);
-
-                        Engine.Restart();
-                    }
-                    else
-                    {
-                        StringBuilder sb = new StringBuilder();
-
-                        sb.Append(Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue));
-                        sb.Append("\r\nYou may also specify the moon name instead of the number.");
-
-                        message = sb.ToString();
-                    }
+                    Engine.Restart();
                 }
                 else
                 {
                     StringBuilder sb = new StringBuilder();
 
-                    sb.Append(Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue, typeExpected));
+                    sb.Append(message);
                     sb.Append("\r\nYou may also specify the moon name instead of the number.");
 
                     message = sb.ToString();
@@ -891,14 +662,6 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(index);
 
-                    Type typeExpected = typeof(int);
-
-                    int lowValue = 1;
-                    int highValue = Data.MoonsArray.Count;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
                     if (o is string)
                     {
                         for (int i = 0; i < Data.MoonsArray.Count; i++)
@@ -907,43 +670,31 @@ namespace Server.TimeSystem
 
                             if (mpo.Name.ToLower() == index.ToLower())
                             {
-                                o = Support.GetValue((++i).ToString());
+                                o = Support.GetValue((i + 1).ToString());
+
+                                break;
                             }
                         }
                     }
 
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Number", 1, Data.MoonsArray.Count, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
+                        moonIndex = value - 1;
 
-                            moonIndex = value - 1;
+                        index = value.ToString();
 
-                            index = value.ToString();
+                        MoonPropsObject mpo = Data.MoonsArray[moonIndex];
 
-                            MoonPropsObject mpo = Data.MoonsArray[moonIndex];
-
-                            moonName = mpo.Name;
-                            oldMoonTotalDays = mpo.TotalDays;
-                        }
-                        else
-                        {
-                            StringBuilder sb = new StringBuilder();
-
-                            sb.Append(Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue));
-                            sb.Append("\r\nYou may also specify the moon name instead of the number.");
-
-                            message = sb.ToString();
-                        }
+                        moonName = mpo.Name;
+                        oldMoonTotalDays = mpo.TotalDays;
                     }
                     else
                     {
                         StringBuilder sb = new StringBuilder();
 
-                        sb.Append(Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue, typeExpected));
+                        sb.Append(message);
                         sb.Append("\r\nYou may also specify the moon name instead of the number.");
 
                         message = sb.ToString();
@@ -956,34 +707,11 @@ namespace Server.TimeSystem
                     {
                         object o = Support.GetValue(setMoonTotalDays);
 
-                        Type typeExpected = typeof(int);
-
-                        success = false;
-
-                        int lowValue = Enum.GetNames(typeof(MoonPhase)).Length;
-                        int highValue = int.MaxValue;
-
-                        string minValue = Convert.ToString(lowValue);
-                        string maxValue = Convert.ToString(highValue);
-
-                        if (o is int)
+                        if (Config.CheckVariable(o, "Total Phase Days", Enum.GetNames(typeof(MoonPhase)).Length, int.MaxValue, typeof(int), ref success, ref message))
                         {
                             int value = (int)o;
 
-                            if (value >= lowValue && value <= highValue)
-                            {
-                                success = true;
-
-                                newMoonTotalDays = value;
-                            }
-                            else
-                            {
-                                message = Formatting.ErrorMessageFormatter("Total Phase Days", o, minValue, maxValue);
-                            }
-                        }
-                        else
-                        {
-                            message = Formatting.ErrorMessageFormatter("Total Phase Days", o, minValue, maxValue, typeExpected);
+                            newMoonTotalDays = value;
                         }
                     }
                     else
@@ -996,44 +724,17 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(setMoonCurrentDay);
 
-                    Type typeExpected = typeof(int);
-
-                    success = false;
-
-                    int lowValue = 1;
-                    int highValue = newMoonTotalDays;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Current Phase Day", 1, newMoonTotalDays, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
-
-                            newMoonCurrentDay = value;
-                        }
-                        else
-                        {
-                            message = Formatting.ErrorMessageFormatter("Current Phase Day", o, minValue, maxValue);
-                        }
-                    }
-                    else
-                    {
-                        message = Formatting.ErrorMessageFormatter("Current Phase Day", o, minValue, maxValue, typeExpected);
+                        newMoonCurrentDay = value;
                     }
                 }
 
                 if (success)
                 {
-                    MoonPropsObject mpo = new MoonPropsObject();
-                    mpo.Name = moonName;
-                    mpo.TotalDays = newMoonTotalDays;
-                    mpo.CurrentDay = newMoonCurrentDay;
-                    mpo.LastUpdateDay = 0;
+                    MoonPropsObject mpo = new MoonPropsObject(moonName, newMoonTotalDays, newMoonCurrentDay);
 
                     Data.MoonsArray[moonIndex] = mpo;
 
@@ -1080,14 +781,6 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(index);
 
-                    Type typeExpected = typeof(int);
-
-                    int lowValue = 0;
-                    int highValue = Data.NumberOfFacets - 1;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
                     if (o is string)
                     {
                         Map map = Support.GetMapFromName(index, false);
@@ -1098,31 +791,17 @@ namespace Server.TimeSystem
                         }
                     }
 
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Number", 0, Data.NumberOfFacets - 1, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
-
-                            mapIndex = value;
-                        }
-                        else
-                        {
-                            StringBuilder sb = new StringBuilder();
-
-                            sb.Append(Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue));
-                            sb.Append("\r\nYou may also specify the facet name instead of the number.");
-
-                            message = sb.ToString();
-                        }
+                        mapIndex = value;
                     }
                     else
                     {
                         StringBuilder sb = new StringBuilder();
 
-                        sb.Append(Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue, typeExpected));
+                        sb.Append(message);
                         sb.Append("\r\nYou may also specify the facet name instead of the number.");
 
                         message = sb.ToString();
@@ -1133,45 +812,18 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(setAdjustment);
 
-                    Type typeExpected = typeof(int);
-
-                    success = false;
-
-                    int lowValue = 0;
-                    int highValue = int.MaxValue - 1440;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Adjustment", 0, int.MaxValue - 1440, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
+                        Data.FacetArray[mapIndex] = new FacetPropsObject(Map.Maps[mapIndex], value);
 
-                            FacetPropsObject fpo = new FacetPropsObject();
+                        string name = Map.Maps[mapIndex].Name;
 
-                            fpo.Map = Map.Maps[mapIndex];
-                            fpo.Adjustment = value;
+                        message = String.Format("Facet #{0} '{1}' has been adjusted to be '{2}' minute{3} ahead of base time.", mapIndex, name, value, value == 1 ? "" : "s");
 
-                            Data.FacetArray[mapIndex] = fpo;
+                        Engine.Restart();
 
-                            string name = Map.Maps[mapIndex].Name;
-
-                            message = String.Format("Facet #{0} '{1}' has been adjusted to be '{2}' minute{3} ahead of base time.", mapIndex, name, value, value == 1 ? "" : "s");
-
-                            Engine.Restart();
-                        }
-                        else
-                        {
-                            message = Formatting.ErrorMessageFormatter("Adjustment", o, minValue, maxValue);
-                        }
-                    }
-                    else
-                    {
-                        message = Formatting.ErrorMessageFormatter("Adjustment", o, minValue, maxValue, typeExpected);
                     }
                 }
 
@@ -1191,42 +843,19 @@ namespace Server.TimeSystem
             lock (Data.FacetArray)
             {
                 bool success = false;
-                string minValue = null;
-                string maxValue = null;
                 string message = null;
 
-                Type typeExpected = typeof(int);
-
-                int lowValue = 0;
-                int highValue = Data.NumberOfFacets - 1;
-
-                minValue = Convert.ToString(lowValue);
-                maxValue = Convert.ToString(highValue);
-
-                if (o is int)
+                if (Config.CheckVariable(o, "Number", 0, Data.NumberOfFacets - 1, typeof(int), ref success, ref message))
                 {
                     int value = (int)o;
 
-                    if (value >= lowValue && value <= highValue)
-                    {
-                        success = true;
+                    string name = Map.Maps[value].Name;
 
-                        string name = Map.Maps[value].Name;
+                    FacetPropsObject fpo = Data.FacetArray[value];
 
-                        FacetPropsObject fpo = Data.FacetArray[value];
+                    int adjustment = fpo.Adjustment;
 
-                        int adjustment = fpo.Adjustment;
-
-                        message = String.Format("Facet #{0} '{1}' has an adjustment of '{2}' minute{3} ahead of base time.", value, name, adjustment, adjustment == 1 ? "" : "s");
-                    }
-                    else
-                    {
-                        message = Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue);
-                    }
-                }
-                else
-                {
-                    message = Formatting.ErrorMessageFormatter("Number", o, minValue, maxValue, typeExpected);
+                    message = String.Format("Facet #{0} '{1}' has an adjustment of '{2}' minute{3} ahead of base time.", value, name, adjustment, adjustment == 1 ? "" : "s");
                 }
 
                 vo.Success = success;
@@ -1295,20 +924,6 @@ namespace Server.TimeSystem
             StringBuilder sb = new StringBuilder();
 
             sb.Append(String.Format("EMO #{0} has been added!\n", index));
-            sb.Append(String.Format("[Priority: {0}]: Bounds: ({1}, {2}) to ({3}, {4}) on map '{5}'.\n", emo.Priority, emo.X1, emo.Y1, emo.X2, emo.Y2, emo.Map));
-            sb.Append(String.Format("UseLatitude: {0}\nOuter Percent: {1}%\nInner Percent: {2}%\n", emo.UseLatitude, emo.OuterLatitudePercent * 100, emo.InnerLatitudePercent * 100));
-            sb.Append(String.Format("Middle Latitude: {0}\n", middleLatitude));
-            sb.Append(String.Format("Upper Outer Range: {0} - {1}\n", upperOuterLowRange, upperOuterHighRange));
-            sb.Append(String.Format("Lower Outer Range: {0} - {1}\n", lowerOuterLowRange, lowerOuterHighRange));
-            sb.Append(String.Format("Inner Range: {0} - {1}\n", innerLowRange, innerHighRange));
-            sb.Append(String.Format("UseSeasons: {0}\nStatic Season: {1}\n", emo.UseSeasons, emo.StaticSeason));
-            sb.Append(String.Format("Spring Date: {0}/{1}\n", emo.SpringDate.Month, emo.SpringDate.Day));
-            sb.Append(String.Format("Summer Date: {0}/{1}\n", emo.SummerDate.Month, emo.SummerDate.Day));
-            sb.Append(String.Format("Fall Date: {0}/{1}\n", emo.FallDate.Month, emo.FallDate.Day));
-            sb.Append(String.Format("Winter Date: {0}/{1}\n", emo.WinterDate.Month, emo.WinterDate.Day));
-            sb.Append(String.Format("UseNightSightDarkestHourOverride: {0}\n", emo.UseNightSightDarkestHourOverride));
-            sb.Append(String.Format("UseNightSightOverride: {0}\n", emo.UseNightSightOverride));
-            sb.Append(String.Format("NightSightLevelReduction: {0}%\n", emo.NightSightLevelReduction));
 
             message = sb.ToString();
 
@@ -1345,40 +960,11 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(index);
 
-                    Type typeExpected = typeof(int);
-
-                    int lowValue = 0;
-                    int highValue = Data.EffectsMapArray.Count - 1;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Number", 0, Data.EffectsMapArray.Count - 1, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
-
-                            emo = Data.EffectsMapArray[value];
-                        }
-                        else
-                        {
-                            StringBuilder sb = new StringBuilder();
-
-                            sb.Append(Formatting.ErrorMessageFormatter("EMO Number", o, minValue, maxValue));
-
-                            message = sb.ToString();
-                        }
-                    }
-                    else
-                    {
-                        StringBuilder sb = new StringBuilder();
-
-                        sb.Append(Formatting.ErrorMessageFormatter("EMO Number", o, minValue, maxValue, typeExpected));
-
-                        message = sb.ToString();
+                        emo = Data.EffectsMapArray[value];
                     }
                 }
 
@@ -1413,42 +999,13 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(int);
-
-                            int lowValue = 0;
-                            int highValue = int.MaxValue;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is int)
+                            if (Config.CheckVariable(o, emoType.ToString(), 0, int.MaxValue, typeof(int), ref success, ref message))
                             {
                                 int value = (int)o;
 
-                                if (value >= lowValue && value <= highValue)
-                                {
-                                    success = true;
+                                emo.Priority = value;
 
-                                    emo.Priority = value;
-
-                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue));
-
-                                    message = sb.ToString();
-                                }
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
                             }
 
                             break;
@@ -1467,9 +1024,7 @@ namespace Server.TimeSystem
 
                             if (map == null)
                             {
-                                string[] mapList = Support.GetMapList(false);
-
-                                message = Formatting.ErrorMessageFormatter(emoType.ToString(), valueOne, mapList);
+                                message = Formatting.ErrorMessageFormatter(emoType.ToString(), valueOne, Support.GetMapList(false));
 
                                 break;
                             }
@@ -1484,6 +1039,8 @@ namespace Server.TimeSystem
                         }
                     case EffectsMapType.X1Y1:
                         {
+                            bool overallSuccess = true;
+
                             if (valueTwo == null)
                             {
                                 success = false;
@@ -1492,105 +1049,51 @@ namespace Server.TimeSystem
                                 break;
                             }
 
-                            int x1 = -1;
-                            int y1 = -1;
+                            int x1 = -1, y1 = -1;
 
                             {
                                 object o = Support.GetValue(valueOne);
 
-                                Type typeExpected = typeof(int);
-
-                                int lowValue = 0;
-                                int highValue = emo.X2 - 1;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "X1", 0, emo.X2 - 1, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        x1 = value;
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("X1", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    x1 = value;
                                 }
                                 else
                                 {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("X1", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    overallSuccess = false;
                                 }
                             }
 
-                            if (success)
                             {
-                                success = false;
-
                                 object o = Support.GetValue(valueTwo);
 
-                                Type typeExpected = typeof(int);
+                                StringBuilder sb = new StringBuilder();
 
-                                int lowValue = 0;
-                                int highValue = emo.Y2 - 1;
+                                if (message != null)
+                                {
+                                    sb.Append(message);
+                                    sb.Append("\n");
+                                }
 
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Y1", 0, emo.Y2 - 1, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        y1 = value;
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Y1", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    y1 = value;
                                 }
                                 else
                                 {
-                                    StringBuilder sb = new StringBuilder();
+                                    overallSuccess = false;
 
-                                    if (message != null)
-                                    {
-                                        sb.Append(message);
-                                        sb.Append("\n");
-                                    }
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("Y1", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    sb.Append(message);
                                 }
+
+                                message = sb.ToString();
                             }
 
-                            if (success)
+                            if (overallSuccess)
                             {
                                 emo.X1 = x1;
                                 emo.Y1 = y1;
@@ -1604,6 +1107,8 @@ namespace Server.TimeSystem
                         }
                     case EffectsMapType.X2Y2:
                         {
+                            bool overallSuccess = true;
+
                             if (valueTwo == null)
                             {
                                 success = false;
@@ -1612,105 +1117,51 @@ namespace Server.TimeSystem
                                 break;
                             }
 
-                            int x2 = -1;
-                            int y2 = -1;
+                            int x2 = -1, y2 = -1;
 
                             {
                                 object o = Support.GetValue(valueOne);
 
-                                Type typeExpected = typeof(int);
-
-                                int lowValue = emo.X1 + 1;
-                                int highValue = emo.Map.Width;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "X2", emo.X1 + 1, emo.Map.Width, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        x2 = value;
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("X2", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    x2 = value;
                                 }
                                 else
                                 {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("X2", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    overallSuccess = false;
                                 }
                             }
 
-                            if (success)
                             {
-                                success = false;
-
                                 object o = Support.GetValue(valueTwo);
 
-                                Type typeExpected = typeof(int);
+                                StringBuilder sb = new StringBuilder();
 
-                                int lowValue = emo.Y1 + 1;
-                                int highValue = emo.Map.Height;
+                                if (message != null)
+                                {
+                                    sb.Append(message);
+                                    sb.Append("\n");
+                                }
 
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Y2", emo.Y1 + 1, emo.Map.Height, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        y2 = value;
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Y2", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    y2 = value;
                                 }
                                 else
                                 {
-                                    StringBuilder sb = new StringBuilder();
+                                    overallSuccess = false;
 
-                                    if (message != null)
-                                    {
-                                        sb.Append(message);
-                                        sb.Append("\n");
-                                    }
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("Y2", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    sb.Append(message);
                                 }
+
+                                message = sb.ToString();
                             }
 
-                            if (success)
+                            if (overallSuccess)
                             {
                                 emo.X2 = x2;
                                 emo.Y2 = y2;
@@ -1734,31 +1185,13 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(bool);
-
-                            bool lowValue = false;
-                            bool highValue = true;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is bool)
+                            if (Config.CheckVariable(o, emoType.ToString(), false, true, typeof(bool), ref success, ref message))
                             {
                                 bool value = (bool)o;
-
-                                success = true;
 
                                 emo.UseLatitude = value;
 
                                 message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
                             }
 
                             break;
@@ -1776,120 +1209,39 @@ namespace Server.TimeSystem
                             {
                                 object o = Support.GetValue(valueOne);
 
-                                Type typeExpected = typeof(double);
-
-                                double lowValue = 0;
-                                double highValue = 100;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "OuterLatitudePercent", 0, 100, typeof(int), ref success, ref message))
                                 {
-                                    o = Convert.ToDouble(o);
-                                }
+                                    int value = (int)o;
 
-                                if (o is double)
-                                {
-                                    double value = (double)o;
+                                    emo.OuterLatitudePercent = value / 100;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        emo.OuterLatitudePercent = value / 100;
-
-                                        message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "OuterLatitudePercent", String.Format("{0}%", value));
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("OuterLatitudePercent", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("OuterLatitudePercent", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "OuterLatitudePercent", String.Format("{0}%", value));
                                 }
                             }
 
-                            if (success)
                             {
-                                success = false;
-
                                 object o = Support.GetValue(valueTwo);
 
-                                Type typeExpected = typeof(double);
+                                StringBuilder sb = new StringBuilder();
 
-                                double lowValue = 0;
-                                double highValue = 100;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (message != null)
                                 {
-                                    o = Convert.ToDouble(o);
+                                    sb.Append(message);
+                                    sb.Append("\n");
                                 }
 
-                                if (o is double)
+                                if (Config.CheckVariable(o, "InnerLatitudePercent", 0, 100, typeof(int), ref success, ref message))
                                 {
-                                    double value = (double)o;
+                                    int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
+                                    emo.InnerLatitudePercent = value / 100;
 
-                                        emo.InnerLatitudePercent = value / 100;
-
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "InnerLatitudePercent", String.Format("{0}%", value)));
-
-                                        message = sb.ToString();
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("InnerLatitudePercent", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "InnerLatitudePercent", String.Format("{0}%", value));
                                 }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
 
-                                    if (message != null)
-                                    {
-                                        sb.Append(message);
-                                        sb.Append("\n");
-                                    }
+                                sb.Append(message);
 
-                                    sb.Append(Formatting.ErrorMessageFormatter("InnerLatitudePercent", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
-                                }
+                                message = sb.ToString();
                             }
 
                             break;
@@ -1906,31 +1258,13 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(bool);
-
-                            bool lowValue = false;
-                            bool highValue = true;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is bool)
+                            if (Config.CheckVariable(o, emoType.ToString(), false, true, typeof(bool), ref success, ref message))
                             {
                                 bool value = (bool)o;
-
-                                success = true;
 
                                 emo.UseSeasons = value;
 
                                 message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
                             }
 
                             break;
@@ -1949,9 +1283,7 @@ namespace Server.TimeSystem
 
                             if (season == Season.None && valueOne.ToUpper() != season.ToString().ToUpper())
                             {
-                                string[] seasonList = Support.GetSeasonList();
-
-                                message = Formatting.ErrorMessageFormatter("Season", valueOne, seasonList);
+                                message = Formatting.ErrorMessageFormatter(emoType.ToString(), valueOne, Support.GetSeasonList());
 
                                 break;
                             }
@@ -1977,112 +1309,40 @@ namespace Server.TimeSystem
                             {
                                 object o = Support.GetValue(valueOne);
 
-                                Type typeExpected = typeof(int);
-
-                                int lowValue = 1;
-                                int highValue = Data.MonthsArray.Count;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Spring Date Month", 1, Data.MonthsArray.Count, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
+                                    emo.SpringDate.Month = value;
 
-                                        emo.SpringDate.Month = value;
-
-                                        message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Spring Date Month", value.ToString());
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Spring Date Month", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("Spring Date Month", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Spring Date Month", value.ToString());
                                 }
                             }
 
                             if (success)
                             {
-                                success = false;
-
                                 object o = Support.GetValue(valueTwo);
 
-                                Type typeExpected = typeof(int);
+                                StringBuilder sb = new StringBuilder();
 
-                                MonthPropsObject mpo = Data.MonthsArray[emo.SpringDate.Month - 1];
+                                if (message != null)
+                                {
+                                    sb.Append(message);
+                                    sb.Append("\n");
+                                }
 
-                                int lowValue = 1;
-                                int highValue = mpo.TotalDays;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Spring Date Day", 1, Data.MonthsArray[emo.SpringDate.Month - 1].TotalDays, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
+                                    emo.SpringDate.Day = value;
 
-                                        emo.SpringDate.Day = value;
-
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Spring Date Day", value.ToString()));
-
-                                        message = sb.ToString();
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Spring Date Day", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Spring Date Day", value.ToString());
                                 }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
 
-                                    if (message != null)
-                                    {
-                                        sb.Append(message);
-                                        sb.Append("\n");
-                                    }
+                                sb.Append(message);
 
-                                    sb.Append(Formatting.ErrorMessageFormatter("Spring Date Day", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
-                                }
+                                message = sb.ToString();
                             }
 
                             break;
@@ -2100,112 +1360,40 @@ namespace Server.TimeSystem
                             {
                                 object o = Support.GetValue(valueOne);
 
-                                Type typeExpected = typeof(int);
-
-                                int lowValue = 1;
-                                int highValue = Data.MonthsArray.Count;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Summer Date Month", 1, Data.MonthsArray.Count, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
+                                    emo.SummerDate.Month = value;
 
-                                        emo.SummerDate.Month = value;
-
-                                        message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Summer Date Month", value.ToString());
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Summer Date Month", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("Summer Date Month", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Summer Date Month", value.ToString());
                                 }
                             }
 
                             if (success)
                             {
-                                success = false;
-
                                 object o = Support.GetValue(valueTwo);
 
-                                Type typeExpected = typeof(int);
+                                StringBuilder sb = new StringBuilder();
 
-                                MonthPropsObject mpo = Data.MonthsArray[emo.SummerDate.Month - 1];
+                                if (message != null)
+                                {
+                                    sb.Append(message);
+                                    sb.Append("\n");
+                                }
 
-                                int lowValue = 1;
-                                int highValue = mpo.TotalDays;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Summer Date Day", 1, Data.MonthsArray[emo.SpringDate.Month - 1].TotalDays, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
+                                    emo.SummerDate.Day = value;
 
-                                        emo.SummerDate.Day = value;
-
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Summer Date Day", value.ToString()));
-
-                                        message = sb.ToString();
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Summer Date Day", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Summer Date Day", value.ToString());
                                 }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
 
-                                    if (message != null)
-                                    {
-                                        sb.Append(message);
-                                        sb.Append("\n");
-                                    }
+                                sb.Append(message);
 
-                                    sb.Append(Formatting.ErrorMessageFormatter("Summer Date Day", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
-                                }
+                                message = sb.ToString();
                             }
 
                             break;
@@ -2223,112 +1411,40 @@ namespace Server.TimeSystem
                             {
                                 object o = Support.GetValue(valueOne);
 
-                                Type typeExpected = typeof(int);
-
-                                int lowValue = 1;
-                                int highValue = Data.MonthsArray.Count;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Fall Date Month", 1, Data.MonthsArray.Count, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
+                                    emo.FallDate.Month = value;
 
-                                        emo.FallDate.Month = value;
-
-                                        message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Fall Date Month", value.ToString());
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Fall Date Month", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("Fall Date Month", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Fall Date Month", value.ToString());
                                 }
                             }
 
                             if (success)
                             {
-                                success = false;
-
                                 object o = Support.GetValue(valueTwo);
 
-                                Type typeExpected = typeof(int);
+                                StringBuilder sb = new StringBuilder();
 
-                                MonthPropsObject mpo = Data.MonthsArray[emo.FallDate.Month - 1];
+                                if (message != null)
+                                {
+                                    sb.Append(message);
+                                    sb.Append("\n");
+                                }
 
-                                int lowValue = 1;
-                                int highValue = mpo.TotalDays;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Fall Date Day", 1, Data.MonthsArray[emo.SpringDate.Month - 1].TotalDays, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
+                                    emo.FallDate.Day = value;
 
-                                        emo.FallDate.Day = value;
-
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Fall Date Day", value.ToString()));
-
-                                        message = sb.ToString();
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Fall Date Day", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Fall Date Day", value.ToString());
                                 }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
 
-                                    if (message != null)
-                                    {
-                                        sb.Append(message);
-                                        sb.Append("\n");
-                                    }
+                                sb.Append(message);
 
-                                    sb.Append(Formatting.ErrorMessageFormatter("Fall Date Day", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
-                                }
+                                message = sb.ToString();
                             }
 
                             break;
@@ -2346,112 +1462,132 @@ namespace Server.TimeSystem
                             {
                                 object o = Support.GetValue(valueOne);
 
-                                Type typeExpected = typeof(int);
-
-                                int lowValue = 1;
-                                int highValue = Data.MonthsArray.Count;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Winter Date Month", 1, Data.MonthsArray.Count, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
+                                    emo.WinterDate.Month = value;
 
-                                        emo.WinterDate.Month = value;
-
-                                        message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Winter Date Month", value.ToString());
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Winter Date Month", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("Winter Date Month", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Winter Date Month", value.ToString());
                                 }
                             }
 
                             if (success)
                             {
-                                success = false;
-
                                 object o = Support.GetValue(valueTwo);
 
-                                Type typeExpected = typeof(int);
+                                StringBuilder sb = new StringBuilder();
 
-                                MonthPropsObject mpo = Data.MonthsArray[emo.WinterDate.Month - 1];
+                                if (message != null)
+                                {
+                                    sb.Append(message);
+                                    sb.Append("\n");
+                                }
 
-                                int lowValue = 1;
-                                int highValue = mpo.TotalDays;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Winter Date Day", 1, Data.MonthsArray[emo.SpringDate.Month - 1].TotalDays, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
+                                    emo.WinterDate.Day = value;
 
-                                        emo.WinterDate.Day = value;
-
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Winter Date Day", value.ToString()));
-
-                                        message = sb.ToString();
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Winter Date Day", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), "Winter Date Day", value.ToString());
                                 }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
 
-                                    if (message != null)
-                                    {
-                                        sb.Append(message);
-                                        sb.Append("\n");
-                                    }
+                                sb.Append(message);
 
-                                    sb.Append(Formatting.ErrorMessageFormatter("Winter Date Day", o, minValue, maxValue, typeExpected));
+                                message = sb.ToString();
+                            }
 
-                                    message = sb.ToString();
-                                }
+                            break;
+                        }
+                    case EffectsMapType.UseDarkestHour:
+                        {
+                            if (valueTwo != null)
+                            {
+                                success = false;
+                                message = Syntax.GetSyntax(true, Command.SetEmo);
+
+                                break;
+                            }
+
+                            object o = Support.GetValue(valueOne);
+
+                            if (Config.CheckVariable(o, emoType.ToString(), false, true, typeof(bool), ref success, ref message))
+                            {
+                                bool value = (bool)o;
+
+                                emo.UseDarkestHour = value;
+
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
+                            }
+
+                            break;
+                        }
+                    case EffectsMapType.UseAutoLighting:
+                        {
+                            if (valueTwo != null)
+                            {
+                                success = false;
+                                message = Syntax.GetSyntax(true, Command.SetEmo);
+
+                                break;
+                            }
+
+                            object o = Support.GetValue(valueOne);
+
+                            if (Config.CheckVariable(o, emoType.ToString(), false, true, typeof(bool), ref success, ref message))
+                            {
+                                bool value = (bool)o;
+
+                                emo.UseAutoLighting = value;
+
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
+                            }
+
+                            break;
+                        }
+                    case EffectsMapType.UseRandomLightOutage:
+                        {
+                            if (valueTwo != null)
+                            {
+                                success = false;
+                                message = Syntax.GetSyntax(true, Command.SetEmo);
+
+                                break;
+                            }
+
+                            object o = Support.GetValue(valueOne);
+
+                            if (Config.CheckVariable(o, emoType.ToString(), false, true, typeof(bool), ref success, ref message))
+                            {
+                                bool value = (bool)o;
+
+                                emo.UseRandomLightOutage = value;
+
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
+                            }
+
+                            break;
+                        }
+                    case EffectsMapType.LightOutageChancePerTick:
+                        {
+                            if (valueTwo != null)
+                            {
+                                success = false;
+                                message = Syntax.GetSyntax(true, Command.SetEmo);
+
+                                break;
+                            }
+
+                            object o = Support.GetValue(valueOne);
+
+                            if (Config.CheckVariable(o, emoType.ToString(), 0, 100, typeof(int), ref success, ref message))
+                            {
+                                int value = (int)o;
+
+                                emo.LightOutageChancePerTick = value;
+
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), String.Format("{0}%", value));
                             }
 
                             break;
@@ -2468,31 +1604,13 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(bool);
-
-                            bool lowValue = false;
-                            bool highValue = true;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is bool)
+                            if (Config.CheckVariable(o, emoType.ToString(), false, true, typeof(bool), ref success, ref message))
                             {
                                 bool value = (bool)o;
-
-                                success = true;
 
                                 emo.UseNightSightDarkestHourOverride = value;
 
                                 message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
                             }
 
                             break;
@@ -2509,42 +1627,13 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(int);
-
-                            int lowValue = 1;
-                            int highValue = 100;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is int)
+                            if (Config.CheckVariable(o, emoType.ToString(), 0, 100, typeof(int), ref success, ref message))
                             {
                                 int value = (int)o;
 
-                                if (value >= lowValue && value <= highValue)
-                                {
-                                    success = true;
+                                emo.NightSightDarkestHourReduction = value;
 
-                                    emo.NightSightDarkestHourReduction = value;
-
-                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), String.Format("{0}%", value));
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue));
-
-                                    message = sb.ToString();
-                                }
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), String.Format("{0}%", value));
                             }
 
                             break;
@@ -2561,31 +1650,13 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(bool);
-
-                            bool lowValue = false;
-                            bool highValue = true;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is bool)
+                            if (Config.CheckVariable(o, emoType.ToString(), false, true, typeof(bool), ref success, ref message))
                             {
                                 bool value = (bool)o;
-
-                                success = true;
 
                                 emo.UseNightSightOverride = value;
 
                                 message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
                             }
 
                             break;
@@ -2602,42 +1673,13 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(int);
-
-                            int lowValue = 1;
-                            int highValue = 100;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is int)
+                            if (Config.CheckVariable(o, emoType.ToString(), 0, 100, typeof(int), ref success, ref message))
                             {
                                 int value = (int)o;
 
-                                if (value >= lowValue && value <= highValue)
-                                {
-                                    success = true;
+                                emo.NightSightLevelReduction = value;
 
-                                    emo.NightSightLevelReduction = value;
-
-                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), String.Format("{0}%", value));
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue));
-
-                                    message = sb.ToString();
-                                }
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), String.Format("{0}%", value));
                             }
 
                             break;
@@ -2654,31 +1696,13 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(bool);
-
-                            bool lowValue = false;
-                            bool highValue = true;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is bool)
+                            if (Config.CheckVariable(o, emoType.ToString(), false, true, typeof(bool), ref success, ref message))
                             {
                                 bool value = (bool)o;
-
-                                success = true;
 
                                 emo.UseLightLevelOverride = value;
 
                                 message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
                             }
 
                             break;
@@ -2695,42 +1719,13 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(int);
-
-                            int lowValue = Data.MinLightLevel;
-                            int highValue = Data.MaxLightLevel;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is int)
+                            if (Config.CheckVariable(o, emoType.ToString(), Data.MinLightLevel, Data.MaxLightLevel, typeof(int), ref success, ref message))
                             {
                                 int value = (int)o;
 
-                                if (value >= lowValue && value <= highValue)
-                                {
-                                    success = true;
+                                emo.LightLevelOverrideAdjust = value;
 
-                                    emo.LightLevelOverrideAdjust = value;
-
-                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue));
-
-                                    message = sb.ToString();
-                                }
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
                             }
 
                             break;
@@ -2747,31 +1742,13 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(bool);
-
-                            bool lowValue = false;
-                            bool highValue = true;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is bool)
+                            if (Config.CheckVariable(o, emoType.ToString(), false, true, typeof(bool), ref success, ref message))
                             {
                                 bool value = (bool)o;
-
-                                success = true;
 
                                 emo.UseMurdererDarkestHourBonus = value;
 
                                 message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
                             }
 
                             break;
@@ -2788,42 +1765,36 @@ namespace Server.TimeSystem
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(int);
-
-                            int lowValue = Data.MinLightLevel;
-                            int highValue = Data.MaxLightLevel;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is int)
+                            if (Config.CheckVariable(o, emoType.ToString(), Data.MinLightLevel, Data.MaxLightLevel, typeof(int), ref success, ref message))
                             {
                                 int value = (int)o;
 
-                                if (value >= lowValue && value <= highValue)
-                                {
-                                    success = true;
+                                emo.MurdererDarkestHourLevelBonus = value;
 
-                                    emo.MurdererDarkestHourLevelBonus = value;
-
-                                    message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue));
-
-                                    message = sb.ToString();
-                                }
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
                             }
-                            else
+
+                            break;
+                        }
+                    case EffectsMapType.UseEvilSpawners:
+                        {
+                            if (valueTwo != null)
                             {
-                                StringBuilder sb = new StringBuilder();
+                                success = false;
+                                message = Syntax.GetSyntax(true, Command.SetEmo);
 
-                                sb.Append(Formatting.ErrorMessageFormatter(emoType.ToString(), o, minValue, maxValue, typeExpected));
+                                break;
+                            }
 
-                                message = sb.ToString();
+                            object o = Support.GetValue(valueOne);
+
+                            if (Config.CheckVariable(o, emoType.ToString(), false, true, typeof(bool), ref success, ref message))
+                            {
+                                bool value = (bool)o;
+
+                                emo.UseEvilSpawners = value;
+
+                                message = Formatting.VariableMessageFormatter(String.Format("EMO #{0}", emo.Index), emoType.ToString(), value.ToString());
                             }
 
                             break;
@@ -2865,8 +1836,8 @@ namespace Server.TimeSystem
                 {
                     success = true;
 
-                    List<EffectsMapObject> emoArray = EffectsEngine.GetEffectsMapArray(mobile.Map, mobile.X, mobile.Y);
-                    List<EffectsExclusionMapObject> eemoArray = EffectsEngine.GetEffectsExclusionMapArray(mobile.Map, mobile.X, mobile.Y);
+                    List<EffectsMapObject> emoArray = EffectsEngine.GetEffectsMapArray(mobile.Map, mobile.X, mobile.Y, true);
+                    List<EffectsExclusionMapObject> eemoArray = EffectsEngine.GetEffectsExclusionMapArray(mobile.Map, mobile.X, mobile.Y, true);
 
                     if (emoArray.Count > 0)
                     {
@@ -2876,7 +1847,7 @@ namespace Server.TimeSystem
                         {
                             EffectsMapObject effectsMap = emoArray[i];
 
-                            if (effectsMap.UseSeasons)
+                            if (effectsMap.Enabled && effectsMap.UseSeasons)
                             {
                                 emoParentSeason = effectsMap;
 
@@ -2886,7 +1857,7 @@ namespace Server.TimeSystem
 
                         StringBuilder sb = new StringBuilder();
 
-                        sb.Append("Legend:\n* - EMO with highest priority\n@ - EMO with season priority\n\n");
+                        sb.Append("Legend:\n* - EMO with highest priority\n@ - EMO with season priority\n! - Disabled EMO\n\n");
                         sb.Append("You are in the following EMO bounds in priortized order:\n");
 
                         if (emoArray.Count > 1)
@@ -2895,17 +1866,17 @@ namespace Server.TimeSystem
                             {
                                 if (i + 1 < emoArray.Count)
                                 {
-                                    sb.Append(String.Format("{0}{1}{2}, ", emoArray[i].Index, i == 0 ? "*" : "", emoArray[i] == emoParentSeason ? "@" : ""));
+                                    sb.Append(String.Format("{0}{1}{2}{3}, ", emoArray[i].Index, i == 0 ? "*" : "", emoArray[i] == emoParentSeason ? "@" : "", !emoArray[i].Enabled ? "!" : ""));
                                 }
                                 else
                                 {
-                                    sb.Append(String.Format("{0}{1}{2}", emoArray[i].Index, i == 0 ? "*" : "", emoArray[i] == emoParentSeason ? "@" : ""));
+                                    sb.Append(String.Format("{0}{1}{2}{3}", emoArray[i].Index, i == 0 ? "*" : "", emoArray[i] == emoParentSeason ? "@" : "", !emoArray[i].Enabled ? "!" : ""));
                                 }
                             }
                         }
                         else
                         {
-                            sb.Append(String.Format("{0}*{1}", emoArray[0].Index, emoArray[0].UseSeasons ? "@" : ""));
+                            sb.Append(String.Format("{0}*{1}{2}", emoArray[0].Index, emoArray[0].UseSeasons ? "@" : "", !emoArray[0].Enabled ? "!" : ""));
                         }
 
                         if (eemoArray.Count > 0 && emoArray.Count > 0 && eemoArray[0].Priority >= emoArray[0].Priority)
@@ -2960,6 +1931,7 @@ namespace Server.TimeSystem
                             StringBuilder sb = new StringBuilder();
 
                             sb.Append(String.Format("EMO #{0} [Priority: {1}]: Bounds: ({2}, {3}) to ({4}, {5}) on map '{6}'.\n", emo.Index, emo.Priority, emo.X1, emo.Y1, emo.X2, emo.Y2, emo.Map));
+                            sb.Append(String.Format("Enabled: {0}\n", emo.Enabled));
                             sb.Append(String.Format("UseLatitude: {0}\nOuter Percent: {1}%\nInner Percent: {2}%\n", emo.UseLatitude, emo.OuterLatitudePercent * 100, emo.InnerLatitudePercent * 100));
                             sb.Append(String.Format("Middle Latitude: {0}\n", middleLatitude));
                             sb.Append(String.Format("Upper Outer Range: {0} - {1}\n", upperOuterLowRange, upperOuterHighRange));
@@ -2970,9 +1942,19 @@ namespace Server.TimeSystem
                             sb.Append(String.Format("Summer Date: {0}/{1}\n", emo.SummerDate.Month, emo.SummerDate.Day));
                             sb.Append(String.Format("Fall Date: {0}/{1}\n", emo.FallDate.Month, emo.FallDate.Day));
                             sb.Append(String.Format("Winter Date: {0}/{1}\n", emo.WinterDate.Month, emo.WinterDate.Day));
+                            sb.Append(String.Format("UseDarkestHour: {0}\n", emo.UseDarkestHour));
+                            sb.Append(String.Format("UseAutoLighting: {0}\n", emo.UseAutoLighting));
+                            sb.Append(String.Format("UseRandomLightOutage: {0}\n", emo.UseRandomLightOutage));
+                            sb.Append(String.Format("LightOutageChancePerTick: {0}%\n", emo.LightOutageChancePerTick));
                             sb.Append(String.Format("UseNightSightDarkestHourOverride: {0}\n", emo.UseNightSightDarkestHourOverride));
+                            sb.Append(String.Format("NightSightDarkestHourReduction: {0}%\n", emo.NightSightDarkestHourReduction));
                             sb.Append(String.Format("UseNightSightOverride: {0}\n", emo.UseNightSightOverride));
                             sb.Append(String.Format("NightSightLevelReduction: {0}%\n", emo.NightSightLevelReduction));
+                            sb.Append(String.Format("UseLightLevelOverride: {0}\n", emo.UseLightLevelOverride));
+                            sb.Append(String.Format("LightLevelOverrideAdjust: {0}%\n", emo.LightLevelOverrideAdjust));
+                            sb.Append(String.Format("UseMurdererDarkestHourBonus: {0}\n", emo.UseMurdererDarkestHourBonus));
+                            sb.Append(String.Format("MurdererDarkestHourLevelBonus: {0}%\n", emo.MurdererDarkestHourLevelBonus));
+                            sb.Append(String.Format("UseEvilSpawners: {0}\n", emo.UseEvilSpawners));
 
                             message = sb.ToString();
                         }
@@ -3080,6 +2062,83 @@ namespace Server.TimeSystem
             return vo;
         }
 
+        public static VariableObject ToggleEmo(string index)
+        {
+            VariableObject vo = new VariableObject();
+
+            if (Support.CheckForceScriptSettings(ref vo, "Toggle EffectsMapObject"))
+            {
+                return vo;
+            }
+
+            if (Data.DataFileInUse)
+            {
+                vo.Success = false;
+                vo.Message = Data.DataFileInUseMessage;
+
+                return vo;
+            }
+
+            if (Data.EffectsMapArray.Count == 0)
+            {
+                vo.Success = false;
+                vo.Message = "There are no EffectsMapObjects!";
+
+                return vo;
+            }
+
+            lock (Data.EffectsMapArray)
+            {
+                bool success = false;
+                string message = null;
+
+                object o = Support.GetValue(index);
+
+                Type typeExpected = typeof(int);
+
+                int lowValue = 0;
+                int highValue = Data.EffectsMapArray.Count - 1;
+
+                string minValue = Convert.ToString(lowValue);
+                string maxValue = Convert.ToString(highValue);
+
+                if (o is int)
+                {
+                    int value = (int)o;
+
+                    if (value >= lowValue && value <= highValue)
+                    {
+                        bool enabled = Data.EffectsMapArray[value].Enabled;
+
+                        Data.EffectsMapArray[value].Enabled = !enabled;
+
+                        message = String.Format("EMO #{0} has been {1}.", value, !enabled ? "enabled" : "disabled");
+                    }
+                    else
+                    {
+                        StringBuilder sb = new StringBuilder();
+
+                        sb.Append(Formatting.ErrorMessageFormatter("EMO Number", o, minValue, maxValue));
+
+                        message = sb.ToString();
+                    }
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.Append(Formatting.ErrorMessageFormatter("EMO Number", o, minValue, maxValue, typeExpected));
+
+                    message = sb.ToString();
+                }
+
+                vo.Success = success;
+                vo.Message = message;
+            }
+
+            return vo;
+        }
+
         #endregion
 
         #region Effects Exclusion Maps
@@ -3124,7 +2183,6 @@ namespace Server.TimeSystem
             StringBuilder sb = new StringBuilder();
 
             sb.Append(String.Format("EEMO #{0} has been added!\n", index));
-            sb.Append(String.Format("[Priority: {0}]: Bounds: ({1}, {2}) to ({3}, {4}) on map '{5}'.\n", eemo.Priority, eemo.X1, eemo.Y1, eemo.X2, eemo.Y2, eemo.Map));
 
             message = sb.ToString();
 
@@ -3161,40 +2219,11 @@ namespace Server.TimeSystem
                 {
                     object o = Support.GetValue(index);
 
-                    Type typeExpected = typeof(int);
-
-                    int lowValue = 0;
-                    int highValue = Data.EffectsExclusionMapArray.Count - 1;
-
-                    string minValue = Convert.ToString(lowValue);
-                    string maxValue = Convert.ToString(highValue);
-
-                    if (o is int)
+                    if (Config.CheckVariable(o, "Number", 0, Data.EffectsExclusionMapArray.Count - 1, typeof(int), ref success, ref message))
                     {
                         int value = (int)o;
 
-                        if (value >= lowValue && value <= highValue)
-                        {
-                            success = true;
-
-                            eemo = Data.EffectsExclusionMapArray[value];
-                        }
-                        else
-                        {
-                            StringBuilder sb = new StringBuilder();
-
-                            sb.Append(Formatting.ErrorMessageFormatter("EEMO Number", o, minValue, maxValue));
-
-                            message = sb.ToString();
-                        }
-                    }
-                    else
-                    {
-                        StringBuilder sb = new StringBuilder();
-
-                        sb.Append(Formatting.ErrorMessageFormatter("EEMO Number", o, minValue, maxValue, typeExpected));
-
-                        message = sb.ToString();
+                        eemo = Data.EffectsExclusionMapArray[value];
                     }
                 }
 
@@ -3222,49 +2251,20 @@ namespace Server.TimeSystem
                             if (valueTwo != null)
                             {
                                 success = false;
-                                message = Syntax.GetSyntax(true, Command.SetEmo);
+                                message = Syntax.GetSyntax(true, Command.SetEemo);
 
                                 break;
                             }
 
                             object o = Support.GetValue(valueOne);
 
-                            Type typeExpected = typeof(int);
-
-                            int lowValue = 0;
-                            int highValue = int.MaxValue;
-
-                            string minValue = Convert.ToString(lowValue);
-                            string maxValue = Convert.ToString(highValue);
-
-                            if (o is int)
+                            if (Config.CheckVariable(o, eemoType.ToString(), 0, int.MaxValue, typeof(int), ref success, ref message))
                             {
                                 int value = (int)o;
 
-                                if (value >= lowValue && value <= highValue)
-                                {
-                                    success = true;
+                                eemo.Priority = value;
 
-                                    eemo.Priority = value;
-
-                                    message = Formatting.VariableMessageFormatter(String.Format("EEMO #{0}", eemo.Index), eemoType.ToString(), value.ToString());
-                                }
-                                else
-                                {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter(eemoType.ToString(), o, minValue, maxValue));
-
-                                    message = sb.ToString();
-                                }
-                            }
-                            else
-                            {
-                                StringBuilder sb = new StringBuilder();
-
-                                sb.Append(Formatting.ErrorMessageFormatter(eemoType.ToString(), o, minValue, maxValue, typeExpected));
-
-                                message = sb.ToString();
+                                message = Formatting.VariableMessageFormatter(String.Format("EEMO #{0}", eemo.Index), eemoType.ToString(), value.ToString());
                             }
 
                             break;
@@ -3274,7 +2274,7 @@ namespace Server.TimeSystem
                             if (valueTwo != null)
                             {
                                 success = false;
-                                message = Syntax.GetSyntax(true, Command.SetEmo);
+                                message = Syntax.GetSyntax(true, Command.SetEemo);
 
                                 break;
                             }
@@ -3283,9 +2283,7 @@ namespace Server.TimeSystem
 
                             if (map == null)
                             {
-                                string[] mapList = Support.GetMapList(false);
-
-                                message = Formatting.ErrorMessageFormatter(eemoType.ToString(), valueOne, mapList);
+                                message = Formatting.ErrorMessageFormatter(eemoType.ToString(), valueOne, Support.GetMapList(false));
 
                                 break;
                             }
@@ -3300,113 +2298,61 @@ namespace Server.TimeSystem
                         }
                     case EffectsExclusionMapType.X1Y1:
                         {
+                            bool overallSuccess = true;
+
                             if (valueTwo == null)
                             {
                                 success = false;
-                                message = Syntax.GetSyntax(true, Command.SetEmo);
+                                message = Syntax.GetSyntax(true, Command.SetEemo);
 
                                 break;
                             }
 
-                            int x1 = -1;
-                            int y1 = -1;
+                            int x1 = -1, y1 = -1;
 
                             {
                                 object o = Support.GetValue(valueOne);
 
-                                Type typeExpected = typeof(int);
-
-                                int lowValue = 0;
-                                int highValue = eemo.X2 - 1;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "X1", 0, eemo.X2 - 1, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        x1 = value;
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("X1", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    x1 = value;
                                 }
                                 else
                                 {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("X1", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    overallSuccess = false;
                                 }
                             }
 
-                            if (success)
                             {
-                                success = false;
-
                                 object o = Support.GetValue(valueTwo);
 
-                                Type typeExpected = typeof(int);
+                                StringBuilder sb = new StringBuilder();
 
-                                int lowValue = 0;
-                                int highValue = eemo.Y2 - 1;
+                                if (message != null)
+                                {
+                                    sb.Append(message);
+                                    sb.Append("\n");
+                                }
 
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Y1", 0, eemo.Y2 - 1, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        y1 = value;
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Y1", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    y1 = value;
                                 }
                                 else
                                 {
-                                    StringBuilder sb = new StringBuilder();
+                                    overallSuccess = false;
 
-                                    if (message != null)
-                                    {
-                                        sb.Append(message);
-                                        sb.Append("\n");
-                                    }
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("Y1", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    sb.Append(message);
                                 }
+
+                                message = sb.ToString();
                             }
 
-                            if (success)
+                            if (overallSuccess)
                             {
                                 eemo.X1 = x1;
                                 eemo.Y1 = y1;
@@ -3420,113 +2366,61 @@ namespace Server.TimeSystem
                         }
                     case EffectsExclusionMapType.X2Y2:
                         {
+                            bool overallSuccess = true;
+
                             if (valueTwo == null)
                             {
                                 success = false;
-                                message = Syntax.GetSyntax(true, Command.SetEmo);
+                                message = Syntax.GetSyntax(true, Command.SetEemo);
 
                                 break;
                             }
 
-                            int x2 = -1;
-                            int y2 = -1;
+                            int x2 = -1, y2 = -1;
 
                             {
                                 object o = Support.GetValue(valueOne);
 
-                                Type typeExpected = typeof(int);
-
-                                int lowValue = eemo.X1 + 1;
-                                int highValue = eemo.Map.Width;
-
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "X2", eemo.X1 + 1, eemo.Map.Width, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        x2 = value;
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("X2", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    x2 = value;
                                 }
                                 else
                                 {
-                                    StringBuilder sb = new StringBuilder();
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("X2", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    overallSuccess = false;
                                 }
                             }
 
-                            if (success)
                             {
-                                success = false;
-
                                 object o = Support.GetValue(valueTwo);
 
-                                Type typeExpected = typeof(int);
+                                StringBuilder sb = new StringBuilder();
 
-                                int lowValue = eemo.Y1 + 1;
-                                int highValue = eemo.Map.Height;
+                                if (message != null)
+                                {
+                                    sb.Append(message);
+                                    sb.Append("\n");
+                                }
 
-                                string minValue = Convert.ToString(lowValue);
-                                string maxValue = Convert.ToString(highValue);
-
-                                if (o is int)
+                                if (Config.CheckVariable(o, "Y2", eemo.Y1 + 1, eemo.Map.Height, typeof(int), ref success, ref message))
                                 {
                                     int value = (int)o;
 
-                                    if (value >= lowValue && value <= highValue)
-                                    {
-                                        success = true;
-
-                                        y2 = value;
-                                    }
-                                    else
-                                    {
-                                        StringBuilder sb = new StringBuilder();
-
-                                        if (message != null)
-                                        {
-                                            sb.Append(message);
-                                            sb.Append("\n");
-                                        }
-
-                                        sb.Append(Formatting.ErrorMessageFormatter("Y2", o, minValue, maxValue));
-
-                                        message = sb.ToString();
-                                    }
+                                    y2 = value;
                                 }
                                 else
                                 {
-                                    StringBuilder sb = new StringBuilder();
+                                    overallSuccess = false;
 
-                                    if (message != null)
-                                    {
-                                        sb.Append(message);
-                                        sb.Append("\n");
-                                    }
-
-                                    sb.Append(Formatting.ErrorMessageFormatter("Y2", o, minValue, maxValue, typeExpected));
-
-                                    message = sb.ToString();
+                                    sb.Append(message);
                                 }
+
+                                message = sb.ToString();
                             }
 
-                            if (success)
+                            if (overallSuccess)
                             {
                                 eemo.X2 = x2;
                                 eemo.Y2 = y2;
@@ -3575,14 +2469,14 @@ namespace Server.TimeSystem
                 {
                     success = true;
 
-                    List<EffectsExclusionMapObject> eemoArray = EffectsEngine.GetEffectsExclusionMapArray(mobile.Map, mobile.X, mobile.Y);
-                    List<EffectsMapObject> emoArray = EffectsEngine.GetEffectsMapArray(mobile.Map, mobile.X, mobile.Y);
+                    List<EffectsExclusionMapObject> eemoArray = EffectsEngine.GetEffectsExclusionMapArray(mobile.Map, mobile.X, mobile.Y, true);
+                    List<EffectsMapObject> emoArray = EffectsEngine.GetEffectsMapArray(mobile.Map, mobile.X, mobile.Y, true);
 
                     if (eemoArray.Count > 0)
                     {
                         StringBuilder sb = new StringBuilder();
 
-                        sb.Append("Legend:\n* - EEMO with highest priority\n\n");
+                        sb.Append("Legend:\n* - EEMO with highest priority\n! - Disabled EEMO\n\n");
                         sb.Append("You are in the following EEMO bounds in priortized order:\n");
 
                         if (eemoArray.Count > 1)
@@ -3591,17 +2485,17 @@ namespace Server.TimeSystem
                             {
                                 if (i + 1 < eemoArray.Count)
                                 {
-                                    sb.Append(String.Format("{0}{1}, ", eemoArray[i].Index, i == 0 ? "*" : ""));
+                                    sb.Append(String.Format("{0}{1}{2}, ", eemoArray[i].Index, i == 0 ? "*" : "", !eemoArray[i].Enabled ? "!" : ""));
                                 }
                                 else
                                 {
-                                    sb.Append(String.Format("{0}{1}", eemoArray[i].Index, i == 0 ? "*" : ""));
+                                    sb.Append(String.Format("{0}{1}{2}", eemoArray[i].Index, i == 0 ? "*" : "", !eemoArray[i].Enabled ? "!" : ""));
                                 }
                             }
                         }
                         else
                         {
-                            sb.Append(String.Format("{0}*", eemoArray[0].Index));
+                            sb.Append(String.Format("{0}*{1}", eemoArray[0].Index, !eemoArray[0].Enabled ? "!" : ""));
                         }
 
                         if (emoArray.Count > 0 && eemoArray.Count > 0 && emoArray[0].Priority > eemoArray[0].Priority)
@@ -3641,6 +2535,7 @@ namespace Server.TimeSystem
                             StringBuilder sb = new StringBuilder();
 
                             sb.Append(String.Format("EEMO #{0} [Priority: {1}]: Bounds: ({2}, {3}) to ({4}, {5}) on map '{6}'.\n", eemo.Index, eemo.Priority, eemo.X1, eemo.Y1, eemo.X2, eemo.Y2, eemo.Map));
+                            sb.Append(String.Format("Enabled: {0}\n", eemo.Enabled));
 
                             message = sb.ToString();
 
@@ -3723,6 +2618,83 @@ namespace Server.TimeSystem
                         Support.ReIndexArray(Data.EffectsExclusionMapArray);
 
                         message = String.Format("EEMO #{0} has been removed.  All succeeding EEMO indexes have moved up.", value);
+                    }
+                    else
+                    {
+                        StringBuilder sb = new StringBuilder();
+
+                        sb.Append(Formatting.ErrorMessageFormatter("EEMO Number", o, minValue, maxValue));
+
+                        message = sb.ToString();
+                    }
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.Append(Formatting.ErrorMessageFormatter("EEMO Number", o, minValue, maxValue, typeExpected));
+
+                    message = sb.ToString();
+                }
+
+                vo.Success = success;
+                vo.Message = message;
+            }
+
+            return vo;
+        }
+
+        public static VariableObject ToggleEemo(string index)
+        {
+            VariableObject vo = new VariableObject();
+
+            if (Support.CheckForceScriptSettings(ref vo, "Toggle EffectsExclusionMapObject"))
+            {
+                return vo;
+            }
+
+            if (Data.DataFileInUse)
+            {
+                vo.Success = false;
+                vo.Message = Data.DataFileInUseMessage;
+
+                return vo;
+            }
+
+            if (Data.EffectsExclusionMapArray.Count == 0)
+            {
+                vo.Success = false;
+                vo.Message = "There are no EffectsExclusionMapObjects!";
+
+                return vo;
+            }
+
+            lock (Data.EffectsExclusionMapArray)
+            {
+                bool success = false;
+                string message = null;
+
+                object o = Support.GetValue(index);
+
+                Type typeExpected = typeof(int);
+
+                int lowValue = 0;
+                int highValue = Data.EffectsExclusionMapArray.Count - 1;
+
+                string minValue = Convert.ToString(lowValue);
+                string maxValue = Convert.ToString(highValue);
+
+                if (o is int)
+                {
+                    int value = (int)o;
+
+                    if (value >= lowValue && value <= highValue)
+                    {
+                        bool enabled = Data.EffectsExclusionMapArray[value].Enabled;
+
+                        Data.EffectsExclusionMapArray[value].Enabled = !enabled;
+
+                        message = String.Format("EEMO #{0} has been {1}.", value, !enabled ? "enabled" : "disabled");
                     }
                     else
                     {

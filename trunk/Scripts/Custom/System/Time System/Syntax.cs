@@ -55,10 +55,12 @@ namespace Server.TimeSystem
                 case Command.SetEmo: { syntax = "<EMO number> <EMO type> <value one> <value two*>"; break; }
                 case Command.GetEmo: { syntax = String.Format("<EMO number*>\n{0} {1} TOTAL", SyntaxPrefix, commandString); break; }
                 case Command.RemoveEmo: { syntax = "<EMO number>"; break; }
+                case Command.ToggleEmo: { syntax = "<EMO number>"; break; }
                 case Command.AddEemo: { break; }
                 case Command.SetEemo: { syntax = "<EEMO number> <EEMO type> <value one> <value two*>"; break; }
                 case Command.GetEemo: { syntax = String.Format("<EEMO number*>\n{0} {1} TOTAL", SyntaxPrefix, commandString); break; }
                 case Command.RemoveEemo: { syntax = "<EEMO number>"; break; }
+                case Command.ToggleEemo: { syntax = "<EEMO number>"; break; }
             }
 
             return String.Format("{0}{1} {2} {3}", incorrect ? "The syntax is incorrect!\n" : String.Empty, SyntaxPrefix, commandString, syntax);

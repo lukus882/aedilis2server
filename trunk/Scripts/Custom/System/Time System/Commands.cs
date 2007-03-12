@@ -428,7 +428,7 @@ namespace Server.TimeSystem
                         {
                             if (e.Length == 1)
                             {
-                                Data.MonthsArray = new List<MonthPropsObject>();
+                                Custom.ClearMonths();
 
                                 mobile.SendMessage("All custom months have been cleared.");
                             }
@@ -749,6 +749,23 @@ namespace Server.TimeSystem
 
                             break;
                         }
+                    case Command.ToggleEmo:
+                        {
+                            if (e.Length == 2)
+                            {
+                                string index = e.GetString(1);
+
+                                vo = Custom.ToggleEmo(index);
+
+                                mobile.SendMessage(vo.Message);
+                            }
+                            else
+                            {
+                                mobile.SendMessage(Syntax.GetSyntax(true, command));
+                            }
+
+                            break;
+                        }
                     case Command.AddEemo:
                         {
                             if (e.Length == 1)
@@ -837,6 +854,23 @@ namespace Server.TimeSystem
                                 string index = e.GetString(1);
 
                                 vo = Custom.RemoveEemo(index);
+
+                                mobile.SendMessage(vo.Message);
+                            }
+                            else
+                            {
+                                mobile.SendMessage(Syntax.GetSyntax(true, command));
+                            }
+
+                            break;
+                        }
+                    case Command.ToggleEemo:
+                        {
+                            if (e.Length == 2)
+                            {
+                                string index = e.GetString(1);
+
+                                vo = Custom.ToggleEemo(index);
 
                                 mobile.SendMessage(vo.Message);
                             }

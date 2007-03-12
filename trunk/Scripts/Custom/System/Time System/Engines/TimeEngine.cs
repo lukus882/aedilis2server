@@ -48,6 +48,17 @@ namespace Server.TimeSystem
             }
         }
 
+        public static bool IsNightTime(object o)
+        {
+            int x = Support.GetXAxis(o);
+
+            int minute, hour;
+
+            GetTimeMinHour(o, x, out minute, out hour);
+
+            return IsNightTime(minute, hour);
+        }
+
         private static bool IsDarkestHour(int minute, int hour)
         {
             int minutesAfterNight = GetMinutesAfterNight(minute, hour);
@@ -62,19 +73,23 @@ namespace Server.TimeSystem
             }
         }
 
-        public static bool IsNightTime(object o)
+        private static bool IsDarkestHour(int minute, int hour, EffectsObject eo)
         {
-            int x = Support.GetXAxis(o);
+            if (!Data.UseDarkestHour || eo == null || eo.EffectsMap == null || !eo.EffectsMap.UseDarkestHour)
+            {
+                return false;
+            }
 
-            int minute, hour;
-
-            GetTimeMinHour(o, x, out minute, out hour);
-
-            return IsNightTime(minute, hour);
+            return IsDarkestHour(minute, hour);
         }
 
-        public static bool IsDarkestHour(object o)
+        public static bool IsDarkestHour(object o, EffectsObject eo)
         {
+            if (!Data.UseDarkestHour || eo == null || eo.EffectsMap == null || !eo.EffectsMap.UseDarkestHour)
+            {
+                return false;
+            }
+
             int x = Support.GetXAxis(o);
 
             int minute, hour;
@@ -98,7 +113,7 @@ namespace Server.TimeSystem
 
         public static int GetAdjustments(object o, int x)
         {
-            return GetFacetAdjustment(o) + GetTimeZoneAdjustment(x, false);
+            return GetFacetAdjustment(o) + GetTimeZoneAdjustment(x, Data.UseTimeZones);
         }
 
         public static int GetFacetAdjustment(object o)
@@ -172,7 +187,7 @@ namespace Server.TimeSystem
 
             if (minute >= Data.MinutesPerHour)
             {
-                int amountOver = (int)((double)minute / (double)Data.MinutesPerHour);
+                int amountOver = Support.GetWholeNumber(minute, Data.MinutesPerHour, true);
                 int leftOver = amountOver * Data.MinutesPerHour;
 
                 minute -= leftOver;
@@ -181,29 +196,29 @@ namespace Server.TimeSystem
 
             if (hour >= Data.HoursPerDay)
             {
-                int amountOver = (int)((double)hour / (double)Data.HoursPerDay);
+                int amountOver = Support.GetWholeNumber(hour, Data.HoursPerDay, true);
                 int leftOver = amountOver * Data.HoursPerDay;
 
                 hour -= leftOver;
                 day += amountOver;
             }
 
-            if (day > totalDays)
+            while (day > totalDays)
             {
-                int amountOver = (int)((double)day / (double)totalDays);
-                int leftOver = amountOver * totalDays;
+                day -= totalDays;
 
-                day -= leftOver;
-                month += amountOver;
-            }
+                month++;
 
-            if (month > totalMonths)
-            {
-                int amountOver = (int)((double)month / (double)totalMonths);
-                int leftOver = amountOver * totalMonths;
+                if (month > totalMonths)
+                {
+                    month -= totalMonths;
 
-                month -= leftOver;
-                year += amountOver;
+                    year++;
+                }
+
+                mpo = Data.MonthsArray[month - 1];
+
+                totalDays = mpo.TotalDays;
             }
 
             if (checkMoonPhaseDay)
@@ -251,13 +266,17 @@ namespace Server.TimeSystem
 
         public static int CalculateLightLevel(object o)
         {
+            return CalculateLightLevel(o, null);
+        }
+
+        public static int CalculateLightLevel(object o, EffectsObject eo)
+        {
             if (!Data.Enabled)
             {
                 return Data.DayLevel;
             }
 
             MobileObject mo = null;
-            EffectsObject eo = null;
 
             if (o is Mobile)
             {
@@ -271,13 +290,16 @@ namespace Server.TimeSystem
                     }
 
                     mo.IsDarkestHour = false;
-
-                    eo = EffectsEngine.GetEffects(o, true);
                 }
                 else
                 {
                     return Data.DayLevel;
                 }
+            }
+
+            if (o != null && eo == null)
+            {
+                eo = EffectsEngine.GetEffects(o, false);
             }
 
             int currentLevel = Data.BaseLightLevel;
@@ -292,7 +314,7 @@ namespace Server.TimeSystem
 
                 int x = Support.GetXAxis(o);
 
-                int minute = Data.Minute + GetAdjustments(o, false);
+                int minute = Data.Minute + GetAdjustments(o, Data.UseTimeZones);
                 int hour = Data.Hour;
                 int day = Data.Day;
                 int month = Data.Month;
@@ -305,7 +327,7 @@ namespace Server.TimeSystem
 
                 if (IsNightTime(minute, hour)) // Night time.
                 {
-                    bool isDarkestHour = IsDarkestHour(minute, hour);
+                    bool isDarkestHour = IsDarkestHour(minute, hour, eo);
 
                     if (mo != null)
                     {
@@ -318,11 +340,11 @@ namespace Server.TimeSystem
                     {
                         currentLevel = (int)(nightLevelAdjust * ((double)minutesAfterNight / (double)Data.ScaleTimeMinutes));
                     }
-                    else if (Data.UseDarkestHour && isDarkestHour)
+                    else if (isDarkestHour)
                     {
                         if (o is BaseLight)
                         {
-                            LightsEngine.CalculateLightOutage((BaseLight)o);
+                            LightsEngine.CalculateLightOutage((BaseLight)o, eo);
                         }
 
                         int bonus = 0;
@@ -355,12 +377,9 @@ namespace Server.TimeSystem
                         currentLevel = nightLevelAdjust;
                     }
 
-                    if (!isDarkestHour && Data.UseAutoLighting)
+                    if (o is BaseLight && !isDarkestHour)
                     {
-                        if (o is BaseLight)
-                        {
-                            LightsEngine.UpdateManagedLight((BaseLight)o, currentLevel);
-                        }
+                        LightsEngine.UpdateManagedLight((BaseLight)o, currentLevel);
                     }
                 }
                 else // Day time.
@@ -376,12 +395,9 @@ namespace Server.TimeSystem
                         currentLevel = Data.DayLevel;
                     }
 
-                    if (Data.UseAutoLighting)
+                    if (o is BaseLight)
                     {
-                        if (o is BaseLight)
-                        {
-                            LightsEngine.UpdateManagedLight((BaseLight)o, currentLevel);
-                        }
+                        LightsEngine.UpdateManagedLight((BaseLight)o, currentLevel);
                     }
                 }
             }
