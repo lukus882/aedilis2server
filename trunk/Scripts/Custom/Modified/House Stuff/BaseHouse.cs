@@ -3034,9 +3034,24 @@ namespace Server.Multis
 			if ( a == null )
 				return false;
 
+            // ARTEGORDONMOD
+            // allow for a limited number of houses
+            ArrayList allHouses = new ArrayList();
+
 			for ( int i = 0; i < a.Length; ++i )
-				if ( a[i] != null && HasHouse( a[i] ) )
-					return true;
+			{
+				Mobile mob = a[i];
+
+				if ( mob != null )
+					allHouses.AddRange( GetHouses( mob ) );
+			}
+
+            // 4 houses per account limit
+            if(allHouses.Count > 5) return true;
+
+			//for ( int i = 0; i < a.Length; ++i )
+			//	if ( a[i] != null && HasHouse( a[i] ) )
+			//		return true;
 
 			return false;
 		}
