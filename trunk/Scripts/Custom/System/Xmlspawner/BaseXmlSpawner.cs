@@ -2383,7 +2383,7 @@ namespace Server.Mobiles
                                     if (no_error)
                                     {
                                         // get all of the nearby objects
-                                        ArrayList nearbylist = GetNearbyObjects(spawner, targetname, targettype, typestr, range, searchcontainers);
+                                        ArrayList nearbylist = GetNearbyObjects(spawner, targetname, targettype, typestr, range, searchcontainers,null);
 
                                         string resultstr = null;
 
@@ -4239,7 +4239,7 @@ namespace Server.Mobiles
                             if (range >= 0)
                             {
                                 // get all of the nearby objects
-                                ArrayList nearbylist = GetNearbyObjects(spawner, targetname, targettype, typestr, range, searchcontainers);
+                                ArrayList nearbylist = GetNearbyObjects(spawner, targetname, targettype, typestr, range, searchcontainers, null);
 
                                 // apply the properties from the first valid thing on the list
                                 foreach (object nearbyobj in nearbylist)
@@ -5159,8 +5159,9 @@ namespace Server.Mobiles
             return (targetname == "*") || (name == targetname) || (targetname != null && targetname.Length == 0 && name == null);
         }
 
-        private static void GetItemsIn(Item source, string targetname, Type targettype, string typestr, ref ArrayList nearbylist)
+        private static void GetItemsIn(Item source, string targetname, Type targettype, string typestr, ref ArrayList nearbylist, string proptest)
         {
+            string status_str;
             if (source != null && source.Items != null && nearbylist != null)
             {
                 foreach (Item i in source.Items)
@@ -5172,23 +5173,25 @@ namespace Server.Mobiles
                     if (!i.Deleted && CheckNameMatch(targetname, i.Name) && (typestr == null ||
                         (itemtype != null && targettype != null && (itemtype.Equals(targettype) || itemtype.IsSubclassOf(targettype)))))
                     {
+                        if (proptest == null || CheckPropertyString(null, i, proptest, null, out status_str))
                         nearbylist.Add(i);
                     }
 
                     if (i is Container)
                     {
-                        GetItemsIn(i, targetname, targettype, typestr, ref nearbylist);
+                        GetItemsIn(i, targetname, targettype, typestr, ref nearbylist, proptest);
                     }
                 }
 
             }
         }
 
-        private static ArrayList GetNearbyObjects(object invoker, string targetname, Type targettype, string typestr, int range, bool searchcontainers)
+        private static ArrayList GetNearbyObjects(object invoker, string targetname, Type targettype, string typestr, int range, bool searchcontainers, string proptest)
         {
             IPooledEnumerable itemlist = null;
             IPooledEnumerable mobilelist = null;
             ArrayList nearbylist = new ArrayList();
+            string status_str;
 
             // get nearby items
             if (targettype == null || targettype == typeof(Item) || targettype.IsSubclassOf(typeof(Item)))
@@ -5215,12 +5218,13 @@ namespace Server.Mobiles
                         if (searchcontainers)
                         {
                             if (i is Container)
-                                GetItemsIn(i, targetname, targettype, typestr, ref nearbylist);
+                                GetItemsIn(i, targetname, targettype, typestr, ref nearbylist, proptest);
                         }
                         else
                             if (!i.Deleted && CheckNameMatch(targetname, i.Name) && (typestr == null ||
                                 (itemtype != null && targettype != null && (itemtype.Equals(targettype) || itemtype.IsSubclassOf(targettype)))))
                             {
+                                if (proptest == null || CheckPropertyString(null, i, proptest, null, out status_str))
                                 nearbylist.Add(i);
                             }
 
@@ -5256,6 +5260,7 @@ namespace Server.Mobiles
                         if (!m.Deleted && CheckNameMatch(targetname, m.Name) && (typestr == null ||
                             (mobtype != null && targettype != null && (mobtype.Equals(targettype) || mobtype.IsSubclassOf(targettype)))))
                         {
+                            if (proptest == null || CheckPropertyString(null, m, proptest, null, out status_str))
                             nearbylist.Add(m);
                         }
                     }
@@ -8509,17 +8514,18 @@ namespace Server.Mobiles
                         }
                     case typeKeyword.SETONNEARBY:
                         {
-                            // the syntax is SETONNEARBY,range,name[,type][,searchcontainers]/prop/value/prop/value...
+                            // the syntax is SETONNEARBY,range,name[,type][,searchcontainers][,proptest]/prop/value/prop/value...
 
                             string[] arglist = ParseSlashArgs(substitutedtypeName, 3);
                             string typestr = null;
                             string targetname = null;
+                            string proptest = null;
                             int range = -1;
                             bool searchcontainers = false;
 
                             if (arglist.Length > 0)
                             {
-                                string[] objstr = ParseString(arglist[0], 5, ",");
+                                string[] objstr = ParseString(arglist[0], 6, ",");
                                 if (objstr.Length < 3)
                                 {
                                     status_str = "missing range or name in SETONNEARBY";
@@ -8553,6 +8559,11 @@ namespace Server.Mobiles
                                     }
                                     catch { }
                                 }
+
+                                if (objstr.Length > 5)
+                                {
+                                       proptest = objstr[5];
+                                }
                             }
                             else
                             {
@@ -8565,7 +8576,7 @@ namespace Server.Mobiles
                             {
                                 targettype = SpawnerType.GetType(typestr);
                             }
-                            ArrayList nearbylist = GetNearbyObjects(invoker, targetname, targettype, typestr, range, searchcontainers);
+                            ArrayList nearbylist = GetNearbyObjects(invoker, targetname, targettype, typestr, range, searchcontainers, proptest);
 
                             // apply the properties to everything on the list
                             foreach (object nearbyobj in nearbylist)
@@ -8624,7 +8635,7 @@ namespace Server.Mobiles
                             }
 
                             // get all of the nearby pets
-                            ArrayList nearbylist = GetNearbyObjects(triggermob, targetname, targettype, typestr, range, searchcontainers);
+                            ArrayList nearbylist = GetNearbyObjects(triggermob, targetname, targettype, typestr, range, searchcontainers, null);
 
                             // apply the properties to everything on the list
                             foreach (object nearbyobj in nearbylist)

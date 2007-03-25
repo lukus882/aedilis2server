@@ -1,3 +1,5 @@
+// $Id: //depot/c%23/RunUO Core Scripts/RunUO Core Scripts/Items/Weapons/Abilities/LightningArrow.cs#2 $
+
 using System;
 using System.Collections;
 using Server;
@@ -12,68 +14,68 @@ namespace Server.Items
 		{
 		}
 
-		public override int BaseMana{ get{ return 20; } }
+		public override int BaseMana { get { return 20; } }
 
-		public override void OnHit( Mobile attacker, Mobile defender, int damage )
+		public override void OnHit(Mobile attacker, Mobile defender, int damage)
 		{
-			if ( !Validate( attacker )  )
+			if (!Validate(attacker))
 				return;
 
-			ClearCurrentAbility( attacker );
+			ClearCurrentAbility(attacker);
 
 			Map map = attacker.Map;
 
-			if ( map == null )
+			if (map == null)
 				return;
 
 			BaseWeapon weapon = attacker.Weapon as BaseWeapon;
 
-			if ( weapon == null )
+			if (weapon == null)
 				return;
 
-			if ( !CheckMana( attacker, true ) )
+			if (!CheckMana(attacker, true))
 				return;
 
 			ArrayList list = new ArrayList();
-					
-					defender.PlaySound(1471);
-					defender.BoltEffect(0);
-					attacker.SendMessage( "The Lighting Arrow strikes a target" );
 
-			foreach ( Mobile m in defender.GetMobilesInRange( 1 ) )
-				list.Add( m );
+			defender.PlaySound(1471);
+			defender.BoltEffect(0);
+			attacker.SendMessage("The Lighting Arrow strikes a target");
+
+			foreach (Mobile m in defender.GetMobilesInRange(1))
+				list.Add(m);
 
 			ArrayList targets = new ArrayList();
 
-			for ( int i = 0; i < list.Count; ++i )
+			for (int i = 0; i < list.Count; ++i)
 			{
 				Mobile m = (Mobile)list[i];
 
-				if ( m != defender && m != attacker && SpellHelper.ValidIndirectTarget( attacker, m ) )
+				if (m != defender && m != attacker && SpellHelper.ValidIndirectTarget(attacker, m))
 				{
-					if ( m == null || m.Deleted || m.Map != attacker.Map || !m.Alive || !attacker.CanSee( m ) || !attacker.CanBeHarmful( m ) )
+					if (m == null || m.Deleted || m.Map != attacker.Map || !m.Alive || !attacker.CanSee(m) || !attacker.CanBeHarmful(m))
 						continue;
 
-					if ( !attacker.InRange( m, weapon.MaxRange ) )
+					if (!attacker.InRange(m, weapon.MaxRange))
 						continue;
 
-					if ( attacker.InLOS( m ) )
-						targets.Add( m );
+					if (attacker.InLOS(m))
+						targets.Add(m);
 				}
 			}
 
-			if ( targets.Count > 0 )
+			if (targets.Count > 0)
 			{
-				double damageBonus = 1.0 + Math.Pow( 1, 2 ) / 100;
+				double damageBonus = 1.0 + Math.Pow(1, 2) / 100;
 
-				for ( int i = 0; i < targets.Count; ++i )
+				for (int i = 0; i < targets.Count; ++i)
 				{
 					Mobile m = (Mobile)targets[i];
 
-						attacker.SendMessage( "The Lighting Arrow strikes around a target" );
+					attacker.SendMessage("The Lighting Arrow strikes around a target");
 					m.PlaySound(1471);
 					m.BoltEffect(0);
-					weapon.OnHit( attacker, m, damageBonus );
+					weapon.OnHit(attacker, m, damageBonus);
 				}
 
 			}

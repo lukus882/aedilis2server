@@ -10,7 +10,7 @@ namespace Server.TimeSystem
     {
         #region Constant Variables
 
-        public const bool ForceScriptSettings = false; // Set to true to have settings configured by script only.  The settings can no longer be configured in-game with exception to setting current date and time.
+        public const bool ForceScriptSettings = true; // Set to true to have settings configured by script only.  The settings can no longer be configured in-game with exception to setting current date and time.
 
         #endregion
 
@@ -44,11 +44,11 @@ namespace Server.TimeSystem
 
             Data.UpdateInterval = 1000;
 
-            Data.DayLevel = 8;
+            Data.DayLevel = 12;
             Data.NightLevel = 24;
             Data.DarkestHourLevel = 28;
             Data.LightsOnLevel = 10;
-            Data.MoonLevelAdjust = 15;
+            Data.MoonLevelAdjust = 22;
 
             Data.MinutesPerHour = 60;
             Data.HoursPerDay = 24;

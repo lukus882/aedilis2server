@@ -114,6 +114,11 @@ namespace Server.Items
         void Invalidate();
 
         void OnSkillUse(Mobile m, Skill skill, bool success);
+
+        ArrayList Journal { get; set; }
+
+        string AddJournalEntry { set;}
+
     }
 
 
@@ -122,6 +127,21 @@ namespace Server.Items
         public const PlayerFlag CarriedXmlQuestFlag = (PlayerFlag)0x00100000;
 
         public const bool QuestPointsEnabled = true;
+
+        public class JournalEntry
+        {
+            private string m_EntryID;
+            private string m_EntryText;
+
+            public string EntryID { get { return m_EntryID; } set { m_EntryID = value; } }
+            public string EntryText { get { return m_EntryText; } set { m_EntryText = value; } }
+
+            public JournalEntry(string ID, string text)
+            {
+                EntryID = ID;
+                EntryText = text;
+            }
+        }
 
         public class GetCollectTarget : Target
         {
