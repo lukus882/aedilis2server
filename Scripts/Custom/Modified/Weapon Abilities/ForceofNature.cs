@@ -1,3 +1,5 @@
+// $Id: //depot/c%23/RunUO Core Scripts/RunUO Core Scripts/Items/Weapons/Abilities/ForceofNature.cs#2 $
+
 using System;
 using Server;
 using System.Collections;
@@ -12,41 +14,41 @@ namespace Server.Items
 
 		public override int BaseMana { get { return 40; } }
 
-		public override void OnHit( Mobile attacker, Mobile defender, int damage )
+		public override void OnHit(Mobile attacker, Mobile defender, int damage)
 		{
-			if( !Validate( attacker ) || !CheckMana( attacker, true ) )
+			if (!Validate(attacker) || !CheckMana(attacker, true))
 				return;
 
-			ClearCurrentAbility( attacker );
+			ClearCurrentAbility(attacker);
 
+			attacker.SendLocalizedMessage(1074374); // You attack your enemy with the force of nature!
+			defender.SendLocalizedMessage(1074375); // You are assaulted with great force!
 
-			attacker.SendMessage( "You attack with Nature's Fury" ); 
-			defender.SendMessage( "You are attacked by Nature's Fury" );
+			defender.PlaySound(0x22F);
+			defender.FixedParticles(0x36CB, 1, 9, 9911, 67, 5, EffectLayer.Head);
+			defender.FixedParticles(0x374A, 1, 17, 9502, 1108, 4, (EffectLayer)255);
 
-				defender.PlaySound( 0x22F );
-				defender.FixedParticles( 0x36CB, 1, 9, 9911, 67, 5, EffectLayer.Head );
-				defender.FixedParticles( 0x374A, 1, 17, 9502, 1108, 4, (EffectLayer)255 );
-				if ( !m_Table.Contains( defender ) )
-				{
-					Timer t = new InternalTimer( defender, attacker );
-					t.Start();
+			if (!m_Table.Contains(defender))
+			{
+				Timer t = new InternalTimer(defender, attacker);
+				t.Start();
 
-					m_Table[defender] = t;
-				}
+				m_Table[defender] = t;
+			}
 		}
 		private static Hashtable m_Table = new Hashtable();
 
-		public static bool RemoveCurse( Mobile m )
+		public static bool RemoveCurse(Mobile m)
 		{
 			Timer t = (Timer)m_Table[m];
 
-			if ( t == null )
+			if (t == null)
 				return false;
 
 			t.Stop();
-			m.SendLocalizedMessage( 1061687 ); // You can breath normally again.
+			m.SendLocalizedMessage(1061687); // You can breath normally again.
 
-			m_Table.Remove( m );
+			m_Table.Remove(m);
 			return true;
 		}
 
@@ -60,7 +62,8 @@ namespace Server.Items
 
 			private int m_Count, m_MaxCount;
 
-			public InternalTimer( Mobile target, Mobile from ) : base( TimeSpan.FromSeconds( 0.1 ), TimeSpan.FromSeconds( 0.1 ) )
+			public InternalTimer(Mobile target, Mobile from)
+				: base(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1))
 			{
 				Priority = TimerPriority.FiftyMS;
 
@@ -73,11 +76,11 @@ namespace Server.Items
 				m_MaxBaseDamage = spiritLevel + 1;
 
 				m_HitDelay = 5;
-				m_NextHit = DateTime.Now + TimeSpan.FromSeconds( m_HitDelay );
+				m_NextHit = DateTime.Now + TimeSpan.FromSeconds(m_HitDelay);
 
 				m_Count = (int)spiritLevel;
 
-				if ( m_Count < 4 )
+				if (m_Count < 4)
 					m_Count = 4;
 
 				m_MaxCount = m_Count;
@@ -85,55 +88,55 @@ namespace Server.Items
 
 			protected override void OnTick()
 			{
-				if ( !m_Target.Alive )
+				if (!m_Target.Alive)
 				{
-					m_Table.Remove( m_Target );
+					m_Table.Remove(m_Target);
 					Stop();
 				}
 
-				if ( !m_Target.Alive || DateTime.Now < m_NextHit )
+				if (!m_Target.Alive || DateTime.Now < m_NextHit)
 					return;
 
 				--m_Count;
 
-				if ( m_HitDelay > 1 )
+				if (m_HitDelay > 1)
 				{
-					if ( m_MaxCount < 5 )
+					if (m_MaxCount < 5)
 					{
 						--m_HitDelay;
 					}
 					else
 					{
-						int delay = (int)(Math.Ceiling( (1.0 + (5 * m_Count)) / m_MaxCount ) );
+						int delay = (int)(Math.Ceiling((1.0 + (5 * m_Count)) / m_MaxCount));
 
-						if ( delay <= 5 )
+						if (delay <= 5)
 							m_HitDelay = delay;
 						else
 							m_HitDelay = 5;
 					}
 				}
 
-				if ( m_Count == 0 )
+				if (m_Count == 0)
 				{
-					m_Target.SendLocalizedMessage( 1061687 ); // You can breath normally again.
-					m_Table.Remove( m_Target );
+					m_Target.SendLocalizedMessage(1061687); // You can breath normally again.
+					m_Table.Remove(m_Target);
 					Stop();
 				}
 				else
 				{
-					m_NextHit = DateTime.Now + TimeSpan.FromSeconds( m_HitDelay );
+					m_NextHit = DateTime.Now + TimeSpan.FromSeconds(m_HitDelay);
 
 					double damage = m_MinBaseDamage + (Utility.RandomDouble() * (m_MaxBaseDamage - m_MinBaseDamage));
 
 					damage *= (3 - (((double)m_Target.Stam / m_Target.StamMax) * 2));
 
-					if ( damage < 1 )
+					if (damage < 1)
 						damage = 1;
 
-					if ( !m_Target.Player )
+					if (!m_Target.Player)
 						damage *= 1.75;
 
-					AOS.Damage( m_Target, m_From, (int)damage, 0, 0, 0, 100, 0 );
+					AOS.Damage(m_Target, m_From, (int)damage, 0, 0, 0, 100, 0);
 				}
 			}
 		}
