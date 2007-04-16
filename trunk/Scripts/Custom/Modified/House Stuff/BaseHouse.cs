@@ -1027,18 +1027,43 @@ namespace Server.Multis
 
 		public virtual bool IsInside( Point3D p, int height )
 		{
-			Sector sector = Map.GetSector( p );
+			if ( Deleted )
+				return false;
 
-			foreach( BaseMulti m in sector.Multis )
+			MultiComponentList mcl = Components;
+
+			int x = p.X - (X + mcl.Min.X);
+			int y = p.Y - (Y + mcl.Min.Y);
+
+			if ( x < 0 || x >= mcl.Width || y < 0 || y >= mcl.Height )
+				return false;
+
+			if ( this is HouseFoundation && y < (mcl.Height-1) && p.Z >= this.Z )
+				return true;
+
+			Tile[] tiles = mcl.Tiles[x][y];
+
+			for ( int j = 0; j < tiles.Length; ++j )
 			{
-				if ( m != this
-				&& m is Knives.TownHouses.TownHouse
-				&& ((Knives.TownHouses.TownHouse)m).ForSaleSign is Knives.TownHouses.RentalContract
-				&& ((Knives.TownHouses.TownHouse)m).IsInside( p, height ) )
-					return false;
+				Tile tile = tiles[j];
+				int id = tile.ID & 0x3FFF;
+				ItemData data = TileData.ItemTable[id];
+
+				// Slanted roofs do not count; they overhang blocking south and east sides of the multi
+				if ( (data.Flags & TileFlag.Roof) != 0 )
+					continue;
+
+				// Signs and signposts are not considered part of the multi
+				if ( (id >= 0xB95 && id <= 0xC0E) || (id >= 0xC43 && id <= 0xC44) )
+					continue;
+
+				int tileZ = tile.Z + this.Z;
+
+				if ( p.Z == tileZ || (p.Z + height) > tileZ )
+					return true;
 			}
 
-			return Region.Contains( p );
+			return false;
 		}
 
 		public SecureAccessResult CheckSecureAccess( Mobile m, Item item )
@@ -3005,6 +3030,20 @@ namespace Server.Multis
 			m_AllHouses.Remove( this );
 		}
 
+		public static int GetHouseSlots( Mobile m )
+		{
+			Account acct = m.Account as Account;
+
+                        int houses = Convert.ToInt32( acct.GetTag("maxHouses") );
+
+			if ( houses < 1 )
+				houses = 5;
+
+			int trueSlots = houses - 1;
+
+			return trueSlots;
+		}
+
 		public static bool HasHouse( Mobile m )
 		{
 			if ( m == null )
@@ -3016,9 +3055,9 @@ namespace Server.Multis
 			if ( list == null )
 				return false;
 
-			for ( int i = 0; i < list.Count; ++i )
+			for ( int i = GetHouseSlots( m ); i < list.Count; ++i )
 			{
-				BaseHouse h = list[i];
+				BaseHouse h = (BaseHouse)list[i];
 
 				if ( !h.Deleted )
 					return true;
@@ -3034,24 +3073,9 @@ namespace Server.Multis
 			if ( a == null )
 				return false;
 
-            // ARTEGORDONMOD
-            // allow for a limited number of houses
-            ArrayList allHouses = new ArrayList();
-
 			for ( int i = 0; i < a.Length; ++i )
-			{
-				Mobile mob = a[i];
-
-				if ( mob != null )
-					allHouses.AddRange( GetHouses( mob ) );
-			}
-
-            // 4 houses per account limit
-            if(allHouses.Count > 5) return true;
-
-			//for ( int i = 0; i < a.Length; ++i )
-			//	if ( a[i] != null && HasHouse( a[i] ) )
-			//		return true;
+				if ( a[i] != null && HasHouse( a[i] ) )
+					return true;
 
 			return false;
 		}
