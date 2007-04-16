@@ -3041,9 +3041,9 @@ namespace Server.Multis
 			if ( list == null )
 				return false;
 
-			for ( int i = 0; i < list.Count; ++i )
+			for ( int i = GetHouseSlots( m ); i < list.Count; ++i )
 			{
-				BaseHouse h = list[i];
+				BaseHouse h = (BaseHouse)list[i];
 
 				if ( !h.Deleted )
 					return true;
