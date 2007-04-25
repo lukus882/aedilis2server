@@ -6,6 +6,9 @@ using System.Collections;
 using Server;
 using Server.Guilds;
 using Server.Network;
+using Server.Accounting;
+using Server.Mobiles;
+using System.Collections.Generic;
 
 namespace Knives.Chat3
 {
@@ -378,6 +381,53 @@ namespace Knives.Chat3
                         s_Connection.SendMessage(String.Format("PRIVMSG {0} : {1}", Data.IrcRoom, Status));
                         BroadcastSystem(Status);
                     }
+
+if (str.ToLower().IndexOf("!seen") != -1 && c_NextStatus < DateTime.Now)
+		            {
+					string s1 = str;
+					int s2 = str.ToLower().IndexOf("!seen")+6;
+					int checklength = s1.Length - s2; 
+					int found = 0;
+					int found2 = 0;
+					if (checklength > 0) //catch invalid values
+					{
+						s1 = s1.Substring(s2, checklength); //everything after "!seen_" is who they are looking for
+						c_NextStatus = DateTime.Now + TimeSpan.FromSeconds(15);
+						//now look for s1 online
+						List<NetState> states = NetState.Instances;
+						for (int i = 0; i < states.Count; ++i )
+						{
+							Mobile m = states[i].Mobile;
+							if (m !=null)
+								if (m.Name.ToLower() == s1.ToLower())
+									found = 1;
+						}
+						//------------
+						if (found > 0) //ok it was found online. return the results
+							s_Connection.SendMessage(String.Format("PRIVMSG {0} : {1}{2}", Data.IrcRoom, s1, " is currently in-game." ));
+						else //it wasnt found online. Is it a player at all??
+						{
+							List<Mobile> mobs = new List<Mobile>( World.Mobiles.Values );
+							foreach ( Mobile m in mobs ) //lets look through the mobs list
+							{
+								if ( m is PlayerMobile ) //is it a player?
+								{
+									if (m.Name.ToLower() == s1.ToLower())
+									{
+										Account acct = m.Account as Account;
+										found2 = 1; //a player with that name was found. Return the last logged in date and time.
+										s_Connection.SendMessage(String.Format("PRIVMSG {0} : {1}{2}{3}{4}", Data.IrcRoom, s1, " was last seen on: ", acct.LastLogin, " (Server Time)" ));	
+									}
+								}
+							}
+							if ((found == 0) && (found2 == 0)) //a character with that name was not found in the mobiles list. It does not exist on this shard.
+								s_Connection.SendMessage(String.Format("PRIVMSG {0} : {1}{2}{3}",  Data.IrcRoom, "The name: ", s1, " is not being used by any players registered at Aedilis." ));	
+						}
+						//------------
+					}
+					else // no name was given, or an invalid name was given.
+						s_Connection.SendMessage(String.Format("PRIVMSG {0} : {1}", Data.IrcRoom, "You have specified an invalid name. " ));
+				}
                 }
             }
             catch (Exception e)

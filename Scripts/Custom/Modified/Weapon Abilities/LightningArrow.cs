@@ -1,4 +1,4 @@
-// $Id: //depot/c%23/RunUO Core Scripts/RunUO Core Scripts/Items/Weapons/Abilities/LightningArrow.cs#2 $
+// $Id: //depot/c%23/RunUO Core Scripts/RunUO Core Scripts/Items/Weapons/Abilities/LightningArrow.cs#4 $
 
 using System;
 using System.Collections;
@@ -40,7 +40,8 @@ namespace Server.Items
 
 			defender.PlaySound(1471);
 			defender.BoltEffect(0);
-			attacker.SendMessage("The Lighting Arrow strikes a target");
+			attacker.SendMessage("Your lightning arrow strikes {0}!", defender.Name);
+			defender.SendMessage("Lightning arcs from {0}{1} arrow onto you!", attacker.Name, attacker.Name.ToLower().EndsWith("s") ? "'" : "'s");
 
 			foreach (Mobile m in defender.GetMobilesInRange(1))
 				list.Add(m);
@@ -72,7 +73,8 @@ namespace Server.Items
 				{
 					Mobile m = (Mobile)targets[i];
 
-					attacker.SendMessage("The Lighting Arrow strikes around a target");
+					attacker.SendMessage("Lightning arcs from your arrow onto {0}!", m.Name);
+					m.SendMessage("Lightning arcs from {0}{1} arrow onto you!", attacker.Name, attacker.Name.ToLower().EndsWith("s") ? "'" : "'s");
 					m.PlaySound(1471);
 					m.BoltEffect(0);
 					weapon.OnHit(attacker, m, damageBonus);

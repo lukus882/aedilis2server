@@ -35,7 +35,7 @@ namespace Server.Items
 
 		public static readonly TimeSpan BlockEquipDuration = TimeSpan.FromSeconds( 5.0 );
 
-		public void OnHit( Mobile attacker, Mobile defender, int damage )
+		public override void OnHit( Mobile attacker, Mobile defender, int damage )
 		{
 			if ( !Validate( attacker ) )
 				return;

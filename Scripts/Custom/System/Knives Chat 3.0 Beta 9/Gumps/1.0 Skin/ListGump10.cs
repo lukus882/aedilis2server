@@ -237,7 +237,8 @@ namespace Knives.Chat3
         private void BuildTabs(int width, int y)
         {
             AddButton(width / 2 - 90, y, 0x98B, "Channels", new GumpCallback(Channels));
-            AddHtml(width / 2 - 90, y + 3, 60, (c_ListPage == ListPage.Channel ? HTML.Green : HTML.White) + "<CENTER>" + Data.GetData(Current).CurrentChannel.NameFor(Current));
+            if(Data.GetData(Current).CurrentChannel != null)
+                AddHtml(width / 2 - 90, y + 3, 60, (c_ListPage == ListPage.Channel ? HTML.Green : HTML.White) + "<CENTER>" + Data.GetData(Current).CurrentChannel.NameFor(Current));
 
             AddButton(width / 2 - 30, y, 0x98B, "Page", new GumpStateCallback(Page), ListPage.Friends);
             AddHtml(width / 2 - 30, y + 3, 60, (c_ListPage == ListPage.Friends ? HTML.Green : HTML.White) + "<CENTER>" + General.Local(203));
