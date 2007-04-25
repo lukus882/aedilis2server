@@ -22,7 +22,7 @@
  * following code is adapted from their Admin gump code
  * 
  * 
- * ^FileID: GuildAdministrator.cs '0.5.0 - beta' 01-28-2007 mbaird^
+ * ^FileID: GuildAdministration.cs '0.6.0 - beta' 01-28-2007 mbaird^
  *********************************************/
 
 using System;
@@ -50,7 +50,7 @@ namespace Khazman.Utilities
 			WarDetails
 		}
 
-		private const string Version = "0.5.0 - beta";
+		private const string Version = "0.6.0 - beta";
 		private const bool UseAdminGump = true; //Note: setting this to false will lose functionality of
 												//GuildInfo.ViewMemberList and GuildInfo.ViewLeader as these
 												//two buttons route the user to the Admin gump
@@ -465,6 +465,10 @@ namespace Khazman.Utilities
 
 						AddLabel( 20, y, LabelHue, "Member Count:" );
 						AddLabel( 200, y, LabelHue, m_AllianceTable[info].Count.ToString() );
+						y += 20;
+
+						AddLabel( 20, y, LabelHue, "Status:" );
+						AddLabel( 200, y, LabelHue, (m_AllianceTable[info].Count < 2 ? "Pending Acceptance" : "Active") );
 						y += 20;
 
 						y = 270;
