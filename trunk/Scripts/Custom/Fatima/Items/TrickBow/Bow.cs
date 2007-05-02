@@ -3,80 +3,13 @@ using System.Collections.Generic;
 using Server;
 using Server.Targeting;
 using Server.Mobiles;
-using Server.Items;
+using Fatima.Items;
 
-namespace Fatima.Items
+namespace Server.Items
 {
-	public enum ArrowReq : byte
-	{
-		NotUsable = 0,
-		Usable = 1,
-		NoReq = 2
-	};
-
-	public class SelectTrickArrowTypeContextMenu : Server.ContextMenus.ContextMenuEntry
-	{
-		private TrickBow m_Bow;
-
-		public override bool NonLocalUse{ get{ return false; } }
-		public SelectTrickArrowTypeContextMenu( TrickBow bow ) : base( 97, 12 ) //"Setup"
-		{
-			m_Bow = bow;
-		}
-
-		public override void OnClick()
-		{
-			Owner.From.SendMessage("Select the Trick Arrow type you wish to fire primarily.");
-			Owner.From.Target = new InternalTarget(m_Bow);
-		}
-
-		private class InternalTarget : Target
-		{
-			private TrickBow m_Bow;
-
-			public InternalTarget( TrickBow bow ) : base( 12, false, TargetFlags.None )
-			{
-				m_Bow = bow;
-			}
-
-			protected override void OnTarget( Mobile from, object o )
-			{
-				if (o == null)
-					return;
-
-				if ( o != null && o is TrickArrow )
-				{
-					m_Bow.ArmDifferentAmmo( (TrickArrow)o, from );
-				}
-				else
-					from.SendMessage("That is not a valid special arrow!");
-			}
-		}
-	}
-
-	public class ClearTrickArrowTypeContextMenu : Server.ContextMenus.ContextMenuEntry
-	{
-		private TrickBow m_Bow;
-
-		public override bool NonLocalUse{ get{ return false; } }
-
-		public ClearTrickArrowTypeContextMenu( TrickBow bow ) : base( 154, 12 ) //"Clear"
-		{
-			m_Bow = bow;
-		}
-
-		public override void OnClick()
-		{
-			Owner.From.SendMessage("Your bow will now fire regular arrows.");
-			m_Bow.ClearTrickAmmo(); //reset
-		}
-	}
-
 	[FlipableAttribute( 0x13B2, 0x13B1 )]
-	public class TrickBow : Bow
+	public class Bow : BaseRanged, ITrickBow
 	{
-		public override int ArtifactRarity{ get{ return 13; } }
-
 		public override int EffectID{ get{ return 0xF42; } }
 
 		private Type m_TrickAmmoType = typeof(Arrow);
@@ -131,28 +64,26 @@ namespace Fatima.Items
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.MortalStrike; } }
 
 		public override int AosStrengthReq{ get{ return 30; } }
-		public override int AosMinDamage{ get{ return 21; } }
-		public override int AosMaxDamage{ get{ return 25; } }
-		public override int AosSpeed{ get{ return 30; } }
+		public override int AosMinDamage{ get{ return 16; } }
+		public override int AosMaxDamage{ get{ return 18; } }
+		public override int AosSpeed{ get{ return 25; } }
 
 		public override int OldStrengthReq{ get{ return 20; } }
 		public override int OldMinDamage{ get{ return 9; } }
 		public override int OldMaxDamage{ get{ return 41; } }
 		public override int OldSpeed{ get{ return 20; } }
 
-		public override int DefMaxRange{ get{ return 11; } }
+		public override int DefMaxRange{ get{ return 10; } }
 
-		public override int InitMinHits{ get{ return 255; } }
-		public override int InitMaxHits{ get{ return 255; } }
+		public override int InitMinHits{ get{ return 31; } }
+		public override int InitMaxHits{ get{ return 60; } }
 
 		public override WeaponAnimation DefAnimation{ get{ return WeaponAnimation.ShootBow; } }
 
 		[Constructable]
-		public TrickBow() : base()
+		public Bow() : base( 0x13B2 )
 		{
 			Layer = Layer.TwoHanded;
-
-			Name = "Trick Bow";
 			Weight = 6.0;
 		}
 
@@ -162,7 +93,7 @@ namespace Fatima.Items
 				return false;
 
 			Type t = arrow.GetType();
-			bool usable = TrickBow.ArrowUsable(t, from);
+			bool usable = Bow.ArrowUsable(t, from);
 
 			if (usable)
 			{
@@ -285,7 +216,7 @@ namespace Fatima.Items
 				{
 					m_TrickAmmoType.GetMethod( "OnArrowHit" ).Invoke( null, new object[]{ this, attacker, defender } );
 				}
-				catch (Exception e)
+				catch// (Exception e)
 				{
 					//Console.WriteLine( String.Format("CAUGHT Exception at OnArrowHit [arrow type= {0}] invoke...Message: {1}\nStack Trace:\n\n{2}", m_TrickAmmoType.FullName, e.Message, e.StackTrace) );
 				}
@@ -294,7 +225,7 @@ namespace Fatima.Items
 			base.OnHit(attacker,defender, dmgbonus);
 		}
 
-		public TrickBow( Serial serial ) : base( serial )
+		public Bow( Serial serial ) : base( serial )
 		{
 		}
 

@@ -4,9 +4,9 @@ using Server.Items;
 
 namespace Fatima.Items
 {
-	public class ShockArrow : TrickArrow, ICommodity
+	public class FireArrow : TrickArrow, ICommodity
 	{
-		public static string ArrowName{ get{ return "Shock"; } }
+		public static string ArrowName{ get{ return "Fire"; } }
 
 		string ICommodity.Description
 		{
@@ -17,33 +17,33 @@ namespace Fatima.Items
 		}
 
 		[Constructable]
-		public ShockArrow() : this( 1 )
+		public FireArrow() : this( 1 )
 		{
 		}
 
 		[Constructable]
-		public ShockArrow( int amount ) : base( amount )
+		public FireArrow( int amount ) : base( amount )
 		{
-			Name = "Shock Arrow";
+			Name = "Fire Arrow";
 			Stackable = true;
 			Weight = 0.1;
 			Amount = amount;
 
-			Hue = 0x490; //Glowy Yellowish
+
+			Hue = 0x489; //Fire
 		}
 
-		public static void OnArrowFired( TrickBow bow, Mobile attacker, Mobile defender )
+		public static void OnArrowFired( ITrickBow bow, Mobile attacker, Mobile defender )
 		{
 			//attacker.MovingParticles( defender, 0x36E4, 5, 0, false, true, 3006, 4006, 0 );
 			attacker.PlaySound( 0x1E5 );
 			Effects.SendMovingEffect( attacker, defender, 0x36D4, 6, 0, false,false, 0, 0 ); //2nd to last 0 => COLOR (flame by default)
 		}
 
-		public static void OnArrowHit( TrickBow bow, Mobile attacker, Mobile defender )
+		public static void OnArrowHit( ITrickBow bow, Mobile attacker, Mobile defender )
 		{
-			//+4 damage, 100% energy.
-			//( Mobile m, Mobile from, int damage, int phys, int fire, int cold, int pois, int nrgy )
-			AOS.Damage( defender, attacker, 4, 0, 0, 0, 0, 100 );
+			//+5 damage, 100% fire.
+			AOS.Damage( defender, attacker, 5, 0, 100, 0, 0, 0 );
 		}
 
 		public static ArrowReq CanUse( Mobile user )
@@ -57,11 +57,11 @@ namespace Fatima.Items
 
 			list.Add( 1060847, "{0}\t{1}", "Usable by", "all" ); // ~1_val~ ~2_val~
 
-			list.Add( 1060658, "{0}\t{1}", "Bonus Energy Damage", "+4" ); // ~1_val~: ~2_val~
+			list.Add( 1060658, "{0}\t{1}", "Bonus Fire Damage", "+5" ); // ~1_val~: ~2_val~
 			//list.Add( 1060659, "{0}\t{1}", "", 100 ); // ~1_val~: ~2_val~
 		}
 
-		public ShockArrow( Serial serial ) : base( serial )
+		public FireArrow( Serial serial ) : base( serial )
 		{
 		}
 

@@ -86,57 +86,57 @@ namespace Server.Misc
          //for instance .15 would be a 15% chance to gain in the particular skill
 
          SkillInfo.Table[0].GainFactor = .10;// Alchemy = 0, 
-         SkillInfo.Table[1].GainFactor = .12;// Anatomy = 1, 
-         SkillInfo.Table[2].GainFactor = .12;// AnimalLore = 2, 
-         SkillInfo.Table[3].GainFactor = .12;// ItemID = 3, 
-         SkillInfo.Table[4].GainFactor = .12;// ArmsLore = 4, 
-         SkillInfo.Table[5].GainFactor = .12;// Parry = 5, 
+         SkillInfo.Table[1].GainFactor = .10;// Anatomy = 1, 
+         SkillInfo.Table[2].GainFactor = .10;// AnimalLore = 2, 
+         SkillInfo.Table[3].GainFactor = .08;// ItemID = 3, 
+         SkillInfo.Table[4].GainFactor = .10;// ArmsLore = 4, 
+         SkillInfo.Table[5].GainFactor = .10;// Parry = 5, 
          SkillInfo.Table[6].GainFactor = .10;// Begging = 6, 
          SkillInfo.Table[7].GainFactor = .10;// Blacksmith = 7, 
          SkillInfo.Table[8].GainFactor = .10;// Fletching = 8, 
          SkillInfo.Table[9].GainFactor = .10;// Peacemaking = 9, 
          SkillInfo.Table[10].GainFactor = .10;// Camping = 10, 
-         SkillInfo.Table[11].GainFactor = .12;// Carpentry = 11, 
-         SkillInfo.Table[12].GainFactor = .12;// Cartography = 12, 
-         SkillInfo.Table[13].GainFactor = .12;// Cooking = 13, 
-         SkillInfo.Table[14].GainFactor = .12;// DetectHidden = 14, 
-         SkillInfo.Table[15].GainFactor = .12;// Discordance = 15, 
-         SkillInfo.Table[16].GainFactor = .12;// EvalInt = 16, 
-         SkillInfo.Table[17].GainFactor = .12;// Healing = 17, 
-         SkillInfo.Table[18].GainFactor = .12;// Fishing = 18, 
-         SkillInfo.Table[19].GainFactor = .12;// Forensics = 19, 
-         SkillInfo.Table[20].GainFactor = .11;// Herding = 20, 
-         SkillInfo.Table[21].GainFactor = .12;// Hiding = 21, 
-         SkillInfo.Table[22].GainFactor = .12;// Provocation = 22, 
-         SkillInfo.Table[23].GainFactor = .14;// Inscribe = 23, 
-         SkillInfo.Table[24].GainFactor = .15;// Lockpicking = 24, 
-         SkillInfo.Table[25].GainFactor = .12;// Magery = 25, 
-         SkillInfo.Table[26].GainFactor = .12;// MagicResist = 26, 
-         SkillInfo.Table[27].GainFactor = .12;// Tactics = 27, 
-         SkillInfo.Table[28].GainFactor = .12;// Snooping = 28, 
-         SkillInfo.Table[29].GainFactor = .11;// Musicianship = 29, 
-         SkillInfo.Table[30].GainFactor = .15;// Poisoning = 30 
-         SkillInfo.Table[31].GainFactor = .12;// Archery = 31 
+         SkillInfo.Table[11].GainFactor = .10;// Carpentry = 11, 
+         SkillInfo.Table[12].GainFactor = .10;// Cartography = 12, 
+         SkillInfo.Table[13].GainFactor = .10;// Cooking = 13, 
+         SkillInfo.Table[14].GainFactor = .10;// DetectHidden = 14, 
+         SkillInfo.Table[15].GainFactor = .10;// Discordance = 15, 
+         SkillInfo.Table[16].GainFactor = .10;// EvalInt = 16, 
+         SkillInfo.Table[17].GainFactor = .10;// Healing = 17, 
+         SkillInfo.Table[18].GainFactor = .10;// Fishing = 18, 
+         SkillInfo.Table[19].GainFactor = .10;// Forensics = 19, 
+         SkillInfo.Table[20].GainFactor = .10;// Herding = 20, 
+         SkillInfo.Table[21].GainFactor = .10;// Hiding = 21, 
+         SkillInfo.Table[22].GainFactor = .10;// Provocation = 22, 
+         SkillInfo.Table[23].GainFactor = .10;// Inscribe = 23, 
+         SkillInfo.Table[24].GainFactor = .10;// Lockpicking = 24, 
+         SkillInfo.Table[25].GainFactor = .10;// Magery = 25, 
+         SkillInfo.Table[26].GainFactor = .10;// MagicResist = 26, 
+         SkillInfo.Table[27].GainFactor = .10;// Tactics = 27, 
+         SkillInfo.Table[28].GainFactor = .10;// Snooping = 28, 
+         SkillInfo.Table[29].GainFactor = .10;// Musicianship = 29, 
+         SkillInfo.Table[30].GainFactor = .10;// Poisoning = 30 
+         SkillInfo.Table[31].GainFactor = .10;// Archery = 31 
          SkillInfo.Table[32].GainFactor = .10;// SpiritSpeak = 32 
-         SkillInfo.Table[33].GainFactor = .12;// Stealing = 33 
-         SkillInfo.Table[34].GainFactor = .12;// Tailoring = 34 
-         SkillInfo.Table[35].GainFactor = .12;// AnimalTaming = 35 
-         SkillInfo.Table[36].GainFactor = .12;// TasteID = 36 
-         SkillInfo.Table[37].GainFactor = .12;// Tinkering = 37 
-         SkillInfo.Table[38].GainFactor = .15;// Tracking = 38 
-         SkillInfo.Table[39].GainFactor = .12;// Veterinary = 39 
+         SkillInfo.Table[33].GainFactor = .10;// Stealing = 33 
+         SkillInfo.Table[34].GainFactor = .10;// Tailoring = 34 
+         SkillInfo.Table[35].GainFactor = .10;// AnimalTaming = 35 
+         SkillInfo.Table[36].GainFactor = .10;// TasteID = 36 
+         SkillInfo.Table[37].GainFactor = .10;// Tinkering = 37 
+         SkillInfo.Table[38].GainFactor = .10;// Tracking = 38 
+         SkillInfo.Table[39].GainFactor = .10;// Veterinary = 39 
          SkillInfo.Table[40].GainFactor = .10;// Swords = 40 
-         SkillInfo.Table[41].GainFactor = .12;// Macing = 41 
-         SkillInfo.Table[42].GainFactor = .12;// Fencing = 42 
-         SkillInfo.Table[43].GainFactor = .12;// Wrestling = 43 
+         SkillInfo.Table[41].GainFactor = .10;// Macing = 41 
+         SkillInfo.Table[42].GainFactor = .10;// Fencing = 42 
+         SkillInfo.Table[43].GainFactor = .10;// Wrestling = 43 
          SkillInfo.Table[44].GainFactor = .10;// Lumberjacking = 44 
          SkillInfo.Table[45].GainFactor = .10;// Mining = 45 
-         SkillInfo.Table[46].GainFactor = .12;// Meditation = 46 
-         SkillInfo.Table[47].GainFactor = .12;// Stealth = 47 
-         SkillInfo.Table[48].GainFactor = .14;// RemoveTrap = 48 
-         SkillInfo.Table[49].GainFactor = .11;// Necromancy = 49 
-         SkillInfo.Table[50].GainFactor = .12;// Focus = 50 
-         SkillInfo.Table[51].GainFactor = .12;// Chivalry = 51
+         SkillInfo.Table[46].GainFactor = .10;// Meditation = 46 
+         SkillInfo.Table[47].GainFactor = .10;// Stealth = 47 
+         SkillInfo.Table[48].GainFactor = .10;// RemoveTrap = 48 
+         SkillInfo.Table[49].GainFactor = .10;// Necromancy = 49 
+         SkillInfo.Table[50].GainFactor = .10;// Focus = 50 
+         SkillInfo.Table[51].GainFactor = .10;// Chivalry = 51
          SkillInfo.Table[52].GainFactor = .10;// Bushido = 52
          SkillInfo.Table[53].GainFactor = .10;// Ninjitsu = 53
          SkillInfo.Table[54].GainFactor = .10;// Spellweaving = 54

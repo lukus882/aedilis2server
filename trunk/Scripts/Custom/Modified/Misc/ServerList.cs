@@ -20,7 +20,7 @@ namespace Server.Misc
 		 * private const string Address = "shard.host.com";
 		 */
 
-		public static readonly string Address = "stormwolf.org";
+		public static readonly string Address = "aedilis.servegame.com";
 
 		public const string ServerName = "Aedilis 2.0";
 

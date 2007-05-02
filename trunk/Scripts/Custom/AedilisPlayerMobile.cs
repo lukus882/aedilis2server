@@ -23,50 +23,72 @@ using Server.Regions;
 using Server.Accounting;
 using Server.Engines.CannedEvil;
 using Server.Engines.Craft;
+using Fatima;
+using Fatima.CharacterFlags;
 
 namespace Server.Mobiles
 {
-	public class AedilisPlayerMobile : PlayerMobile
+	public partial class PlayerMobile
 	{
-		public AedilisPlayerMobile() : base()
-		{
-		}
+		#region Fatima.CharacterFlags -- April 28th '07
+			private Dictionary<string, BaseCharacterFlag> m_CharFlags = new Dictionary<string, BaseCharacterFlag>();
+			public Dictionary<string, BaseCharacterFlag> CharFlags{ get{ return m_CharFlags; } }
 
-		public AedilisPlayerMobile( Serial s ) : base( s )
-		{
-		}
-		
+			public string MapHash = String.Empty;
+		#endregion
 
-		public override void Deserialize( GenericReader reader )
-		{
-			base.Deserialize( reader );
-			int version = reader.ReadInt();
-			
+		#region Travel Mages -- April 28th '07
+			private int m_TravelTickets;
 
-			switch ( version )
+			[CommandProperty( AccessLevel.Administrator )]
+			public int TravelTickets
 			{
+				get{ return m_TravelTickets; }
+				set
+				{
+					m_TravelTickets = value;
+				}
+			}
 
+		#endregion
+
+		public void ExtendedDeserialize( GenericReader reader, int parentVerison )
+		{
+			int version = reader.ReadInt();
+
+			switch (version)
+			{
+				case 2:
+				{
+					m_CharFlags = CharacterFlags.DeserializeFlags(reader);
+					goto case 1;
+				}
 				case 1:
-                		{
-                 		     m_Settings = new MobileSettings(this);
-               			     m_Settings.Deserialize(reader);
-               			     goto case 0;
-               		        }
+				{
+					m_Settings = new MobileSettings(this);
+					m_Settings.Deserialize(reader);
+					goto case 0;
+				}
 				case 0:
 				{
+					m_TravelTickets = reader.ReadInt();
 					break;
 				}
-				
 			}
-	
 		}
 
-		public override void Serialize( GenericWriter writer )
+		public void ExtendedSerialize( GenericWriter writer )
 		{
-			base.Serialize( writer );
-			writer.Write( (int) 1 );
+			writer.Write( (int)2 ); //version
+			
+			//Alteration 2
+			CharacterFlags.SerializeFlags(writer, m_CharFlags);
 
-			m_Settings.Serialize(writer);
+			//Alteration 1
+                        m_Settings.Serialize(writer);
+
+			//Alteration 0
+			writer.Write( (int)m_TravelTickets );
 		}
 	}
 }
