@@ -38,7 +38,7 @@ namespace Fatima.Items
 			return SlayerGroup.GetEntryByName( SlayerName.Silver ).Slays( npc ); 
 		}
 
-		public static void OnArrowFired( TrickBow bow, Mobile attacker, Mobile defender )
+		public static void OnArrowFired( ITrickBow bow, Mobile attacker, Mobile defender )
 		{
 			if (IsUndead(defender))
 			{
@@ -47,7 +47,7 @@ namespace Fatima.Items
 			}
 		}
 
-		public static void OnArrowHit( TrickBow bow, Mobile attacker, Mobile defender )
+		public static void OnArrowHit( ITrickBow bow, Mobile attacker, Mobile defender )
 		{
 			if (IsUndead(defender))
 			{

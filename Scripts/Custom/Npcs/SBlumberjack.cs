@@ -21,9 +21,9 @@ namespace Server.Mobiles
 			public InternalBuyInfo()
 			{
 
-				Add( new GenericBuyInfo( "In Pack Container Renaming Rune", typeof( BagRenaming ), 500, 20, 0x1F14, 0 ) );
-                                Add( new GenericBuyInfo( "In House Container Renaming Rune", typeof( BagRenaming2 ), 700, 20, 0x1F14, 0 ) );
-                                
+				Add( new GenericBuyInfo( "In Pack Container Renaming Rune", typeof( BagRenaming ), 600, 20, 0x1F14, 0 ) );
+                                Add( new GenericBuyInfo( "In House Container Renaming Rune", typeof( BagRenaming2 ), 800, 20, 0x1F14, 0 ) );
+                                Add( new GenericBuyInfo( "Seed Box", typeof( SeedBox ), 5000, 20, 0xE41, 0 ) );
 			}
 		}
 

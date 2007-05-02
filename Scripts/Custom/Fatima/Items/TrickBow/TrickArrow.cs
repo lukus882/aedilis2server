@@ -32,26 +32,26 @@ namespace Fatima.Items
 			Item item = null;
 
 			item = from.FindItemOnLayer( Layer.TwoHanded );
-			if (item != null && item is TrickBow)
+			if (item != null && item is ITrickBow)
 			{
-				((TrickBow)item).ArmDifferentAmmo( this, from );
+				((ITrickBow)item).ArmDifferentAmmo( this, from );
 				return;
 			}
 
 			item = from.FindItemOnLayer( Layer.OneHanded );
-			if (item != null && item is TrickBow)
+			if (item != null && item is ITrickBow)
 			{
-				((TrickBow)item).ArmDifferentAmmo( this, from );
+				((ITrickBow)item).ArmDifferentAmmo( this, from );
 				return;
 			}
 		}
 
 		/* THESE PROPERTIES SHOULD EXIST IN CHILD ARROW CLASSES!!
-			public static void OnArrowFired( TrickBow bow, Mobile attacker, Mobile defender )
+			public static void OnArrowFired( ITrickBow bow, Mobile attacker, Mobile defender )
 			{
 			}
 	
-			public static void OnArrowHit( TrickBow bow, Mobile attacker, Mobile defender )
+			public static void OnArrowHit( ITrickBow bow, Mobile attacker, Mobile defender )
 			{
 			}
 	

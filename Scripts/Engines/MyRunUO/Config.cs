@@ -7,14 +7,14 @@ namespace Server.Engines.MyRunUO
 	public class Config
 	{
 		// Is MyRunUO enabled?
-		public static bool Enabled = false;
+		public static bool Enabled = true;
 
 		// Details required for database connection string
 		public static string DatabaseDriver			= "{MySQL ODBC 3.51 Driver}";
-		public static string DatabaseServer			= "localhost";
-		public static string DatabaseName			= "MyRunUO";
-		public static string DatabaseUserID			= "username";
-		public static string DatabasePassword		= "password";
+		public static string DatabaseServer			= "stormfronthosting.net";
+		public static string DatabaseName			= "mike_myaedilis";
+		public static string DatabaseUserID			= "mike_myaedilis";
+		public static string DatabasePassword		= "zanar";
 
 		// Should the database use transactions? This is recommended
 		public static bool UseTransactions = true;
@@ -35,7 +35,7 @@ namespace Server.Engines.MyRunUO
 		public static AccessLevel HiddenAccessLevel	= AccessLevel.Counselor;
 
 		// Export character database every 30 minutes
-		public static TimeSpan CharacterUpdateInterval = TimeSpan.FromMinutes( 30.0 );
+		public static TimeSpan CharacterUpdateInterval = TimeSpan.FromMinutes( 60.0 );
 
 		// Export online list database every 5 minutes
 		public static TimeSpan StatusUpdateInterval = TimeSpan.FromMinutes( 5.0 );

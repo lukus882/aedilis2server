@@ -57,7 +57,7 @@ namespace Server.Mobiles
 
 				Add( new GenericBuyInfo( typeof( BoltOfCloth ), 100, 20, 0xf95, Utility.RandomDyedHue() ) ); 
 
-				Add( new GenericBuyInfo( typeof( Cloth ), 2, 20, 0x1766, Utility.RandomDyedHue() ) ); 
+				Add( new GenericBuyInfo( typeof( Cloth ), 5, 20, 0x1766, Utility.RandomDyedHue() ) ); 
 				Add( new GenericBuyInfo( typeof( UncutCloth ), 2, 20, 0x1767, Utility.RandomDyedHue() ) ); 
 
 				Add( new GenericBuyInfo( typeof( Cotton ), 102, 20, 0xDF9, 0 ) );
@@ -76,7 +76,7 @@ namespace Server.Mobiles
 				Add( typeof( Dyes ), 4 );
 				Add( typeof( DyeTub ), 4 );
 
-				Add( typeof( BoltOfCloth ), 50 );
+				Add( typeof( BoltOfCloth ), 15 );
 
 				Add( typeof( FancyShirt ), 10 );
 				Add( typeof( Shirt ), 6 );

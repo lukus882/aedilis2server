@@ -1,0 +1,24 @@
+<StockData>
+	<Stock type="Server.Items.Bottle" demand="73.4484401833207" priceChange="-1.46132186425911" priceAdjust="0" />
+	<Stock type="Server.Items.BlackPearl" demand="73.4484401833207" priceChange="-1.79265970182263" priceAdjust="0" />
+	<Stock type="Server.Items.Bloodmoss" demand="73.4484401833207" priceChange="1.08973386061365" priceAdjust="2.30547476993197" />
+	<Stock type="Server.Items.Garlic" demand="73.4484401833207" priceChange="0.739873932436981" priceAdjust="1.42996034586335" />
+	<Stock type="Server.Items.Ginseng" demand="73.4484401833207" priceChange="0.419484346112928" priceAdjust="1.39646638321991" />
+	<Stock type="Server.Items.MandrakeRoot" demand="74.4997658846548" priceChange="0.569743756586566" priceAdjust="2.53905987005637" />
+	<Stock type="Server.Items.Nightshade" demand="73.4484401833207" priceChange="1.31804950398768" priceAdjust="1.86624549961009" />
+	<Stock type="Server.Items.SpidersSilk" demand="73.4484401833207" priceChange="-2.8078847066536" priceAdjust="0" />
+	<Stock type="Server.Items.SulfurousAsh" demand="74.2912776007849" priceChange="-0.721967898016781" priceAdjust="1.03299702407466" />
+	<Stock type="Server.Items.BatWing" demand="73.4484401833207" priceChange="0.694372860595758" priceAdjust="6.756806941613" />
+	<Stock type="Server.Items.DaemonBlood" demand="73.4484401833207" priceChange="-5.28106589390946" priceAdjust="0" />
+	<Stock type="Server.Items.PigIron" demand="73.4484401833207" priceChange="0.498351144720032" priceAdjust="6.38200452813506" />
+	<Stock type="Server.Items.NoxCrystal" demand="-0.367879441171442" priceChange="-1.48455562409226" priceAdjust="0" />
+	<Stock type="Server.Items.NoxCrystal" demand="-0.367879441171442" priceChange="-0.483881962198709" priceAdjust="0.226419010002361" />
+	<Stock type="Server.Items.Cloth" demand="48.7906063410002" priceChange="-0.549524222104589" priceAdjust="0" />
+	<Stock type="Server.Items.UncutCloth" demand="48.7906063410002" priceChange="0.335624501963902" priceAdjust="0.335624501963902" />
+	<Stock type="Server.Items.Bandage" demand="49.7075481347405" priceChange="0.91929355162163" priceAdjust="1.06506414332663" />
+	<Stock type="Server.Items.Log" demand="48.7906063410002" priceChange="0.565031689156327" priceAdjust="6.47677286303452" />
+	<Stock type="Server.Items.Board" demand="48.7906063410002" priceChange="0.371963025290502" priceAdjust="0.371963025290502" />
+	<Stock type="Server.Items.Arrow" demand="70.7506134607742" priceChange="2.95391079446017" priceAdjust="2.95391079446017" />
+	<Stock type="Server.Items.IronOre" demand="48.7906063410002" priceChange="-6.90500169843668" priceAdjust="0" />
+	<Stock type="Server.Items.IronIngot" demand="48.7906063410002" priceChange="-2.3254006079982" priceAdjust="0" />
+</StockData>

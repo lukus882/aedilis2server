@@ -82,7 +82,7 @@ namespace Server.TimeSystem
             Data.UseAutoLighting = true;
             Data.UseRandomLightOutage = true;
 
-            Data.UseSeasons = true;
+            Data.UseSeasons = false;
 
             Data.UseNightSightDarkestHourOverride = true;
 

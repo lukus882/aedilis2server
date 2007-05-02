@@ -32,14 +32,14 @@ namespace Fatima.Items
 			Hue = 67; //Green
 		}
 
-		public static void OnArrowFired( TrickBow bow, Mobile attacker, Mobile defender )
+		public static void OnArrowFired( ITrickBow bow, Mobile attacker, Mobile defender )
 		{
 			//attacker.MovingParticles( defender, 0x36E4, 5, 0, false, true, 3006, 4006, 0 );
 			attacker.PlaySound( 0x1E5 );
 			Effects.SendMovingEffect( attacker, defender, 0x36D4, 6, 0, false,false, 67, 0 ); //2nd to last 0 => COLOR (flame by default)
 		}
 
-		public static void OnArrowHit( TrickBow bow, Mobile attacker, Mobile defender )
+		public static void OnArrowHit( ITrickBow bow, Mobile attacker, Mobile defender )
 		{
 			//+8 damage, 100% poison.
 			//( Mobile m, Mobile from, int damage, int phys, int fire, int cold, int pois, int nrgy )

@@ -71,7 +71,7 @@ namespace Server.Mobiles
 	}
 	#endregion
 
-	public class PlayerMobile : Mobile, IHonorTarget
+	public partial class PlayerMobile : Mobile, IHonorTarget
 	{
 		private class CountAndTimeStamp
 		{
@@ -449,15 +449,15 @@ namespace Server.Mobiles
 			m_LastPersonalLight = -1;
 		}
 
-public override void ComputeBaseLightLevels( out int global, out int personal )
-{
-	global = LightCycle.ComputeLevelFor( this );
+		public override void ComputeBaseLightLevels( out int global, out int personal )
+		{
+			global = LightCycle.ComputeLevelFor( this );
 
 // ** EDIT ** Time System
 
 	/*if ( this.LightLevel < 21 && AosAttributes.GetValue( this, AosAttribute.NightSight ) > 0 )
-		personal = 21;
-	else
+				personal = 21;
+			else
 		personal = this.LightLevel;*/
 
 	if (this.LightLevel < 21 && AosAttributes.GetValue(this, AosAttribute.NightSight) > 0)
@@ -475,8 +475,8 @@ public override void ComputeBaseLightLevels( out int global, out int personal )
 	}
 	else
 	{
-		personal = this.LightLevel;
-	}
+				personal = this.LightLevel;
+		}
 
 // ** END *** Time System
 
@@ -2362,6 +2362,10 @@ public override void ComputeBaseLightLevels( out int global, out int personal )
 
 			switch ( version )
 			{
+				case 26:
+				{
+					goto case 25;
+				}
 				case 25:
 				{
 					int recipeCount = reader.ReadInt();
@@ -2606,6 +2610,11 @@ public override void ComputeBaseLightLevels( out int global, out int personal )
 
 			if( Hidden )	//Hiding is the only buff where it has an effect that's serialized.
 				AddBuff( new BuffInfo( BuffIcon.HidingAndOrStealth, 1075655 ) );
+
+			if (version >= 26) //Aedilis 2.0 RC1
+			{
+				ExtendedDeserialize( reader, version );
+			}
 		}
 		
 		public override void Serialize( GenericWriter writer )
@@ -2643,7 +2652,7 @@ public override void ComputeBaseLightLevels( out int global, out int personal )
 
 			base.Serialize( writer );
 			
-			writer.Write( (int) 25 ); // version
+			writer.Write( (int) 26 ); // version
 
 			if( m_AcquiredRecipes == null )
 			{
@@ -2742,6 +2751,8 @@ public override void ComputeBaseLightLevels( out int global, out int personal )
 			writer.Write( m_LongTermElapse );
 			writer.Write( m_ShortTermElapse );
 			writer.Write( this.GameTime );
+
+			ExtendedSerialize( writer );
 		}
 
 

@@ -8,7 +8,7 @@ namespace Server.Items
 	
 	public class WelcomeBook : Item
 	{
-		private string i_url = "http://www.aedilis.us/forum/showthread.php?t=1630"; // set default url here or 
+		private string i_url = "http://www.aedilis.us"; // set default url here or 
 		//private string i_url; // use this instead for default of null.
 
 		[CommandProperty( AccessLevel.GameMaster )]
