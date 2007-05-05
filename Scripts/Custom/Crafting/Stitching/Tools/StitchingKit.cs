@@ -4,18 +4,18 @@ using Server.Engines.Craft;
 
 namespace Server.Items
 {
-	public class StichingKit : BaseTool
+	public class StitchingKit : BaseTool
 	{
-		public override CraftSystem CraftSystem{ get{ return DefStiching.CraftSystem; } }
+		public override CraftSystem CraftSystem{ get{ return DefStitching.CraftSystem; } }
 
 		[Constructable]
-		public StichingKit() : base( 0xDF6 )
+		public StitchingKit() : base( 0xDF6 )
 		{
 			Weight = 2.0;
-			Name = "Stiching Kit";
+			Name = "Stitching Kit";
 		}
 
-        public StichingKit(Serial serial) : base(serial)
+        public StitchingKit(Serial serial) : base(serial)
         {
         }
 

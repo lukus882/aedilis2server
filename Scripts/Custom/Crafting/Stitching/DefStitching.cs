@@ -4,7 +4,7 @@ using Server.Items;
 
 namespace Server.Engines.Craft
 {
-	public class DefStiching : CraftSystem
+	public class DefStitching : CraftSystem
 	{
 		public override SkillName MainSkill
 		{
@@ -13,13 +13,13 @@ namespace Server.Engines.Craft
 
 		public override int GumpTitleNumber
 		{
-			get { return 0; } // <CENTER>STICHING MENU</CENTER>
+			get { return 0; } // <CENTER>Stitching MENU</CENTER>
 		}
 
   
                 public override string GumpTitleString
 		{
-			get { return "<basefont color=#FFFFFF><CENTER>Stiching Menu</CENTER></basefont>"; }
+			get { return "<basefont color=#FFFFFF><CENTER>Stitching Menu</CENTER></basefont>"; }
 		}
 
 		private static CraftSystem m_CraftSystem;
@@ -29,7 +29,7 @@ namespace Server.Engines.Craft
 			get
 			{
 				if ( m_CraftSystem == null )
-					m_CraftSystem = new DefStiching();
+					m_CraftSystem = new DefStitching();
 
 				return m_CraftSystem;
 			}
@@ -40,7 +40,7 @@ namespace Server.Engines.Craft
 			return 0.5; // 50%
 		}
 
-		private DefStiching() : base( 1, 1, 1.25 )// base( 1, 1, 3.0 )
+		private DefStitching() : base( 1, 1, 1.25 )// base( 1, 1, 3.0 )
 		{
 		}
 		

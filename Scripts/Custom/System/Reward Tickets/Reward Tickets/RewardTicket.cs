@@ -29,7 +29,7 @@ namespace Server.Items
 			Name = "a Reward ticket";
 			Movable = true;
 			LootType = LootType.Blessed;
-			Hue = 1161;
+			Hue = 1163;
 		}
 
 		public RewardTicket( Serial serial ) : base( serial )

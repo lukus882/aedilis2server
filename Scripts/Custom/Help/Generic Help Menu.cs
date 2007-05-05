@@ -225,8 +225,8 @@ namespace Server.Help
 
 		public void AddJunkTwo()
 		{
-			AddButton(100, 345, 10710, 10711, 2, GumpButtonType.Reply, 0); 
-			AddLabel(135, 341, 0, @"Page staff for further assistance..."); 
+			//AddButton(100, 345, 10710, 10711, 2, GumpButtonType.Reply, 0); 
+			//AddLabel(135, 341, 0, @"Page staff for further assistance..."); 
 
 			AddButton(100, 365, 10710, 10711, 3, GumpButtonType.Reply, 0); 
 			AddLabel(135, 361, 0, String.Format("Visit the {0} website...", ServerList.ServerName )); 

@@ -4,8 +4,6 @@ using Server;
 using Server.Items;
 using Server.Mobiles;
 using System.Collections.Generic;
-using Server.Network;
-using Server.Items.Economy;
 
 namespace Server
 {
@@ -917,27 +915,11 @@ namespace Server
 		public int Roll()
 		{
 			int v = m_Bonus;
-			double eco_Modifier = 100;
-			double w;
 
 			for ( int i = 0; i < m_Count; ++i )
 				v += Utility.Random( 1, m_Sides );
 			
-			
-			//i love amy
-			foreach (Item item in World.Items.Values)
-            {
-				
-            	if (item is StoneGoldCounter)
-            	{
-            		StoneGoldCounter GC = (StoneGoldCounter)item;
-        //    		eco_Modifier = GC.EconomyMultiplier;
-            	};
-            	
-            }
-
-			w = v * (eco_Modifier * .01);
-			return (int)w;
+			return v;
 		}
 
 		public LootPackDice( string str )
