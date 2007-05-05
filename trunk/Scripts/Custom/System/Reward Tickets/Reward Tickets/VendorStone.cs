@@ -491,9 +491,6 @@ namespace Server.Gumps
 			AddLabel( 410, 205, 1152, "or bonding." );
 
 
-			AddLabel( 420, 400, 906, "Created By" );
-			AddLabel( 420, 420, 906, "~Raelis~" );
-
 			AddButton( 420, 440, 4005, 4007, 0, GumpButtonType.Reply, 0 );
 			AddLabel( 450, 440, 33, "Close" );
 

@@ -5,30 +5,24 @@ using Server.Engines.BulkOrders;
 
 namespace Server.Mobiles
 {
-	public class StichingMistress : BaseVendor
+	public class UndeadStitchingMistress : BaseVendor
 	{
 		private ArrayList m_SBInfos = new ArrayList();
 		protected override ArrayList SBInfos{ get { return m_SBInfos; } }
 
 		[Constructable]
-		public StichingMistress() : base( "the stiching mistress" )
+		public UndeadStitchingMistress() : base( "the undead Stitching mistress" )
 		{
 			SetSkill( SkillName.Tailoring, 64.0, 100.0 );
+			BodyValue = 50;
 		}
 
 		public override void InitSBInfo()
 		{
-			m_SBInfos.Add( new SBStichingMistress() );
+			m_SBInfos.Add( new SBStitchingMistress() );
 		}
 
-		public override VendorShoeType ShoeType
-		{
-			get{ return Utility.RandomBool() ? VendorShoeType.Sandals : VendorShoeType.Shoes; }
-		}
-
-
-
-		public StichingMistress( Serial serial ) : base( serial )
+		public UndeadStitchingMistress( Serial serial ) : base( serial )
 		{
 		}
 

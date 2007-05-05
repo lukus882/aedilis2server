@@ -28,6 +28,7 @@ namespace Server.Mobiles
 				Add( new GenericBuyInfo( typeof( Fish ), 6, 80, 0x9CE, 0 ) );
 				Add( new GenericBuyInfo( typeof( Fish ), 6, 80, 0x9CF, 0 ) );
 				Add( new GenericBuyInfo( typeof( FishingPole ), 15, 20, 0xDC0, 0 ) );
+				Add( new GenericBuyInfo( typeof( GoldFishPole ), 500, 20, 0xDC0, 0 ) );
 			} 
 		} 
 

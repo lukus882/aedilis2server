@@ -16,7 +16,7 @@ namespace Server.Misc
 			}
 			
 		[Usage( "BondInfo" )]
-		[Description( "Tells you how much time remaining until your next BOD is available." )]
+		[Description( "Tells you how much time remaining until your pet will be bonded to you." )]
 		public static void BondInfo_OnCommand( CommandEventArgs e )
 		{
 			Mobile from = e.Mobile;

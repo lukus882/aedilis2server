@@ -4,12 +4,12 @@ using Server.Items;
 
 namespace Server.Mobiles
 {
-	public class SBStichingMistress: SBInfo
+	public class SBStitchingMistress: SBInfo
 	{
 		private ArrayList m_BuyInfo = new InternalBuyInfo();
 		private IShopSellInfo m_SellInfo = new InternalSellInfo();
 
-		public SBStichingMistress()
+		public SBStitchingMistress()
 		{
 		}
 
@@ -20,7 +20,7 @@ namespace Server.Mobiles
 		{
 			public InternalBuyInfo()
 			{
-				Add( new GenericBuyInfo( typeof( StichingKit ), 10000, 20, 0xDF6, 0 ) ); 
+				Add( new GenericBuyInfo( typeof( StitchingKit ), 10000, 20, 0xDF6, 0 ) ); 
 				Add( new GenericBuyInfo( typeof( Dyes ), 8, 20, 0xFA9, 0 ) ); 
 				Add( new GenericBuyInfo( typeof( DyeTub ), 9, 20, 0xFAB, 0 ) ); 
 				Add( new GenericBuyInfo( typeof( BoltOfCloth ), 120, 20, 0xf95, 0 ) ); 

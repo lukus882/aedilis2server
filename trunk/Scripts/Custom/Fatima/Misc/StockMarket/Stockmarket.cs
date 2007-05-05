@@ -472,19 +472,26 @@ namespace Fatima.Misc
 
 		public static void UpdateVendor( BaseVendor vendor )
 		{
-			IBuyItemInfo[] itemsToBuy = vendor.GetBuyInfo();
-			foreach ( IBuyItemInfo iBuyInterface in itemsToBuy )
+			try
 			{
-				if ( iBuyInterface is GenericBuyInfo )
+				IBuyItemInfo[] itemsToBuy = vendor.GetBuyInfo();
+				foreach ( IBuyItemInfo iBuyInterface in itemsToBuy )
 				{
-					GenericBuyInfo buyInfo = (GenericBuyInfo)iBuyInterface;
-					if ( m_MarketItems.ContainsKey( buyInfo.Type ) )
+					if ( iBuyInterface is GenericBuyInfo )
 					{
-						StockMarketItem stockEntry = m_MarketItems[buyInfo.Type];
-						buyInfo.Price = stockEntry.NewPrice;
-						//vendor.Say( String.Format("Demand on {0} is {1}", buyInfo.Type.Name, stockEntry.Demand) );
+						GenericBuyInfo buyInfo = (GenericBuyInfo)iBuyInterface;
+						if ( m_MarketItems.ContainsKey( buyInfo.Type ) )
+						{
+							StockMarketItem stockEntry = m_MarketItems[buyInfo.Type];
+							buyInfo.Price = stockEntry.NewPrice;
+							//vendor.Say( String.Format("Demand on {0} is {1}", buyInfo.Type.Name, stockEntry.Demand) );
+						}
 					}
 				}
+			}
+			catch
+			{
+				Fatima.Misc.LogWriter.WriteLine("StockMarket","Debug", String.Format("Error updating [Mobile: {0}, {1}, type: {2}]", vendor.Serial,vendor.Name, vendor.GetType().FullName) );
 			}
 
 		}

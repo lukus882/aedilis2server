@@ -25,7 +25,7 @@ namespace Server.Items
 		{
 			Stackable = false;
 			Name = "An Empty Reward Ticket Ledger";
-			Hue = 1161;
+			Hue = 1163;
 			Weight = 1.0;
 			LootType = LootType.Blessed;
 		}

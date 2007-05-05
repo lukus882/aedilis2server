@@ -53,9 +53,9 @@ namespace Server.TimeSystem
             Data.MinutesPerHour = 60;
             Data.HoursPerDay = 24;
 
-            Data.NightStartHour = 16;
+            Data.NightStartHour = 18;
             Data.NightStartMinute = 0;
-            Data.DayStartHour = 8;
+            Data.DayStartHour = 6;
             Data.DayStartMinute = 0;
             Data.ScaleTimeMinutes = 60;
 

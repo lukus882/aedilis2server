@@ -7,7 +7,7 @@ namespace Server.Engines.MyRunUO
 	public class Config
 	{
 		// Is MyRunUO enabled?
-		public static bool Enabled = false;
+		public static bool Enabled = true;
 
 		// Details required for database connection string
 		public static string DatabaseDriver			= "{MySQL ODBC 3.51 Driver}";
