@@ -47,15 +47,14 @@ namespace Server.Items
 			{
 				from.SendMessage( "The shrink system has been disabled. Contact your server administrator for details." );
 			}
-			else if ( from.Skills[SkillName.AnimalTaming].Value > 10 )
+			else if ( from.Skills[SkillName.AnimalTaming].Value > 50 )
 			{
            			from.Target = new HitchingPostTarget( m_Addon, this );
 				from.SendMessage( "What do you wish to shrink?" );
 			}
 			else
 			{
-				from.SendMessage( "You must have 10 animal taming to use a hitching post." );
-				from.SendMessage( "Try using a pet shrinking potion." );
+				from.SendMessage( "You must have 50 animal taming to use a hitching post." );
 			}
 		}
 

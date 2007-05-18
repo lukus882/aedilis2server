@@ -2927,6 +2927,10 @@ namespace Server.Multis
 						item.IsSecure = false;
 						item.Movable = true;
 						item.SetLastMoved();
+						#region Lokai's House Paints
+      						if (item is PaintedItem)
+       						item.Delete();
+      						#endregion
 					}
 				}
 

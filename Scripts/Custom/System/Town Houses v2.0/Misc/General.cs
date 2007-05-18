@@ -9,7 +9,7 @@ namespace Knives.TownHouses
 {
 	public class General
 	{
-		public static string Version{ get { return "2.0"; } }
+		public static string Version{ get { return "2.01"; } }
 
 		// This setting determines the suggested gold value for a single square of a home
 		//  which then derives price, lockdowns and secures.

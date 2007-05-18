@@ -3,6 +3,7 @@ using System.Collections;
 using Server;
 using Server.Items;
 using Server.Multis;
+using Server.Targeting;
 
 namespace Knives.TownHouses
 {
@@ -43,8 +44,6 @@ namespace Knives.TownHouses
 			s_TownHouses.Add( this );
 		}
 
-        public Point3D BaseBanLocation { get { return Point3D.Zero; } }
-
 		public void InitSectorDefinition()
 		{
             if (c_Sign == null || c_Sign.Blocks.Count == 0)
@@ -82,44 +81,6 @@ namespace Knives.TownHouses
             Components.Resize(maxX - minX, maxY - minY);
             Components.Add(0x520, Components.Width - 1, Components.Height - 1, -5);
         }
-
-/*#if(RunUO_1_Final)
-		public override void UpdateRegionArea()
-		{
-			Region.Map = Map;
-			Region.Coords = new ArrayList(c_Sign.Blocks);
-		}
-
-        public void UpdateRegion()
-        {
-            UpdateRegionArea();
-        }
-
-#elif(RunUO_2_RC1)
-        public override void UpdateRegion()
-		{
-            base.UpdateRegion();
-
-            if (c_Sign == null)
-                return;
-
-            Rectangle3D[] rects = Region.Area;
-            Rectangle2D rect;
-
-            for (int i = 0; i < rects.Length && i < c_Sign.Blocks.Count; ++i)
-            {
-                rect = (Rectangle2D)c_Sign.Blocks[i];
-                rects[i] = new Rectangle3D(new Point3D(rect.Start.X, rect.Start.Y, c_Sign.MinZ), new Point3D(rect.End.X, rect.End.Y, c_Sign.MaxZ));
-            }
-            
-            Region.Unregister();
-            Region.Register();
-		}
-
-        public override Point3D BaseBanLocation { get { return Point3D.Zero; } }
-
-#endif
- * */
 
         public override Rectangle2D[] Area
         {
@@ -215,9 +176,23 @@ namespace Knives.TownHouses
 			if ( e.Mobile != Owner || !IsInside( e.Mobile ) )
 				return;
 
-			if ( e.Speech.ToLower() == "check house rent" )
-				c_Sign.CheckRentTimer();
-		}
+            if (e.Speech.ToLower() == "check house rent")
+                c_Sign.CheckRentTimer();
+
+            Timer.DelayCall(TimeSpan.Zero, new TimerStateCallback(AfterSpeech), e.Mobile);
+        }
+
+        private void AfterSpeech(object o)
+        {
+            if (!(o is Mobile))
+                return;
+
+            if (((Mobile)o).Target is HouseBanTarget && ForSaleSign != null && ForSaleSign.NoBanning)
+            {
+                ((Mobile)o).Target.Cancel((Mobile)o, TargetCancelType.Canceled);
+                ((Mobile)o).SendMessage(0x161, "You cannot ban people from this house.");
+            }
+        }
 
 		public override void OnDelete()
 		{

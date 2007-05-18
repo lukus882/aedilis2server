@@ -21,6 +21,12 @@ namespace Server.Items
 		{
         }
 
+        public override bool OnDragLift(Mobile from)
+        {
+            if (from.AccessLevel >= AccessLevel.GameMaster) return base.OnDragLift(from);
+            else return false;
+        }
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);

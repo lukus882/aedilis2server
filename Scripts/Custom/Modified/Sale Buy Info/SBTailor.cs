@@ -76,7 +76,7 @@ namespace Server.Mobiles
 				Add( typeof( Dyes ), 4 );
 				Add( typeof( DyeTub ), 4 );
 
-				Add( typeof( BoltOfCloth ), 15 );
+				Add( typeof( BoltOfCloth ), 40 );
 
 				Add( typeof( FancyShirt ), 10 );
 				Add( typeof( Shirt ), 6 );

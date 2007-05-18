@@ -35,37 +35,36 @@
 \f10\fbias0 \fi-360\li4320\jclisttab\tx4320\lin4320 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace0\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\fbias0 \fi-360\li5040
 \jclisttab\tx5040\lin5040 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace0\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\fbias0 \fi-360\li5760\jclisttab\tx5760\lin5760 }{\listlevel
 \levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace0\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f10\fbias0 \fi-360\li6480\jclisttab\tx6480\lin6480 }{\listname ;}\listid1136679256}}
-{\*\listoverridetable{\listoverride\listid1136679256\listoverridecount0\ls1}{\listoverride\listid953288573\listoverridecount0\ls2}{\listoverride\listid928544353\listoverridecount0\ls3}}{\*\rsidtbl \rsid673505\rsid939626\rsid1928404\rsid3087438\rsid4403757
-\rsid5720789\rsid6097433\rsid10444852\rsid11010391\rsid11150156\rsid11536214\rsid12322751\rsid14176111\rsid14746673\rsid15479477\rsid15728713\rsid16011839\rsid16464944}{\*\generator Microsoft Word 11.0.5604;}{\info{\author Kevin}{\operator Kevin}
-{\creatim\yr2006\mo6\dy16\hr19\min10}{\revtim\yr2007\mo1\dy4\hr19\min34}{\version19}{\edmins32}{\nofpages2}{\nofwords752}{\nofchars4293}{\*\company  }{\nofcharsws5035}{\vern24689}}
+{\*\listoverridetable{\listoverride\listid1136679256\listoverridecount0\ls1}{\listoverride\listid953288573\listoverridecount0\ls2}{\listoverride\listid928544353\listoverridecount0\ls3}}{\*\rsidtbl \rsid673505\rsid939626\rsid1928404\rsid3087438\rsid3374933
+\rsid4403757\rsid5720789\rsid6097433\rsid7694856\rsid9571899\rsid10444852\rsid10580262\rsid11010391\rsid11032522\rsid11150156\rsid11536214\rsid12322751\rsid14176111\rsid14746673\rsid15479477\rsid15728713\rsid16011839\rsid16464944}{\*\generator Microsoft W
+ord 11.0.5604;}{\info{\author Kevin}{\operator Kevin}{\creatim\yr2006\mo6\dy16\hr19\min10}{\revtim\yr2007\mo5\dy13\hr20\min27}{\version23}{\edmins40}{\nofpages2}{\nofwords722}{\nofchars4116}{\*\company  }{\nofcharsws4829}{\vern24689}}
 \widowctrl\ftnbj\aenddoc\noxlattoyen\expshrtn\noultrlspc\dntblnsbdb\nospaceforul\hyphcaps0\horzdoc\dghspace120\dgvspace120\dghorigin1701\dgvorigin1984\dghshow0\dgvshow3\jcompress\viewkind4\viewscale100\nolnhtadjtbl\rsidroot5720789 \fet0\sectd 
 \linex0\sectdefaultcl\sftnbj {\*\pnseclvl1\pnucrm\pnstart1\pnindent720\pnhang {\pntxta .}}{\*\pnseclvl2\pnucltr\pnstart1\pnindent720\pnhang {\pntxta .}}{\*\pnseclvl3\pndec\pnstart1\pnindent720\pnhang {\pntxta .}}{\*\pnseclvl4
 \pnlcltr\pnstart1\pnindent720\pnhang {\pntxta )}}{\*\pnseclvl5\pndec\pnstart1\pnindent720\pnhang {\pntxtb (}{\pntxta )}}{\*\pnseclvl6\pnlcltr\pnstart1\pnindent720\pnhang {\pntxtb (}{\pntxta )}}{\*\pnseclvl7\pnlcrm\pnstart1\pnindent720\pnhang {\pntxtb (}
 {\pntxta )}}{\*\pnseclvl8\pnlcltr\pnstart1\pnindent720\pnhang {\pntxtb (}{\pntxta )}}{\*\pnseclvl9\pnlcrm\pnstart1\pnindent720\pnhang {\pntxtb (}{\pntxta )}}\pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 
 \fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\f1\fs20\insrsid939626 Summary:}{\f1\fs20\insrsid939626 
 \par 
-\par }{\f1\fs20\insrsid14746673 Version 2.0}{\f1\fs20\insrsid939626 
+\par }{\f1\fs20\insrsid14746673 Version 2.0}{\f1\fs20\insrsid3374933 1}{\f1\fs20\insrsid939626 
 \par }\pard \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0\pararsid14746673 {\f1\fs20\insrsid14746673 Supports RunUO 2.0 RC1, RunUO 1.0 Final}{\f1\fs20\insrsid14746673\charrsid9571899 
 \par 
 \par ***}{\f1\fs20\insrsid14746673  This version may work with the current RunUO 2.0 SVN, and this may change as the SVN changes.  Please report this to me, as I can add patches to allow functionality.
 \par }\pard \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 {\f1\fs20\insrsid939626 
-\par }{\b\f1\fs20\insrsid15728713 Version 2.0 News}{\f1\fs20\insrsid15728713\charrsid15728713 
+\par }{\b\f1\fs20\insrsid15728713 Version 2.0}{\b\f1\fs20\insrsid3374933 1}{\b\f1\fs20\insrsid15728713  News}{\f1\fs20\insrsid15728713\charrsid15728713 
 \par }{\f1\fs20\insrsid15728713 
-\par \tab Welcome to the first major update to my TownHouses system!  For most the system has run without any problems so far, but we all know by reading the 1.0 topic that icky crashes, doors not working, regions not updating
-, and other problems popped up all over.  Through all your feedback I\rquote ve managed to knock out every bug reported!  *crosses fingers*
+\par }{\f1\fs20\insrsid3374933 \tab Only about 15 days late, here is my latest TownHouses release!  Since it is a build on top of the current 2.0 system, I just adjusted a little itty bitty .01!  
+There have been many recent feature requests, and this only touches a few.  One of them, however, is quite important, that being a major RAM usage overhaul.  For most of you this will be transparent but the large shards will see an improvement.
+\par }{\f1\fs20\insrsid15728713 
+\par }{\f1\fs20\insrsid3374933 \tab Here\rquote s the list of changes!
 \par 
-\par \tab But would I release a major update with just bug fixes?  No way!!!  All the features you expect remain intact, and not much has changed with the houses themselves other than the stability.  Here are the other changes with the new version!
-\par 
-\par {\listtext\pard\plain\f1\fs20\insrsid15728713 \hich\af1\dbch\af0\loch\f1 -\tab}}\pard \ql \fi-360\li1080\ri0\nowidctlpar\jclisttab\tx1080\faauto\ls2\rin0\lin1080\itap0\pararsid15728713 {\f1\fs20\insrsid15728713 No more Utilities package, it\rquote 
-s all built in.
-\par {\listtext\pard\plain\f1\fs20\insrsid15728713 \hich\af1\dbch\af0\loch\f1 -\tab}One release for RunUO versions
-\par {\listtext\pard\plain\f1\fs20\insrsid15728713 \hich\af1\dbch\af0\loch\f1 -\tab}New global menu using the [TownHouses command.  No more need to [add TownHouseSign .
-\par {\listtext\pard\plain\f1\fs20\insrsid16464944 \hich\af1\dbch\af0\loch\f1 -\tab}}{\f1\fs20\insrsid16464944 Many general code improvements.
-\par }\pard \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0\pararsid4403757 {\f1\fs20\insrsid4403757 
-\par }\pard \ql \fi720\li0\ri0\nowidctlpar\tx0\faauto\rin0\lin0\itap0\pararsid4403757 {\f1\fs20\insrsid4403757 Notice this isn\rquote t a Beta release.  Since I didn\rquote t rewrite the entire system, I am confident enough in the stability.}{
-\f1\fs20\insrsid16011839   There will be no problems in removing the old system and installing this, all old TownHouses will work fine.}{\f1\fs20\insrsid4403757 
-\par }{\f1\fs20\insrsid1928404 
-\par For this package to work under RunUO 1.0 Final, follow the directions below after the Installation directions.
+\par {\listtext\pard\plain\f1\fs20\insrsid11032522 \hich\af1\dbch\af0\loch\f1 -\tab}}\pard \ql \fi-360\li1080\ri0\nowidctlpar\jclisttab\tx1080\faauto\ls2\rin0\lin1080\itap0\pararsid15728713 {\f1\fs20\insrsid11032522 RAM reduction on home purchase}{
+\f1\fs20\insrsid15728713 
+\par {\listtext\pard\plain\f1\fs20\insrsid11032522 \hich\af1\dbch\af0\loch\f1 -\tab}}{\f1\fs20\insrsid11032522 A new setup options: You can prevent banning in homes and force a home to be public or private.
+\par {\listtext\pard\plain\f1\fs20\insrsid11032522 \hich\af1\dbch\af0\loch\f1 -\tab}The [TownHouses menu now has a tab for showing all houses.
+\par }\pard \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0\pararsid10580262 {\f1\fs20\insrsid10580262 
+\par }\pard \ql \li720\ri0\nowidctlpar\faauto\rin0\lin720\itap0\pararsid10580262 {\f1\fs20\insrsid10580262 That\rquote s it!  Next time I update, I am planning to enhance the rental features.  I can\rquote t predict when that update will come however
+ =)  Until then, I will continue support as always!
+\par }\pard \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0\pararsid11032522 {\f1\fs20\insrsid11032522 
+\par }\pard \ql \fi720\li0\ri0\nowidctlpar\tx0\faauto\rin0\lin0\itap0\pararsid4403757 {\f1\fs20\insrsid1928404 For this package to work under RunUO 1.0 Final, follow the directions below after the Installation directions.
 \par }\pard \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 {\f1\fs20\insrsid15728713 
 \par }{\f1\fs20\insrsid939626 \tab This package }{\b\f1\fs20\insrsid939626 doesn't require any existing script modifications.}{\f1\fs20\insrsid939626   (The patches are optional!)
 \par 
@@ -81,8 +80,8 @@ s all built in.
 \par \tab }{\b\f1\fs20\insrsid939626\charrsid673505 "Create rental contract"}{\f1\fs20\insrsid939626 : If allowed, players can use this spoken command in their home to begin the setup for renting portions of their home.
 \par 
 \par \tab "}{\b\f1\fs20\insrsid939626\charrsid673505 Check house rent"}{\f1\fs20\insrsid939626 :  Players can check to see how long before their rental cycle expires by speaking these words while in their home.  At the end of the cycle, if the rent is }{
-\f1\fs20\insrsid10444852 reoccurring}{\f1\fs20\insrsid939626 , the bank will attempt to take gold automatically.  If not }{\f1\fs20\insrsid10444852 reoccurring}{\f1\fs20\insrsid939626 , the bank will pack up the player's belongings and put the 
-home back up for rent.
+\f1\fs20\insrsid10444852 reoccurring}{\f1\fs20\insrsid939626 , the bank will attempt to take gold automatically.  If not }{\f1\fs20\insrsid10444852 reoccurring}{\f1\fs20\insrsid939626 , the bank will pack up the pla
+yer's belongings and put the home back up for rent.
 \par 
 \par \tab }{\b\f1\fs20\insrsid939626\charrsid673505 "Check storage"}{\f1\fs20\insrsid939626 
 : While usable by all home owners, this command is especially useful for renters.  It will detail how many lockdowns and secures are used by their rental property, and include those figures in how much storage they have available.
@@ -91,22 +90,21 @@ home back up for rent.
 \par 
 \par }{\b\f1\fs20\insrsid939626 Details:}{\f1\fs20\insrsid939626 
 \par 
-\par \tab With this system you
- can not only sell static buildings to players, you can sell or rent any portion of land in any shape and size!  Nothing like owning Blackthorn's Castle, or the center of the Hedge Maze!  Good way to give many of the never-used areas of the game some life
-.
+\par \tab With this system you can not only sell static buildings to players, you can sell or rent any portion of land in any shape and size!  Nothing like owning Blackthorn's Castle, or the center of the Hedge Maze!  Good way to give many of the never-used
+ areas of the game some life.
 \par 
-\par \tab These houses come with all the housing features we've come to love: lock downs, secures, private, public, vendors.  In fact, it's derived from RunUO's own housing system!  Setup is fairly simple, with a step-by-step menu 
-to guide you through the process.
+\par \tab These houses come with all the housing features we've come to love: lock downs, secures, private, public, vendors.  In fact, it's derived from RunUO's own housing system!  Setup is fairly simple, with a step-by-step menu to 
+guide you through the process.
 \par 
-\par \tab Players can also rent out their property, as long as they own it!  By speaking the "Create rental contract" command in their home, players can rent out unused rooms and make a little bit of cash on the side.  This also w
-orks with classic and custom houses!  You can also require players to have a renter's license to rent property, which you will have to add for sale.  You can find that option in Misc/General.cs right near the top.
+\par \tab Players can also rent out their property, as long as they own it!  By speaking the "Create rental contract" command in their home, players can rent out unused rooms and make a little bit of cash on the side.  This also work
+s with classic and custom houses!  You can also require players to have a renter's license to rent property, which you will have to add for sale.  You can find that option in Misc/General.cs right near the top.
 \par 
 \par \tab To begin}{\f1\fs20\insrsid11010391  as a staff member, use the command [TownHouses}{\f1\fs20\insrsid939626 .  }{\f1\fs20\insrsid11010391 Here you can create a new TownHouse through the setup menu.  This menu }{\f1\fs20\insrsid939626 
 takes you step-by-step through the many different features you can apply to the home, with detailed explanations at every level.
 \par 
-\par \tab In brief, here's all the neat things you can c
-ustomize with the home: lockdowns, secures, the area and floors, the sign location, ban location, whether or not to include items in the area with the purchase, restrictions on who can purchase the home, how much to charge, whether it is a purchase or ren
-t, automated price suggestion.
+\par \tab In brief, here's all the neat things yo
+u can customize with the home: lockdowns, secures, the area and floors, the sign location, ban location, whether or not to include items in the area with the purchase, restrictions on who can purchase the home, how much to charge, whether it is a purchase
+ or rent, automated price suggestion.
 \par 
 \par \tab While the home is owned, you can change its price, lockdowns, secures, its area, and ownership requirements through the now invisible TownHouseSign.  Just in case you need to adjust the home!
 \par 

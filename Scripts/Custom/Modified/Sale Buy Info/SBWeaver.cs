@@ -50,7 +50,7 @@ namespace Server.Mobiles
 				Add( typeof( Dyes ), 4 ); 
 				Add( typeof( DyeTub ), 4 ); 
 				Add( typeof( UncutCloth ), 1 );
-				Add( typeof( BoltOfCloth ), 15 ); 
+				Add( typeof( BoltOfCloth ), 40 ); 
 				Add( typeof( LightYarnUnraveled ), 9 );
 				Add( typeof( LightYarn ), 9 );
 				Add( typeof( DarkYarn ), 9 );
