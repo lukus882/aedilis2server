@@ -17,7 +17,7 @@ namespace Knives.TownHouses
 
 		private Point3D c_BanLoc, c_SignLoc;
 		private int c_Locks, c_Secures, c_Price, c_MinZ, c_MaxZ, c_MinTotalSkill, c_MaxTotalSkill, c_ItemsPrice, c_RTOPayments;
-		private bool c_YoungOnly, c_RecurRent, c_Relock, c_KeepItems, c_LeaveItems, c_RentToOwn, c_Free;
+		private bool c_YoungOnly, c_RecurRent, c_Relock, c_KeepItems, c_LeaveItems, c_RentToOwn, c_Free, c_ForcePrivate, c_ForcePublic, c_NoTrade, c_NoBanning;
 		private string c_Skill;
 		private double c_SkillReq;
 		private ArrayList c_Blocks, c_DecoreItemInfos, c_PreviewItems;
@@ -228,13 +228,60 @@ namespace Knives.TownHouses
 			}
 		}
 
-		public ArrayList Blocks{ get{ return c_Blocks; } set{ c_Blocks = value; } }
+        public bool ForcePrivate
+        { 
+            get { return c_ForcePrivate; }
+            set
+            { 
+                c_ForcePrivate = value;
+
+                if (value)
+                {
+                    c_ForcePublic = false;
+
+                    if (c_House != null)
+                        c_House.Public = false;
+                }
+            } 
+        }
+        
+        public bool ForcePublic
+        { 
+            get { return c_ForcePublic; }
+            set
+            { 
+                c_ForcePublic = value;
+
+                if (value)
+                {
+                    c_ForcePrivate = false;
+
+                    if (c_House != null)
+                        c_House.Public = true;
+                }
+            }
+        }
+
+        public bool NoBanning
+        { 
+            get { return c_NoBanning; }
+            set
+            {
+                c_NoBanning = value;
+
+                if (value && c_House != null)
+                    c_House.Bans.Clear();
+            }
+        }
+
+        public ArrayList Blocks { get { return c_Blocks; } set { c_Blocks = value; } }
         public string Skill { get { return c_Skill; } set { c_Skill = value; ValidateOwnership(); InvalidateProperties(); } }
         public double SkillReq { get { return c_SkillReq; } set { c_SkillReq = value; ValidateOwnership(); InvalidateProperties(); } }
 		public bool LeaveItems{ get{ return c_LeaveItems; } set{ c_LeaveItems = value; InvalidateProperties(); } }
 		public bool RentToOwn{ get{ return c_RentToOwn; } set{ c_RentToOwn = value; InvalidateProperties(); } }
-		public bool Relock{ get{ return c_Relock; } set{ c_Relock = value; } }
-		public int ItemsPrice{ get{ return c_ItemsPrice; } set{ c_ItemsPrice = value; InvalidateProperties(); } }
+        public bool Relock { get { return c_Relock; } set { c_Relock = value; } }
+        public bool NoTrade { get { return c_NoTrade; } set { c_NoTrade = value; } }
+        public int ItemsPrice { get { return c_ItemsPrice; } set { c_ItemsPrice = value; InvalidateProperties(); } }
 		public TownHouse House{ get{ return c_House; } set{ c_House = value; } }
 		public Timer DemolishTimer{ get{ return c_DemolishTimer; } }
 		public DateTime DemolishTime{ get{ return c_DemolishTime; } }
@@ -513,6 +560,9 @@ namespace Knives.TownHouses
                 c_House.Hanger.Map = Map;
                 c_House.Hanger.Movable = false;
 
+                if (c_ForcePublic)
+                    c_House.Public = true;
+
                 c_House.Price = (RentByTime == TimeSpan.FromDays(0) ? c_Price : 1);
 
                 RUOVersion.UpdateRegion(this);
@@ -557,39 +607,42 @@ namespace Knives.TownHouses
 			if ( c_House == null )
 				return;
 
-            foreach (Item item in new ArrayList(World.Items.Values))
+            ArrayList items = new ArrayList();
+            foreach(Rectangle2D rect in c_Blocks)
+                foreach (Item item in Map.GetItemsInBounds(rect))
+                    if (c_House.Region.Contains(item.Location) && item.RootParent == null && !items.Contains(item))
+                        items.Add(item);
+
+            foreach (Item item in new ArrayList(items))
             {
-                if (item.Map == c_House.Map && c_House.Region.Contains(item.Location) && item.RootParent == null)
+                if (item is HouseSign
+                || item is BaseMulti
+                || item is BaseAddon
+                || item is AddonComponent
+                || item == c_House.Hanger
+                || !item.Visible
+                || item.IsLockedDown
+                || item.IsSecure
+                || item.Movable
+                || c_PreviewItems.Contains(item))
+                    continue;
+
+                if (item is BaseDoor)
+                    ConvertDoor((BaseDoor)item);
+                else if (!c_LeaveItems)
                 {
-                    if (item is HouseSign
-                    || item is BaseMulti
-                    || item is BaseAddon
-                    || item is AddonComponent
-                    || item == c_House.Hanger
-                    || !item.Visible
-                    || item.IsLockedDown
-                    || item.IsSecure
-                    || item.Movable
-                    || c_PreviewItems.Contains(item))
-                        continue;
+                    c_DecoreItemInfos.Add(new DecoreItemInfo(item.GetType().ToString(), item.Name, item.ItemID, item.Hue, item.Location, item.Map));
 
-                    if (item is BaseDoor)
-                        ConvertDoor((BaseDoor)item);
-                    else if (!c_LeaveItems)
+                    if (!c_KeepItems || !keep)
+                        item.Delete();
+                    else
                     {
-                        c_DecoreItemInfos.Add(new DecoreItemInfo(item.GetType().ToString(), item.Name, item.ItemID, item.Hue, item.Location, item.Map));
-
-                        if (!c_KeepItems || !keep)
-                            item.Delete();
-                        else
-                        {
-                            item.Movable = true;
-                            c_House.LockDown(c_House.Owner, item, false);
-                        }
+                        item.Movable = true;
+                        c_House.LockDown(c_House.Owner, item, false);
                     }
                 }
             }
-		}
+        }
 
 		protected void ConvertDoor( BaseDoor door )
 		{
@@ -598,7 +651,6 @@ namespace Knives.TownHouses
 
 			if ( door is Server.Gumps.ISecurable )
 			{
-                Console.WriteLine("Convert Door 1");
 				door.Locked = false;
 				c_House.Doors.Add( door );
                 return;
@@ -622,7 +674,6 @@ namespace Knives.TownHouses
 					newdoor.Link = (BaseDoor)inneritem;
 				}
 
-            Console.WriteLine("Convert Door 2");
             c_House.Doors.Add(newdoor);
         }
 
@@ -836,23 +887,24 @@ namespace Knives.TownHouses
 				bag.DropItem( info.Item );
 			}
 
-			foreach( Item item in World.Items.Values )
-			{
-				if ( item is HouseSign
-				|| item is BaseDoor
-				|| item is BaseMulti
-				|| item is BaseAddon
-				|| item is AddonComponent
-				|| !item.Visible
-				|| item.IsLockedDown
-				|| item.IsSecure
-				|| !item.Movable
-				|| item.Map != c_House.Map
-				|| !c_House.Region.Contains( item.Location ) )
-						continue;
+            foreach(Rectangle2D rect in c_Blocks)
+                foreach (Item item in Map.GetItemsInBounds(rect))
+                {
+                    if (item is HouseSign
+                    || item is BaseDoor
+                    || item is BaseMulti
+                    || item is BaseAddon
+                    || item is AddonComponent
+                    || !item.Visible
+                    || item.IsLockedDown
+                    || item.IsSecure
+                    || !item.Movable
+                    || item.Map != c_House.Map
+                    || !c_House.Region.Contains(item.Location))
+                        continue;
 
-				bag.DropItem( item );
-			}
+                    bag.DropItem(item);
+                }
 
 			if ( bag.Items.Count == 0 )
 			{
@@ -1085,9 +1137,15 @@ namespace Knives.TownHouses
 		{
 			base.Serialize( writer );
 
-			writer.Write( 12 );
+			writer.Write( 13 );
 
-			// Version 12
+            // Version 13
+
+            writer.Write(c_ForcePrivate);
+            writer.Write(c_ForcePublic);
+            writer.Write(c_NoTrade);
+
+            // Version 12
 
 			writer.Write( c_Free );
 
@@ -1153,7 +1211,14 @@ namespace Knives.TownHouses
 
 			int version = reader.ReadInt();
 
-			if ( version >= 12 )
+            if (version >= 13)
+            {
+                c_ForcePrivate = reader.ReadBool();
+                c_ForcePublic = reader.ReadBool();
+                c_NoTrade = reader.ReadBool();
+            }
+            
+            if (version >= 12)
 				c_Free = reader.ReadBool();
 
 			if ( version >= 11 )

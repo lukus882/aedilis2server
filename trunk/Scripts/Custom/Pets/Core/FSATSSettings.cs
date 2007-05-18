@@ -29,7 +29,8 @@ namespace Server
 			"Ridgeback",
 			"PackHorse",
 			"PackLlama",
-			"Beetle"
+			"Beetle",
+			"FireBeetle"
 		};
 
 		//Add all pack animals for your server here.

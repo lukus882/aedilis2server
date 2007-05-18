@@ -6,6 +6,7 @@ using Server.Factions;
 using System.Collections;
 using System.Collections.Generic;
 using Server.ContextMenus;
+using Server.Regions;
 
 namespace Server.Items
 {
@@ -1126,7 +1127,7 @@ namespace Server.Items
 				from.SendMessage( "This is locked and only the owner can claim this pet while locked." );
 				from.SendMessage( "This item is now being returned to its owner." );
 				m_PetOwner.AddToBackpack( this );
-				m_PetOwner.SendMessage( "You pet {0} has been returned to you because it was locked and {1} was trying to claim the pet.", m_MobTypeString, from.Name );
+				m_PetOwner.SendMessage( "Your pet {0} has been returned to you because it was locked and {1} was trying to claim the pet.", m_MobTypeString, from.Name );
 			}
 			else if ( from.Skills[SkillName.AnimalTaming].Value < m_PetMinTame && notame != true )
 			{

@@ -6,13 +6,14 @@ using Server.Network;
 using Server.Menus; 
 using Server.Menus.Questions; 
 using Server.Mobiles; 
-using System.Collections; 
+using System.Collections;
+using Server.Regions;
 
 namespace Server.Items 
 { 
    	public class PetLeash : Item 
    	{ 
-    		private int m_Charges = 100;
+    		private int m_Charges = 50;
 
 		[CommandProperty( AccessLevel.GameMaster )]
 		public int Charges
@@ -46,6 +47,10 @@ namespace Server.Items
 			{
 				from.SendLocalizedMessage( 1042001 ); // That must be in your pack for you to use it.
 			}
+			else if ( from is PlayerMobile && from.AccessLevel < AccessLevel.Counselor && from.Region is DungeonRegion )  
+			{ 
+				from.SendMessage("The Mystical Powers Of This Dungeon Block Your Attemp At Shrinking Your Pet"); 
+			} 
 			else if ( FSATS.EnableShrinkSystem == false )
 			{
 				from.SendMessage( "The shrink system has been disabled. Contact your server administrator for details." );
@@ -57,8 +62,7 @@ namespace Server.Items
 			}
 			else
 			{
-				from.SendMessage( "You must have 75 animal taming to use a hitching post." );
-				from.SendMessage( "Try using a pet shrinking potion." );
+				from.SendMessage( "You must have 75 animal taming to use a pet leash." );
 			}
 
       		} 

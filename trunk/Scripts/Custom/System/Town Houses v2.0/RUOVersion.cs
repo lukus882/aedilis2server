@@ -54,6 +54,7 @@ namespace Knives.TownHouses
                 sign.House.Region.MaxZ = sign.MaxZ;
                 sign.House.Region.Unregister();
                 sign.House.Region.Register();
+                sign.House.Region.GoLocation = sign.BanLoc;
             #elif(RunUO_2_RC1)
                 sign.House.UpdateRegion();
 
@@ -68,7 +69,8 @@ namespace Knives.TownHouses
 
                 sign.House.Region.Unregister();
                 sign.House.Region.Register();
-                
+                sign.House.Region.GoLocation = sign.BanLoc;
+ 
             #endif
         }
 

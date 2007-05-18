@@ -129,122 +129,147 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                int id;
-                PaintedItem pi;
+                bool GM = from.AccessLevel >= AccessLevel.GameMaster;
+
+                IPoint3D p3d;
+                int id = 0;
+                PaintedItem pi = null;
+                BaseHouse house = null;
                 if (m_Can.UsesCharges && m_Can.Uses < 1)
                 {
                     from.SendMessage("Your paint can is empty.");
                     return;
                 }
-
-                if (targeted is PaintedItem)
+                try
                 {
-                    pi = targeted as PaintedItem;
-                    id = pi.ItemID;
-                    if (m_Can.CanPaint(id))
-                        if (m_Can.AllowRepaint)
-                        {
-                            pi.Hue = m_Can.DyedHue;
-                            if (m_Can.UsesCharges) m_Can.Uses--;
-                            from.PlaySound(0x23E);
-                            //from.SendMessage("TEMP: Successfully painted over PaintedItem.");
-                        }
-                        else
-                            from.SendMessage("This surface may not be repainted.");
-                    else
-                        from.SendMessage("Unable to paint that using this type of paint.");
+                    p3d = targeted as IPoint3D;
+                    house = Multis.BaseHouse.FindHouseAt(new Point3D(p3d), from.Map, p3d.Z);
                 }
-                else
-                    if (targeted is BaseMulti)
+                catch
+                {
+                    from.SendMessage("TEMP: Unable to find house.");
+                }
+                finally
+                {
+                    if ((house != null && from == house.Owner) || GM)
                     {
-                        BaseMulti target = targeted as BaseMulti;
-                        id = target.ItemID;
-                    
-                        BaseHouse house = Multis.BaseHouse.FindHouseAt(target);
-                        if (house != null && house.Owner == from)
+                        if (targeted is PaintedItem)
                         {
-                            if (m_Can.AllowHouse && m_Can.CanPaint(id))
-                            {
-                                pi = new PaintedItem(target.ItemID);
-                                pi.Hue = m_Can.DyedHue;
-                                pi.MoveToWorld(target.Location, target.Map);
-                                pi.X = target.X;
-                                pi.Y = target.Y;
-                                pi.Z = target.Z;
-                                pi.Movable = false;
-                                from.PlaySound(0x23E);
-                                if (m_Can.UsesCharges) m_Can.Uses--;
-                                //from.SendMessage("TEMP: Successfully painted over BaseMulti.");
-                                target.Delete();
-                            }
-                            else
-                                from.SendMessage("Unable to paint that using this type of paint.");
-                        }
-                        else
-                            from.SendMessage("That is not your house!");
-                    }
-                    else
-                        if (targeted is StaticTarget)
-                        {
-                            StaticTarget stat = targeted as StaticTarget;
-                            id = stat.ItemID;
-                            if (m_Can.CanPaint(id) && from.Map != null)
-                            {
-                                IPoint3D p = targeted as IPoint3D;
-
-                                if (p != null)
+                            pi = targeted as PaintedItem;
+                            id = pi.ItemID;
+                            if (m_Can.CanPaint(id))
+                                if (m_Can.AllowRepaint)
                                 {
-                                    pi = new PaintedItem(stat.ItemID);
+                                    if (!GM && house.LockDowns.Contains(pi)) house.LockDowns.Remove(pi);
 
-                                    if (p is Item)
+                                    if (GM || house == BaseHouse.FindHouseAt(pi))
                                     {
-                                        p = ((Item)p).GetWorldTop();
-                                        //from.SendMessage("TEMP: Set Point3D to ((Item)p).GetWorldTop().");
-                                    }
-                                    else
-                                    {
-                                        p = new Point3D(stat.X, stat.Y, stat.Z - pi.ItemData.CalcHeight);
-                                        //from.SendMessage("TEMP: IPoint3D was not an Item!");
-                                    }
-                                    pi.Hue = m_Can.DyedHue;
-                                    pi.Movable = false;
-
-                                    if (!pi.Deleted)
-                                    {
-                                        //from.SendMessage("TEMP: Successfully painted over StaticTarget.");
-                                        from.PlaySound(0x23E);
+                                        if (!GM) house.LockDown(from, pi);
+                                        pi.Hue = m_Can.DyedHue;
                                         if (m_Can.UsesCharges) m_Can.Uses--;
-                                        pi.MoveToWorld(new Point3D(p), from.Map);
+                                        from.PlaySound(0x23E);
+                                        //from.SendMessage("TEMP: Successfully painted over PaintedItem.");
                                     }
                                     else
-                                        from.SendMessage("The item you were about to paint was deleted?!");
+                                        from.SendMessage("You can only paint your house.");
                                 }
                                 else
-                                    from.SendMessage("Huh?! Where did it go??");
-                            }
+                                    from.SendMessage("This surface may not be repainted.");
                             else
                                 from.SendMessage("Unable to paint that using this type of paint.");
                         }
                         else
-                            if (targeted is Item)
+                            if (targeted is BaseMulti)
                             {
-                                Item item = targeted as Item;
-                                id = item.ItemID;
-                                if (m_Can.CanPaint(id) && from.Map != null)
+                                BaseMulti target = targeted as BaseMulti;
+                                id = target.ItemID;
+
+                                if (m_Can.AllowHouse && m_Can.CanPaint(id))
                                 {
-                                    pi = new PaintedItem(item.ItemID);
+                                    pi = new PaintedItem(target.ItemID);
                                     pi.Hue = m_Can.DyedHue;
-                                    pi.Movable = false;
-                                    pi.MoveToWorld(item.Location, item.Map);
+                                    pi.MoveToWorld(target.Location, target.Map);
+                                    pi.X = target.X;
+                                    pi.Y = target.Y;
+                                    pi.Z = target.Z;
+                                    pi.Movable = true;
+                                    if (!GM) house.LockDown(from, pi);
                                     from.PlaySound(0x23E);
                                     if (m_Can.UsesCharges) m_Can.Uses--;
-                                    //from.SendMessage("TEMP: Successfully painted over Item.");
+                                    //from.SendMessage("TEMP: Successfully painted over BaseMulti.");
+                                    target.Delete();
                                 }
                                 else
-                                    from.SendMessage("Unable to paint that item using this type of paint.", id.ToString());
+                                    from.SendMessage("Unable to paint that using this type of paint.");
                             }
                             else
-                                from.SendMessage("Failed to target a paintable item.");
+                                if (targeted is StaticTarget)
+                                {
+                                    StaticTarget stat = targeted as StaticTarget;
+                                    id = stat.ItemID;
+                                    if (m_Can.CanPaint(id) && from.Map != null)
+                                    {
+                                        IPoint3D p = targeted as IPoint3D;
+
+                                        if (p != null)
+                                        {
+                                            pi = new PaintedItem(stat.ItemID);
+
+                                            if (p is Item)
+                                            {
+                                                p = ((Item)p).GetWorldTop();
+                                                //from.SendMessage("TEMP: Set Point3D to ((Item)p).GetWorldTop().");
+                                            }
+                                            else
+                                            {
+                                                p = new Point3D(stat.X, stat.Y, stat.Z - pi.ItemData.CalcHeight);
+                                                //from.SendMessage("TEMP: IPoint3D was not an Item!");
+                                            }
+                                            pi.Hue = m_Can.DyedHue;
+                                            if (GM) pi.Movable = false;
+                                            else pi.Movable = true;
+
+                                            if (!pi.Deleted)
+                                            {
+                                                pi.MoveToWorld(new Point3D(p), from.Map);
+                                                if (!GM) house.LockDown(from, pi);
+                                                //from.SendMessage("TEMP: Successfully painted over StaticTarget.");
+                                                from.PlaySound(0x23E);
+                                                if (m_Can.UsesCharges) m_Can.Uses--;
+                                            }
+                                            else
+                                                from.SendMessage("The item you were about to paint was deleted?!");
+                                        }
+                                        else
+                                            from.SendMessage("Huh?! Where did it go??");
+                                    }
+                                    else
+                                        from.SendMessage("Unable to paint that using this type of paint.");
+                                }
+                                else
+                                    if (GM && targeted is Item)
+                                    {
+                                        Item item = targeted as Item;
+                                        id = item.ItemID;
+                                        if (m_Can.CanPaint(id) && from.Map != null)
+                                        {
+                                            pi = new PaintedItem(item.ItemID);
+                                            pi.Hue = m_Can.DyedHue;
+                                            pi.Movable = false;
+                                            pi.MoveToWorld(item.Location, item.Map);
+                                            from.PlaySound(0x23E);
+                                            if (m_Can.UsesCharges) m_Can.Uses--;
+                                            //from.SendMessage("TEMP: Successfully painted over Item.");
+                                        }
+                                        else
+                                            from.SendMessage("Unable to paint that item using this type of paint.", id.ToString());
+                                    }
+                                    else
+                                        from.SendMessage("Failed to target a paintable item.");
+                    }
+                    else
+                        from.SendMessage("You must be standing in, and targeting a house you own.");
+                }
             }
         }
 
