@@ -14,8 +14,8 @@ namespace Server.Gumps
 	{
 		public static void Initialize()
 		{
-            CommandSystem.Register("PS", AccessLevel.Administrator, new CommandEventHandler(CharSearch_OnCommand));
-            CommandSystem.Register("CharSearch", AccessLevel.Administrator, new CommandEventHandler(CharSearch_OnCommand));
+            CommandSystem.Register("PS", AccessLevel.GameMaster, new CommandEventHandler(CharSearch_OnCommand));
+            CommandSystem.Register("CharSearch", AccessLevel.GameMaster, new CommandEventHandler(CharSearch_OnCommand));
 		}
 
 		[Usage( "CharSearch" )]

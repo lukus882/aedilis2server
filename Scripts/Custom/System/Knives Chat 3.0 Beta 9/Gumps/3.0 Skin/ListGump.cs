@@ -321,7 +321,7 @@ namespace Knives.Chat3
                 AddButton(x + width - 30, y + 3, 0x2716, "Global Menu", new GumpCallback(GlobalMenu));
             }
 
-            if (Current.AccessLevel >= AccessLevel.Administrator)
+            if (Current.AccessLevel >= AccessLevel.GameMaster)
             {
                 AddHtml(x, y += 20, width, HTML.LightPurple + "<CENTER>" + General.Local(207));
                 AddButton(x + 20, y + 3, 0x2716, "General", new GumpCallback(GenOpt));

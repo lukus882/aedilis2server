@@ -689,7 +689,7 @@ namespace Knives.Chat3
 
         public bool GlobalAccess
         {
-            get { return c_GlobalAccess || c_Mobile.AccessLevel >= AccessLevel.Administrator; }
+            get { return c_GlobalAccess || c_Mobile.AccessLevel >= AccessLevel.GameMaster; }
             set
             {
                 c_GlobalAccess = value;
@@ -759,7 +759,7 @@ namespace Knives.Chat3
             c_Signature = "";
             c_BannedUntil = DateTime.Now;
 
-            if (m.AccessLevel >= AccessLevel.Administrator)
+            if (m.AccessLevel >= AccessLevel.GameMaster)
                 c_GlobalAccess = true;
 
             s_Datas[m] = this;
