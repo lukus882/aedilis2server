@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <!-- /**************************************
      *Script Name: NPC Sales Tax           *
@@ -17,21 +17,21 @@
 
 <Taxes>
 	<Facet name="Felucca">
-		<Town name="Britain"           tax="20"/>
+		<Town name="Britain"           tax="30"/>
 		<Town name="Cove"              tax="8" />
-		<Town name="Jhelom"            tax="8" />
+		<Town name="Jhelom"            tax="12" />
 		<Town name="Minoc"             tax="13"/>
 		<Town name="Ocllo"             tax="5" />
-		<Town name="Trinsic"           tax="15"/>
+		<Town name="Trinsic"           tax="9"/>
 		<Town name="Vesper"            tax="12"/>
-		<Town name="Yew"               tax="10"/>
-		<Town name="Wind"              tax="7" />
-		<Town name="Serpent's Hold"    tax="0" />
+		<Town name="Yew"               tax="15"/>
+		<Town name="Wind"              tax="0" />
+		<Town name="Serpent's Hold"    tax="2" />
 		<Town name="Skara Brae"        tax="8" />
 		<Town name="Nujel'm"           tax="5" />
-		<Town name="Moonglow"          tax="12"/>
-		<Town name="Magincia"          tax="12"/>
-		<Town name="Buccaneer's Den"   tax="0" />
+		<Town name="Moonglow"          tax="15"/>
+		<Town name="Magincia"          tax="17"/>
+		<Town name="Buccaneer's Den"   tax="20" />
 	</Facet>
 	<Facet name="Trammel">
 		<Town name="Britain"           tax="20"/>
