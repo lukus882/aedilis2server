@@ -5,6 +5,8 @@ using Server.Network;
 using Server.Mobiles;
 using Server.Targeting;
 using Server.Prompts;
+using Server.Regions;
+using Server.Spells;
 
 namespace Server.Guilds
 {
@@ -58,22 +60,52 @@ namespace Server.Guilds
 			{
 				case 1:	//Yes
 				{
-                    if ( m_pm.Map == Map.Felucca && m_Member.Map == Map.Felucca )
+					if ( Server.Spells.SpellHelper.CheckCombat( m_Member ) )
 					{
-						Map map = m_pm.Map;
-						Point3D loc = m_pm.Location;
-
-						m_Member.MoveToWorld( loc, map );
+					m_pm.SendMessage( "You cannot travel while fighting. 1 " );
+					m_Member.SendMessage( "Your guildmate is in combat and can not travel at the moment.2 " );
 					}
+
+					else if ( Server.Spells.SpellHelper.CheckCombat( m_pm ) )
+					{
+					m_pm.SendMessage( "Your guildmate is in combat and you cannot travel while your guildmate is fighting. 1 " );
+					m_Member.SendMessage( "You cannot bring your guildmate to you while fighting. 2 " );
+					}
+
+					else if (m_pm.Region is DungeonRegion)  
+					{ 
+					m_Member.SendMessage("Your guildmate is in a dungeon and you can not transport there at this time. 1 ");
+					m_pm.SendMessage( "The mystical powers of this dungeon prevent your guildmate from joining you. 2 ");
+					} 
+
+					else if (m_Member.Region is DungeonRegion)  
+					{ 
+					m_Member.SendMessage("The mystical powers of this dungeon prevent you from joining your guildmate.1 ");
+					m_pm.SendMessage( "Your guildmate is in a dungeon and is blocked from joining you at this time. 2 " );
+					}
+
 					else
 					{
-						m_Member.SendMessage( m_pm.Name +" is in "+ m_pm.Map as string +"." );
-                        m_Member.SendMessage( "You are in "+ m_Member.Map as string +"." );
-                        m_Member.SendMessage( "You both need to be in Felucca to travel." );
-						m_pm.SendMessage( m_Member.Name +" is in "+ m_Member.Map as string +"." );
-                        m_pm.SendMessage( "You are in "+ m_pm.Map as string +"." );
-                        m_pm.SendMessage( "You both need to be in Felucca to travel." );
+
+						
+                   				 if ( m_pm.Map == Map.Felucca && m_Member.Map == Map.Felucca )
+						{
+							Map map = m_pm.Map;
+							Point3D loc = m_pm.Location;
+
+							m_Member.MoveToWorld( loc, map );
+						}
+						else
+						{
+							m_Member.SendMessage( m_pm.Name +" is in "+ m_pm.Map as string +"." );
+                        				m_Member.SendMessage( "You are in "+ m_Member.Map as string +"." );
+                        				m_Member.SendMessage( "You both need to be in Felucca to travel." );
+							m_pm.SendMessage( m_Member.Name +" is in "+ m_Member.Map as string +"." );
+                       					m_pm.SendMessage( "You are in "+ m_pm.Map as string +"." );
+                        				m_pm.SendMessage( "You both need to be in Felucca to travel." );
+						}
 					}
+					
 					break;
 				}
 				case 2:	//No
