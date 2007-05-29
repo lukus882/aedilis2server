@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using Server.Spells.Bushido;
@@ -11,7 +11,7 @@ namespace Server.Spells
 {
 	public class SpellRegistry
 	{
-		private static Type[] m_Types = new Type[600];
+		private static Type[] m_Types = new Type[700];
 		private static int m_Count;
 
 		public static Type[] Types
@@ -147,7 +147,7 @@ namespace Server.Spells
 				"Chivalry",
 				"Bushido",
 				"Ninjitsu",
-                                 "Avatar",
+				"SpellWeaving"
 			};
 
 		public static Spell NewSpell( string name, Mobile caster, Item scroll )

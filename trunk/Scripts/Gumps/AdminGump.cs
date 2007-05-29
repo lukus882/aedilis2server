@@ -722,8 +722,8 @@ namespace Server.Gumps
 				{
 					if ( m_List == null )
 					{
-						m_List = new ArrayList( (ICollection)Accounts.GetAccounts() );
-						m_List.Sort( AccountComparer.Instance );
+						m_List = new ArrayList(); // new ArrayList( (ICollection)Accounts.GetAccounts() );
+						// m_List.Sort( AccountComparer.Instance );
 					}
 
 					ArrayList rads = ( state as ArrayList );
@@ -1182,7 +1182,7 @@ namespace Server.Gumps
 					{
 						object obj = m_List[index];
 
-						if ( !(obj is IPAddress) && !(obj is String) )
+						if ( !(obj is Firewall.IFirewallEntry ) )
 							break;
 
 						int offset = 140 + (i * 20);
@@ -1197,7 +1197,7 @@ namespace Server.Gumps
 				{
 					AddFirewallHeader();
 
-					if ( !(state is IPAddress) && !(state is String) )
+					if ( !(state is Firewall.IFirewallEntry) )
 						break;
 
 					AddHtml( 10, 125, 400, 20, Color( Center( state.ToString() ), LabelColor32 ), false, false );
@@ -1210,9 +1210,6 @@ namespace Server.Gumps
 					{
 						m_List = new ArrayList();
 
-						string pattern = state as String;
-						IPAddress addr = ( state is IPAddress ? (IPAddress)state : IPAddress.Any );
-
 						foreach ( Account acct in Accounts.GetAccounts() )
 						{
 							IPAddress[] loginList = acct.LoginIPs;
@@ -1221,22 +1218,12 @@ namespace Server.Gumps
 
 							for( int i = 0; !contains && i < loginList.Length; ++i )
 							{
-								if( pattern == null )	//if is IP Address
+								if( ((Firewall.IFirewallEntry)state).IsBlocked( loginList[i] ) )
 								{
-									contains = loginList[i].Equals( addr );
-									continue;
+									m_List.Add( acct );
+									break;
 								}
-
-								contains = Utility.IPMatchCIDR( pattern, loginList[i] );
-
-								if( !contains )
-									contains = Utility.IPMatch( pattern, loginList[i] );
 							}
-
-
-
-							if ( contains )
-								m_List.Add( acct );
 						}
 
 						m_List.Sort( AccountComparer.Instance );
@@ -2042,7 +2029,7 @@ namespace Server.Gumps
 						}
 						case 7:
 						{
-							ArrayList results = new ArrayList();
+							ArrayList results;
 
 							TextRelay matchEntry = info.GetTextEntry( 0 );
 							string match = ( matchEntry == null ? null : matchEntry.Text.Trim().ToLower() );
@@ -2050,10 +2037,13 @@ namespace Server.Gumps
 
 							if ( match == null || match.Length == 0 )
 							{
-								notice = "You must enter a username to search.";
+								results = new ArrayList( (ICollection)Accounts.GetAccounts() );
+								results.Sort( AccountComparer.Instance );
+								//notice = "You must enter a username to search.";
 							}
 							else
 							{
+								results = new ArrayList();
 								foreach ( Account check in Accounts.GetAccounts() )
 								{
 									if ( check.Username.ToLower().IndexOf( match ) >= 0 )
@@ -2363,7 +2353,7 @@ namespace Server.Gumps
 						{
 							ArrayList results = new ArrayList();
 
-							DateTime minTime = DateTime.Now - TimeSpan.FromDays( 90.0 );
+							DateTime minTime = DateTime.Now - TimeSpan.FromDays( 180.0 );
 
 							foreach ( Account acct in Accounts.GetAccounts() )
 							{
@@ -2478,10 +2468,7 @@ namespace Server.Gumps
 							}
 							else
 							{
-								object toAdd;
-                                
-								try{ toAdd = IPAddress.Parse( text ); }
-								catch{ toAdd = text; }
+								object toAdd = Firewall.ToFirewallEntry( text );
 
 								CommandLogging.WriteLine( from, "{0} {1} firewalling {2}", from.AccessLevel, CommandLogging.Format( from ), toAdd );
 
@@ -2499,7 +2486,7 @@ namespace Server.Gumps
 						}
 						case 3:
 						{
-							if ( m_State is IPAddress || m_State is String )
+							if ( m_State is Firewall.IFirewallEntry )
 							{
 								CommandLogging.WriteLine( from, "{0} {1} removing {2} from firewall list", from.AccessLevel, CommandLogging.Format( from ), m_State );
 

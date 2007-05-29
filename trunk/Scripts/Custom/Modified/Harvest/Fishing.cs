@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using Server;
 using Server.Items;
 using Server.Mobiles;
 using Server.Engines.Quests;
 using Server.Engines.Quests.Collector;
+using System.Collections.Generic;
 
 namespace Server.Engines.Harvest
 {
@@ -200,11 +201,11 @@ namespace Server.Engines.Harvest
 
 			if ( pack != null )
 			{
-				Item[] messages = pack.FindItemsByType( typeof( SOS ) );
+				List<SOS> messages = pack.FindItemsByType<SOS>();
 
-				for ( int i = 0; i < messages.Length; ++i )
+				for ( int i = 0; i < messages.Count; ++i )
 				{
-					SOS sos = (SOS)messages[i];
+					SOS sos = messages[i];
 
 					if ( from.Map == sos.TargetMap && from.InRange( sos.TargetLocation, 60 ) )
 						return true;
@@ -219,27 +220,27 @@ namespace Server.Engines.Harvest
 			if ( type == typeof( TreasureMap ) )
 			{
 				int level;
-				if ( from is PlayerMobile && ((PlayerMobile)from).Young && from.Map == Map.Trammel && TreasureMap.IsInHavenIsland( from ) )
+				if ( from is PlayerMobile && ((PlayerMobile)from).Young && from.Map == Map.Felucca && TreasureMap.IsInHavenIsland( from ) )
 					level = 0;
 				else
 					level = 1;
 
-				return new TreasureMap( level, from.Map == Map.Felucca ? Map.Felucca : Map.Trammel );
+				return new TreasureMap( level, from.Map == Map.Felucca ? Map.Felucca : Map.Felucca );
 			}
 			else if ( type == typeof( MessageInABottle ) )
 			{
-				return new MessageInABottle( SafeMap( from.Map ) );
+				return new MessageInABottle( from.Map == Map.Felucca ? Map.Felucca : Map.Felucca );
 			}
 
 			Container pack = from.Backpack;
 
 			if ( pack != null )
 			{
-				Item[] messages = pack.FindItemsByType( typeof( SOS ) );
+				List<SOS> messages = pack.FindItemsByType<SOS>();
 
-				for ( int i = 0; i < messages.Length; ++i )
+				for ( int i = 0; i < messages.Count; ++i )
 				{
-					SOS sos = (SOS)messages[i];
+					SOS sos = messages[i];
 
 					if ( from.Map == sos.TargetMap && from.InRange( sos.TargetLocation, 60 ) )
 					{

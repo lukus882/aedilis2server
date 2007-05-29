@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using Server;
 using Server.Items;
@@ -18,7 +18,7 @@ namespace Server
 
 			PlayerMobile pmKiller = killer as PlayerMobile;
 			if ( pmKiller != null && pmKiller.SentHonorContext != null && pmKiller.SentHonorContext.Target == victim )
-				pmKiller.SentHonorContext.ApplyPerfectionLuckBonus( ref luck );
+				luck += pmKiller.SentHonorContext.PerfectionLuckBonus;
 
 			if ( luck < 0 )
 				return 0;
@@ -238,10 +238,7 @@ namespace Server
 				new LootPackItem( typeof( BaseJewel ), 207 )
 			};
 		#endregion
-//*********************************************************************************************
-//*********************************************************************************************
-//*********************************************************************************************
-//*********************************************************************************************
+
 		#region SE definitions
 		public static readonly LootPack SePoor = new LootPack( new LootPackEntry[]
 			{
@@ -458,10 +455,7 @@ namespace Server
 				new LootPackEntry( false, OldMagicItems,	100.00, 1, 1, 70, 100 )
 			} );
 		#endregion
-//*********************************************************************************************
-//*********************************************************************************************
-//*********************************************************************************************
-//*********************************************************************************************
+
 		#region Generic accessors
 		public static LootPack Poor{ get{ return Core.AOS ? AosPoor : OldPoor; } }
 		public static LootPack Meager{ get{ return Core.AOS ? AosMeager : OldMeager; } }

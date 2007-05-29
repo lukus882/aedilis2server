@@ -62,6 +62,7 @@ namespace Server.Misc
 			if ( Core.AOS )
 			{
 				CityInfo haven = new CityInfo( "Haven", "Uzeraan's Mansion", 3618, 2591, 0 );
+				//NewUO//CityInfo haven = new CityInfo( "Haven", "Uzeraan's Mansion", 3503, 2574, 14 );
 				StartingCities[StartingCities.Length - 1] = haven;
 			}
 		}
@@ -120,7 +121,7 @@ namespace Server.Misc
 
 			try
 			{
-				IPAddress ipAddress = ((IPEndPoint)ns.Socket.RemoteEndPoint).Address;
+				IPAddress ipAddress = ns.Address;
 
 				if ( Utility.IPMatchClassC( accessList[0], ipAddress ) )
 				{

@@ -103,12 +103,12 @@ namespace Server.Commands
 			{
 				if ( e.Length == 1 && !e.GetBoolean( 0 ) )
 				{
-					from.Send( SpeedBoost.Disabled );
+					from.Send( SpeedControl.Disable );
 					from.SendMessage( "Speed boost has been disabled." );
 				}
 				else
 				{
-					from.Send( SpeedBoost.Enabled );
+					from.Send( SpeedControl.MountSpeed );
 					from.SendMessage( "Speed boost has been enabled." );
 				}
 			}
@@ -992,36 +992,6 @@ namespace Server.Commands
 		private static void Move_OnCommand( CommandEventArgs e )
 		{
 			e.Mobile.Target = new PickMoveTarget();
-		}
-
-		private class FirewallTarget : Target
-		{
-			public FirewallTarget() : base( -1, false, TargetFlags.None )
-			{
-			}
-
-			protected override void OnTarget( Mobile from, object targeted )
-			{
-				if ( targeted is Mobile )
-				{
-					Mobile targ = (Mobile)targeted;
-
-					NetState state = targ.NetState;
-
-					if ( state != null )
-					{
-						CommandLogging.WriteLine( from, "{0} {1} firewalling {2}", from.AccessLevel, CommandLogging.Format( from ), CommandLogging.Format( targeted ) );
-
-						try
-						{
-							Firewall.Add( ((IPEndPoint)state.Socket.RemoteEndPoint).Address );
-						}
-						catch
-						{
-						}
-					}
-				}
-			}
 		}
 
 		[Usage( "Save" )]

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
@@ -54,6 +54,8 @@ namespace Server.Items
 			get{ return m_TimeOfDeath; }
 			set{ m_TimeOfDeath = value; }
 		}
+
+		public override bool DisplayWeight { get { return false; } }
 
 		public HairInfo Hair { get { return m_Hair; } }
 		public FacialHairInfo FacialHair { get { return m_FacialHair; } }

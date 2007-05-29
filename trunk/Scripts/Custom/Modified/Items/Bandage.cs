@@ -1,4 +1,4 @@
-/**************************************
+﻿/**************************************
 *Script Name: Bloody Bandages         *
 *Author: Joeku AKA Demortris          *
 *For use with RunUO 2.0               *
@@ -322,7 +322,7 @@ namespace Server.Items
 				healerNumber = 1060088; // You bind the wound and stop the bleeding
 				patientNumber = 1060167; // The bleeding wounds have healed, you are no longer bleeding!
 
-				BleedAttack.EndBleed( m_Patient, true );
+				BleedAttack.EndBleed( m_Patient, false );
 			}
 			else if ( MortalStrike.IsWounded( m_Patient ) )
 			{
@@ -377,7 +377,7 @@ namespace Server.Items
 						healerNumber = 500968; // You apply the bandages, but they barely help.
 					}
 
-					m_Patient.Heal( (int) toHeal, false );
+					m_Patient.Heal( (int) toHeal, m_Healer, false );
 				}
 				else
 				{
