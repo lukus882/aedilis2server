@@ -13,6 +13,7 @@ using Server.ContextMenus;
 using Server.Engines.Quests;
 using Server.Factions;
 using Server.Spells.Bushido;
+using Server.Spells.Spellweaving;
 
 namespace Server.Mobiles
 {
@@ -1040,7 +1041,7 @@ namespace Server.Mobiles
 		public virtual void AddPetFriend( Mobile m )
 		{
 			if ( m_Friends == null )
-				m_Friends = new List<Mobile>( 8 );
+				m_Friends = new List<Mobile>();
 
 			m_Friends.Add( m );
 		}
@@ -1125,6 +1126,9 @@ namespace Server.Mobiles
 
 			if ( !(m is BaseCreature) || m is Server.Engines.Quests.Haven.MilitiaFighter )
 				return true;
+
+			if( TransformationSpellHelper.UnderTransformation( m, typeof( EtherealVoyageSpell ) ) )
+				return false;
 
 			BaseCreature c = (BaseCreature)m;
 
@@ -3032,14 +3036,12 @@ namespace Server.Mobiles
 		}
 
 		/*
-		 * Will need to be givent a better name
-		 * 
 		 * This function can be overriden.. so a "Strongest" mobile, can have a different definition depending
 		 * on who check for value
 		 * -Could add a FightMode.Prefered
 		 * 
 		 */
-		public virtual double GetValueFrom( Mobile m, FightMode acqType, bool bPlayerOnly )
+		public virtual double GetFightModeRanking( Mobile m, FightMode acqType, bool bPlayerOnly )
 		{
 			if ( ( bPlayerOnly && m.Player ) ||  !bPlayerOnly )
 			{
@@ -3061,7 +3063,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		// Turn, - for let, + for right
+		// Turn, - for left, + for right
 		// Basic for now, needs work
 		public virtual void Turn(int iTurnSteps)
 		{
@@ -4756,6 +4758,8 @@ namespace Server.Mobiles
 				{
 					this.OwnerAbandonTime = DateTime.MinValue;
 				}
+
+				GiftOfLifeSpell.HandleDeath( this );
 
 				CheckStatTimers();
 			}

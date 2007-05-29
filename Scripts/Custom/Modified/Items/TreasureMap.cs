@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -249,7 +249,7 @@ namespace Server.Items
 			if ( m.Backpack == null )
 				return false;
 
-			Item[] items = m.Backpack.FindItemsByType( typeof( BaseHarvestTool ) );
+			List<BaseHarvestTool> items = m.Backpack.FindItemsByType<BaseHarvestTool>();
 
 			foreach ( BaseHarvestTool tool in items )
 			{
@@ -814,7 +814,7 @@ namespace Server.Items
 		{
 			base.GetProperties( list );
 
-			list.Add( m_Map == Map.Felucca ? 1041502 : 1041502 ); // for somewhere in Felucca : for somewhere in Trammel
+			list.Add( m_Map == Map.Felucca ? 1041502 : 1041503 ); // for somewhere in Felucca : for somewhere in Trammel
 
 			if ( m_Completed )
 			{
