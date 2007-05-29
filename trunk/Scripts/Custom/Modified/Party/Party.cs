@@ -165,8 +165,8 @@ namespace Server.Engines.PartySystem
 				m_Members.Add( new PartyMemberInfo( m ) );
 				m.Party = this;
 
-				Packet memberList = new PartyMemberList( this );
-				Packet attrs  = new MobileAttributesN( m );
+				Packet memberList = Packet.Acquire( new PartyMemberList( this ) );
+				Packet attrs = Packet.Acquire( new MobileAttributesN( m ) );
 
 				for ( int i = 0; i < m_Members.Count; ++i )
 				{
@@ -174,26 +174,17 @@ namespace Server.Engines.PartySystem
 
 					f.Send( memberList );
 
-					if (! f.HasGump( typeof( PartyRadarGump)))
-					{
-						PartyRadarGump pr = new PartyRadarGump( f, m );
-						f.SendGump( pr ); // Custom Radar Gump
-
-						GumpTimer gumpTimer = new GumpTimer( f, m );
-						gumpTimer.Start();
-
-						GumpTimer gumpTimerT = new GumpTimer( m, f );
-						gumpTimerT.Start();
-					}
-
-					if ( f != m )
+                                        if ( f != m )
 					{
 						f.Send( new MobileStatusCompact( m.CanBeRenamedBy( f ), m ) );
 						f.Send( attrs );
 						m.Send( new MobileStatusCompact( f.CanBeRenamedBy( m ), f ) );
 						m.Send( new MobileAttributesN( f ) );
 					}
-				}
+					}
+
+				Packet.Release( memberList );
+				Packet.Release( attrs );
 			}
 		}
 
