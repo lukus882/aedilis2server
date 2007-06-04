@@ -13,7 +13,7 @@ namespace Server.Items
 		public BlankScroll( int amount ) : base( 0xEF3 )
 		{
 			Stackable = true;
-			Weight = 0.5;
+			Weight = 0.3;
 			Amount = amount;
 		}
 

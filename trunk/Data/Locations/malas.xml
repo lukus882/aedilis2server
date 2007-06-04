@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<places>
+	<parent name="Sanctuary Island">
+		<parent name="Towns">
+			<parent name="Maris">
+				<child name="Main Region" x="723" y="455" z="0" />
+			</parent>
+			<parent name="Voltumna">
+				<child name="Main Region" x="1258" y="1058" z="0" />
+			</parent>
+			<parent name="Turan">
+				<child name="Main Region" x="864" y="1354" z="0" />
+			</parent>
+			<parent name="Velchan">
+				<child name="Main Region" x="373" y="1571" z="0" />
+			</parent>
+			<parent name="Feronia">
+				<child name="Main Region" x="1755" y="1236" z="1" />
+			</parent>
+			<parent name="Thesan">
+				<child name="Main Region" x="272" y="950" z="0" />
+			</parent>
+			<parent name="Nethuns">
+				<child name="Main Region" x="1334" y="1779" z="0" />
+			</parent>
+			<parent name="Nortia">
+				<child name="Main Region" x="1714" y="794" z="7" />
+			</parent>
+		</parent>
+		<parent name="Dungeons">
+			<parent name="Dungeon1">
+				<child name="Main Region" x="1946" y="96" z="0" />
+			</parent>
+			<parent name="Dungeon2">
+				<child name="Main Region" x="2034" y="96" z="0" />
+			</parent>
+			<parent name="Dungeon3">
+				<child name="Main Region" x="2171" y="105" z="0" />
+			</parent>
+			<parent name="Dungeon4">
+				<child name="Main Region" x="2353" y="102" z="0" />
+			</parent>
+			<parent name="Dungeon5">
+				<child name="Main Region" x="2524" y="56" z="2" />
+			</parent>
+			<parent name="Dungeon6">
+				<child name="Main Region" x="1938" y="430" z="0" />
+			</parent>
+			<parent name="Dungeon7">
+				<child name="Main Region" x="2102" y="361" z="0" />
+			</parent>
+			<parent name="Dungeon8">
+				<child name="Main Region" x="2191" y="423" z="0" />
+			</parent>
+			<parent name="Dungeon9">
+				<child name="Main Region" x="2328" y="410" z="0" />
+			</parent>
+			<parent name="Dungeon10">
+				<child name="Main Region" x="2518" y="420" z="0" />
+			</parent>
+			<parent name="Dungeon11">
+				<child name="Main Region" x="1974" y="698" z="0" />
+			</parent>
+			<parent name="Dungeon12">
+				<child name="Main Region" x="2078" y="793" z="2" />
+			</parent>
+			<parent name="Dungeon13">
+				<child name="Main Region" x="2224" y="689" z="0" />
+			</parent>
+			<parent name="Dungeon14">
+				<child name="Main Region" x="2346" y="681" z="0" />
+			</parent>
+			<parent name="Dungeon15">
+				<child name="Main Region" x="2506" y="724" z="2" />
+			</parent>
+		</parent>
+	</parent>
+</places>
