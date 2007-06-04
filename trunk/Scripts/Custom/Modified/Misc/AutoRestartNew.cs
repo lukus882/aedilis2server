@@ -32,7 +32,7 @@ namespace Server.Misc
 
 		public static void Initialize()
 		{
-			CommandSystem.Register( "Restart", AccessLevel.Administrator, new CommandEventHandler( Restart_OnCommand ) );
+			CommandSystem.Register( "Restart", AccessLevel.GameMaster, new CommandEventHandler( Restart_OnCommand ) );
 			CommandSystem.Register( "AutoRestart", AccessLevel.Administrator, new CommandEventHandler( AutoRestart_OnCommand ) );
 			CommandSystem.Register( "NextRestart", AccessLevel.Player, new CommandEventHandler( NextRestart_OnCommand ) );
 			new AutoRestart().Start();

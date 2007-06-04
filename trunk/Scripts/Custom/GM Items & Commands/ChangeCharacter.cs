@@ -22,11 +22,11 @@ namespace Server.Commands
             Mobile from = e.Mobile;
             NetState ns = from.NetState;
 
-            if (from.GetLogoutDelay() > TimeSpan.Zero)
-            {
-                from.SendMessage("You can't insta-log here, or right now; you cannot switch characters.");
-                return;
-            }
+            //if (from.GetLogoutDelay() > TimeSpan.Zero)
+            //{
+            //    from.SendMessage("You can't insta-log here, or right now; you cannot switch characters.");
+            //    return;
+            //}
 
             if (e.ArgString.Length == 0)
             {
