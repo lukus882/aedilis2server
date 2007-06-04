@@ -102,12 +102,14 @@ namespace Server.Items
 
 		public override void OnDoubleClick( Mobile from )
 		{
-			if (from.AccessLevel > AccessLevel.Player)
-			{
-				from.SendMessage( "You require the assistance of a Game Master to install this add-on" );
-				return;
-			}
-			else if ( from.Z <= -60 )
+//			if (from.AccessLevel < AccessLevel.Counselor)
+//			{
+//				from.SendMessage( "You require the assistance of a Game Master to install this add-on" );
+//				return;
+//			}
+//			else if ( from.Z <= -60 )
+
+			if ( from.Z <= -60 )
 			{
 				from.SendMessage( "You can not make a cellar here - you are to deep" );
 				return;
