@@ -44,18 +44,21 @@ namespace Server.Mobiles
         private static bool m_Talked;
         string[] VendorSay = new string[] 
 		{ 
-			"Greetings",
+	    "Greetings",
             "Hello there",
             "I have what ye needs.",
             "Look here!",
-            "Shop ye here!"
+            "Shop ye here!",
+            "Welcome to my shop!",
+            "Are you here to buy or sell?",
+            "Please buy my goods I have a family to feed"
 		};
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
             if (m_Talked == false)
             {
-                if (m.InRange(this, 3) && m is PlayerMobile)
+                if (m.InRange(this, 3) && m is PlayerMobile && m.AccessLevel == AccessLevel.Player)
                 {
                     m_Talked = true;
                     SayRandom(VendorSay, this);

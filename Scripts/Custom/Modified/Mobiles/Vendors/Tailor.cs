@@ -38,7 +38,7 @@ namespace Server.Mobiles
 				double theirSkill = pm.Skills[SkillName.Tailoring].Base;
 
 				if ( theirSkill >= 70.1 )
-					pm.NextTailorBulkOrder = TimeSpan.FromHours( 6.0 );
+					pm.NextTailorBulkOrder = TimeSpan.FromHours( 4.0 );
 				else if ( theirSkill >= 50.1 )
 					pm.NextTailorBulkOrder = TimeSpan.FromHours( 2.0 );
 				else

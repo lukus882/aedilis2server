@@ -160,13 +160,9 @@ namespace Server.Mobiles
         #region [ Payday ] 
         public virtual bool Payday( BaseHire m ) 
         { 
-            m_Pay = (int)m.Skills[SkillName.Anatomy].Value + (int)m.Skills[SkillName.Tactics].Value; 
-            m_Pay += (int)m.Skills[SkillName.Macing].Value + (int)m.Skills[SkillName.Swords].Value; 
-            m_Pay += (int)m.Skills[SkillName.Fencing].Value + (int)m.Skills[SkillName.Archery].Value; 
-            m_Pay += (int)m.Skills[SkillName.MagicResist].Value + (int)m.Skills[SkillName.Healing].Value; 
-            m_Pay += (int)m.Skills[SkillName.Magery].Value + (int)m.Skills[SkillName.Parry].Value;
-		m_Pay /= 35; 
-		m_Pay += 1;
+
+	    m_Pay = 100; 
+
             return true; 
         } 
         #endregion 
@@ -183,7 +179,7 @@ namespace Server.Mobiles
                     if( item is Gold ) 
                     { 
                         // Is the payment in gold sufficient 
-                        if( item.Amount >= m_Pay ) 
+                        if( item.Amount == m_Pay ) 
                         { 
                             // Check if this mobile already has a hire 
                             BaseHire hire = (BaseHire)m_HireTable[from]; 

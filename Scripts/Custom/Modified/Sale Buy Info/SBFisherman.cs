@@ -37,6 +37,7 @@ namespace Server.Mobiles
 			public InternalSellInfo() 
 			{ 
 				Add( typeof( RawFishSteak ), 1 );
+				Add( typeof( FishSteak ), 1 );
 				Add( typeof( Fish ), 1 );
 				//TODO: Add( typeof( SmallFish ), 1 );
 				Add( typeof( FishingPole ), 7 );

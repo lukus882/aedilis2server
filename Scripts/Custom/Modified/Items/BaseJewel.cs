@@ -162,8 +162,9 @@ namespace Server.Items
 
 		public override void GetProperties( ObjectPropertyList list )
 		{
-			    /************************************************************************/
-    /******************* Mod for ItemID skill ******************/
+
+/************************************************************************/
+/******************* Mod for ItemID skill ******************/
 
 
     if(!Identified )
@@ -176,7 +177,7 @@ namespace Server.Items
             list.Add(name);
 
             if (ArtifactRarity > 0)
-                list.Add(1061078, ArtifactRarity.ToString()); // artifact rarity ~1_val~
+            list.Add(1061078, ArtifactRarity.ToString()); // artifact rarity ~1_val~
         }
         else
         {
@@ -274,10 +275,9 @@ namespace Server.Items
 
 			writer.Write( (int) 3 ); // version
 	
-
+                        writer.Write( m_Identified );			
 			writer.WriteEncodedInt( (int) m_Resource );
 			writer.WriteEncodedInt( (int) m_GemType );
-                        writer.Write( m_Identified );
 
 			m_AosAttributes.Serialize( writer );
 			m_AosResistances.Serialize( writer );
@@ -294,7 +294,7 @@ namespace Server.Items
 			{
 				case 3:
 				{
-				    m_Identified = reader.ReadBool();
+				        m_Identified = reader.ReadBool();
 
 					goto case 2;
 				}
@@ -353,6 +353,7 @@ namespace Server.Items
 			{
 				m_Resource = CraftResource.Iron;
 				m_GemType = GemType.None;
+				m_Identified = reader.ReadBool();
 			}
 		}
 		#region ICraftable Members
