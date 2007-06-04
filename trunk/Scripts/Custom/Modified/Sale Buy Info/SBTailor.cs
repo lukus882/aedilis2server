@@ -99,6 +99,35 @@ namespace Server.Mobiles
 				Add( typeof( FullApron ), 5 );
 				Add( typeof( HalfApron ), 5 );
 
+				Add( typeof( ClothNinjaHood ), 6 );
+				Add( typeof( FlowerGarland ), 3 );
+				Add( typeof( ClothNinjaJacket ), 8 );
+				Add( typeof( ElvenShirt ), 5 );
+				Add( typeof( ElvenDarkShirt ), 3 );
+				Add( typeof( FurCape ), 4 );
+				Add( typeof( JinBaori ), 4 );
+				Add( typeof( Kamishimo ), 4 );
+				Add( typeof( HakamaShita ), 5 );
+				Add( typeof( MaleKimono ), 4 );
+				Add( typeof( FemaleKimono ), 5 );
+				Add( typeof( Hakama ), 6 );
+				Add( typeof( TattsukeHakama ), 6 );
+				Add( typeof( Obi ), 6 );
+				Add( typeof( NinjaTabi ), 6 );
+				Add( typeof( SamuraiTabi ), 6 );
+				Add( typeof( Hakama ), 6 );
+
+				Add( typeof( Kamishimo ), 4 );
+				Add( typeof( HakamaShita ), 5 );
+				Add( typeof( MaleKimono ), 4 );
+				Add( typeof( FemaleKimono ), 5 );
+				Add( typeof( Hakama ), 6 );
+				Add( typeof( TattsukeHakama ), 6 );
+				Add( typeof( Obi ), 6 );
+				Add( typeof( NinjaTabi ), 6 );
+				Add( typeof( SamuraiTabi ), 6 );
+				Add( typeof( Hakama ), 6 );
+
 				Add( typeof( JesterHat ), 6 );
 				Add( typeof( FloppyHat ), 3 );
 				Add( typeof( WideBrimHat ), 13 );

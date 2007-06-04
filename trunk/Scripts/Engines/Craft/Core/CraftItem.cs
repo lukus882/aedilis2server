@@ -1106,6 +1106,11 @@ namespace Server.Engines.Craft
 					else if ( item.Hue == 0 )
 						item.Hue = resHue;
 
+					if ( m_NameNumber == 1027124 ) //Multiplies crafted amount of "Shaft"
+					{
+						  maxAmount *= 2;
+					}
+
 					if ( maxAmount > 0 )
 					{
 						if ( !item.Stackable && item is IUsesRemaining )

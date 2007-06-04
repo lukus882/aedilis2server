@@ -207,6 +207,19 @@ namespace Server.Mobiles
 					Add( typeof( CrescentBlade ), 18 );
 				}
 
+				Add( typeof( LeatherJingasa ), 5 );
+				Add( typeof( LeatherDo ), 42 );
+				Add( typeof( LeatherHiroSode ), 23 );
+				Add( typeof( LeatherSuneate ), 26 );
+				Add( typeof( LeatherHaidate), 28 );
+				Add( typeof( LeatherNinjaPants ), 25 );
+				Add( typeof( LeatherNinjaJacket ), 26 );
+				Add( typeof( StuddedMempo ), 28 );
+				Add( typeof( StuddedDo ), 66 );
+				Add( typeof( StuddedHiroSode ), 32 );
+				Add( typeof( StuddedSuneate ), 40 );
+				Add( typeof( StuddedHaidate ), 37 );
+
 				Add( typeof( Spear ), 15 );
 				Add( typeof( Pitchfork ), 9 );
 				Add( typeof( ShortSpear ), 11 );
