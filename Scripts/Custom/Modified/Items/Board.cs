@@ -50,6 +50,11 @@ namespace Server.Items
 
 			if ( version == 0 && Weight == 0.1 )
 				Weight = -1;
+
+			if ( Weight == 1 )
+				Weight = 0.5;
+
+
 		}
 	}
 }
