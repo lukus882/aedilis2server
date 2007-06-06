@@ -1,0 +1,48 @@
+//Quest Template Gump by Yohanu
+//http://www.runuo.com/forums/custom-script-releases/80439-2-0-rc1-1-0-final-quest-gump-template.html
+
+using System;
+using Server;
+using Server.Gumps;
+
+namespace Server.Gumps
+{
+	public class QuestTemplate : Gump
+	{
+		public QuestTemplate(string QuestName, string QuestDescription)
+			: base( 0, 0 )
+		{
+			this.Closable=false;
+			this.Disposable=true;
+			this.Dragable=true;
+			this.Resizable=false;
+			this.AddPage(0);
+			this.AddImageTiled(399, 94, 44, 399, 203);
+			this.AddBackground(70, 88, 357, 436, 9200);
+			this.AddHtml( 85, 226, 331, 174, @"<p>" + QuestDescription +"</p>", (bool)true, (bool)true);
+			this.AddImageTiled(59, 109, 24, 381, 202);
+			this.AddImage(8, 224, 10401);
+			this.AddImage(410, 224, 10411);
+			this.AddImageTiled(400, 75, 44, 40, 207);
+			this.AddImageTiled(59, 75, 44, 40, 206);
+			this.AddImageTiled(101, 75, 299, 36, 201);
+			this.AddImageTiled(400, 484, 44, 40, 205);
+			this.AddImageTiled(59, 484, 44, 40, 204);
+			this.AddLabel(166, 96, 0, @""+ QuestName);
+			this.AddImage(409, 22, 10410);
+			this.AddImage(9, 22, 10400);
+			this.AddImage(9, 437, 10402);
+			this.AddImage(409, 437, 10412);
+			this.AddButton(150, 435, 247, 248, (int)Buttons.acceptQuest, GumpButtonType.Reply, 0);
+			this.AddButton(280, 435, 241, 242, (int)Buttons.cancelQuest, GumpButtonType.Reply, 0);
+
+		}
+		
+		public enum Buttons
+		{
+			acceptQuest,
+			cancelQuest,
+		}
+
+	}
+}

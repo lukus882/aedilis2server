@@ -27,7 +27,13 @@ namespace Server.Mobiles
 		AI_Mage,
 		AI_Berserk,
 		AI_Predator,
-		AI_Thief
+		AI_Thief,
+		AI_Necro,
+		AI_Necromage,
+		AI_Paladin,
+		AI_Vampire,
+		AI_AnimalSkittish,
+		AI_OrcScout
 	}
 
 	public enum ActionType
@@ -351,7 +357,9 @@ namespace Server.Mobiles
 				SkillName.Wrestling,
 				SkillName.Lumberjacking,
 				SkillName.Mining,
-				SkillName.Meditation
+				SkillName.Meditation,
+				SkillName.Necromancy,
+				SkillName.Chivalry
 			};
 
 		public virtual void OnSpeech( SpeechEventArgs e )

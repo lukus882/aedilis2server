@@ -2482,37 +2482,54 @@ namespace Server.Mobiles
 
 			m_AI = null;
 
-			switch ( NewAI )
-			{
-				case AIType.AI_Melee:
-					m_AI = new MeleeAI(this);
-					break;
-				case AIType.AI_Animal:
-					m_AI = new AnimalAI(this);
-					break;
-				case AIType.AI_Berserk:
-					m_AI = new BerserkAI(this);
-					break;
-				case AIType.AI_Archer:
-					m_AI = new ArcherAI(this);
-					break;
-				case AIType.AI_Healer:
-					m_AI = new HealerAI(this);
-					break;
-				case AIType.AI_Vendor:
-					m_AI = new VendorAI(this);
-					break;
-				case AIType.AI_Mage:
-					m_AI = new MageAI(this);
-					break;
-				case AIType.AI_Predator:
-					//m_AI = new PredatorAI(this);
-					m_AI = new MeleeAI(this);
-					break;
-				case AIType.AI_Thief:
-					m_AI = new ThiefAI(this);
-					break;
-			}
+			   switch ( NewAI )
+    				   {
+    				        case AIType.AI_Animal:
+    				        m_AI = new AnimalAI(this);
+    				        break;
+    				        case AIType.AI_AnimalSkittish:
+    				        m_AI = new AnimalSkittishAI(this);
+    				        break;
+    				       case AIType.AI_Archer:
+    				        m_AI = new ArcherAI(this);
+    				        break;
+    				       case AIType.AI_Berserk:
+    				        m_AI = new BerserkAI(this);
+    				        break;
+    				       case AIType.AI_Healer:
+    				        m_AI = new HealerAI(this);
+    				        break;
+    				       case AIType.AI_Mage:
+    				        m_AI = new MageAI(this);
+    				        break;
+    				       case AIType.AI_Melee:
+    				        m_AI = new MeleeAI(this);
+    				        break;
+    				       case AIType.AI_Necro:
+    				        m_AI = new NecroAI(this);
+    				        break;
+    				       case AIType.AI_Necromage:
+    				        m_AI = new NecromageAI(this);
+    				        break;
+    				       case AIType.AI_OrcScout:
+    				        m_AI = new OrcScoutAI(this);
+    				        break;
+    				       case AIType.AI_Paladin:
+    				        m_AI = new PaladinAI(this);
+    				        break;
+    				       case AIType.AI_Predator:
+    				        m_AI = new PredatorAI(this);
+    				        break;
+    				       case AIType.AI_Thief:
+    				        m_AI = new ThiefAI(this);
+    				        break;
+    				       case AIType.AI_Vampire:
+    				        m_AI = new VampireAI(this);
+    				        break;
+    				       case AIType.AI_Vendor:
+    				        m_AI = new VendorAI(this);
+    				        break;
+    				   }
 		}
 
 		public void ChangeAIToDefault()

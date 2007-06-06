@@ -148,9 +148,9 @@ namespace mordero.Items
         public void SetUpProperties()
         {
             m_maxCharges = 50;
-            m_maxItems = 10;
+            m_maxItems = 50;
             m_maxItemWeight = 25;
-            m_deleteOnNoCharge = false;
+            m_deleteOnNoCharge = true;
             m_currentCharge = m_maxCharges;
             Name = "A Transfer Chest";
         }
