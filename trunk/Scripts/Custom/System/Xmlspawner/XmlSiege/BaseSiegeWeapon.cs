@@ -421,11 +421,15 @@ namespace Server.Items
 				return false;
 			}
 
-			// ok, the projectile is being fired
-			// calculate attack parameters
-			double firingspeedbonus = projectile.FiringSpeed / 10.0;
-			double dexbonus = (double)from.Dex / 30.0;
-			int weaponskill = (int)from.Skills[SkillName.ArmsLore].Value;
+				// ok, the projectile is being fired
+
+            			// make this a revealing action
+            			from.RevealingAction();
+
+            			// calculate attack parameters
+            			double firingspeedbonus = projectile.FiringSpeed / 10.0;
+            			double dexbonus = (double)from.Dex / 30.0;
+            			int weaponskill = (int)from.Skills[SkillName.ArmsLore].Value;
 
 
 			int accuracybonus = projectile.AccuracyBonus;
