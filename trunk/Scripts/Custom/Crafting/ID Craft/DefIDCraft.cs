@@ -91,10 +91,13 @@ namespace Server.Engines.Craft
 
 			// Identification Stuff
 
+			index = AddCraft( typeof( IDCrystal ), "ID Crystal", "An ID Crystal", 100.0, 120.0, typeof( ArcaneGem ), "An Arcane Gem", 1, 1044037 );
+			AddSkill( index, SkillName.Tinkering, 50.0, 55.0 );
+
 			index = AddCraft( typeof( CraftedIDWand10 ), "ID Wand 10", "Item ID Wand 10 Charges", 100.0, 120.0, typeof( IronIngot ), "Iron Ingot", 2, 1044037 );
 			AddSkill( index, SkillName.Tinkering, 50.0, 55.0 );
 			AddRes( index, typeof( Log ), "Log", 2, 1044351 );
-			AddRes( index, typeof( IDCrystal ), "ID Cyrstals", 1, 1044351 );
+			AddRes( index, typeof( ArcaneGem ), "ID Cyrstals", 1, 1044351 );
 			
 
 			index = AddCraft( typeof( CraftedIDWand100 ), "ID Wand 100", "Item ID Wand 100 Charges", 100.0, 120.0, typeof( IronIngot ), "Iron Ingot", 2, 1044037 );
