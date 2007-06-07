@@ -248,6 +248,8 @@ namespace Server.Items
 				{
 					// AOS.Damage( Mobile m, Mobile from, int damage, int phys, int fire, int cold, int pois, int nrgy )
 					AOS.Damage(m, from, scaledmobdamage, phys, fire, 0, 0, 0);
+
+					from.DoHarmful( m, true );
 				}
 			}
 
