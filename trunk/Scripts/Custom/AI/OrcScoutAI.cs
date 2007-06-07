@@ -159,6 +159,15 @@ namespace Server.Mobiles
 					return true;
 				}
 
+				Mobile target = BaseAttackHelperSE.GetRandomAttacker( m_Mobile , m_Mobile.RangePerception );
+
+				if ( target != null )
+				{
+					m_Mobile.Combatant = target;
+
+					Action = ActionType.Combat;
+				}
+
 				base.DoActionWander();
 			}
 
