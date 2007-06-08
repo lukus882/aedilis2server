@@ -209,8 +209,8 @@ namespace Server.Misc
 				ComputedSkillMod = 0.01;
 
             //following line used to see chance to gain ingame
-            if (from.AccessLevel > AccessLevel.Player)
-	    from.SendMessage( "Your chance to gain {0} is {1}",skill.Name, ComputedSkillMod );
+            //if (from.AccessLevel > AccessLevel.Player)
+	    //from.SendMessage( "Your chance to gain {0} is {1}",skill.Name, ComputedSkillMod );
             if (from is BaseCreature && ((BaseCreature)from).Controlled)
                 ComputedSkillMod *= 2;
 
@@ -326,8 +326,8 @@ namespace Server.Misc
                         GainStat(from, Stat.Int);
                 }
                 //following line used to show chance to gain stats ingame
-if (from.AccessLevel > AccessLevel.Player)
-from.SendMessage( "Str: {0} Dex: {1} Int: {2}",((info.StrGain / 33.3) + StatGainBonus),((info.DexGain / 33.3) + StatGainBonus),((info.IntGain / 33.3) + StatGainBonus) );
+//if (from.AccessLevel > AccessLevel.Player)
+//from.SendMessage( "Str: {0} Dex: {1} Int: {2}",((info.StrGain / 33.3) + StatGainBonus),((info.DexGain / 33.3) + StatGainBonus),((info.IntGain / 33.3) + StatGainBonus) );
             }
         }
 
