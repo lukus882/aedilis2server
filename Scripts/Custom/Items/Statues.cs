@@ -731,6 +731,7 @@ namespace Server.Items
                 from.SendMessage("This must be in your backpack to be used");
                 return;
             }
+            from.CloseGump (typeof (StatueGump));
             from.SendGump(new StatueGump(this, from, m_MaterialGroup, 0, Direction.East, StatuePoses.AllPraiseMe, true));
         }
 
