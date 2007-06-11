@@ -21,7 +21,7 @@ namespace Server.Mobiles
 			SetStr( 200, 235 );
 			SetDex( 103, 147 );
 			SetInt( 51, 65 );
-			Title( "the Slave Master" );
+			Title = "the Slave Master" ;
 
 			SetDamage( 25, 39 );
 
