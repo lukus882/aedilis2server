@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections;
 using Server.Network;
@@ -1101,6 +1101,7 @@ namespace Server.Items
 		public virtual int AbsorbDamageAOS( Mobile attacker, Mobile defender, int damage )
 		{
 			bool blocked = false;
+			int originaldamage = damage;
 
 			if ( defender.Player || defender.Body.IsHuman )
 			{
@@ -1138,7 +1139,10 @@ namespace Server.Items
 
 					if ( shield != null )
 					{
-						shield.OnHit( this, damage );
+					shield.OnHit( this, damage );
+
+					// XmlAttachment check for OnArmorHit
+					Server.Engines.XmlSpawner2.XmlAttach.OnArmorHit(attacker, defender, shield, this, originaldamage);
 					}
 				}
 			}
@@ -3257,6 +3261,9 @@ namespace Server.Items
 
         if (m_Hits >= 0 && m_MaxHits > 0)
             list.Add(1060639, "{0}\t{1}", m_Hits, m_MaxHits); // durability ~1_val~ / ~2_val~
+
+	// mod to display attachment properties
+	Server.Engines.XmlSpawner2.XmlAttach.AddAttachmentProperties(this, list);
     }
 }
 
