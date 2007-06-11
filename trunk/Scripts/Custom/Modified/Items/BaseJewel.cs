@@ -264,7 +264,10 @@ namespace Server.Items
 			if ( (prop = m_AosAttributes.WeaponSpeed) != 0 )
 				list.Add( 1060486, prop.ToString() ); // swing speed increase ~1_val~%
 
-			base.AddResistanceProperties( list );
+				base.AddResistanceProperties( list );
+			
+        // mod to display attachment properties
+        Server.Engines.XmlSpawner2.XmlAttach.AddAttachmentProperties(this, list);
     }
 }
 

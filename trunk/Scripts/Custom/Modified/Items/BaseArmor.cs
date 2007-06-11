@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server.Network;
@@ -1539,6 +1539,9 @@ namespace Server.Items
 
 			if ( m_HitPoints >= 0 && m_MaxHitPoints > 0 )
 				list.Add( 1060639, "{0}\t{1}", m_HitPoints, m_MaxHitPoints ); // durability ~1_val~ / ~2_val~
+
+// mod to display attachment properties
+	Server.Engines.XmlSpawner2.XmlAttach.AddAttachmentProperties(this, list);
     }
 }
 

@@ -646,7 +646,7 @@ namespace Server.Engines.Craft
 				AddRes( index, typeof( Cloth ), 1044286, 10, 1044287 );
 				SetNeededExpansion( index, Expansion.SE );
 			}
-			
+			/*
 			if( Core.ML )
 			{
 				index = AddCraft( typeof( DiamondMace ), 1011084, 1073568, 70.0, 120.0, typeof( IronIngot ), 1044036, 20, 1044037 );
@@ -680,8 +680,7 @@ namespace Server.Engines.Craft
 				AddRes( index, typeof( BlueDiamond ), 1032696, 1, 1044240 );
 				AddRecipe( index, 41 );
 				SetNeededExpansion( index, Expansion.ML );
-*/
-			}
+			}*/
 			#endregion
 
 			#region Dragon Scale Armor
