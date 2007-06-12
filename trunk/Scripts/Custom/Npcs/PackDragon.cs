@@ -42,7 +42,7 @@ namespace Server.Mobiles
 			Fame = 15000;
 			Karma = -15000;
 
-			Hue = 1164;
+			Hue = 1148;
 
 			VirtualArmor = 60;
 
