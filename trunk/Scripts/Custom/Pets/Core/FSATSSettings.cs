@@ -30,7 +30,7 @@ namespace Server
 			"PackHorse",
 			"PackLlama",
 			"Beetle",
-			"FireBeetle"
+			"FireBeetle",
 			"UltraBeetle"
 		};
 

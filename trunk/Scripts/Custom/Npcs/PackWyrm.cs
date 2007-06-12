@@ -69,7 +69,7 @@ namespace Server.Mobiles
 		public override int Hides{ get{ return 20; } }
 		public override HideType HideType{ get{ return HideType.Barbed; } }
 		public override int Scales{ get{ return 9; } }
-		public override ScaleType ScaleType{ get{ return ScaleType.Pack; } }
+		public override ScaleType ScaleType{ get{ return ScaleType.White; } }
 		public override FoodType FavoriteFood{ get{ return FoodType.Meat | FoodType.Gold; } }
 		public override bool CanAngerOnTame { get { return true; } }
 
