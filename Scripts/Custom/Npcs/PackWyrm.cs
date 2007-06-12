@@ -5,44 +5,52 @@ using Server;
 using Server.Items;
 using Server.Mobiles;
 using Server.ContextMenus;
+
 namespace Server.Mobiles
 {
-	[CorpseName( "a ultra beetle corpse" )]
-	[Server.Engines.Craft.Forge]
-	public class UltraBeetle : BaseMount
+	[CorpseName( "a pack wyrm corpse" )]
+	public class PackWyrm : BaseCreature
 	{
-		public override bool StatLossAfterTame{ get{ return true; } }
-
 		[Constructable]
-		public UltraBeetle() : base( "an ultra beetle", 0xA9, 0x3E95, AIType.AI_Melee, FightMode.Closest, 10, 1, 0.2, 0.4 )
+		public PackWyrm () : base( AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
-			SetStr( 300 );
-			SetDex( 100 );
-			SetInt( 500 );
+			Body = Core.AOS ? 180 : 49;
+			Name = "a Pack Wyrm";
+			BaseSoundID = 362;
+			Hue = 1164;
 
-			SetHits( 200 );
+			SetStr( 721, 760 );
+			SetDex( 101, 130 );
+			SetInt( 386, 425 );
 
-			SetDamage( 7, 20 );
+			SetHits( 433, 456 );
 
-			SetDamageType( ResistanceType.Physical, 100 );
+			SetDamage( 17, 25 );
 
-			SetResistance( ResistanceType.Physical, 30, 40 );
-			SetResistance( ResistanceType.Fire, 20, 30 );
-			SetResistance( ResistanceType.Cold, 20, 30 );
-			SetResistance( ResistanceType.Poison, 20, 30 );
-			SetResistance( ResistanceType.Energy, 20, 30 );
+			SetDamageType( ResistanceType.Physical, 50 );
+			SetDamageType( ResistanceType.Cold, 50 );
 
-			SetSkill( SkillName.MagicResist, 80.0 );
-			SetSkill( SkillName.Tactics, 100.0 );
-			SetSkill( SkillName.Wrestling, 100.0 );
+			SetResistance( ResistanceType.Physical, 55, 70 );
+			SetResistance( ResistanceType.Fire, 15, 25 );
+			SetResistance( ResistanceType.Cold, 80, 90 );
+			SetResistance( ResistanceType.Poison, 40, 50 );
+			SetResistance( ResistanceType.Energy, 40, 50 );
 
-			Fame = 4000;
-			Karma = -4000;
+			SetSkill( SkillName.EvalInt, 99.1, 100.0 );
+			SetSkill( SkillName.Magery, 99.1, 100.0 );
+			SetSkill( SkillName.MagicResist, 99.1, 100.0 );
+			SetSkill( SkillName.Tactics, 97.6, 100.0 );
+			SetSkill( SkillName.Wrestling, 90.1, 100.0 );
+
+			Fame = 18000;
+			Karma = -18000;
+
+			VirtualArmor = 64;
 
 			Tamable = true;
-			ControlSlots = 4;
-			MinTameSkill = 93.9;
-			Hue = 1172;
+			ControlSlots = 3;
+			MinTameSkill = 96.3;
+
 
 			Container pack = Backpack;
 
@@ -53,45 +61,19 @@ namespace Server.Mobiles
 			pack.Movable = false;
 
 			AddItem( pack );
-
-
 		}
 
-		public override int GetAngerSound()
-		{
-			return 0x21D;
-		}
+		public override bool ReacquireOnMovement{ get{ return true; } }
+		public override int TreasureMapLevel{ get{ return 4; } }
+		public override int Meat{ get{ return 19; } }
+		public override int Hides{ get{ return 20; } }
+		public override HideType HideType{ get{ return HideType.Barbed; } }
+		public override int Scales{ get{ return 9; } }
+		public override ScaleType ScaleType{ get{ return ScaleType.Pack; } }
+		public override FoodType FavoriteFood{ get{ return FoodType.Meat | FoodType.Gold; } }
+		public override bool CanAngerOnTame { get { return true; } }
 
-		public override int GetIdleSound()
-		{
-			return 0x21D;
-		}
-
-		public override int GetAttackSound()
-		{
-			return 0x162;
-		}
-
-		public override int GetHurtSound()
-		{
-			return 0x163;
-		}
-
-		public override int GetDeathSound()
-		{
-			return 0x21D;
-		}
-
-
-		public override int Meat{ get{ return 16; } }
-		public override FoodType FavoriteFood{ get{ return FoodType.Meat; } }
-
-		public override double GetControlChance( Mobile m, bool useBaseSkill )
-		{
-			return 1.0;
-		}
-
-		public UltraBeetle( Serial serial ) : base( serial )
+		public PackWyrm( Serial serial ) : base( serial )
 		{
 		}
 
@@ -154,18 +136,16 @@ namespace Server.Mobiles
 		public override void Serialize( GenericWriter writer )
 		{
 			base.Serialize( writer );
-
-			writer.Write( (int) 1 ); // version
+			writer.Write( (int) 0 );
 		}
 
 		public override void Deserialize( GenericReader reader )
 		{
 			base.Deserialize( reader );
-
 			int version = reader.ReadInt();
 
-			if( version == 0 )
-				Hue = 0x489;
+			if ( Core.AOS && Body == 49 )
+				Body = 180;
 		}
 	}
 }

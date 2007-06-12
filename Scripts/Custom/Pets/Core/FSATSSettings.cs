@@ -31,6 +31,7 @@ namespace Server
 			"PackLlama",
 			"Beetle",
 			"FireBeetle"
+			"UltraBeetle"
 		};
 
 		//Add all pack animals for your server here.
