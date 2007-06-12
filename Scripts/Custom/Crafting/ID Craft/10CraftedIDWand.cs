@@ -12,6 +12,7 @@ namespace Server.Items
 		public CraftedIDWand10() : base( WandEffect.Identification, 25, 175 )
 		{
 			Charges = 10;
+			Hue = 1196;
 		}
 
 		public CraftedIDWand10( Serial serial ) : base( serial )
