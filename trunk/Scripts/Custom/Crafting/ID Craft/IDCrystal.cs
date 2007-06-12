@@ -12,8 +12,9 @@ namespace Server.Items
 		public IDCrystal() : base( 0x23B )
 		{
 			Name = "an Identification Crystal";
+			Weight = 0.5; 
 			Movable = true;
-			Hue = 1173;
+			Hue = 1196;
 		}
 
 		public IDCrystal( Serial serial ) : base( serial )
