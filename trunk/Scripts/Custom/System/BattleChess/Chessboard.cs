@@ -29,39 +29,18 @@ namespace Arya.Chess
 	}
 
 	/// <summary>
-	/// Defines the style of the NPCs on the BChessboard
+	/// This class holds the chessboard logic that manages the chess game
 	/// </summary>
-	public enum ChessSet : int
-	{
-		Classic,
-		Fantasy,
-		FantasyGiant,
-		Animal,
-		Undead
-	}
-
-	/// <summary>
-	/// The orientaion of the game on the BChessboard
-	/// </summary>
-	public enum BoardOrientation : byte
-	{
-		NorthSouth = 0,
-		EastWest = 1
-	}
-
-	/// <summary>
-	/// This class holds the BChessboard logic that manages the chess game
-	/// </summary>
-	public class BChessboard
+	public class Chessboard
 	{
 		#region Variables
 
 		/// <summary>
-		/// The Map the physical BChessboard lies on
+		/// The Map the physical chessboard lies on
 		/// </summary>
 		private Map m_Map;
 		/// <summary>
-		/// The Z coordinate of the BChessboard plane
+		/// The Z coordinate of the chessboard plane
 		/// </summary>
 		private int m_Z;
 		/// <summary>
@@ -96,50 +75,6 @@ namespace Arya.Chess
 		/// The game object
 		/// </summary>
 		private ChessGame m_Game;
-		/// <summary>
-		/// The chess set for this board
-		/// </summary>
-		private ChessSet m_ChessSet;
-		/// <summary>
-		/// The hue used for white pieces
-		/// </summary>
-		private int m_WhiteHue = 1151;
-		/// <summary>
-		/// The hue used for black pieces
-		/// </summary>
-		private int m_BlackHue = 1175;
-		/// <summary>
-		/// The orientation of the BChessboard
-		/// </summary>
-		private BoardOrientation m_Orientation;
-		/// <summary>
-		/// The minor hue for white pieces
-		/// </summary>
-		private int m_WhiteMinorHue;
-		/// <summary>
-		/// The minor hue for black pieces
-		/// </summary>
-		private int m_BlackMinorHue;
-		/// <summary>
-		/// States if a piece is performing a move
-		/// </summary>
-		private bool m_IsMoving = false;
-		/// <summary>
-		/// States if a rebuild action should be performed after a move is over
-		/// </summary>
-		private bool m_DoRebuild = false;
-		/// <summary>
-		/// Specifies if the Minor Hue should be ignored
-		/// </summary>
-		private bool m_OverrideMinorHue;
-		/// <summary>
-		/// The hue for the NPCs skin
-		/// </summary>
-		private int m_SkinHue = -1;
-		/// <summary>
-		/// The hue for the NPCs hair
-		/// </summary>
-		private int m_HairHue = -1;
 
 		#endregion
 
@@ -161,213 +96,13 @@ namespace Arya.Chess
 			get { return m_Z; }
 		}
 
-		/// <summary>
-		/// Gets or sets the chess set for this board
-		/// </summary>
-		public ChessSet ChessSet
-		{
-			get { return m_ChessSet; }
-			set
-			{
-				if ( m_ChessSet != value )
-				{
-					m_ChessSet = value;
-					Rebuild();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the hue used for white pieces
-		/// </summary>
-		public int WhiteHue
-		{
-			get { return m_WhiteHue; }
-			set
-			{
-				if ( m_WhiteHue != value )
-				{
-					m_WhiteHue = value;
-					Rebuild();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the hue for black pieces
-		/// </summary>
-		public int BlackHue
-		{
-			get { return m_BlackHue; }
-			set
-			{
-				if ( m_BlackHue != value )
-				{
-					m_BlackHue = value;
-					Rebuild();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the minor hue for white pieces
-		/// </summary>
-		public int WhiteMinorHue
-		{
-			get
-			{
-				return m_WhiteMinorHue;
-			}
-			set
-			{
-				if ( m_WhiteMinorHue != value )
-				{
-					m_WhiteMinorHue = value;
-
-					if ( ! m_OverrideMinorHue )
-						Rebuild();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the minor hue for black pieces
-		/// </summary>
-		public int BlackMinorHue
-		{
-			get
-			{
-				return m_BlackMinorHue;
-			}
-			set
-			{
-				if ( m_BlackMinorHue != value )
-				{
-					m_BlackMinorHue = value;
-
-					if ( ! m_OverrideMinorHue )
-						Rebuild();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the effect performed whan a NPC attacks
-		/// </summary>
-		public int AttackEffect
-		{
-			get
-			{
-				if ( m_Game != null )
-					return m_Game.AttackEffect;
-				else
-					return 0;
-			}
-		}
-
-		/// <summary>
-		/// Gets or sets the effect performed when capturing a NPC
-		/// </summary>
-		public int CaptureEffect
-		{
-			get
-			{
-				if ( m_Game != null )
-					return m_Game.CaptureEffect;
-				else
-					return 0;
-			}
-		}
-
-		/// <summary>
-		/// States whether the dying NPC should display a bolt animation
-		/// </summary>
-		public bool BoltOnDeath
-		{
-			get
-			{
-				if ( m_Game != null )
-					return m_Game.BoltOnDeath;
-				else
-					return false;
-			}
-		}
-
-		/// <summary>
-		/// Gets the orientation of the board
-		/// </summary>
-		public BoardOrientation Orientation
-		{
-			get { return m_Orientation; }
-			set
-			{
-				if ( value != m_Orientation )
-				{
-					m_Orientation = value;
-					Rebuild();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Specifies whether the main hue should be used as the minor hue as well
-		/// </summary>
-		public bool OverrideMinorHue
-		{
-			get { return m_OverrideMinorHue; }
-			set
-			{
-				if ( m_OverrideMinorHue != value )
-				{
-					m_OverrideMinorHue = value;
-					Rebuild();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets the hue for this game
-		/// </summary>
-		public int SkinHue
-		{
-			get
-			{
-				if ( m_SkinHue == -1 )
-					m_SkinHue = Utility.RandomSkinHue();
-
-				return m_SkinHue;
-			}
-		}
-
-		/// <summary>
-		/// Gets the hue for hair for this game
-		/// </summary>
-		public int HairHue
-		{
-			get
-			{
-				if ( m_HairHue == -1 )
-					m_HairHue = Utility.RandomHairHue();
-
-				return m_HairHue;
-			}
-		}
-
 		#endregion
 
-		public BChessboard( Mobile black, Mobile white, int z, Rectangle2D bounds, ChessGame game, ChessSet chessSet, int whiteHue, int blackHue, int whiteMinorHue, int blackMinorHue, bool overrideMinorHue )
+		public Chessboard( Mobile black, Mobile white, int z, Rectangle2D bounds, ChessGame game )
 		{
 			m_Game = game;
 			m_Black = black;
 			m_White = white;
-
-			m_ChessSet = chessSet;
-			m_WhiteHue = whiteHue;
-			m_BlackHue = blackHue;
-			m_WhiteMinorHue = whiteMinorHue;
-			m_BlackMinorHue = blackMinorHue;
-			m_Orientation = m_Game.Orientation;
-			m_OverrideMinorHue = overrideMinorHue;
 
 			m_Map = m_Black.Map;
 			m_Z = z;
@@ -459,36 +194,15 @@ namespace Arya.Chess
 			}
 		}
 
-		/// <summary>
-		/// Rebuilds the BChessboard applying any changes made to the NPCs
-		/// </summary>
-		public void Rebuild()
-		{
-			// If a piece is moving, set the rebuild flag to true. When the move is over, the OnMoveOver
-			// function will call Rebuild()
-			if ( m_IsMoving )
-			{
-				m_DoRebuild = true;
-				return;
-			}
-
-			foreach( BaseChessPiece piece in m_Table.Values )
-			{
-				piece.Rebuild();
-			}
-
-			m_DoRebuild = false;
-		}
-
 		#endregion
 
 		#region Physic Board Managment
 
 		/// <summary>
-		/// Verifies is a given Point2D is a valid position on the BChessboard
+		/// Verifies is a given Point2D is a valid position on the chessboard
 		/// </summary>
 		/// <param name="pos">The Point2D considered</param>
-		/// <returns>True if the position provided is part of the BChessboard</returns>
+		/// <returns>True if the position provided is part of the chessboard</returns>
 		public bool IsValid( Point2D pos )
 		{
 			return pos.X >= 0 && pos.Y >= 0 && pos.X < 8 && pos.Y < 8;
@@ -501,22 +215,10 @@ namespace Arya.Chess
 		/// <returns>The corresponding real world coordinate</returns>
 		public Point2D BoardToWorld( Point2D boardPosition )
 		{
-			if ( m_Orientation == BoardOrientation.NorthSouth )
-			{
-				int xoffset = boardPosition.X * m_Step + m_Offset;
-				int yoffset = boardPosition.Y * m_Step + m_Offset;
+			int xoffset = boardPosition.X * m_Step + m_Offset;
+			int yoffset = boardPosition.Y * m_Step + m_Offset;
 
-				return new Point2D( m_Bounds.X + xoffset, m_Bounds.Y + yoffset );
-			}
-			else
-			{
-				int xoffset = boardPosition.Y * m_Step + m_Offset;
-				int yoffset = boardPosition.X * m_Step + m_Offset;
-
-				return new Point2D(
-					m_Bounds.X + xoffset,
-					m_Bounds.End.Y - yoffset );
-			}
+			return new Point2D( m_Bounds.X + xoffset, m_Bounds.Y + yoffset );
 		}
 
 		/// <summary>
@@ -526,20 +228,10 @@ namespace Arya.Chess
 		/// <returns>Board coordinates</returns>
 		public Point2D WorldToBoard( Point2D worldPosition )
 		{
-			if ( m_Orientation == BoardOrientation.NorthSouth )
-			{
-				int dx = worldPosition.X - m_Bounds.X;
-				int dy = worldPosition.Y - m_Bounds.Y;
+			int dx = worldPosition.X - m_Bounds.X;
+			int dy = worldPosition.Y - m_Bounds.Y;
 
-				return new Point2D( dx / m_Step, dy / m_Step );
-			}
-			else
-			{
-				int dx = m_Bounds.End.Y - worldPosition.Y - 1;
-				int dy = worldPosition.X - m_Bounds.X;
-
-				return new Point2D( dx / m_Step, dy / m_Step );
-			}
+			return new Point2D( dx / m_Step, dy / m_Step );
 		}
 
 		#endregion
@@ -577,7 +269,6 @@ namespace Arya.Chess
 				if ( rook == null )
 					rook = this[ p2 ] as Rook;
 
-				m_IsMoving = true;
 				rook.Castle();
 				return true;
 			}
@@ -585,14 +276,12 @@ namespace Arya.Chess
 			Move move = new Move( piece, p2 );
 			ApplyMove( move );
 
-			// bool ok = !IsCheck( piece.Color ) || IsCheckMate( piece.EnemyColor );
-			bool ok = !IsCheck( piece.Color );
+			bool ok = !IsCheck( piece.Color ) || IsCheckMate( piece.EnemyColor );
 
 			UndoMove( move );
 
 			if ( ok )
 			{
-				m_IsMoving = true;
 				piece.MoveTo( move );
 
 				foreach( BaseChessPiece pass in m_Table.Values )
@@ -618,11 +307,6 @@ namespace Arya.Chess
 			ApplyMove( move );
 			FinalizeMove( move );
 
-			m_IsMoving = false;
-
-			if ( m_DoRebuild )
-				Rebuild();
-
 			PushGame( move.EnemyColor, move );
 		}
 
@@ -645,8 +329,7 @@ namespace Arya.Chess
 			{
 				case Status.Check:
 
-					King k = GetKing( nextMoveColor ) as King;
-					k.PlayCheck();
+					GetKing( nextMoveColor ).Piece.Say( "*CHECK*" );
 
 					if ( nextMoveColor == ChessColor.White )
 						m_Game.OnMoveOver( move, "Your king is under check!", "You have the opponent's king under check!" );
@@ -657,8 +340,7 @@ namespace Arya.Chess
 
 				case Status.CheckMate:
 
-					King king = GetKing( nextMoveColor ) as King;
-					king.PlayCheckMate();
+					GetKing( nextMoveColor ).Piece.Say( "*CHECKMATE*" );
 
 					m_Game.EndGame( nextMoveColor == ChessColor.White ? m_Black : m_White );
 
@@ -666,11 +348,8 @@ namespace Arya.Chess
 
 				case Status.Stall:
 
-					King wKing = GetKing( ChessColor.White ) as King;
-					King bKing = GetKing( ChessColor.Black ) as King;
-
-					wKing.PlayStaleMate();
-					bKing.PlayStaleMate();
+					GetKing( ChessColor.Black ).Piece.Say( "*STALL*" );
+					GetKing( ChessColor.White ).Piece.Say( "*STALL*" );
 
 					m_Game.EndGame( null );
 
@@ -720,14 +399,14 @@ namespace Arya.Chess
 			{
 				m_Table[ pawn.Position ] = promoted;
 
-				pawn.Die( false );
+				pawn.Die();
 			}
 
 			PushGame( pawn.EnemyColor, null );
 		}
 
 		/// <summary>
-		/// Applies a move to the BChessboard logic
+		/// Applies a move to the chessboard logic
 		/// </summary>
 		/// <param name="move">The move object</param>
 		public void ApplyMove( Move move )
@@ -769,25 +448,6 @@ namespace Arya.Chess
 			{
 				m_Table.Add( move.To, move.CapturedPiece );
 				move.CapturedPiece.Position = move.To;
-			}
-		}
-
-		/// <summary>
-		/// Plays a sound to all mobiles within 20 tiles of the NPC emitting it
-		/// </summary>
-		/// <param name="m">The NPC producing the sound</param>
-		/// <param name="sound">The sound to play</param>
-		public void PlaySound( ChessMobile m, int sound )
-		{
-			if ( m == null )
-				return;
-
-			Server.Network.Packet p = new Server.Network.PlaySound( sound, m.Location );
-
-			foreach( Server.Network.NetState state in m.GetClientsInRange( 20 ) )
-			{
-				if ( state.Mobile.CanSee( m ) )
-					state.Send( p );
 			}
 		}
 
@@ -1065,11 +725,11 @@ namespace Arya.Chess
 		public void Delete()
 		{
 			foreach( BaseChessPiece piece in m_Table.Values )
-				piece.Die( false );
+				piece.Die();
 		}
 
 		/// <summary>
-		/// The staff deleted a piece from the BChessboard, so clean up the game
+		/// The staff deleted a piece from the chessboard, so clean up the game
 		/// </summary>
 		public void OnStaffDelete()
 		{

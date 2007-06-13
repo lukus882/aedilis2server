@@ -9,11 +9,10 @@ namespace Server.Mobiles
 {
 	public class OrcScoutAI : BaseAI
 	{
-		private static double teleportChance	= 0.04;
-
+		private static double teleportChance = 0.04;
 		private static int[] m_Offsets = new int[]
 		{
-			 0, 0,
+		 	 0, 0,
 			-1,-1,
 			 0,-1,
 			 1,-1,
@@ -35,7 +34,9 @@ namespace Server.Mobiles
 				if ( m.Player && !m.Hidden && m.AccessLevel == AccessLevel.Player && m.Combatant == m_Mobile )
 				{
 					if ( dist > m.GetDistanceToSqrt( m_Mobile ) )
+					{
 						nearest = m;
+					}
 				}
 			}
 
@@ -46,9 +47,15 @@ namespace Server.Mobiles
 		{
 			Mobile m = FindNearestAggressor();
 
-			if ( m == null || m.Map == null || m_Mobile.Map == null ) return;
+			if ( m == null || m.Map == null || m_Mobile.Map == null )
+			{
+				return;
+			}
 
-			if ( m_Mobile.GetDistanceToSqrt( m ) > m_Mobile.RangePerception + 1 ) return;
+			if ( m_Mobile.GetDistanceToSqrt( m ) > m_Mobile.RangePerception + 1 )
+			{
+				return;
+			}
 
 			int px = m_Mobile.X;
 			int py = m_Mobile.Y;
@@ -58,27 +65,27 @@ namespace Server.Mobiles
 
 			// get vector's length
 
-			double l = Math.Sqrt( (double)( dx*dx + dy*dy ));
+			double l = Math.Sqrt( (double) (dx*dx + dy*dy) );
 
 			if ( l == 0 )
-			{       
-				int rand = Utility.Random(8) + 1;
+			{
+				int rand = Utility.Random( 8 ) + 1;
 				rand *= 2;
 				dx = m_Offsets[ rand ];
-				dy = m_Offsets[ rand + 1];
-				l = Math.Sqrt( (double)( dx*dx + dy*dy ));
+				dy = m_Offsets[ rand + 1 ];
+				l = Math.Sqrt( (double) (dx*dx + dy*dy) );
 			}
 
 			// normalize vector
-			double dpx = ((double)dx)/l;
-			double dpy = ((double)dy)/l;
+			double dpx = ((double) dx)/l;
+			double dpy = ((double) dy)/l;
 			// move 
-			px += (int)( dpx * ( 4 + Utility.Random( 3 )) );
-			py += (int)( dpy * ( 4 + Utility.Random( 3 )) );
+			px += (int) (dpx*(4 + Utility.Random( 3 )));
+			py += (int) (dpy*(4 + Utility.Random( 3 )));
 
 			for ( int i = 0; i < m_Offsets.Length; i += 2 )
 			{
-				int x = m_Offsets[i], y = m_Offsets[i + 1];
+				int x = m_Offsets[ i ], y = m_Offsets[ i + 1 ];
 
 				Point3D p = new Point3D( px + x, py + y, 0 );
 
@@ -114,17 +121,24 @@ namespace Server.Mobiles
 
 		private void PerformHide()
 		{
-			if ( !m_Mobile.Alive || m_Mobile.Deleted ) return;
+			if ( !m_Mobile.Alive || m_Mobile.Deleted )
+			{
+				return;
+			}
 
 			if ( !m_Mobile.Hidden )
-			{			
+			{
 				double chance = 0.05;
 
 				if ( m_Mobile.Hits < 20 )
+				{
 					chance = 0.1;
+				}
 
 				if ( m_Mobile.Poisoned )
+				{
 					chance = 0.01;
+				}
 
 				if ( Utility.RandomDouble() < chance )
 				{
@@ -133,7 +147,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		public OrcScoutAI(BaseCreature m) : base (m)
+		public OrcScoutAI( BaseCreature m ) : base( m )
 		{
 		}
 
@@ -146,7 +160,9 @@ namespace Server.Mobiles
 			if ( AcquireFocusMob( m_Mobile.RangePerception, m_Mobile.FightMode, false, false, true ) )
 			{
 				if ( m_Mobile.Debug )
+				{
 					m_Mobile.DebugSay( "I have detected {0}, attacking", m_Mobile.FocusMob.Name );
+				}
 
 				m_Mobile.Combatant = m_Mobile.FocusMob;
 				Action = ActionType.Combat;
@@ -159,14 +175,7 @@ namespace Server.Mobiles
 					return true;
 				}
 
-				Mobile target = BaseAttackHelperSE.GetRandomAttacker( m_Mobile , m_Mobile.RangePerception );
-
-				if ( target != null )
-				{
-					m_Mobile.Combatant = target;
-
-					Action = ActionType.Combat;
-				}
+				
 
 				base.DoActionWander();
 			}
@@ -187,7 +196,10 @@ namespace Server.Mobiles
 				return true;
 			}
 
-			if ( Utility.RandomDouble() < teleportChance ) TryToTeleport();
+			if ( Utility.RandomDouble() < teleportChance )
+			{
+				TryToTeleport();
+			}
 
 			if ( !m_Mobile.InRange( combatant, m_Mobile.RangePerception ) )
 			{
@@ -198,7 +210,7 @@ namespace Server.Mobiles
 					m_Mobile.Combatant = m_Mobile.FocusMob;
 					m_Mobile.FocusMob = null;
 				}
-				else if ( !m_Mobile.InRange( combatant, m_Mobile.RangePerception * 3 ) )
+				else if ( !m_Mobile.InRange( combatant, m_Mobile.RangePerception*3 ) )
 				{
 					m_Mobile.Combatant = null;
 				}
@@ -230,7 +242,9 @@ namespace Server.Mobiles
 			else if ( AcquireFocusMob( m_Mobile.RangePerception, m_Mobile.FightMode, false, false, true ) )
 			{
 				if ( m_Mobile.Debug )
+				{
 					m_Mobile.DebugSay( "My move is blocked, so I am going to attack {0}", m_Mobile.FocusMob.Name );
+				}
 
 				m_Mobile.Combatant = m_Mobile.FocusMob;
 				Action = ActionType.Combat;
@@ -240,7 +254,9 @@ namespace Server.Mobiles
 			else if ( m_Mobile.GetDistanceToSqrt( combatant ) > m_Mobile.RangePerception + 1 )
 			{
 				if ( m_Mobile.Debug )
+				{
 					m_Mobile.DebugSay( "I cannot find {0}, so my guard is up", combatant.Name );
+				}
 
 				Action = ActionType.Guard;
 
@@ -249,12 +265,14 @@ namespace Server.Mobiles
 			else
 			{
 				if ( m_Mobile.Debug )
+				{
 					m_Mobile.DebugSay( "I should be closer to {0}", combatant.Name );
+				}
 			}
 
 			if ( !m_Mobile.Controlled && !m_Mobile.Summoned )
 			{
-				if ( m_Mobile.Hits < m_Mobile.HitsMax * 20/100 )
+				if ( m_Mobile.Hits < m_Mobile.HitsMax*20/100 )
 				{
 					// We are low on health, should we flee?
 
@@ -266,7 +284,7 @@ namespace Server.Mobiles
 
 						int diff = combatant.Hits - m_Mobile.Hits;
 
-						flee = ( Utility.Random( 0, 100 ) < (10 + diff) ); // (10 + diff)% chance to flee
+						flee = (Utility.Random( 0, 100 ) < (10 + diff)); // (10 + diff)% chance to flee
 					}
 					else
 					{
@@ -276,11 +294,16 @@ namespace Server.Mobiles
 					if ( flee )
 					{
 						if ( m_Mobile.Debug )
+						{
 							m_Mobile.DebugSay( "I am going to flee from {0}", combatant.Name );
+						}
 
 						Action = ActionType.Flee;
-				
-						if ( Utility.RandomDouble() < teleportChance + 0.1 ) TryToTeleport();
+
+						if ( Utility.RandomDouble() < teleportChance + 0.1 )
+						{
+							TryToTeleport();
+						}
 					}
 				}
 			}
@@ -290,10 +313,12 @@ namespace Server.Mobiles
 
 		public override bool DoActionGuard()
 		{
-			if ( AcquireFocusMob(m_Mobile.RangePerception, m_Mobile.FightMode, false, false, true ) )
+			if ( AcquireFocusMob( m_Mobile.RangePerception, m_Mobile.FightMode, false, false, true ) )
 			{
 				if ( m_Mobile.Debug )
+				{
 					m_Mobile.DebugSay( "I have detected {0}, attacking", m_Mobile.FocusMob.Name );
+				}
 
 				m_Mobile.Combatant = m_Mobile.FocusMob;
 				Action = ActionType.Combat;
@@ -321,13 +346,13 @@ namespace Server.Mobiles
 
 				if ( WalkMobileRange( m_Mobile.FocusMob, 1, false, m_Mobile.RangePerception*2, m_Mobile.RangePerception*3 ) )
 				{
-					m_Mobile.DebugSay("I Have fled");
+					m_Mobile.DebugSay( "I Have fled" );
 					Action = ActionType.Guard;
-					return true;                        
+					return true;
 				}
 				else
 				{
-					m_Mobile.DebugSay("I am fleeing!");
+					m_Mobile.DebugSay( "I am fleeing!" );
 				}
 			}
 

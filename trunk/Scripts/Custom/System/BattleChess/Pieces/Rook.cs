@@ -23,7 +23,8 @@ namespace Arya.Chess
 			}
 		}
 
-		public Rook( BChessboard board, ChessColor color, Point2D position ) : base( board, color, position )
+
+		public Rook( Chessboard board, ChessColor color, Point2D position ) : base( board, color, position )
 		{
 		}
 
@@ -31,72 +32,6 @@ namespace Arya.Chess
 		{
 			m_Piece = new ChessMobile( this );
 			m_Piece.Name	= string.Format( "Rook [{0}]", m_Color.ToString() );
-
-			switch ( m_BChessboard.ChessSet )
-			{
-				case ChessSet.Classic : CreateClassic();
-					break;
-
-				case ChessSet.Fantasy : CreateFantasy();
-					break;
-
-				case ChessSet.FantasyGiant : CreateFantasyGiant();
-					break;
-
-				case ChessSet.Animal : CreateAnimal();
-					break;
-
-				case ChessSet.Undead : CreateUndead();
-					break;
-			}
-		}
-
-		private void CreateUndead()
-		{
-			m_MoveSound = 880;
-			m_CaptureSound = 357;
-			m_DeathSound = 1156;
-
-			m_Piece.BodyValue = 154; // Mummy
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateAnimal()
-		{
-			m_MoveSound = 159;
-			m_CaptureSound = 158;
-			m_DeathSound = 162;
-
-			m_Piece.BodyValue = 29; // Gorilla
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateFantasyGiant()
-		{
-			m_MoveSound = 767;
-			m_CaptureSound = 367;
-			m_DeathSound = 371;
-
-			m_Piece.BodyValue = 312; // Abysmal Horror
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateFantasy()
-		{
-			m_MoveSound = 461;
-			m_CaptureSound = 463;
-			m_DeathSound = 465;
-
-			m_Piece.Female = false;
-			m_Piece.BodyValue = 55; // Troll
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateClassic()
-		{
-			m_MoveSound = 287;
-			m_CaptureSound = 268;
-			m_DeathSound = 269;
 
 			m_Piece.Female = false;
 			m_Piece.BodyValue = 14;
@@ -110,12 +45,12 @@ namespace Arya.Chess
 				return false;
 
 			// Verify if this is a castle
-			BaseChessPiece king = m_BChessboard[ newLocation ];
+			BaseChessPiece king = m_Chessboard[ newLocation ];
 
 			if ( king is King && king.Color == m_Color )
 			{
 				// Trying to castle
-				return m_BChessboard.AllowCastle( king, this, ref err );
+				return m_Chessboard.AllowCastle( king, this, ref err );
 			}
 
 			int dx = newLocation.X - m_Position.X;
@@ -140,7 +75,7 @@ namespace Arya.Chess
 					{
 						int offset = direction * i;
 
-						if ( m_BChessboard[ m_Position.X + offset, m_Position.Y ] != null )
+						if ( m_Chessboard[ m_Position.X + offset, m_Position.Y ] != null )
 						{
 							err = "Rooks can't move over pieces";
 							return false; // There's a piece on the 
@@ -149,7 +84,7 @@ namespace Arya.Chess
 				}
 
 				// Verify if there's a piece to each at the end
-				BaseChessPiece piece = m_BChessboard[ newLocation ];
+				BaseChessPiece piece = m_Chessboard[ newLocation ];
 
 				if ( piece == null || piece.Color != m_Color )
 					return true;
@@ -171,7 +106,7 @@ namespace Arya.Chess
 					{
 						int offset = direction * i;
 
-						if ( m_BChessboard[ m_Position.X, m_Position.Y + offset ] != null )
+						if ( m_Chessboard[ m_Position.X, m_Position.Y + offset ] != null )
 						{
 							err = "The rook can't move over other pieces";
 							return false; // Piece on the way
@@ -180,7 +115,7 @@ namespace Arya.Chess
 				}
 
 				// Verify for piece at end
-				BaseChessPiece piece = m_BChessboard[ newLocation ];
+				BaseChessPiece piece = m_Chessboard[ newLocation ];
 
 				if ( piece == null || piece.Color != m_Color )
 					return true;
@@ -210,10 +145,10 @@ namespace Arya.Chess
 				{
 					Point2D p = new Point2D( m_Position.X + offset * xDir, m_Position.Y + offset * yDir );
 
-					if ( ! m_BChessboard.IsValid( p ) )
+					if ( ! m_Chessboard.IsValid( p ) )
 						break;
 
-					BaseChessPiece piece = m_BChessboard[ p ];
+					BaseChessPiece piece = m_Chessboard[ p ];
 
 					if ( piece == null )
 					{
@@ -237,11 +172,11 @@ namespace Arya.Chess
 
 		public override bool IsCastle(Point2D loc)
 		{
-			King king = m_BChessboard[ loc ] as King;
+			King king = m_Chessboard[ loc ] as King;
 
 			string err = null;
 
-			return king != null && king.Color == m_Color && m_BChessboard.AllowCastle( king, this, ref err );
+			return king != null && king.Color == m_Color && m_Chessboard.AllowCastle( king, this, ref err );
 		}
 
 		public void Castle()
@@ -268,9 +203,9 @@ namespace Arya.Chess
 			{
 				m_Castle = false;
 
-				m_BChessboard.ApplyMove( m_Move );
+				m_Chessboard.ApplyMove( m_Move );
 
-				King king = m_BChessboard.GetKing( m_Color ) as King;
+				King king = m_Chessboard.GetKing( m_Color ) as King;
 				
 				int dx = 0;
 

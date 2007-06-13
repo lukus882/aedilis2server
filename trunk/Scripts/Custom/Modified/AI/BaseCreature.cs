@@ -2514,6 +2514,9 @@ namespace Server.Mobiles
     				       case AIType.AI_OrcScout:
     				        m_AI = new OrcScoutAI(this);
     				        break;
+					case AIType.AI_Ninja:	
+                              		m_AI = new NinjaAI(this);
+                              		break;
     				       case AIType.AI_Paladin:
     				        m_AI = new PaladinAI(this);
     				        break;

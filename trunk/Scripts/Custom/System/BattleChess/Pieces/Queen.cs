@@ -25,7 +25,7 @@ namespace Arya.Chess
 		}
 
 
-		public Queen( BChessboard board, ChessColor color, Point2D position ) : base( board, color, position )
+		public Queen( Chessboard board, ChessColor color, Point2D position ) : base( board, color, position )
 		{
 		}
 
@@ -34,90 +34,22 @@ namespace Arya.Chess
 			m_Piece = new ChessMobile( this );
 			m_Piece.Name = string.Format( "Queen [{0}]", m_Color.ToString() );
 
-			switch ( m_BChessboard.ChessSet )
-			{
-				case ChessSet.Classic : CreateClassic();
-					break;
-
-				case ChessSet.Fantasy : CreateFantasy();
-					break;
-
-				case ChessSet.FantasyGiant : CreateFantasyGiant();
-					break;
-
-				case ChessSet.Animal : CreateAnimal();
-					break;
-
-				case ChessSet.Undead: CreateUndead();
-					break;
-			}
-		}
-
-		private void CreateUndead()
-		{
-			m_MoveSound = 896;
-			m_CaptureSound = 382;
-			m_DeathSound = 1202;
-
-			m_Piece.BodyValue = 310; // Wailing banshee
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateAnimal()
-		{
-			m_MoveSound = 123;
-			m_CaptureSound = 120;
-			m_DeathSound = 124;
-
-			m_Piece.BodyValue = 216; // Cow
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateFantasyGiant()
-		{
-			m_MoveSound = 883;
-			m_CaptureSound = 880;
-			m_DeathSound = 888;
-
-			m_Piece.BodyValue = 174; // Semidar
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateFantasy()
-		{
-			m_MoveSound = 1200;
-			m_CaptureSound = 1201;
-			m_DeathSound = 1202;
-
-			m_Piece.BodyValue = 149; // Succubus
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateClassic()
-		{
-			m_MoveSound = 823;
-			m_CaptureSound = 824;
-			m_DeathSound = 814;
-
 			m_Piece.Female = true;
 			m_Piece.BodyValue = 0x191;
 
-			if ( m_BChessboard.OverrideMinorHue )
-				m_Piece.Hue = Hue;
-			else
-				m_Piece.Hue = m_BChessboard.SkinHue;
-			m_Piece.AddItem( new LongHair( m_BChessboard.OverrideMinorHue ? Hue : m_BChessboard.HairHue ) );
+			m_Piece.Hue = Utility.RandomSkinHue();
+			m_Piece.AddItem( new LongHair( Utility.RandomHairHue() ) );
 
 			Item item = null;
 
 			item = new FancyDress( Hue );
 			m_Piece.AddItem( item );
 
-			item = new Sandals( MinorHue );
+			item = new Sandals( Hue );
 			m_Piece.AddItem( item );
 
 			item = new Scepter();
-			item.Hue = MinorHue;
+			item.Hue = SecondaryHue;
 			m_Piece.AddItem( item );
 		}
 
@@ -141,7 +73,7 @@ namespace Arya.Chess
 					{
 						int offset = direction * i;
 
-						if ( m_BChessboard[ m_Position.X + offset, m_Position.Y ] != null )
+						if ( m_Chessboard[ m_Position.X + offset, m_Position.Y ] != null )
 						{
 							err = "The queen can't move over other pieces";
 							return false;
@@ -157,7 +89,7 @@ namespace Arya.Chess
 					{
 						int offset = direction * i;
 
-						if ( m_BChessboard[ m_Position.X, m_Position.Y + offset ] != null )
+						if ( m_Chessboard[ m_Position.X, m_Position.Y + offset ] != null )
 						{
 							err = "The queen can't move over other pieces";
 							return false;
@@ -184,7 +116,7 @@ namespace Arya.Chess
 						int xOffset = xDirection * i;
 						int yOffset = yDirection * i;
 
-						if ( m_BChessboard[ m_Position.X + xOffset, m_Position.Y + yOffset ] != null )
+						if ( m_Chessboard[ m_Position.X + xOffset, m_Position.Y + yOffset ] != null )
 						{
 							err = "The queen can't move over other pieces";
 							return false;
@@ -194,7 +126,7 @@ namespace Arya.Chess
 			}
 
 			// Verify target piece
-			BaseChessPiece piece = m_BChessboard[ newLocation ];
+			BaseChessPiece piece = m_Chessboard[ newLocation ];
 
 			if ( piece == null || piece.Color != m_Color )
 				return true;
@@ -223,10 +155,10 @@ namespace Arya.Chess
 				{
 					Point2D p = new Point2D( m_Position.X + offset * xDir, m_Position.Y + offset * yDir );
 
-					if ( ! m_BChessboard.IsValid( p ) )
+					if ( ! m_Chessboard.IsValid( p ) )
 						break;
 
-					BaseChessPiece piece = m_BChessboard[ p ];
+					BaseChessPiece piece = m_Chessboard[ p ];
 
 					if ( piece == null )
 					{

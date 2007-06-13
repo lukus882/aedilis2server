@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
@@ -33,6 +33,7 @@ namespace Server.Mobiles
 		AI_Paladin,
 		AI_Vampire,
 		AI_AnimalSkittish,
+		AI_Ninja,
 		AI_OrcScout
 	}
 

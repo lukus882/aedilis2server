@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 
 using Server;
-using Server.Items;
 
 namespace Arya.Chess
 {
@@ -27,9 +26,9 @@ namespace Arya.Chess
 		/// </summary>
 		protected ChessMobile m_Piece;
 		/// <summary>
-		/// The BChessboard object parent of this chess piece
+		/// The Chessboard object parent of this chess piece
 		/// </summary>
-		protected BChessboard m_BChessboard;
+		protected Chessboard m_Chessboard;
 		/// <summary>
 		/// The color of this piece
 		/// </summary>
@@ -50,18 +49,6 @@ namespace Arya.Chess
 		/// The move this piece is performing
 		/// </summary>
 		protected Move m_Move;
-		/// <summary>
-		/// The sound made when the piece moves
-		/// </summary>
-		protected int m_MoveSound;
-		/// <summary>
-		/// The sound made when the piece captures
-		/// </summary>
-		protected int m_CaptureSound;
-		/// <summary>
-		/// The sound made when the piece is captured
-		/// </summary>
-		protected int m_DeathSound;
 
 		#endregion
 
@@ -114,20 +101,10 @@ namespace Arya.Chess
 		{
 			get
 			{
-				if ( m_BChessboard.Orientation == BoardOrientation.NorthSouth )
-				{
-					if ( m_Color == ChessColor.Black )
-						return Direction.South;
-					else
-						return Direction.North;
-				}
+				if ( m_Color == ChessColor.Black )
+					return Direction.South;
 				else
-				{
-					if ( m_Color == ChessColor.Black )
-						return Direction.East;
-					else
-						return Direction.West;
-				}
+					return Direction.North;
 			}
 		}
 
@@ -139,9 +116,9 @@ namespace Arya.Chess
 			get
 			{
 				if ( m_Color == ChessColor.Black )
-					return m_BChessboard.BlackHue;
+					return ChessConfig.BlackHue;
 				else
-					return m_BChessboard.WhiteHue;
+					return ChessConfig.WhiteHue;
 			}
 		}
 
@@ -153,20 +130,9 @@ namespace Arya.Chess
 			get
 			{
 				if ( m_Color == ChessColor.Black )
-					return m_BChessboard.WhiteHue;
+					return ChessConfig.WhiteHue;
 				else
-					return m_BChessboard.BlackHue;
-			}
-		}
-
-		public virtual int MinorHue
-		{
-			get
-			{
-				if ( m_Color == ChessColor.Black )
-					return m_BChessboard.BlackMinorHue;
-				else
-					return m_BChessboard.WhiteMinorHue;
+					return ChessConfig.BlackHue;
 			}
 		}
 
@@ -200,12 +166,12 @@ namespace Arya.Chess
 		/// <summary>
 		/// Creates a new chess piece object
 		/// </summary>
-		/// <param name="board">The BChessboard object hosting this piece</param>
+		/// <param name="board">The Chessboard object hosting this piece</param>
 		/// <param name="color">The color of this piece</param>
 		/// <param name="position">The initial position on the board</param>
-		public BaseChessPiece( BChessboard board, ChessColor color, Point2D position )
+		public BaseChessPiece( Chessboard board, ChessColor color, Point2D position )
 		{
-			m_BChessboard = board;
+			m_Chessboard = board;
 			m_Color = color;
 			m_Position = position;
 
@@ -220,12 +186,9 @@ namespace Arya.Chess
 		protected virtual void CreatePiece()
 		{
 			InitializePiece();
-			Point3D loc = new Point3D( m_BChessboard.BoardToWorld( m_Position ), m_BChessboard.Z );
+			Point3D loc = new Point3D( m_Chessboard.BoardToWorld( m_Position ), m_Chessboard.Z );
 
-			if ( m_BChessboard.OverrideMinorHue )
-				m_Piece.SolidHueOverride = Hue;
-
-			m_Piece.MoveToWorld( loc, m_BChessboard.Map );
+			m_Piece.MoveToWorld( loc, m_Chessboard.Map );
 			m_Piece.FixedParticles( 14089, 1, 15, 5012, Hue, 2, EffectLayer.Waist );
 		}
 
@@ -234,16 +197,6 @@ namespace Arya.Chess
 		/// </summary>
 		/// <returns></returns>
 		public abstract void InitializePiece();
-
-		/// <summary>
-		/// Rebuilds the NPC applying any changes made to the appearance
-		/// </summary>
-		public virtual void Rebuild()
-		{
-			Die( false );
-			CreatePiece();
-			m_Dead = false;
-		}
 
 		#endregion
 
@@ -286,19 +239,7 @@ namespace Arya.Chess
 
 			m_Move = move;
 
-			Point2D worldLocation = m_BChessboard.BoardToWorld( move.To );
-
-			if ( move.Capture )
-			{
-				m_BChessboard.PlaySound( m_Piece, m_CaptureSound );
-
-				// It's a capture, do an effect
-				m_Piece.MovingParticles( move.CapturedPiece.m_Piece, m_BChessboard.AttackEffect, 5, 0, false, true, Hue, 2, 0, 1, 4006, EffectLayer.Waist, 0 );
-			}
-			else
-			{
-				m_BChessboard.PlaySound( m_Piece, m_MoveSound );
-			}
+			Point2D worldLocation = m_Chessboard.BoardToWorld( move.To );
 
 			m_Piece.GoTo( worldLocation );
 		}
@@ -308,17 +249,15 @@ namespace Arya.Chess
 		/// </summary>
 		public virtual void OnMoveOver()
 		{
-			m_BChessboard.OnMoveOver( m_Move );
+			m_Chessboard.OnMoveOver( m_Move );
 
 			if ( m_Move.Capture )
 			{
-				m_Piece.FixedParticles( m_BChessboard.CaptureEffect, 1, 15, 5012, SecondaryHue, 2, EffectLayer.Waist );
-				m_Move.CapturedPiece.Die( true );
+				m_Piece.FixedParticles( 14089, 1, 15, 5012, Hue, 2, EffectLayer.Waist );
+				m_Move.CapturedPiece.Die();
 			}
 
 			m_Move = null;
-
-			m_Piece.Direction = Facing;
 		}
 
 		/// <summary>
@@ -339,7 +278,7 @@ namespace Arya.Chess
 		{
 			enpassant = false;
 
-			BaseChessPiece piece = m_BChessboard[ at ];
+			BaseChessPiece piece = m_Chessboard[ at ];
 
 			if ( piece != null && piece.Color != m_Color )
 				return piece;
@@ -368,24 +307,15 @@ namespace Arya.Chess
 		{
 			if ( ! m_Dead )
 			{
-				m_BChessboard.OnStaffDelete();
+				m_Chessboard.OnStaffDelete();
 			}
 		}
 
 		/// <summary>
 		/// This function is invoked when the piece is captured and the NPC should be removed from the board
 		/// </summary>
-		/// <param name="sound">Specifies if to play the death sound</param>
-		public virtual void Die( bool sound )
+		public virtual void Die()
 		{
-			if ( sound ) // Use sound for bolt too - sound is used in normal gameplay
-			{
-				if ( m_BChessboard.BoltOnDeath )
-					m_Piece.BoltEffect( SecondaryHue );
-
-				m_BChessboard.PlaySound( m_Piece, m_DeathSound );
-			}
-
 			m_Dead = true;
 			m_Piece.Delete();
 		}
