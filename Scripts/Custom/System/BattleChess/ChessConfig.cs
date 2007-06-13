@@ -5,6 +5,14 @@ namespace Arya.Chess
 	public class ChessConfig
 	{
 		/// <summary>
+		/// The hue used to color white pieces
+		/// </summary>
+		public static int WhiteHue = 1151;
+		/// <summary>
+		/// The hue used to color black pieces
+		/// </summary>
+		public static int BlackHue = 1175;
+		/// <summary>
 		/// The time out for the game to start. If a second player hasn't accepted the game within this time
 		/// the game will be reset.
 		/// </summary>
@@ -32,9 +40,5 @@ namespace Arya.Chess
 		/// its properties only show the results of the game.
 		/// </summary>
 		public static bool GiveRewardScroll = true;
-		/// <summary>
-		/// This is the keyword that can be used to restore the gumps if anything goes wrong and the gump disappears
-		/// </summary>
-		public static string ResetKeyword = "game";
 	}
 }

@@ -22,7 +22,7 @@ namespace Arya.Chess
 		}
 
 
-		public Bishop( BChessboard board, ChessColor color, Point2D position ) : base( board, color, position )
+		public Bishop( Chessboard board, ChessColor color, Point2D position ) : base( board, color, position )
 		{
 		}
 
@@ -31,78 +31,10 @@ namespace Arya.Chess
 			m_Piece = new ChessMobile( this );
 			m_Piece.Name = string.Format( "Bishop [{0}]", m_Color.ToString() );
 
-			switch ( m_BChessboard.ChessSet )
-			{
-				case ChessSet.Classic : CreateClassic();
-					break;
-
-				case ChessSet.Fantasy : CreateFantasy();
-					break;
-
-				case ChessSet.FantasyGiant : CreateFantasyGiant();
-					break;
-
-				case ChessSet.Animal : CreateAnimal();
-					break;
-
-				case ChessSet.Undead : CreateUndead();
-					break;
-			}
-		}
-
-		private void CreateUndead()
-		{
-			m_MoveSound = 415;
-			m_CaptureSound = 1004;
-			m_DeathSound = 1005;
-
-			m_Piece.BodyValue = 78; // Liche
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateAnimal()
-		{
-			m_MoveSound = 858;
-			m_CaptureSound = 616;
-			m_DeathSound = 623;
-
-			m_Piece.BodyValue = 80; // Giant toad
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateFantasyGiant()
-		{
-			m_MoveSound = 373;
-			m_CaptureSound = 372;
-			m_DeathSound = 376;
-
-			m_Piece.BodyValue = 316; // Wanderer of the void
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateFantasy()
-		{
-			m_MoveSound = 579;
-			m_CaptureSound = 283;
-			m_DeathSound = 250;
-
-			m_Piece.BodyValue = 124; // Evil mage
-			m_Piece.Hue = Hue;
-		}
-
-		private void CreateClassic()
-		{
-			m_MoveSound = 251;
-			m_CaptureSound = 773;
-			m_DeathSound = 1063;
-
 			m_Piece.Female = false;
 			m_Piece.BodyValue = 0x190;
 
-			if ( m_BChessboard.OverrideMinorHue )
-				m_Piece.Hue = Hue;
-			else
-				m_Piece.Hue = m_BChessboard.SkinHue;
+			m_Piece.Hue = Utility.RandomSkinHue();
 
 			Item item = null;
 			
@@ -110,11 +42,11 @@ namespace Arya.Chess
 			item.Name = "Bishop's Robe";
 			m_Piece.AddItem( item );
 
-			item = new Boots( MinorHue );
+			item = new Boots( Hue );
 			m_Piece.AddItem( item );
 
 			item = new QuarterStaff();
-			item.Hue = MinorHue;
+			item.Hue = SecondaryHue;
 			m_Piece.AddItem( item );
 		}
 
@@ -143,7 +75,7 @@ namespace Arya.Chess
 					int xOffset = xDirection * i;
 					int yOffset = yDirection * i;
 
-					if ( m_BChessboard[ m_Position.X + xOffset, m_Position.Y + yOffset ] != null )
+					if ( m_Chessboard[ m_Position.X + xOffset, m_Position.Y + yOffset ] != null )
 					{
 						err = "Bishops can't move over other pieces";
 						return false;
@@ -152,7 +84,7 @@ namespace Arya.Chess
 			}
 
 			// Verify target piece
-			BaseChessPiece piece = m_BChessboard[ newLocation ];
+			BaseChessPiece piece = m_Chessboard[ newLocation ];
 
 			if ( piece == null || piece.Color != m_Color )
 			{
@@ -183,10 +115,10 @@ namespace Arya.Chess
 				{
 					Point2D p = new Point2D( m_Position.X + offset * xDir, m_Position.Y + offset * yDir );
 
-					if ( ! m_BChessboard.IsValid( p ) )
+					if ( ! m_Chessboard.IsValid( p ) )
 						break;
 
-					BaseChessPiece piece = m_BChessboard[ p ];
+					BaseChessPiece piece = m_Chessboard[ p ];
 
 					if ( piece == null )
 					{

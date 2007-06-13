@@ -16,14 +16,12 @@ namespace Arya.Chess
 		private ChessGame m_Game;
 		private Mobile m_User;
 		private bool m_IsOwner;
-		private bool m_AllowSpectators;
 
-		public StartGameGump( Mobile m, ChessGame game, bool isOwner, bool allowSpectators ) : base( 200, 200 )
+		public StartGameGump( Mobile m, ChessGame game, bool isOwner ) : base( 200, 200 )
 		{
 			m_Game = game;
 			m_User = m;
 			m_IsOwner = isOwner;
-			m_AllowSpectators = allowSpectators;
 
 			m_User.CloseGump( typeof( StartGameGump ) );
 
@@ -38,15 +36,10 @@ namespace Arya.Chess
 			this.Resizable=false;
 
 			this.AddPage(0);
-			int height = 75;
-
-			if ( m_IsOwner )
-				height = 110;
-
-			this.AddBackground(0, 0, 300, height, 9250);
-			this.AddImageTiled(0, 0, 300, height, 9304);
-			this.AddImageTiled(1, 1, 298, height - 2, 9274);
-			this.AddAlphaRegion(1, 1, 298, height - 2);
+			this.AddBackground(0, 0, 300, 75, 9250);
+			this.AddImageTiled(0, 0, 300, 75, 9304);
+			this.AddImageTiled(1, 1, 298, 73, 9274);
+			this.AddAlphaRegion(1, 1, 298, 73);
 
 			if ( m_IsOwner )
 			{
@@ -67,10 +60,6 @@ namespace Arya.Chess
 				// Cancel : 0
 				this.AddButton(15, 50, 5601, 5605, 2, GumpButtonType.Reply, 0);
 				this.AddLabel(35, 48, LabelHue, @"Cancel");
-
-				int bid = m_AllowSpectators ? 2153 : 2151;
-				this.AddButton( 10, 75, bid, bid, 3, GumpButtonType.Reply, 0 );
-				this.AddLabel( 45, 80, LabelHue, "Allow spectators on the Chessboard" );
 			}
 			else
 			{
@@ -91,22 +80,16 @@ namespace Arya.Chess
 		{
 			if ( m_IsOwner )
 			{
-				if ( info.ButtonID == 3 )
-				{
-					// Switch the allow spectators flag
-					m_Game.AllowSpectators = !m_AllowSpectators;
-					sender.Mobile.SendGump( new StartGameGump( sender.Mobile, m_Game, m_IsOwner, !m_AllowSpectators ) );
-				}
-				else if ( info.ButtonID == 2 )
+				if ( info.ButtonID == 2 )
 				{
 					m_Game.CancelGameStart( sender.Mobile );
 				}
 				else if ( info.ButtonID == 1 )
 				{
-					sender.Mobile.Target = new ChessTarget( m_Game, sender.Mobile, "Please select your partner...",
+					sender.Mobile.Target = new ChessTarget( sender.Mobile, "Please select your partner...",
 						new ChessTargetCallback( m_Game.ChooseOpponent ) );
 					
-					sender.Mobile.SendGump( new StartGameGump( sender.Mobile, m_Game, m_IsOwner, m_AllowSpectators ) );
+					sender.Mobile.SendGump( new StartGameGump( sender.Mobile, m_Game, m_IsOwner ) );
 				}
 			}
 			else

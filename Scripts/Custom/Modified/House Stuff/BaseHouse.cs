@@ -24,7 +24,7 @@ namespace Server.Multis
 		public const int MaxFriends = 50;
 		public const int MaxBans = 50;
 
-		public const bool DecayEnabled = false;
+		public const bool DecayEnabled = true;
 
 		public static void Decay_OnTick()
 		{
@@ -49,7 +49,7 @@ namespace Server.Multis
 			set{ m_RestrictDecay = value; }
 		}
 
-		public virtual TimeSpan DecayPeriod{ get{ return TimeSpan.FromDays( 5.0 ); } }
+		public virtual TimeSpan DecayPeriod{ get{ return TimeSpan.FromDays( 50.0 ); } }
 
 		public virtual DecayType DecayType
 		{
