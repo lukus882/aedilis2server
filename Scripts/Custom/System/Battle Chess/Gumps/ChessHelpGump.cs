@@ -31,7 +31,7 @@ namespace Arya.Chess
 			this.AddButton(20, 32, 5601, 5605, 1, GumpButtonType.Reply, 0);
 			this.AddLabel(45, 30, LabelHue, @"Basic rules and pieces moves");
 			this.AddButton(20, 57, 5601, 5605, 2, GumpButtonType.Reply, 0);
-			this.AddLabel(45, 55, LabelHue, @"Genreal Chess FAQ");
+			this.AddLabel(45, 55, LabelHue, @"General Chess FAQ");
 			this.AddButton(20, 82, 5601, 5605, 3, GumpButtonType.Reply, 0);
 			this.AddLabel(45, 80, LabelHue, @"Check, Checkmate and Stalemate FAQ");
 			this.AddButton(20, 107, 5601, 5605, 4, GumpButtonType.Reply, 0);

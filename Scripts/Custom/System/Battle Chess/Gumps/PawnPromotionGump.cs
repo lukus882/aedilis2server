@@ -58,6 +58,9 @@ namespace Arya.Chess
 
 			switch ( info.ButtonID )
 			{
+				case 0 :
+						return; // This fixes a crash when staff deletes the pawn being promoted
+
 				case 1 : type = PawnPromotion.Queen;
 					break;
 
