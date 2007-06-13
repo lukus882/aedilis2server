@@ -36,7 +36,11 @@ namespace Arya.Chess
 		/// <summary>
 		/// A black pawn has been promoted and the system is waiting for the user to make the decision
 		/// </summary>
-		BlackPromotion
+		BlackPromotion,
+		/// <summary>
+		/// Game over
+		/// </summary>
+		Over
 	}
 
 	/// <summary>
@@ -71,9 +75,9 @@ namespace Arya.Chess
 		/// </summary>
 		private TimeSpan m_BlackTime = TimeSpan.Zero;
 		/// <summary>
-		/// The Chessboard object providing game logic
+		/// The BChessboard object providing game logic
 		/// </summary>
-		private Chessboard m_Board;
+		private BChessboard m_Board;
 		/// <summary>
 		/// The piece that is performing a move
 		/// </summary>
@@ -87,11 +91,11 @@ namespace Arya.Chess
 		/// </summary>
 		private DateTime m_MoveTime;
 		/// <summary>
-		/// The bounds of the chessboard
+		/// The bounds of the BChessboard
 		/// </summary>
 		private Rectangle2D m_Bounds;
 		/// <summary>
-		/// The height of the chessboard
+		/// The height of the BChessboard
 		/// </summary>
 		private int m_Z;
 		/// <summary>
@@ -110,6 +114,14 @@ namespace Arya.Chess
 		/// The ChessControl object owner of this game
 		/// </summary>
 		private ChessControl m_Parent;
+		/// <summary>
+		/// The region for the BChessboard
+		/// </summary>
+		private ChessRegion m_Region;
+		/// <summary>
+		/// Specifies if other players can get on the board or not
+		/// </summary>
+		private bool m_AllowSpectators;
 
 		#endregion
 
@@ -144,6 +156,125 @@ namespace Arya.Chess
 			}
 		}
 
+		/// <summary>
+		/// States whether the game is able to accept targets
+		/// </summary>
+		public bool AllowTarget
+		{
+			get
+			{
+				if ( m_Pending ) // Pending status
+					return false;
+
+				if ( m_Status == GameStatus.Setup && Owner == null ) // Ownerless setup - is this even needed?
+					return false;
+
+				if ( m_Status != GameStatus.Setup )
+				{
+					if ( m_White == null || m_Black == null || m_White.NetState == null || m_Black.NetState == null )
+						return false;
+				}
+
+				if ( m_Status == GameStatus.Over )
+					return false;
+
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// Verifies if the game is in a consistent state and can send the game gumps to players
+		/// </summary>
+		public bool AllowGame
+		{
+			get
+			{
+				if ( m_Pending )
+					return false;
+
+				if ( m_Status == GameStatus.Setup || m_Status == GameStatus.Over )
+					return false;
+
+				if ( m_White == null || m_Black == null || m_White.NetState == null || m_Black.NetState == null )
+					return false;
+
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// Sets the attack effect on the BChessboard
+		/// </summary>
+		public int AttackEffect
+		{
+			get
+			{
+				if ( m_Parent != null )
+					return m_Parent.AttackEffect;
+				else
+					return 0;
+			}
+		}
+
+		/// <summary>
+		/// Sets the capture effect on the BChessboard
+		/// </summary>
+		public int CaptureEffect
+		{
+			get
+			{
+				if ( m_Parent != null )
+					return m_Parent.CaptureEffect;
+				else
+					return 0;
+			}
+		}
+
+		/// <summary>
+		/// Sets the BoltOnDeath property on the BChessboard
+		/// </summary>
+		public bool BoltOnDeath
+		{
+			get
+			{
+				if ( m_Parent != null )
+					return m_Parent.BoltOnDeath;
+				else
+					return false;
+			}
+		}
+
+		/// <summary>
+		/// Gets the orientation of the BChessboard
+		/// </summary>
+		public BoardOrientation Orientation
+		{
+			get
+			{
+				if ( m_Parent != null )
+					return m_Parent.Orientation;
+				else
+					return BoardOrientation.NorthSouth;
+			}
+		}
+		
+		/// <summary>
+		/// States whether other players can get on the board
+		/// </summary>
+		public bool AllowSpectators
+		{
+			get { return m_AllowSpectators; }
+			set { m_AllowSpectators = value; }
+		}
+
+		/// <summary>
+		/// Gets the BChessboard region
+		/// </summary>
+		public ChessRegion Region
+		{
+			get { return m_Region; }
+		}
+
 		#endregion
 
 		public ChessGame( ChessControl parent, Mobile owner, Rectangle2D bounds, int z )
@@ -159,9 +290,13 @@ namespace Arya.Chess
 			else
 				m_White = owner;
 
-			Owner.SendGump( new StartGameGump( Owner, this, true ) );
-			Owner.Target = new ChessTarget( Owner, "Please select your partner...",
-				new ChessTargetCallback( ChooseOpponent ) );
+			m_AllowSpectators = m_Parent.AllowSpectators;
+
+			// Owner.SendGump( new StartGameGump( Owner, this, true, m_AllowSpectators ) );
+			Owner.SendGump( new ChessSetGump( Owner, this, true, m_AllowSpectators ) );
+
+			// Owner.Target = new ChessTarget( this, Owner, "Please select your partner...",
+			//	new ChessTargetCallback( ChooseOpponent ) );
 
 			EventSink.Login += new LoginEventHandler(OnPlayerLogin);
 			EventSink.Disconnected += new DisconnectedEventHandler(OnPlayerDisconnected);
@@ -187,9 +322,7 @@ namespace Arya.Chess
 				}
 
 				if ( from.Target != null && from.Target is ChessTarget )
-				{
-					from.Target.Cancel( from, Server.Targeting.TargetCancelType.Canceled );
-				}
+					(from.Target as ChessTarget).Remove( from );
 
 				Cleanup();
 			}
@@ -197,8 +330,8 @@ namespace Arya.Chess
 			{
 				Guest = null;
 
-				Owner.SendGump( new StartGameGump( Owner, this, true ) );
-				Owner.Target = new ChessTarget( Owner, "The selected partner refused the game. Please select another partner...",
+				Owner.SendGump( new StartGameGump( Owner, this, true, m_AllowSpectators ) );
+				Owner.Target = new ChessTarget( this, Owner, "The selected partner refused the game. Please select another partner...",
 					new ChessTargetCallback( ChooseOpponent ) );
 			}
 		}
@@ -224,9 +357,13 @@ namespace Arya.Chess
 
 			Owner.CloseGump( typeof( Arya.Chess.StartGameGump ) );
 
-			m_Board = new Chessboard( m_Black, m_White, m_Z, m_Bounds, this );
+			m_Board = new BChessboard( m_Black, m_White, m_Z, m_Bounds, this, m_Parent.ChessSet, m_Parent.WhiteHue, m_Parent.BlackHue, m_Parent.WhiteMinorHue, m_Parent.BlackMinorHue, m_Parent.OverrideMinorHue );
 
 			m_MoveTime = DateTime.Now;
+
+			// Create the region
+			m_Region = new ChessRegion( m_Parent.Map, this, m_AllowSpectators, m_Bounds, m_Z );
+			m_Region.Register();
 
 			SendAllGumps( null, null );
 		}
@@ -240,25 +377,25 @@ namespace Arya.Chess
 
 			if ( m == null || ! m.Player || m.NetState == null )
 			{
-				Owner.SendGump( new StartGameGump( Owner, this, true ) );
-				Owner.Target = new ChessTarget( Owner, "You must select a player. Please select another partner...",
+				Owner.SendGump( new StartGameGump( Owner, this, true, m_AllowSpectators ) );
+				Owner.Target = new ChessTarget( this, Owner, "You must select a player. Please select another partner...",
 					new ChessTargetCallback( ChooseOpponent ) );
 			}
 			else if ( m == from )
 			{
 				from.SendMessage( 0x40, "You can't play against yourself" );
 
-				Owner.SendGump( new StartGameGump( Owner, this, true ) );
-				Owner.Target = new ChessTarget( Owner, "You must select a player. Please select another partner...",
+				Owner.SendGump( new StartGameGump( Owner, this, true, m_AllowSpectators ) );
+				Owner.Target = new ChessTarget( this, Owner, "You must select a player. Please select another partner...",
 					new ChessTargetCallback( ChooseOpponent ) );
 			}
 			else
 			{
 				Guest = m;
 
-				Owner.SendGump( new StartGameGump( Owner, this, true ) );
+				Owner.SendGump( new StartGameGump( Owner, this, true, m_AllowSpectators ) );
 
-				Guest.SendGump( new StartGameGump( Guest, this, false ) );
+				Guest.SendGump( new StartGameGump( Guest, this, false, m_AllowSpectators ) );
 			}
 		}
 
@@ -314,48 +451,42 @@ namespace Arya.Chess
 		/// </summary>
 		private void OnPlayerDisconnected(DisconnectedEventArgs e)
 		{
-			if ( e.Mobile == m_Black || e.Mobile == m_White )
+			if ( e.Mobile != m_Black && e.Mobile != m_White )
+				return;
+
+			if ( m_Status == GameStatus.Setup )
 			{
-				if ( m_Status == GameStatus.Setup )
-				{
-					Cleanup();
-				}
-				else
-				{
-					m_Pending = true;
-
-					if ( m_Black.NetState != null )
-					{
-						if ( m_Black.Target != null )
-							m_Black.Target.Cancel( m_Black, Server.Targeting.TargetCancelType.Canceled );
-
-						m_Black.CloseGump( typeof( GameGump ) );
-					}
-
-					if ( m_White.NetState != null )
-					{
-						if ( m_White.Target != null )
-							m_White.Target.Cancel( m_White, Server.Targeting.TargetCancelType.Canceled );
-
-						m_White.CloseGump( typeof( GameGump ) );
-					}
-					
-					m_Timer.OnPlayerDisconnected();
-
-					// Send end gump to remaining player
-					if ( m_White.NetState == null && m_Black.NetState != null )
-					{
-						m_Black.SendGump( new EndGameGump( m_Black, this, false,
-							"Your partner has been disconnected", ChessConfig.DisconnectTimeOut.Minutes ) );
-					}
-
-					if ( m_Black.NetState == null && m_White.NetState != null )
-					{
-						m_White.SendGump( new EndGameGump( m_White, this, false,
-							"Your parner has been disconnected", ChessConfig.DisconnectTimeOut.Minutes ) );
-					}
-				}
+				Cleanup(); // No game to loose, just end.
+				return;
 			}
+
+			if ( m_Status == GameStatus.Over )
+			{
+				// If game is over, logging out = confirming game over through the gump
+				NotifyGameOver( e.Mobile );
+				return;
+			}
+
+			// Game in progress
+
+			m_Pending = true;
+
+			if ( m_Black != null && m_Black.NetState != null )
+			{
+				m_Black.CloseGump( typeof( GameGump ) );
+				m_Black.SendGump( new EndGameGump( m_Black, this, false,
+					"Your partner has been disconnected", ChessConfig.DisconnectTimeOut.Minutes ) );
+			}
+
+			if ( m_White != null && m_White.NetState != null )
+			{
+					m_White.CloseGump( typeof( GameGump ) );
+					m_White.SendGump( new EndGameGump( m_White, this, false,
+						"Your partner has been disconnected", ChessConfig.DisconnectTimeOut.Minutes ) );
+			}
+
+			if ( m_Timer != null )
+				m_Timer.OnPlayerDisconnected();
 		}
 
 		#endregion
@@ -386,7 +517,7 @@ namespace Arya.Chess
 			else
 				m_Status = GameStatus.BlackToMove;
 
-			m.Target = new ChessTarget( m, "Select the piece you wish to move...",
+			m.Target = new ChessTarget( this, m, "Select the piece you wish to move...",
 				new ChessTargetCallback( OnPickPieceTarget ) );
 		}
 
@@ -415,7 +546,7 @@ namespace Arya.Chess
 			}
 
 			m_MovingPiece = piece;
-			from.Target = new ChessTarget( from, "Where do you wish to move?",
+			from.Target = new ChessTarget( this, from, "Where do you wish to move?",
 				new ChessTargetCallback( OnPieceMove ) );
 		}
 
@@ -546,8 +677,11 @@ namespace Arya.Chess
 		/// </summary>
 		/// <param name="whiteMsg">The message displayed to white</param>
 		/// <param name="blackMsg">The message displayed to black</param>
-		private void SendAllGumps( string whiteMsg, string blackMsg )
+		public void SendAllGumps( string whiteMsg, string blackMsg )
 		{
+			if ( m_White == null || m_Black == null )
+				return;
+
 			if ( m_Pending )
 			{
 				whiteMsg = "This game is temporarily stopped";
@@ -602,6 +736,12 @@ namespace Arya.Chess
 				m_Timer = null;
 			}
 
+			if ( m_Black != null && m_Black.Target != null && m_Black.Target is ChessTarget )
+				( m_Black.Target as ChessTarget ).Remove( m_Black );
+
+			if ( m_White != null && m_White.Target != null && m_White.Target is ChessTarget )
+				( m_White.Target as ChessTarget ).Remove( m_White );
+
 			if ( m_Black != null && m_Black.NetState != null )
 			{
 				m_Black.CloseGump( typeof( StartGameGump ) );
@@ -620,6 +760,12 @@ namespace Arya.Chess
 				m_White.CloseGump( typeof( ScoreGump ) );
 			}
 
+			if ( m_Region != null )
+			{
+				m_Region.Unregister();
+				m_Region = null;
+			}
+
 			ParentCleanup();
 		}
 
@@ -629,6 +775,8 @@ namespace Arya.Chess
 		/// <param name="winner">The winner of the game, null for a stall</param>
 		public void EndGame( Mobile winner )
 		{
+			m_Status = GameStatus.Over;
+
 			m_Timer.OnGameOver();
 
 			if ( winner != null )
@@ -715,7 +863,73 @@ namespace Arya.Chess
 				return;
 
 			WinnerPaper paper = new WinnerPaper( winner, looser, DateTime.Now - m_GameStart, winTime, looseTime, winnerScore, looserScore );
-			to.Backpack.AddItem( paper );
+
+			if ( to.Backpack != null )
+				to.Backpack.AddItem( paper );
+		}
+
+		#endregion
+
+		#region Appearance
+
+		/// <summary>
+		/// Changes the board's chess set
+		/// </summary>
+		public void SetChessSet( ChessSet chessset )
+		{
+			if ( m_Board != null )
+				m_Board.ChessSet = chessset;
+			else
+				m_Parent.SetChessSet( chessset );  // This allows players to choose their own set
+		}
+
+		/// <summary>
+		/// Resets the pieces hues
+		/// </summary>
+		/// <param name="white"></param>
+		/// <param name="black"></param>
+		public void SetHues( int white, int black, int whiteMinor, int blackMinor )
+		{
+			if ( m_Board != null )
+			{
+				m_Board.WhiteHue = white;
+				m_Board.BlackHue = black;
+				m_Board.WhiteMinorHue = whiteMinor;
+				m_Board.BlackMinorHue = blackMinor;
+			}
+		}
+
+		/// <summary>
+		/// Sets the orientation of the board
+		/// </summary>
+		/// <param name="orientation"></param>
+		public void SetOrientation( BoardOrientation orientation )
+		{
+			if ( m_Board != null )
+				m_Board.Orientation = orientation;
+		}
+
+		/// <summary>
+		/// Sets the flag that makes pieces ignore their minor hue
+		/// </summary>
+		/// <param name="doOverride"></param>
+		public void SetMinorHueOverride( bool doOverride )
+		{
+			if ( m_Board != null )
+				m_Board.OverrideMinorHue = doOverride;
+		}
+
+		#endregion
+
+		#region Misc
+
+		/// <summary>
+		/// Verifies if a specified mobile is a player in the game
+		/// </summary>
+		/// <param name="m"></param>
+		public bool IsPlayer( Mobile m )
+		{
+			return m == m_Black || m == m_White;
 		}
 
 		#endregion

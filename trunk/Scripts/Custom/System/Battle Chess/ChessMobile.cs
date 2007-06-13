@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 
 using Server;
 using Server.Items;
@@ -19,9 +20,15 @@ namespace Arya.Chess
 		/// Specifies the location of the next position of this piece
 		/// </summary>
 		private Point3D m_NextMove = Point3D.Zero;
+		/// <summary>
+		/// The list of waypoints used by this NPC
+		/// </summary>
+		private ArrayList m_WayPoints;
 
-		public ChessMobile( BaseChessPiece piece ) : base( AIType.AI_Use_Default, FightMode.None, 1, 1, 1.0, 1.0 )
+		public ChessMobile( BaseChessPiece piece ) : base( AIType.AI_Use_Default, FightMode.None, 1, 1, 0.2, 0.2 )
 		{
+			m_WayPoints = new ArrayList();
+
 			InitStats( 25, 100, 100 );
 			m_Piece = piece;
 
@@ -49,7 +56,7 @@ namespace Arya.Chess
 
 		#endregion
 
-		#region Movement on the chessboard
+		#region Movement on the BChessboard
 
 		/// <summary>
 		/// Places the piece on the board for the first time
@@ -72,9 +79,40 @@ namespace Arya.Chess
 
 			m_NextMove = new Point3D( to, Z );
 
-			WayPoint wp = new WayPoint();
-			wp.MoveToWorld( m_NextMove, Map );
-			CurrentWayPoint = wp;
+			if ( m_Piece is Knight )
+			{
+				WayPoint end = new WayPoint();
+				WayPoint start = new WayPoint();
+
+				end.MoveToWorld( m_NextMove, Map );
+
+				// This is a knight, so do L shaped move
+				int dx = to.X - X;
+				int dy = to.Y - Y;
+
+				Point3D p = Location; // Point3D is a value type
+
+				if ( Math.Abs( dx ) == 1 )
+					p.X += dx;
+				else
+					p.Y += dy;
+
+				start.MoveToWorld( p, Map );
+				start.NextPoint = end;
+
+				CurrentWayPoint = start;
+
+				m_WayPoints.Add( start );
+				m_WayPoints.Add( end );
+			}
+			else
+			{
+				WayPoint wp = new WayPoint();
+				wp.MoveToWorld( m_NextMove, Map );
+				CurrentWayPoint = wp;
+
+				m_WayPoints.Add( wp );
+			}
 
 			Paralyzed = false;
 		}
@@ -87,15 +125,29 @@ namespace Arya.Chess
 			// The NPC is at the waypoint
 			AI = AIType.AI_Use_Default;
 
-			CurrentWayPoint.Delete();
 			CurrentWayPoint = null;
 			Paralyzed = true;
+
+			foreach( WayPoint wp in m_WayPoints )
+				wp.Delete();
+
+			m_WayPoints.Clear();
 
 			m_NextMove = Point3D.Zero;
 
 			Direction = m_Piece.Facing;
 
 			m_Piece.OnMoveOver();
+
+			Server.Timer.DelayCall( TimeSpan.FromMilliseconds( 500 ), TimeSpan.FromMilliseconds( 500 ), 1, new TimerStateCallback ( OnFacingTimer ), null );
+		}
+
+		private void OnFacingTimer( object state )
+		{
+			if ( ! Deleted && m_Piece != null )
+			{
+				Direction = m_Piece.Facing;
+			}
 		}
 
 		#endregion
@@ -110,12 +162,27 @@ namespace Arya.Chess
 			if ( m_Piece != null )
 				m_Piece.OnPieceDeleted();
 
+			CurrentWayPoint = null;
+
+			if ( m_WayPoints != null && m_WayPoints.Count > 0 )
+			{
+				foreach( WayPoint wp in m_WayPoints )
+					wp.Delete();
+
+				m_WayPoints.Clear();
+			}
+
 			base.OnDelete ();
 		}
 
 		public override bool OnMoveOver(Mobile m)
 		{
 			return true;
+		}
+
+		public override bool CanPaperdollBeOpenedBy(Mobile from)
+		{
+			return false;
 		}
 	}
 }
