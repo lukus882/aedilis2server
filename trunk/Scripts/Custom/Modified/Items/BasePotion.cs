@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Server;
 using Server.Engines.Craft;
 using System.Collections.Generic;
@@ -36,7 +36,12 @@ namespace Server.Items
 		PetHeal,
 		PetGreaterHeal,
 		PetCure,
-		PetGreaterCure
+		PetGreaterCure,
+		ConfusionBlast,
+		ConfusionBlastGreater,
+		MaskOfDeath,
+		MaskOfDeathGreater
+
 		#endregion
 	}
 
