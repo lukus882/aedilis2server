@@ -7,14 +7,14 @@ namespace Server.Engines.MyRunUO
 	public class Config
 	{
 		// Is MyRunUO enabled?
-		public static bool Enabled = true;
+		public static bool Enabled = false;
 
 		// Details required for database connection string
 		public static string DatabaseDriver			= "{MySQL ODBC 3.51 Driver}";
-		public static string DatabaseServer			= "stormfronthosting.net";
-		public static string DatabaseName			= "mike_myaedilis";
-		public static string DatabaseUserID			= "mike_myaedilis";
-		public static string DatabasePassword		= "zanar";
+		public static string DatabaseServer			= "narf.net";
+		public static string DatabaseName			= "dont_think_so";
+		public static string DatabaseUserID			= "dont_think_so";
+		public static string DatabasePassword		= "okeydokely";
 
 		// Should the database use transactions? This is recommended
 		public static bool UseTransactions = true;
