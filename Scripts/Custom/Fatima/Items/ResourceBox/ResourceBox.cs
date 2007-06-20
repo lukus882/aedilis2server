@@ -236,6 +236,7 @@ namespace Fatima.Items
 
 		static ResourceBox()
 		{
+//Ingots
 			m_ResourceEntries.Add(typeof(IronIngot), new ResourceBoxEntry( typeof(IronIngot), "Ingots", "Iron Ingot" ));
 			m_ResourceEntries.Add(typeof(DullCopperIngot), new ResourceBoxEntry( typeof(DullCopperIngot), "Ingots", "Dull Copper Ingot" ));
 			m_ResourceEntries.Add(typeof(ShadowIronIngot), new ResourceBoxEntry( typeof(ShadowIronIngot), "Ingots", "Shadow Iron Ingot" ));
@@ -245,11 +246,104 @@ namespace Fatima.Items
 			m_ResourceEntries.Add(typeof(AgapiteIngot), new ResourceBoxEntry( typeof(AgapiteIngot), "Ingots", "Agapite Ingot" ));
 			m_ResourceEntries.Add(typeof(VeriteIngot), new ResourceBoxEntry( typeof(VeriteIngot), "Ingots", "Verite Ingot" ));
 			m_ResourceEntries.Add(typeof(ValoriteIngot), new ResourceBoxEntry( typeof(ValoriteIngot), "Ingots", "Valorite Ingot" ));
-
-
+//Granites
+			m_ResourceEntries.Add(typeof(Granite), new ResourceBoxEntry( typeof(Granite), "Granite", "Granite" ));
+			m_ResourceEntries.Add(typeof(DullCopperGranite), new ResourceBoxEntry( typeof(DullCopperGranite), "Granite", "Dull Copper Granite" ));
+			m_ResourceEntries.Add(typeof(ShadowIronGranite), new ResourceBoxEntry( typeof(ShadowIronGranite), "Granite", "Shadow Iron Granite" ));
+			m_ResourceEntries.Add(typeof(CopperGranite), new ResourceBoxEntry( typeof(CopperGranite), "Granite", "Copper Granite" ));
+			m_ResourceEntries.Add(typeof(BronzeGranite), new ResourceBoxEntry( typeof(BronzeGranite), "Granite", "Bronze Granite" ));
+			m_ResourceEntries.Add(typeof(GoldGranite), new ResourceBoxEntry( typeof(GoldGranite), "Granite", "Golden Ingot" ));
+			m_ResourceEntries.Add(typeof(AgapiteGranite), new ResourceBoxEntry( typeof(AgapiteGranite), "Granite", "Agapite Ingot" ));
+			m_ResourceEntries.Add(typeof(VeriteGranite), new ResourceBoxEntry( typeof(VeriteGranite), "Granite", "Verite Granite" ));
+			m_ResourceEntries.Add(typeof(ValoriteGranite), new ResourceBoxEntry( typeof(ValoriteGranite), "Granite", "Valorite Granite" ));
+//Wood
+			m_ResourceEntries.Add(typeof(Board), new ResourceBoxEntry( typeof(Board), "Woods", "Boards" ));
+			m_ResourceEntries.Add(typeof(Log), new ResourceBoxEntry( typeof(Log), "Woods", "Log" ));
+//Fletching
+			m_ResourceEntries.Add(typeof(Feather), new ResourceBoxEntry( typeof(Feather), "Fletching", "Feather" ));
+			m_ResourceEntries.Add(typeof(Shaft), new ResourceBoxEntry( typeof(Shaft), "Fletching", "Shaft" ));
+			m_ResourceEntries.Add(typeof(Arrow), new ResourceBoxEntry( typeof(Arrow), "Fletching", "Arrow" ));
+			m_ResourceEntries.Add(typeof(Bolt), new ResourceBoxEntry( typeof(Bolt), "Fletching", "Bolt" ));
+//Misc
+			m_ResourceEntries.Add(typeof(BlankScroll), new ResourceBoxEntry( typeof(BlankScroll), "Misc", "Blank Scroll" ));
+			m_ResourceEntries.Add(typeof(Bottle), new ResourceBoxEntry( typeof(Bottle), "Misc", "Bottle" ));
+			m_ResourceEntries.Add(typeof(Sand), new ResourceBoxEntry( typeof(Sand), "Misc", "Sand" ));
+			m_ResourceEntries.Add(typeof(ZoogiFungus), new ResourceBoxEntry( typeof(ZoogiFungus), "Misc", "Zoogi Fungus" ));
+			m_ResourceEntries.Add(typeof(PowderOfTranslocation), new ResourceBoxEntry( typeof(PowderOfTranslocation), "Misc", "Powder Of Translocation" ));
+			m_ResourceEntries.Add(typeof(FertileDirt), new ResourceBoxEntry( typeof(FertileDirt), "Misc", "Fertile Dirt" ));
+			m_ResourceEntries.Add(typeof(Bandage), new ResourceBoxEntry( typeof(Bandage), "Misc", "Bandages" ));
+//Tailoring
 			m_ResourceEntries.Add(typeof(Cloth), new ResourceBoxEntry( typeof(Cloth), "Tailoring", "Cloth" ));
-
-			m_ResourceEntries.Add(typeof(JarHoney), new ResourceBoxEntry( typeof(JarHoney), "Baking", "Honey Jar" ));
+			m_ResourceEntries.Add(typeof(Leather), new ResourceBoxEntry( typeof(Leather), "Tailoring", "Leather" ));
+			m_ResourceEntries.Add(typeof(SpinedLeather), new ResourceBoxEntry( typeof(SpinedLeather), "Tailoring", "Spined Leather" ));
+			m_ResourceEntries.Add(typeof(BarbedLeather), new ResourceBoxEntry( typeof(BarbedLeather), "Tailoring", "Barbed Leather" ));
+			m_ResourceEntries.Add(typeof(HornedLeather), new ResourceBoxEntry( typeof(HornedLeather), "Tailoring", "Horned Leather" ));
+			m_ResourceEntries.Add(typeof(ArcaneGem), new ResourceBoxEntry( typeof(ArcaneGem), "Tailoring", "Arcane Gem" ));
+//Scales
+			m_ResourceEntries.Add(typeof(RedScales), new ResourceBoxEntry( typeof(RedScales), "Scales", "Red Scales" ));
+			m_ResourceEntries.Add(typeof(YellowScales), new ResourceBoxEntry( typeof(YellowScales), "Scales", "Yellow Scales" ));
+			m_ResourceEntries.Add(typeof(BlackScales), new ResourceBoxEntry( typeof(BlackScales), "Scales", "Black Scales" ));
+			m_ResourceEntries.Add(typeof(GreenScales), new ResourceBoxEntry( typeof(GreenScales), "Scales", "Green Scales" ));
+			m_ResourceEntries.Add(typeof(BlueScales), new ResourceBoxEntry( typeof(BlueScales), "Scales", "Blue Scales" ));
+			m_ResourceEntries.Add(typeof(WhiteScales), new ResourceBoxEntry( typeof(WhiteScales), "Scales", "White Scales" ));
+//Reagents
+			m_ResourceEntries.Add(typeof(BlackPearl), new ResourceBoxEntry( typeof(BlackPearl), "Reagents", "Black Pearl" ));
+			m_ResourceEntries.Add(typeof(Bloodmoss), new ResourceBoxEntry( typeof(Bloodmoss), "Reagents", "Bloodmoss" ));
+			m_ResourceEntries.Add(typeof(Garlic), new ResourceBoxEntry( typeof(Garlic), "Reagents", "Garlic" ));
+			m_ResourceEntries.Add(typeof(Ginseng), new ResourceBoxEntry( typeof(Ginseng), "Reagents", "Ginseng" ));
+			m_ResourceEntries.Add(typeof(MandrakeRoot), new ResourceBoxEntry( typeof(MandrakeRoot), "Reagents", "Mandrake Root" ));
+			m_ResourceEntries.Add(typeof(Nightshade), new ResourceBoxEntry( typeof(Nightshade), "Reagents", "Nightshade" ));
+			m_ResourceEntries.Add(typeof(SulfurousAsh), new ResourceBoxEntry( typeof(SulfurousAsh), "Reagents", "Sulfurous Ash" ));
+			m_ResourceEntries.Add(typeof(SpidersSilk), new ResourceBoxEntry( typeof(SpidersSilk), "Reagents", "Spiders Silk" ));
+			m_ResourceEntries.Add(typeof(BatWing), new ResourceBoxEntry( typeof(BatWing), "Reagents", "BatWing" ));
+			m_ResourceEntries.Add(typeof(GraveDust), new ResourceBoxEntry( typeof(GraveDust), "Reagents", "Grave Dust" ));
+			m_ResourceEntries.Add(typeof(PigIron), new ResourceBoxEntry( typeof(PigIron), "Reagents", "Pig Iron" ));
+			m_ResourceEntries.Add(typeof(NoxCrystal), new ResourceBoxEntry( typeof(NoxCrystal), "Reagents", "Nox Crystal" ));
+			m_ResourceEntries.Add(typeof(DaemonBlood), new ResourceBoxEntry( typeof(DaemonBlood), "Reagents", "Daemon Blood" ));
+			m_ResourceEntries.Add(typeof(DaemonBlood), new ResourceBoxEntry( typeof(DaemonBlood), "Reagents", "Daemon Blood" ));
+//Potions
+			m_ResourceEntries.Add(typeof(NightSightPotion), new ResourceBoxEntry( typeof(NightSightPotion), "Potions", "Nightsight" ));
+			m_ResourceEntries.Add(typeof(StrengthPotion), new ResourceBoxEntry( typeof(StrengthPotion), "Potions", "Strength" ));
+			m_ResourceEntries.Add(typeof(GreaterStrengthPotion), new ResourceBoxEntry( typeof(GreaterStrengthPotion), "Potions", "Greater Strength" ));
+			m_ResourceEntries.Add(typeof(CurePotion), new ResourceBoxEntry( typeof(CurePotion), "Potions", "Cure" ));
+			m_ResourceEntries.Add(typeof(GreaterCurePotion), new ResourceBoxEntry( typeof(GreaterCurePotion), "Potions", "Greater Cure" ));
+			m_ResourceEntries.Add(typeof(LesserPoisonPotion), new ResourceBoxEntry( typeof(LesserPoisonPotion), "Potions", "Lesser Poison" ));
+			m_ResourceEntries.Add(typeof(PoisonPotion), new ResourceBoxEntry( typeof(PoisonPotion), "Potions", "Poison" ));
+			m_ResourceEntries.Add(typeof(GreaterPoisonPotion), new ResourceBoxEntry( typeof(GreaterPoisonPotion), "Potions", "Greater Poison" ));
+			m_ResourceEntries.Add(typeof(LesserHealPotion), new ResourceBoxEntry( typeof(LesserHealPotion), "Potions", "Lesser Heal" ));
+			m_ResourceEntries.Add(typeof(HealPotion), new ResourceBoxEntry( typeof(HealPotion), "Potions", "Heal" ));
+			m_ResourceEntries.Add(typeof(GreaterHealPotion), new ResourceBoxEntry( typeof(GreaterHealPotion), "Potions", "Greater Heal" ));
+			m_ResourceEntries.Add(typeof(RefreshPotion), new ResourceBoxEntry( typeof(RefreshPotion), "Potions", "Refresh" ));
+			m_ResourceEntries.Add(typeof(TotalRefreshPotion), new ResourceBoxEntry( typeof(TotalRefreshPotion), "Potions", "Total Refresh" ));
+			m_ResourceEntries.Add(typeof(LesserExplosionPotion), new ResourceBoxEntry( typeof(LesserExplosionPotion), "Potions", "Lesser Explosion" ));
+			m_ResourceEntries.Add(typeof(ExplosionPotion), new ResourceBoxEntry( typeof(ExplosionPotion), "Potions", "Explosion" ));
+			m_ResourceEntries.Add(typeof(GreaterExplosionPotion), new ResourceBoxEntry( typeof(GreaterExplosionPotion), "Potions", "Greater Explosion" ));
+			m_ResourceEntries.Add(typeof(InvisibilityPotion), new ResourceBoxEntry( typeof(InvisibilityPotion), "Potions", "Invisibility" ));
+			m_ResourceEntries.Add(typeof(LesserFlameStrikePotion), new ResourceBoxEntry( typeof(LesserFlameStrikePotion), "Potions", "Lesser Flame Strike" ));
+			m_ResourceEntries.Add(typeof(FlameStrikePotion), new ResourceBoxEntry( typeof(FlameStrikePotion), "Potions", "Flame Strike" ));
+			m_ResourceEntries.Add(typeof(GreaterFlameStrikePotion), new ResourceBoxEntry( typeof(GreaterFlameStrikePotion), "Potions", "Greater Flame Strike" ));
+			m_ResourceEntries.Add(typeof(ConfusionBlastPotion), new ResourceBoxEntry( typeof(ConfusionBlastPotion), "Potions", "Confusion Blast" ));
+			m_ResourceEntries.Add(typeof(GreaterConfusionBlastPotion), new ResourceBoxEntry( typeof(GreaterConfusionBlastPotion), "Potions", "Greater Confusion Blast" ));
+			m_ResourceEntries.Add(typeof(MaskOfDeathPotion), new ResourceBoxEntry( typeof(MaskOfDeathPotion), "Potions", "Mask Of Death" ));
+			m_ResourceEntries.Add(typeof(GreaterMaskOfDeathPotion), new ResourceBoxEntry( typeof(GreaterMaskOfDeathPotion), "Potions", "Greater Mask Of Death" ));
+//Pet Potions
+			m_ResourceEntries.Add(typeof(HealPotionPet), new ResourceBoxEntry( typeof(HealPotionPet), "Pet Potions", "Pet Heal" ));
+			m_ResourceEntries.Add(typeof(GreaterHealPotionPet), new ResourceBoxEntry( typeof(GreaterHealPotionPet), "Pet Potions", "Pet Greater Heal" ));
+			m_ResourceEntries.Add(typeof(CurePotionPet), new ResourceBoxEntry( typeof(CurePotionPet), "Pet Potions", "Pet Cure" ));
+			m_ResourceEntries.Add(typeof(GreaterCurePotionPet), new ResourceBoxEntry( typeof(GreaterCurePotionPet), "Pet Potions", "Pet Greater Cure" ));
+			m_ResourceEntries.Add(typeof(PetShrinkPotion), new ResourceBoxEntry( typeof(PetShrinkPotion), "Pet Potions", "Pet Shrink" ));
+			m_ResourceEntries.Add(typeof(PetResurrectPotion), new ResourceBoxEntry( typeof(PetResurrectPotion), "Pet Potions", "Pet Resurrect" ));
+//1st Cricle Scrolls
+			m_ResourceEntries.Add(typeof(ClumsyScroll), new ResourceBoxEntry( typeof(ClumsyScroll), "1st Cricle Scrolls", "Clumsy" ));
+			m_ResourceEntries.Add(typeof(CreateFoodScroll), new ResourceBoxEntry( typeof(CreateFoodScroll), "1st Cricle Scrolls", "Create Food" ));
+			m_ResourceEntries.Add(typeof(FeeblemindScroll), new ResourceBoxEntry( typeof(FeeblemindScroll), "1st Cricle Scrolls", "Feeblemind" ));
+			m_ResourceEntries.Add(typeof(HealScroll), new ResourceBoxEntry( typeof(HealScroll), "1st Cricle Scrolls", "Heal" ));
+			m_ResourceEntries.Add(typeof(MagicArrowScroll), new ResourceBoxEntry( typeof(MagicArrowScroll), "1st Cricle Scrolls", "Magic Arrow" ));
+			m_ResourceEntries.Add(typeof(NightSightScroll), new ResourceBoxEntry( typeof(NightSightScroll), "1st Cricle Scrolls", "Night Sight" ));
+			m_ResourceEntries.Add(typeof(WeakenScroll), new ResourceBoxEntry( typeof(WeakenScroll), "1st Cricle Scrolls", "Weaken" ));
+			m_ResourceEntries.Add(typeof(ReactiveArmorScroll), new ResourceBoxEntry( typeof(ReactiveArmorScroll), "1st Cricle Scrolls", "Reactive Armor" ));
+//Cooking
+			m_ResourceEntries.Add(typeof(JarHoney), new ResourceBoxEntry( typeof(JarHoney), "Cooking", "Honey Jar" ));
 		}
 
 		public ResourceBox( Serial serial ) : base( serial )
