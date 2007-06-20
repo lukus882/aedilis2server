@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <!-- /**************************************
      *Script Name: NPC Sales Tax           *
@@ -15,8 +15,8 @@
      how they are spelled in the Regions.xml file,
      otherwise it WON'T WORK.                   -->
 
-<Taxes>
-	<Facet name="Felucca">
+<!--Last number set
+
 		<Town name="Britain"           tax="23"/>
 		<Town name="Cove"              tax="5" />
 		<Town name="Jhelom"            tax="15" />
@@ -34,5 +34,27 @@
 		<Town name="Buccaneer's Den"   tax="18" />
 		<Town name="Papua"             tax="10" />
 		<Town name="Delucia"             tax="8" />
+
+ -->
+
+<Taxes>
+	<Facet name="Felucca">
+		<Town name="Britain"           tax="10"/>
+		<Town name="Cove"              tax="7" />
+		<Town name="Jhelom"            tax="5" />
+		<Town name="Minoc"             tax="20"/>
+		<Town name="Ocllo"             tax="4" />
+		<Town name="Trinsic"           tax="0"/>
+		<Town name="Vesper"            tax="4"/>
+		<Town name="Yew"               tax="10"/>
+		<Town name="Wind"              tax="0" />
+		<Town name="Serpent's Hold"    tax="0" />
+		<Town name="Skara Brae"        tax="15" />
+		<Town name="Nujel'm"           tax="9" />
+		<Town name="Moonglow"          tax="0"/>
+		<Town name="Magincia"          tax="30"/>
+		<Town name="Buccaneer's Den"   tax="6" />
+		<Town name="Papua"             tax="5" />
+		<Town name="Delucia"             tax="18" />
 	</Facet>
 </Taxes>
