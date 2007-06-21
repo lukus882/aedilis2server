@@ -300,7 +300,6 @@ namespace Fatima.Items
 			m_ResourceEntries.Add(typeof(PigIron), new ResourceBoxEntry( typeof(PigIron), "Reagents", "Pig Iron" ));
 			m_ResourceEntries.Add(typeof(NoxCrystal), new ResourceBoxEntry( typeof(NoxCrystal), "Reagents", "Nox Crystal" ));
 			m_ResourceEntries.Add(typeof(DaemonBlood), new ResourceBoxEntry( typeof(DaemonBlood), "Reagents", "Daemon Blood" ));
-			m_ResourceEntries.Add(typeof(DaemonBlood), new ResourceBoxEntry( typeof(DaemonBlood), "Reagents", "Daemon Blood" ));
 //Potions
 			m_ResourceEntries.Add(typeof(NightSightPotion), new ResourceBoxEntry( typeof(NightSightPotion), "Potions", "Nightsight" ));
 			m_ResourceEntries.Add(typeof(StrengthPotion), new ResourceBoxEntry( typeof(StrengthPotion), "Potions", "Strength" ));
@@ -333,15 +332,6 @@ namespace Fatima.Items
 			m_ResourceEntries.Add(typeof(GreaterCurePotionPet), new ResourceBoxEntry( typeof(GreaterCurePotionPet), "Pet Potions", "Pet Greater Cure" ));
 			m_ResourceEntries.Add(typeof(PetShrinkPotion), new ResourceBoxEntry( typeof(PetShrinkPotion), "Pet Potions", "Pet Shrink" ));
 			m_ResourceEntries.Add(typeof(PetResurrectPotion), new ResourceBoxEntry( typeof(PetResurrectPotion), "Pet Potions", "Pet Resurrect" ));
-//1st Cricle Scrolls
-			m_ResourceEntries.Add(typeof(ClumsyScroll), new ResourceBoxEntry( typeof(ClumsyScroll), "1st Cricle Scrolls", "Clumsy" ));
-			m_ResourceEntries.Add(typeof(CreateFoodScroll), new ResourceBoxEntry( typeof(CreateFoodScroll), "1st Cricle Scrolls", "Create Food" ));
-			m_ResourceEntries.Add(typeof(FeeblemindScroll), new ResourceBoxEntry( typeof(FeeblemindScroll), "1st Cricle Scrolls", "Feeblemind" ));
-			m_ResourceEntries.Add(typeof(HealScroll), new ResourceBoxEntry( typeof(HealScroll), "1st Cricle Scrolls", "Heal" ));
-			m_ResourceEntries.Add(typeof(MagicArrowScroll), new ResourceBoxEntry( typeof(MagicArrowScroll), "1st Cricle Scrolls", "Magic Arrow" ));
-			m_ResourceEntries.Add(typeof(NightSightScroll), new ResourceBoxEntry( typeof(NightSightScroll), "1st Cricle Scrolls", "Night Sight" ));
-			m_ResourceEntries.Add(typeof(WeakenScroll), new ResourceBoxEntry( typeof(WeakenScroll), "1st Cricle Scrolls", "Weaken" ));
-			m_ResourceEntries.Add(typeof(ReactiveArmorScroll), new ResourceBoxEntry( typeof(ReactiveArmorScroll), "1st Cricle Scrolls", "Reactive Armor" ));
 //Cooking
 			m_ResourceEntries.Add(typeof(JarHoney), new ResourceBoxEntry( typeof(JarHoney), "Cooking", "Honey Jar" ));
 		}
