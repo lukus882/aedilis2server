@@ -192,6 +192,10 @@ namespace Server.Engines.Craft
 			AddCraft( typeof( ScribesPen ), 1044046, 1044168, 25.0, 75.0, typeof( IronIngot ), 1044036, 1, 1044037 );
 			AddCraft( typeof( StitchingKit ), 1044046, "An Stitching Kit", 80.0, 100.0, typeof( IronIngot ), 1044036, 2, 1044037 );
 			AddCraft( typeof( IDCraftKit ), 1044046, "An ID Crafting Kit", 80.0, 100.0, typeof( IronIngot ), 1044036, 5, 1044037 );
+			AddCraft( typeof( WhittlingKnife ), 1044046, "A Whittling Knife", 80.0, 100.0, typeof( IronIngot ), 1044036, 5, 1044037 );
+
+			AddCraft( typeof( TalismanOfSacrifice ), 1044046, "A Talisman Of Sacrifice", 90.0, 100.0, typeof( IronIngot ), 1044036, 50, 1044037 );
+			AddRes( index, typeof( Log ), 1044041, 10, 1044351 );
 	
 
 			#endregion

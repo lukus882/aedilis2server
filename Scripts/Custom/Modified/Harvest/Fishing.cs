@@ -123,6 +123,8 @@ namespace Server.Engines.Harvest
 				new MutateEntry(  80.0,  80.0,  4080.0,  true, typeof( BigFish ) ),
 				new MutateEntry(  90.0,  80.0,  4080.0,  true, typeof( TreasureMap ) ),
 				new MutateEntry( 100.0,  80.0,  4080.0,  true, typeof( MessageInABottle ) ),
+// woodcrafting driftwood
+				new MutateEntry(   0.0, 120.0,  -120.0, false, typeof( DriftWood ) ),
 				new MutateEntry(   0.0, 125.0, -2375.0, false, typeof( PrizedFish ), typeof( WondrousFish ), typeof( TrulyRareFish ), typeof( PeculiarFish ) ),
 				new MutateEntry(   0.0, 105.0,  -420.0, false, typeof( Boots ), typeof( Shoes ), typeof( Sandals ), typeof( ThighBoots ) ),
 				new MutateEntry(   0.0, 200.0,  -200.0, false, new Type[1]{ null } )
@@ -329,6 +331,8 @@ namespace Server.Engines.Harvest
 						chest.TrapType = TrapType.None;
 						chest.TrapPower = 0;
 						chest.TrapLevel = 0;
+// label chest with fisherman's name
+						chest.Name = "Treasure chest fished up by " + from.Name;
 
 						sos.Delete();
 
@@ -410,6 +414,12 @@ namespace Server.Engines.Harvest
 					number = 1008124;
 					name = "a mess of small fish";
 				}
+// driftwood label
+				else if ( item is DriftWood )
+				{
+					number = 9999999;
+					name = "a piece of driftwood";
+				}
 				else if ( item is Fish )
 				{
 					number = 1008124;
@@ -449,6 +459,9 @@ namespace Server.Engines.Harvest
 
 				if ( number == 1043297 )
 					from.SendLocalizedMessage( number, name );
+// driftwood message
+				else if (number == 9999999)
+					from.SendMessage("You fish up a piece of driftwood!");
 				else
 					from.SendLocalizedMessage( number, true, name );
 			}
