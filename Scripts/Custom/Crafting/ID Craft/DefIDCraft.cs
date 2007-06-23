@@ -91,7 +91,7 @@ namespace Server.Engines.Craft
 
 			// Identification Stuff
 
-			index = AddCraft( typeof( IDCrystal ), "ID Crystal", "An ID Crystal", 90.0, 100.0, typeof( Sand ), "Some Sand", 1, 1044037 );
+			index = AddCraft( typeof( IDCrystal ), "ID Crystal", "An ID Crystal", 90.0, 100.0, typeof( ZoogiFungus ), "Zoogie Fungus", 10, 1044037 );
 			AddSkill( index, SkillName.Tinkering, 50.0, 55.0 );
 			AddSkill( index, SkillName.Mining, 40.0, 75.0 );
 
