@@ -106,19 +106,6 @@ namespace Server.Items
           			( (Mobile)o).DisplayGuildTitle = true;
                 	}
 				
-      			
-				from.SendMessage( "You lower the mask." );
-				from.PlaySound( 0x440 );
-				//from.Title = null;
-				from.BodyMod = 0x0;
-				from.NameHue = -1;
-				from.HueMod = -1;
-				from.DisplayGuildTitle = true;
-				this.Transformed = false;
-				ItemID = 0x1F03;
-				from.RemoveItem(this);
-              			from.EquipItem(this);
-				
       			base.OnRemoved( o );
       		}			
 
