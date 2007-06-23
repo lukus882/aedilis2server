@@ -34,8 +34,18 @@ namespace Server.Items
 			else if( from.InRange( this.GetWorldLocation(), 1 ) ) 
 			{
 
-        			this.SendLocalizedMessageTo(from, 1010086); 
-           			from.Target = new TSacrificeTarget( this );
+        			
+				else if ( from.Skills[SkillName.AnimalTaming].Value >= 100 )
+				{
+           				this.SendLocalizedMessageTo(from, 1010086); 
+           				from.Target = new TSacrificeTarget( this );
+					}
+				else
+				{
+					from.SendMessage( "You must have 100 animal taming to use this talisman." );
+				}
+
+
 
 			} 
 			else 
