@@ -36,7 +36,7 @@ namespace Server.Items
       if(DefSerUss == 0 && g != null) 
       { 
       DefSerUss = from.Serial; 
-      from.Emote( "" + from.Name + ", the robe is now it your personal item!" );  
+      from.Emote( "" + from.Name + ", the robe is now your personal item!" );  
       this.Name =  from.Name +"'s "  +  this.Name +" [" + g.Abbreviation + "]";
       base.OnEquip( from ); 
       return true;
