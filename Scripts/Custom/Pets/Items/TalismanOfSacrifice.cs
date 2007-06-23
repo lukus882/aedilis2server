@@ -35,7 +35,7 @@ namespace Server.Items
 			{
 
         			
-				else if ( from.Skills[SkillName.AnimalTaming].Value >= 100 )
+				if ( from.Skills[SkillName.AnimalTaming].Value >= 100 )
 				{
            				this.SendLocalizedMessageTo(from, 1010086); 
            				from.Target = new TSacrificeTarget( this );
