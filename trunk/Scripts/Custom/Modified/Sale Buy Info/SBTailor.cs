@@ -143,9 +143,9 @@ namespace Server.Mobiles
 
 				Add( typeof( SpoolOfThread ), 9 );
 
-				Add( typeof( Flax ), 51 );
-				Add( typeof( Cotton ), 51 );
-				Add( typeof( Wool ), 31 );
+				//Add( typeof( Flax ), 51 );
+				//Add( typeof( Cotton ), 51 );
+				//Add( typeof( Wool ), 10 );
 			}
 		}
 	}
