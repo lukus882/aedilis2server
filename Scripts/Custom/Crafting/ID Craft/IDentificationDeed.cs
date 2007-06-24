@@ -18,7 +18,7 @@ namespace Server.Items
       		{ 
          		Weight = 1.0;  
          		Movable = true;
-         		Name = "An Identifcaion Deed";
+         		Name = "An Identification Deed";
 			Hue = 1103;   
       		} 
 
@@ -53,7 +53,8 @@ namespace Server.Items
       		{ 
          		base.Deserialize( reader ); 
 
-         		int version = reader.ReadInt(); 
+         		int version = reader.ReadInt();
+			Name = "An Identification Deed"; 
       		} 
 
 
