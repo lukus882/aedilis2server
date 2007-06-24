@@ -108,15 +108,15 @@ namespace Server.Engines.Craft
 			AddCraft( typeof( FishingPole ), "Miscellaneous", "Fishing Pole", 50.0, 95.0, typeof( DriftWood ), "Drift Wood", 5, 1053098 );
 			AddCraft( typeof( QuarterStaff ), "Miscellaneous", "Quarter Staff", 55.0, 105.0, typeof( DriftWood ), "Drift Wood", 5, 1053098 );
 			AddCraft( typeof( GnarledStaff ), "Miscellaneous", "GnarledStaff", 57.5, 107.5, typeof( DriftWood ), "Drift Wood", 5, 1053098 );
-			AddCraft( typeof( Croc ), "Statuettes", "a Wee Crocodile", 110.0, 120.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
-			AddCraft( typeof( PlainIdol ), "Statuettes", "a Plain Idol", 110.0, 120.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
-			AddCraft( typeof( Shark ), "Statuettes", "a Hungry Little Shark", 110.0, 120.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
-			AddCraft( typeof( SeaFrog ), "Statuettes", "a Singing Sea Frog", 110.0, 120.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
-			AddCraft( typeof( SeaSprite ), "Statuettes", "a Sea Sprite", 110.0, 120.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
-			AddCraft( typeof( SeaHag ), "Statuettes", "a Sea Hag", 110.0, 120.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
-			AddCraft( typeof( SeaSpider ), "Statuettes", "a Sea Spider", 110.0, 120.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
-			AddCraft( typeof( SeaHorseStatue ), "Statuettes", "a Sleek Sea Horse", 100.0, 120.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
-			AddCraft( typeof( Abacus ), "Statuettes", "an Abacus", 75.0, 120.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
+			AddCraft( typeof( Croc ), "Statuettes", "a Wee Crocodile", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
+			AddCraft( typeof( PlainIdol ), "Statuettes", "a Plain Idol", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
+			AddCraft( typeof( Shark ), "Statuettes", "a Hungry Little Shark", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
+			AddCraft( typeof( SeaFrog ), "Statuettes", "a Singing Sea Frog", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
+			AddCraft( typeof( SeaSprite ), "Statuettes", "a Sea Sprite", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
+			AddCraft( typeof( SeaHag ), "Statuettes", "a Sea Hag", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
+			AddCraft( typeof( SeaSpider ), "Statuettes", "a Sea Spider", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
+			AddCraft( typeof( SeaHorseStatue ), "Statuettes", "a Sleek Sea Horse", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
+			AddCraft( typeof( Abacus ), "Statuettes", "an Abacus", 75.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
 
 // on my shard I added a lot of furniture graphics into the art.mul file. I wrote scripts for them and made them craftable
 // via WoodCrafting. An example of setting up a new category is below.
