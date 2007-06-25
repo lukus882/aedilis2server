@@ -57,7 +57,14 @@ namespace Server.Mobiles
 					Add( new GenericBuyInfo( typeof( TangledBramblesN ), 150, 100, 12320, 0 ) );
 					Add( new GenericBuyInfo( typeof( TangledBramblesS ), 150, 100, 12321, 0 ) );
 					Add( new GenericBuyInfo( typeof( TangledBramblesW ), 150, 100, 12323, 0 ) );
-					Add( new GenericBuyInfo( typeof( TrimmedHedge1 ), 150, 100, 3215, 0 ) );
+					Add( new GenericBuyInfo( typeof( TrimmedHedge1 ), 150, 100, 0x14F0, 0 ) );
+					Add( new GenericBuyInfo( typeof( AppleTreeDeed ), 1000, 100, 0x14F0, 0 ) );
+					Add( new GenericBuyInfo( typeof( PearTreeDeed ), 1000, 100, 0x14F0, 0 ) );
+					Add( new GenericBuyInfo( typeof( PeachTreeDeed ), 1000, 100, 0x14F0, 0 ) );
+					Add( new GenericBuyInfo( typeof( CherryTreeDeed ), 1000, 100, 0x14F0, 0 ) );
+					Add( new GenericBuyInfo( typeof( GreyTreeDeed ), 1000, 100, 0x14F0, 0 ) );
+					Add( new GenericBuyInfo( typeof( LightBrownTreeDeed ), 1000, 100, 0x14F0, 0 ) );
+					Add( new GenericBuyInfo( typeof( DarkBrownTreeDeed ), 1000, 100, 0x14F0, 0 ) );
 
 
 			}

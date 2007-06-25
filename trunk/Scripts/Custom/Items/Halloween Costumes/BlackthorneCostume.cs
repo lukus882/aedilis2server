@@ -22,13 +22,13 @@ namespace Server.Items
 		}
 
 		[Constructable]
-		public BlackthorneCostume() : base( 0x2684 )
+		public BlackthorneCostume() : base( 0x1F03 )
 		{
                         Name = "Blackthorne Costume";
 			
                         Hue = 2;
                         Layer = Layer.OuterTorso;
-                        ItemID = 0x2684;
+                        ItemID = 0x1F03;
 
 			Weight = 3.0;
 		}
@@ -121,6 +121,7 @@ namespace Server.Items
 			base.Deserialize( reader );
 
 			int version = reader.ReadInt();
+			ItemID = 0x1F03;
 		}
 	}
 }

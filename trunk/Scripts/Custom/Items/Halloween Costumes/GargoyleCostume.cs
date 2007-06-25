@@ -22,13 +22,13 @@ namespace Server.Items
 		}
 
 		[Constructable]
-		public GargoyleCostume() : base( 0x2684 )
+		public GargoyleCostume() : base( 0x1F03 )
 		{
                         Name = "Gargoyle Costume";
 			
                         Hue = 2;
                         Layer = Layer.OuterTorso;
-                        ItemID = 0x2684;
+                        ItemID = 0x1F03;
 
 			Weight = 3.0;
 		}
@@ -61,7 +61,7 @@ namespace Server.Items
 				from.NameHue = 39;
 				from.DisplayGuildTitle = false; 
 				this.Transformed = true; 
-				ItemID = 9860;
+				//ItemID = 9860;
 				from.RemoveItem(this);
               			from.EquipItem(this);
                         
@@ -76,7 +76,7 @@ namespace Server.Items
 				from.HueMod = -1;
 				from.DisplayGuildTitle = true;
 				this.Transformed = false;
-				ItemID = 0x1F03;
+				//ItemID = 0x1F03;
 				from.RemoveItem(this);
               			from.EquipItem(this);
 			}
@@ -121,6 +121,7 @@ namespace Server.Items
 			base.Deserialize( reader );
 
 			int version = reader.ReadInt();
+			ItemID = 0x1F03;
 		}
 	}
 }
