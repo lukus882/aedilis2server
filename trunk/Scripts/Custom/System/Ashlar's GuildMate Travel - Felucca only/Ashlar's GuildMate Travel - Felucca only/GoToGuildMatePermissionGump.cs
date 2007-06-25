@@ -72,6 +72,12 @@ namespace Server.Guilds
 					m_Member.SendMessage( "You cannot bring your guildmate to you while fighting. 2 " );
 					}
 
+					else if (!m_Member.Alive)  
+					{ 
+					m_pm.SendMessage("Your Guildmate is dead and can not use his powers to summon you at this time. 1");
+					m_Member.SendMessage( "You are dead and don't have the power to summon your guildmate to you at this time. 2" );
+					}
+
  					else if (m_Member.Region is DungeonRegion)  
 					{ 
 					m_pm.SendMessage("Your guildmate is in a dungeon and can not join you at this time. 1 ");
