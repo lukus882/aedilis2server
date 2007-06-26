@@ -66,10 +66,34 @@ namespace Server.Guilds
 					m_Member.SendMessage( "Your guildmate is in combat and can not travel at the moment.2 " );
 					}
 
+					else if ( Server.Misc.WeightOverloading.IsOverloaded( m_Member ))
+					{ 
+					m_Member.SendMessage("You are overloaded and can not travel until you lose some weight. 1");
+					m_pm.SendMessage( "Your guildmate is overloaded and can not travel until they lose some weight. 2" );
+					}
+
+					else if ( m_pm.Criminal )
+					{
+					m_pm.SendMessage( "You can not use this system when one of the members is a criminal. 1 " );
+					m_Member.SendMessage( "You can not use this system when one of the members is a criminal. 2 " );
+					}
+
+					else if ( m_Member.Criminal )
+					{
+					m_pm.SendMessage( "You can not use this system when one of the members is a criminal. 1 " );
+					m_Member.SendMessage( "You can not use this system when one of the members is a criminal. 2 " );
+					}
+
 					else if ( Server.Spells.SpellHelper.CheckCombat( m_pm ) )
 					{
-					m_pm.SendMessage( "Your guildmate is in combat and you cannot travel while your guildmate is fighting. 1 " );
-					m_Member.SendMessage( "You cannot bring your guildmate to you while fighting. 2 " );
+					m_pm.SendMessage( "You can not use this system while somebody is in combat. 1 " );
+					m_Member.SendMessage( "You can not use this system while somebody is in combat. 2 " );
+					}
+
+					else if ( Server.Spells.SpellHelper.CheckCombat( m_member ) )
+					{
+					m_pm.SendMessage( "You can not use this system while somebody is in combat. 1 " );
+					m_Member.SendMessage( "You can not use this system while somebody is in combat. 2 " );
 					}
 
 					else if (!m_pm.Alive)  
@@ -94,8 +118,12 @@ namespace Server.Guilds
 					{
 
 						
-                   				 if ( m_pm.Map == Map.Felucca && m_Member.Map == Map.Felucca )
+                   				if ( m_pm.Map == Map.Felucca && m_Member.Map == Map.Felucca )
 						{
+							
+
+							m_pm.RevealingAction();
+							m_Member.RevealingAction();
 							Map map = m_pm.Map;
 							Point3D loc = m_pm.Location;
 
