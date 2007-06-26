@@ -20,9 +20,9 @@ namespace Server.Misc
 		 * private const string Address = "shard.host.com";
 		 */
 
-		public static readonly string Address = "aedilis.servegame.com";
+		public static readonly string Address = "127.0.0.1";
 
-		public const string ServerName = "Aedilis 2.0";
+		public const string ServerName = "Aedilis Test";
 
 		public static void Initialize()
 		{
