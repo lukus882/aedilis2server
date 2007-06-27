@@ -72,7 +72,7 @@ namespace Server.Guilds
 					m_Member.SendMessage( "You can not use this system while somebody is in combat. 2 " );
 					}
 
-					else if ( Server.Spells.SpellHelper.CheckCombat( m_member ) )
+					else if ( Server.Spells.SpellHelper.CheckCombat( m_Member ) )
 					{
 					m_pm.SendMessage( "You can not use this system while somebody is in combat. 1 " );
 					m_Member.SendMessage( "You can not use this system while somebody is in combat. 2 " );
