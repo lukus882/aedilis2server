@@ -171,13 +171,14 @@ namespace Server.Items
     {
         if (m_Crafter == null)
         {
-            string name = String.Format("Unidentified");
+	    this.Identified = true;
+            //string name = String.Format("Unidentified");
 
-            base.GetProperties(list);
-            list.Add(name);
+            //base.GetProperties(list);
+            //list.Add(name);
 
-            if (ArtifactRarity > 0)
-            list.Add(1061078, ArtifactRarity.ToString()); // artifact rarity ~1_val~
+            //if (ArtifactRarity > 0)
+            //list.Add(1061078, ArtifactRarity.ToString()); // artifact rarity ~1_val~
         }
         else
         {
