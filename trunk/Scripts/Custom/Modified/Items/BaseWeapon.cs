@@ -3022,24 +3022,25 @@ namespace Server.Items
 {
     /************************************************************************/
     /******************* Mod by FireStorm for ItemID skill ******************/
-    if(!Identified )
+    /*if(!Identified )
     {
         if (m_Crafter == null && !PlayerConstructed)
         {
-            //string name = String.Format("Unidentified");
 	    this.Identified = true;
-            //base.GetProperties(list);
+            //string name = String.Format("Unidentified");
+
+            base.GetProperties(list);
             //list.Add(name);
 
-            //if (ArtifactRarity > 0)
-             //   list.Add(1061078, ArtifactRarity.ToString()); // artifact rarity ~1_val~
+            if (ArtifactRarity > 0)
+            list.Add(1061078, ArtifactRarity.ToString()); // artifact rarity ~1_val~
         }
         else
         {
             this.Identified = true;
         }
     }
-    else
+    else*/
     {
         base.GetProperties(list);
 
