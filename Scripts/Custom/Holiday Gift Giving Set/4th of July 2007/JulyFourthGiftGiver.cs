@@ -11,7 +11,7 @@ namespace Server.Misc
 			GiftGiving.Register( new July4th2007Gifter() );
 		}
 
-		public override DateTime Start{ get{ return new DateTime( 2007, 7, 2 ); } }
+		public override DateTime Start{ get{ return new DateTime( 2007, 6, 29 ); } }
 		public override DateTime Finish{ get{ return new DateTime( 2007, 7, 10 ); } }
 
 		public override void GiveGift( Mobile mob )
