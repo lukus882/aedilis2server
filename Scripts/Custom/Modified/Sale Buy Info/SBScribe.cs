@@ -26,8 +26,8 @@ namespace Server.Mobiles
 				Add( new GenericBuyInfo( typeof( BrownBook ), 15, 10, 0xFEF, 0 ) );
 				Add( new GenericBuyInfo( typeof( TanBook ), 15, 10, 0xFF0, 0 ) );
 				Add( new GenericBuyInfo( typeof( BlueBook ), 15, 10, 0xFF2, 0 ) );
-				Add( new GenericBuyInfo( typeof( BookOfNinjitsu ), 500, 10, 0xFF2, 0 ) );
-				Add( new GenericBuyInfo( typeof( BookOfBushido ), 500, 10, 0xFF2, 0 ) );
+				Add( new GenericBuyInfo( typeof( BookOfNinjitsu ), 5000, 10, 0xFF2, 0 ) );
+				Add( new GenericBuyInfo( typeof( BookOfBushido ), 5000, 10, 0xFF2, 0 ) );
 				//Add( new GenericBuyInfo( "1041267", typeof( Runebook ), 3500, 10, 0xEFA, 0x461 ) );
 			}
 		}
