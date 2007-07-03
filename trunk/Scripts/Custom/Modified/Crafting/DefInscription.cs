@@ -295,6 +295,8 @@ namespace Server.Engines.Craft
 
 			// Killbook
 			index = AddCraft( typeof( KillBook ), 1044294, "A Kill Book", 45.0, 95.0, typeof( BlankScroll ), "Blank Scrolls", 15, 1044378 );
+			index = AddCraft( typeof( BookOfNinjitsu ), 1044294, "Book Of Ninjitsu", 95.0, 100.0, typeof( BlankScroll ), "Blank Scrolls", 15, 1044378 );
+			index = AddCraft( typeof( BookOfBushido ), 1044294, "Book Of Bushido", 95.0, 100.0, typeof( BlankScroll ), "Blank Scrolls", 15, 1044378 );
 
 			if ( Core.AOS )
 			{
