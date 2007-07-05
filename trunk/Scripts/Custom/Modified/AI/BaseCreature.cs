@@ -15,6 +15,12 @@ using Server.Factions;
 using Server.Spells.Bushido;
 using Server.Spells.Spellweaving;
 
+//Begin Pet Death Announce //
+                           //
+using Server.Gumps;        //
+                           //
+//End Pet Death Announce   //
+
 namespace Server.Mobiles
 {
 	#region Enums
@@ -4839,6 +4845,16 @@ namespace Server.Mobiles
 						}
 					}
 				}
+
+//Begin Pet Death Announce ////////////////////////////////////////////////////////////////////////////////
+									     		  		 //
+				if ( ControlMaster != null )		     		  		 //
+				{					     		  		 //
+				ControlMaster.SendGump( new PetDeathGump(this)); 	  		 //
+				ControlMaster.SendMessage(33, "WARNING! [PET DEATH!]", this.ToString()); //
+				}					     		  		 //
+								             		  		 //
+//End Pet Death Announce //////////////////////////////////////////////////////////////////////////////////
 
 				base.OnDeath( c );
 
