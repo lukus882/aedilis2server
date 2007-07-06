@@ -46,12 +46,12 @@ namespace Server.Mobiles
 		{ 
 	    "Greetings",
             "Hello there",
-            "I have what ye needs.",
-            "Look here!",
-            "Shop ye here!",
-            "Welcome to my shop!",
-            "Are you here to buy or sell?",
-            "Please buy my goods I have a family to feed"
+            "Hey there hot stuff, my shift ends in about an hour want to go get some grog?",
+            "Hello",
+            "Hi, how are you today?",
+            "Nice to see you friend",
+            "Ah, another friendly face off on a wild adventure!",
+            "How goes that wild adventure friend?"
 		};
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
