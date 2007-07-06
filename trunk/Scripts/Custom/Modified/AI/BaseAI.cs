@@ -1979,7 +1979,8 @@ namespace Server.Mobiles
 				if( m_Mobile.ControlOrder == OrderType.Follow && m_Mobile.ControlTarget == m_Mobile.ControlMaster )
 					delay *= 0.5;
 
-				delay -= 0.075;
+				//delay -= 0.075;
+				//delay -= 0.0375;
 			}
 
 			double offset = (double)m_Mobile.Hits / m_Mobile.HitsMax;
