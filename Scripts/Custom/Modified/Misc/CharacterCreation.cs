@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Server;
 using Server.Items;
 using Server.Mobiles;
@@ -41,11 +41,11 @@ namespace Server.Misc
 			SWW.LootType = LootType.Blessed;
                         PackItem( SWW );
 
-			IDWand SID = new IDWand();
-                        SID.Charges = 10;
-			SID.Name = "Starter ID Wand";
-			SID.Identified = true;
-                        PackItem( SID );
+			//IDWand SID = new IDWand();
+                        //SID.Charges = 10;
+			//SID.Name = "Starter ID Wand";
+			//SID.Identified = true;
+                        //PackItem( SID );
 
 			if (m.AccessLevel > AccessLevel.Player)
 			PackItem( new StaffLantern() );
