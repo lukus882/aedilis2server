@@ -31,7 +31,8 @@ namespace Server
 			"PackLlama",
 			"Beetle",
 			"FireBeetle",
-			"UltraBeetle"
+			"UltraBeetle",
+			"RainbowHorse"
 		};
 
 		//Add all pack animals for your server here.
@@ -39,7 +40,10 @@ namespace Server
 		{
 			"PackHorse",
 			"PackLlama",
-			"Beetle"
+			"Beetle",
+			"UltraBeetle",
+			"PackDragon",
+			"PackWyrm"
 		};
 
 		//Add all creatures you do not wish to level / breed
