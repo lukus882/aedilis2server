@@ -157,6 +157,7 @@ namespace Server.Engines.Craft
 			AddCraft( typeof( ClockFrame ), 1044042, 1024173, 0.0, 50.0, typeof( Log ), 1044041, 6, 1044351 );
 			AddCraft( typeof( Axle ), 1044042, 1024187, -25.0, 25.0, typeof( Log ), 1044041, 2, 1044351 );
 			AddCraft( typeof( RollingPin ), 1044042, 1024163, 0.0, 50.0, typeof( Log ), 1044041, 5, 1044351 );
+			AddCraft( typeof( InstrumentTuningBox ), 1044042, "Instrument Tuning Box", 50.0, 75.0, typeof( Log ), 1044041, 10, 1044351 );
 
 			if( Core.SE )
 			{
