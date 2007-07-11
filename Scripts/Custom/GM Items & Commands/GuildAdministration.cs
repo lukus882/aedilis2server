@@ -1,30 +1,3 @@
-/*********************************************
- *			GuildAdministration.cs
- *		-------------------------------
- *  summary: GuildAdministration is a modular addition
- * to the RunUO 2.0 RC1 package (http://www.runuo.com).
- * It provides an interface to effectively manage the
- * standard guild system utilized in the 2.0 RC1 release.
- * 
- *  license: The contents of this file are released under
- * the same license as the RunUO 2.0 RC1 package as of
- * the "last modified" date specified below.
- * 
- * 
- *  copyright:..........(c) Michael Baird
- *  contact:............admin@khazman.com
- * 
- *  begin date:.........January 25, 2007
- *  last modified:......January 28, 2007
- * 
- *  additonal authors:
- *		-credit to the RunUO Software Team as much of the
- * following code is adapted from their Admin gump code
- * 
- * 
- * ^FileID: GuildAdministration.cs '0.6.0 - beta' 01-28-2007 mbaird^
- *********************************************/
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,16 +17,14 @@ namespace Khazman.Utilities
 			Information,
 			Guilds,
 			GuildInfo,
+			GuildMemberList,
 			Alliances,
 			AllianceDetails,
 			Wars,
 			WarDetails
 		}
 
-		private const string Version = "0.6.0 - beta";
-		private const bool UseAdminGump = true; //Note: setting this to false will lose functionality of
-												//GuildInfo.ViewMemberList and GuildInfo.ViewLeader as these
-												//two buttons route the user to the Admin gump
+		private const string Version = "1.2.1";
 
 		private Mobile m_From;
 		private Page m_PageType;
@@ -78,7 +49,7 @@ namespace Khazman.Utilities
 
 		public static void Initialize()
 		{
-			CommandSystem.Register( "GuildAdmin", AccessLevel.Administrator, new CommandEventHandler( GuildAdmin_OnCommand ) );
+			CommandSystem.Register( "GuildAdmin", AccessLevel.GameMaster, new CommandEventHandler( GuildAdmin_OnCommand ) );
 		}
 
 		[Usage( "GuildAdmin" )]
@@ -102,7 +73,7 @@ namespace Khazman.Utilities
 					m_List.Add( (Guild)kvp.Value );
 			}
 
-			m_List.Sort( new GuildIDComparer() );
+			m_List.Sort( GuildComparer.Instance );
 		}
 
 		private void PopulateAllianceTable()
@@ -128,7 +99,7 @@ namespace Khazman.Utilities
 						}
 					}
 
-					memberList.Sort( new GuildIDComparer() );
+					memberList.Sort( GuildComparer.Instance );
 					m_AllianceTable.Add( kvp.Value, memberList );
 				}
 			}
@@ -372,8 +343,11 @@ namespace Khazman.Utilities
 						y += 20;
 
 						AddLabel( 20, y, LabelHue, "Guild Leader:" );
-						AddLabelCropped( 200, y, 150, 20, LabelHue, g.Leader.RawName );
-						AddButton( 380, y, 0xFA5, 0xFA7, GetButtonID( 7, 6 ), GumpButtonType.Reply, 0 );
+						if( g.Leader.Account != null )
+							AddLabelCropped( 200, y, 150, 20, LabelHue, String.Format( "{0} [{1}]", g.Leader.RawName,
+								((Server.Accounting.Account)g.Leader.Account).Username ) );
+						else
+							AddLabelCropped( 200, y, 150, 20, LabelHue, g.Leader.RawName );
 						y += 20;
 
 						AddLabel( 20, y, LabelHue, "Active Members:" );
@@ -390,6 +364,51 @@ namespace Khazman.Utilities
 
 						AddButtonLabeled( 20, y, GetButtonID( 7, 4 ), "Add Member" );
 						AddButtonLabeled( 200, y, GetButtonID( 7, 5 ), "Guild Properties" );
+
+						break;
+					}
+				case Page.GuildMemberList:
+					{
+						Guild g = state as Guild;
+
+						if( g == null )
+							break;
+
+						AddGuildHeader();
+						AddLabelCropped( 12, 120, 120, 20, LabelHue, "Player Name" );
+						AddLabelCropped( 132, 120, 120, 20, LabelHue, "Account Username" );
+						AddLabelCropped( 252, 120, 120, 20, LabelHue, "Status" );
+
+						if( listPage > 0 )
+							AddButton( 375, 122, 0x15E3, 0x15E7, GetButtonID( 1, 0 ), GumpButtonType.Reply, 0 );
+						else
+							AddImage( 375, 122, 0x25EA );
+
+						if( (listPage + 1) * 12 < g.Members.Count )
+							AddButton( 392, 122, 0x15E1, 0x15E5, GetButtonID( 1, 1 ), GumpButtonType.Reply, 0 );
+						else
+							AddImage( 392, 122, 0x25E6 );
+
+						if( g.Members.Count == 0 )
+							AddLabel( 12, 140, LabelHue, "This guild has no members." );
+
+						for( int i = 0, index = (listPage * 12); i < 12 && index >= 0 && index < g.Members.Count; i++, index++ )
+						{
+							Mobile m = g.Members[index];
+
+							if( m == null || m.Account == null )
+								continue;
+
+							int offset = (140 + (i * 20));
+
+							AddLabelCropped( 12, offset, 120, 20, LabelHue, m.RawName );
+							AddLabelCropped( 132, offset, 120, 20, LabelHue, ((Server.Accounting.Account)m.Account).Username );
+
+							if( m.NetState != null )
+								AddLabelCropped( 252, offset, 120, 20, 0x40, "Online" );
+							else
+								AddLabelCropped( 252, offset, 120, 20, 0x20, "Offline" );
+						}
 
 						break;
 					}
@@ -569,9 +588,6 @@ namespace Khazman.Utilities
 			if( val < 0 )
 				return;
 
-			if( m_From.AccessLevel < AccessLevel.Administrator )
-				return;
-
 			int type = (val % 10);
 			int index = (val / 10);
 
@@ -598,12 +614,12 @@ namespace Khazman.Utilities
 							case 0:
 								{
 									if( m_List != null && m_ListPage > 0 )
-										m_From.SendGump( new GuildAdminGump( m_From, m_PageType, (m_ListPage - 1), null, null, null ) );
+										m_From.SendGump( new GuildAdminGump( m_From, m_PageType, (m_ListPage - 1), null, null, m_State ) );
 								} break;
 							case 1:
 								{
 									if( m_List != null )
-										m_From.SendGump( new GuildAdminGump( m_From, m_PageType, (m_ListPage + 1), null, null, null ) );
+										m_From.SendGump( new GuildAdminGump( m_From, m_PageType, (m_ListPage + 1), null, null, m_State ) );
 								} break;
 						}
 					} break;
@@ -647,7 +663,7 @@ namespace Khazman.Utilities
 												foundList.Add( (Guild)kvp.Value );
 										}
 
-										foundList.Sort( new GuildIDComparer() );
+										foundList.Sort( GuildComparer.Instance );
 									}
 
 									if( foundList.Count == 1 )
@@ -714,17 +730,9 @@ namespace Khazman.Utilities
 
 									break;
 								}
-							case 2: //member list [routes to AdminGump accounts page]
+							case 2: //member list
 								{
-									ArrayList list = new ArrayList();
-
-									for( int i = 0; i < ((Guild)m_State).Members.Count; i++ )
-										list.Add( ((Guild)m_State).Members[i].Account );
-
-									if( UseAdminGump )
-										m_From.SendGump( new AdminGump( m_From, AdminGumpPage.Accounts, 0, list, null, null ) );
-									else
-										m_From.SendGump( new GuildAdminGump( m_From, m_PageType, 0, "This button is currently disabled or you do not have authorization to use the Admin gump.", null, m_State ) );
+									m_From.SendGump( new GuildAdminGump( m_From, Page.GuildMemberList, 0, null, null, (Guild)m_State ) );
 
 									break;
 								}
@@ -752,15 +760,6 @@ namespace Khazman.Utilities
 									m_From.SendGump( new GuildInfoGump( (Server.Mobiles.PlayerMobile)m_From, (Guild)m_State ) );
 
 									m_From.SendGump( new GuildAdminGump( m_From, m_PageType, 0, null, null, m_State ) );
-
-									break;
-								}
-							case 6: //guild leader [routes to AdminGump client page]
-								{
-									if( UseAdminGump )
-										m_From.SendGump( new AdminGump( m_From, AdminGumpPage.ClientInfo, 0, null, null, ((Guild)m_State).Leader ) );
-									else
-										m_From.SendGump( new GuildAdminGump( m_From, m_PageType, 0, "This button is currently disabled or you do not have authorization to use the Admin gump.", null, m_State ) );
 
 									break;
 								}
@@ -893,22 +892,29 @@ namespace Khazman.Utilities
 				}
 			}
 		}
+	}
 
-		private class GuildIDComparer : IComparer<Guild>
+	public class GuildComparer : IComparer<Guild>
+	{
+		public static readonly IComparer<Guild> Instance = new GuildComparer();
+
+		public int Compare( Guild x, Guild y )
 		{
-			public int Compare( Guild x, Guild y )
-			{
-				if( x == null && y == null )
-					return 0;
+			if( x == null && y == null )
+				return 0;
+			else if( x == null )
+				return -1;
+			else if( y == null )
+				return 1;
 
-				if( x == null )
-					return 1;
-
-				if( y == null )
-					return -1;
-
-				return x.Id.CompareTo( y.Id );
-			}
+			if( x.Id == y.Id )
+				return 0;
+			else if( x.Id > y.Id )
+				return 1;
+			else if( x.Id < y.Id )
+				return -1;
+			else
+				return Insensitive.Compare( x.Name, y.Name );
 		}
 	}
 }

@@ -8,7 +8,7 @@ namespace Server.Items
    	{ 
     
       		[Constructable] 
-      		public StormwolfQuestFight4LifeStatue() : base( 0x2848 ) 
+      		public StormwolfQuestFight4LifeStatue() : base( 0x139D ) 
       		{ 
          		Weight = 1.0;  
          		Movable = true;
