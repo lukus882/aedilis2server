@@ -90,10 +90,10 @@ namespace Server.Engines.Harvest
 
 			// A resource bank will respawn its content every 20 to 30 minutes
 			reagent.MinRespawn = TimeSpan.FromMinutes( 60.0 );
-			reagent.MaxRespawn = TimeSpan.FromMinutes( 120.0 );
+			reagent.MaxRespawn = TimeSpan.FromMinutes( 90.0 );
 
 			// Skill checking is done on the Magery skill
-			reagent.Skill = SkillName.Magery;
+			reagent.Skill = SkillName.Necromancy;
 
 			// Set the list of harvestable tiles
 			reagent.Tiles = m_TreeTiles;
