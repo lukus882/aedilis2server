@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Server;
 using Server.Items;
 using Server.Mobiles;
@@ -43,8 +43,8 @@ namespace Server.Engines.Harvest
 			fish.BankHeight = 8;
 
 			// Every bank holds from 5 to 15 fish
-			fish.MinTotal = 5;
-			fish.MaxTotal = 15;
+			fish.MinTotal = 10;
+			fish.MaxTotal = 20;
 
 			// A resource bank will respawn its content every 10 to 20 minutes
 			fish.MinRespawn = TimeSpan.FromMinutes( 10.0 );
@@ -58,7 +58,7 @@ namespace Server.Engines.Harvest
 			fish.RangedTiles = true;
 
 			// Players must be within 4 tiles to harvest
-			fish.MaxRange = 4;
+			fish.MaxRange = 5;
 
 			// One fish per harvest action
 			fish.ConsumedPerHarvest = 1;
@@ -80,12 +80,20 @@ namespace Server.Engines.Harvest
 
 			res = new HarvestResource[]
 				{
-					new HarvestResource( 00.0, 00.0, 100.0, 1043297, typeof( Fish ) )
+					new HarvestResource( 00.0, 00.0, 100.0, 1043297, typeof( LittleFish ) ),
+					new HarvestResource( 10.0, -15.0, 100.0, "Bluegill", typeof( Bluegill ) ),
+					new HarvestResource( 10.0, -15.0, 100.0, "Perch", typeof( Perch ) ),
+					new HarvestResource( 20.0, -5.0, 100.0, "Carp", typeof( Carp ) ),
+					new HarvestResource( 20.0, -5.0, 100.0, "Catfish", typeof( Catfish ) )
 				};
 
 			veins = new HarvestVein[]
 				{
-					new HarvestVein( 100.0, 0.0, res[0], null )
+					new HarvestVein( 20.0, 0.0, res[0], null ),	// little fish
+					new HarvestVein( 20.0, 0.5, res[1], res[0] ),	// bluegill
+					new HarvestVein( 20.0, 0.5, res[2], res[0] ),	// perch
+					new HarvestVein( 20.0, 0.5, res[3], res[0] ),	// carp
+					new HarvestVein( 20.0, 0.5, res[4], res[0] )	// catfish
 				};
 
 			fish.Resources = res;
@@ -119,14 +127,15 @@ namespace Server.Engines.Harvest
 
 		private static MutateEntry[] m_MutateTable = new MutateEntry[]
 			{
+				new MutateEntry(  40.0, 125.0, -420.0,   true, typeof( Cod ), typeof( Tuna ), typeof( Swordfish ), typeof( Sturgeon ) ),
+				new MutateEntry(  40.0, 125.0, -420.0,   true, typeof( Seaweed ), typeof( FishBones ), typeof( NetPiece ), typeof( Kelp ) ),
 				new MutateEntry(  80.0,  80.0,  4080.0,  true, typeof( SpecialFishingNet ) ),
 				new MutateEntry(  80.0,  80.0,  4080.0,  true, typeof( BigFish ) ),
 				new MutateEntry(  90.0,  80.0,  4080.0,  true, typeof( TreasureMap ) ),
 				new MutateEntry( 100.0,  80.0,  4080.0,  true, typeof( MessageInABottle ) ),
-// woodcrafting driftwood
+				// woodcrafting driftwood
 				new MutateEntry(   0.0, 120.0,  -120.0, false, typeof( DriftWood ) ),
-				new MutateEntry(   0.0, 125.0, -2375.0, false, typeof( PrizedFish ), typeof( WondrousFish ), typeof( TrulyRareFish ), typeof( PeculiarFish ) ),
-				new MutateEntry(   0.0, 105.0,  -420.0, false, typeof( Boots ), typeof( Shoes ), typeof( Sandals ), typeof( ThighBoots ) ),
+                                new MutateEntry(   0.0, 105.0,  -420.0, false, typeof( Boots ), typeof( ThighBoots ) ),
 				new MutateEntry(   0.0, 200.0,  -200.0, false, new Type[1]{ null } )
 			};
 
@@ -248,62 +257,73 @@ namespace Server.Engines.Harvest
 					{
 						Item preLoot = null;
 
-						switch ( Utility.Random( 7 ) )
+						switch ( Utility.Random( 5 ) )
 						{
-							case 0: // Body parts
-							{
-								int[] list = new int[]
-									{
-										0x1CDD, 0x1CE5, // arm
-										0x1CE0, 0x1CE8, // torso
-										0x1CE1, 0x1CE9, // head
-										0x1CE2, 0x1CEC // leg
-									};
-
-								preLoot = new ShipwreckedItem( Utility.RandomList( list ) );
-								break;
-							}
-							case 1: // Bone parts
+							case 0: // Bone parts
 							{
 								int[] list = new int[]
 									{
 										0x1AE0, 0x1AE1, 0x1AE2, 0x1AE3, 0x1AE4, // skulls
 										0x1B09, 0x1B0A, 0x1B0B, 0x1B0C, 0x1B0D, 0x1B0E, 0x1B0F, 0x1B10, // bone piles
-										0x1B15, 0x1B16 // pelvis bones
+										0x1B15, 0x1B16, // pelvis bones
+										0xECA, 0xECB, 0xECC, 0xECD, 0xECE, 0xECF, 0xED0, 0xED1, 0xED2 // skeletons
 									};
 
 								preLoot = new ShipwreckedItem( Utility.RandomList( list ) );
 								break;
 							}
-							case 2: // Paintings and portraits
-							{
-								preLoot = new ShipwreckedItem( Utility.Random( 0xE9F, 10 ) );
-								break;
-							}
-							case 3: // Pillows
-							{
-								preLoot = new ShipwreckedItem( Utility.Random( 0x13A4, 11 ) );
-								break;
-							}
-							case 4: // Shells
+							case 1: // Shells
 							{
 								preLoot = new ShipwreckedItem( Utility.Random( 0xFC4, 9 ) );
 								break;
 							}
-							case 5: // Misc
+							case 2: // Misc
 							{
 								int[] list = new int[]
 									{
+										0xE9F, 0xEA0, 0xEA1, 0xEA2, 0xEA3, 0xEA4, 0xEA5, 0xEA6, 0xEA7, 0xEA8, // paintings
+										0x13A4, 0x13A5, 0x13A6, 0x13A7, 0x13A8, 0x13A9, 0x13AA, 0x13AB, 0x13AC, 0x13AD, 0x13AE, // pillows
 										0x1EB5, // unfinished barrel
 										0xA2A, // stool
 										0xC1F, // broken clock
 										0x1047, 0x1048, // globe
-										0x1EB1, 0x1EB2, 0x1EB3, 0x1EB4 // barrel staves
+										0x1EB1, 0x1EB2, 0x1EB3, 0x1EB4, // barrel staves
+										0xE25, 0xE26, 0xE27, 0xE28, 0xE29, 0xE2A, 0xE2B, 0xE2C, // bottles
+										0xC19, 0xC1A, 0xC1B, 0xC1C, 0xC1D, 0xC1E, // broken chairs
+										0xC2C, 0xC2D, 0xC2E, 0xC2F, 0xC30, // ruined painting, debris
+										0x13E5, 0x13E6, 0x13E7, 0x13E8, 0x13E9, 0x13EA // hanging armor
 									};
 
 								preLoot = new ShipwreckedItem( Utility.RandomList( list ) );
 								break;
 							}
+							case 3: // Ship Items
+							{
+								int[] list = new int[]
+									{
+										0x14F8, 0x14FA, // ropes
+										0x14F7, 0x14F9, // anchors
+										0x14EB, 0x14EC, // maps
+										0x1057, 0x1058, // sextants
+										0x171A // feathered hat
+									};
+
+								preLoot = new ShipwreckedItem( Utility.RandomList( list ) );
+								break;
+							}
+
+						/* YET TO BE TESTED FOR VHAERUN'S CRL FISHING SYSTEM
+
+							case 4: // Treasure Box
+							{
+								new TreasureBox();
+							}
+							case 5: // Ruined Clothes
+							{
+								preLoot = newShipwreckedItem( Utility.Random( 0xXXX, X ) );
+							}
+						*/
+
 						}
 
 						if ( preLoot != null )
@@ -409,21 +429,70 @@ namespace Server.Engines.Harvest
 				int number;
 				string name;
 
-				if ( item is BaseMagicFish )
+				if ( item is LittleFish )
 				{
 					number = 1008124;
-					name = "a mess of small fish";
+					name = "a little fish";
 				}
-// driftwood label
-				else if ( item is DriftWood )
-				{
-					number = 9999999;
-					name = "a piece of driftwood";
-				}
-				else if ( item is Fish )
+				else if ( item is Cod )
 				{
 					number = 1008124;
-					name = "a fish";
+					name = "a cod";
+				}
+				else if ( item is Sturgeon )
+				{
+					number = 1008124;
+					name = "a sturgeon";
+				}
+				else if ( item is Swordfish )
+				{
+					number = 1008124;
+					name = "a swordfish";
+				}
+				else if ( item is Tuna )
+				{
+					number = 1008124;
+					name = "a tuna";
+				}
+				else if ( item is Bluegill )
+				{
+					number = 1008124;
+					name = "a bluegill";
+				}
+				else if ( item is Perch )
+				{
+					number = 1008124;
+					name = "a perch";
+				}
+				else if ( item is Catfish )
+				{
+					number = 1008124;
+					name = "a catfish";
+				}
+				else if ( item is Carp )
+				{
+					number = 1008124;
+					name = "a carp";
+				}
+				else if ( item is Seaweed )
+				{
+					number = 1008124;
+					name = "some seaweed";
+				}
+				else if ( item is Kelp )
+				{
+					number = 1008124;
+					name = "some kelp";
+				}
+				else if ( item is FishBones )
+				{
+					number = 1008124;
+					name = "some fish bones";
+				}
+				else if ( item is NetPiece )
+				{
+					number = 1008124;
+					name = "a piece of a fishing net";
 				}
 				else if ( item is BaseShoes )
 				{

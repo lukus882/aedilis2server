@@ -166,7 +166,7 @@ namespace Server.Items
 				return false;
 			}
 
-			return CheckSkills(from) && CheckMana(from, false);
+			return CheckSkills(from);
 		}
 
 		private static WeaponAbility[] m_Abilities = new WeaponAbility[30]
