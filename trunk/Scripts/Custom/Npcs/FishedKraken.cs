@@ -48,14 +48,14 @@ namespace Server.Mobiles
 			MinTameSkill = 79.8;
 
 			CanSwim = true;
-			CantWalk = false;
+			CantWalk = true;
 
-			Rope rope = new Rope();
-			rope.ItemID = 0x14F8;
-			PackItem( rope );
+			PackItem( new CoilRope() );
 			
 			if( Utility.RandomDouble() < .05 )
 				PackItem( new MessageInABottle() );
+				
+			PackItem( new SpecialFishingNet() ); //Confirm?
 		}
 
 		public override void GenerateLoot()
