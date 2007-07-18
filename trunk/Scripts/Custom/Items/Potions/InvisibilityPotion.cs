@@ -99,6 +99,7 @@ namespace Server.Items
 				m_Mobile.RevealingAction();
 				RemoveTimer( m_Mobile );
 				m_Mobile.SendMessage( "The potion loses its effect, and you are revealed." );
+				m_Mobile.Hidden = false;
 			}
 		}
 	}

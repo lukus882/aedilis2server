@@ -154,6 +154,24 @@ namespace Server.Engines.Craft
 			index = AddCraft( typeof( GreaterExplosionPotion ), 1044537, 1044557, 65.0, 115.0, typeof( SulfurousAsh ), 1044359, 10, 1044367 );
 			AddRes( index, typeof ( Bottle ), 1044529, 1, 500315 );
 
+			//other
+			index = AddCraft( typeof( InvisibilityPotion ), "Other", "Invisibility Potion", 65.0, 120.0, typeof( Bloodmoss ), 1015004, 4, 1044362 );
+			AddRes( index, typeof( Nightshade ), 1044358, 3, 1044366 );
+			AddRes( index, typeof( Bottle ), 1044529, 1, 500315 );
+			index = AddCraft( typeof( HealPotionPet ), "Other", "Pet Heal Potion", 65.0, 120.0, typeof( ZoogiFungus ), 1015004, 10, 1044362 );
+			AddRes( index, typeof( Ginseng ), 1044358, 3, 1044366 );
+			AddRes( index, typeof( Bottle ), 1044529, 1, 500315 );
+			index = AddCraft( typeof( GreaterHealPotionPet ), "Other", "Pet Greater Heal Potion", 65.0, 120.0, typeof( ZoogiFungus ), 1015004, 20, 1044362 );
+			AddRes( index, typeof( Ginseng ), 1044358, 6, 1044366 );
+			AddRes( index, typeof( Bottle ), 1044529, 1, 500315 );
+			index = AddCraft( typeof( HealPotionPet ), "Other", "Pet Cure Potion", 65.0, 120.0, typeof( ZoogiFungus ), 1015004, 10, 1044362 );
+			AddRes( index, typeof( Garlic ), 1044358, 3, 1044366 );
+			AddRes( index, typeof( Bottle ), 1044529, 1, 500315 );
+			index = AddCraft( typeof( GreaterHealPotionPet ), "Other", "Pet Greater Cure Potion", 65.0, 120.0, typeof( ZoogiFungus ), 1015004, 15, 1044362 );
+			AddRes( index, typeof( Garlic ), 1044358, 6, 1044366 );
+			AddRes( index, typeof( Bottle ), 1044529, 1, 500315 );
+
+
 			if( Core.SE )
 			{
 				index = AddCraft( typeof( SmokeBomb ), 1044537, 1030248, 90.0, 120.0, typeof( Eggs ), 1044477, 1, 1044253 );

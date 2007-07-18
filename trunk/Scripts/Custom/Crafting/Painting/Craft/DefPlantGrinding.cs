@@ -1,24 +1,3 @@
-/*
- created by:Bad Karma aka Broadside
-
-  			        BBBBB        A      DDDDD  
-  			       BB  BB      AAA     DDDDDD
-  			      BB  BB     AA AA    DD   DD
- 			     BBBBBB	   AA   AA   DD   DD
-  		    	BBBBB     AAAAAAA   DD   DD
-   		       BB  BB    AAAAAAA   DD   DD
-   		      BB  BB    AA   AA   DDDDDD
-		     BBBBBB    AA   AA   DDDDD
-
-			        KK   KK       A      RRRRRR    MM   MM      A
-			       KK  KK       AAA     RR   RR   MMM MMM     AAA
-			      KK KK       AA AA    RR   RR   MMMMMMM    AA AA
-			     KKKK       AA   AA   RRRRRR    MM M MM   AA   AA
-			    KKKK       AAAAAAA   RRRR      MM   MM   AAAAAAA
-			   KK KK      AAAAAAA   RR RR     MM   MM   AAAAAAA
-			  KK   KK    AA   AA   RR  RR    MM   MM   AA   AA
-			 KK     KK  AA   AA   RR   RR   MM   MM   AA   AA
- */
 using Server.Engines.Craft;
 using System;
 using Server.Items;
@@ -40,7 +19,7 @@ namespace Server.Engines.Craft
 
 		public override string GumpTitleString
 		{
-            get { return "<basefont color=#FFFFFF><CENTER>Bad Karma's Plant Grinding Menu</CENTER></basefont>"; } 
+            get { return "<basefont color=#FFFFFF><CENTER>Paste Grinding Menu</CENTER></basefont>"; } 
 		}
 
 		private static CraftSystem m_CraftSystem;
@@ -116,11 +95,11 @@ namespace Server.Engines.Craft
 //			int index = -1;
 
 			// PaintPaste //
-			AddCraft(typeof(RedPaste), "PaintPaste", "Red Paste", 65.0, 125.0, typeof( BrightRedLilies ), "Decorative Bright Red Lilies", 1, "You need Bright Red Lilies." );
-            AddCraft(typeof(BluePaste), "PaintPaste", "Blue Paste", 65.0, 125.0, typeof(BrightBlueLilies), "Decorative Bright Blue Lilies", 1, "You need Bright Blue Lilies.");
-            AddCraft(typeof(YellowPaste), "PaintPaste", "Yellow Paste", 65.0, 125.0, typeof(BrightYellowLilies), "Decorative Bright Yellow Lilies", 1, "You need  Bright Yellow Lilies.");
-            AddCraft(typeof(WhitePaste), "PaintPaste", "White Paste", 65.0, 125.0, typeof(WhiteLilies), "Decorative White Lilies", 1, "You need White Lilies.");
-            AddCraft(typeof(BlackPaste), "PaintPaste", "Black Paste", 65.0, 125.0, typeof(BlackLilies), "Decorative Black Lilies", 1, "You need Black Lilies.");
+	    AddCraft(typeof(RedPaste), "PaintPaste", "Red Paste", 65.0, 125.0, typeof(Watermelon), "a Water melon", 1, "You need an Water Melon." );
+            AddCraft(typeof(BluePaste), "PaintPaste", "Blue Paste", 65.0, 125.0, typeof(Cake), "a Cake", 1, "You need a Cake.");
+            AddCraft(typeof(YellowPaste), "PaintPaste", "Yellow Paste", 65.0, 125.0, typeof(YellowGourd), "a Yellow Gourd", 1, "You need  a Yellow Gourd");
+            AddCraft(typeof(WhitePaste), "PaintPaste", "White Paste", 65.0, 125.0, typeof(HoneydewMelon), "a Honeydew Melon", 1, "You need a Honeydew Melon.");
+            AddCraft(typeof(BlackPaste), "PaintPaste", "Black Paste", 65.0, 125.0, typeof(CookedBird), "a Cooked Bird", 1, "You a Cooked Bird.");
 
 			MarkOption = true;
 

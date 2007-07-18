@@ -21,7 +21,7 @@ namespace Server.Engines.Craft
 
 		public override string GumpTitleString
 		{
-			get { return "<basefont color=#FFFFFF><CENTER>WOOD CARVING MENU</CENTER></basefont>"; } 
+			get { return "<basefont color=#FFFFFF><CENTER>Whittling Menu</CENTER></basefont>"; } 
 		}
 
 		private static CraftSystem m_CraftSystem;
@@ -105,9 +105,7 @@ namespace Server.Engines.Craft
 
 		public override void InitCraftList()
 		{
-			AddCraft( typeof( FishingPole ), "Miscellaneous", "Fishing Pole", 50.0, 95.0, typeof( DriftWood ), "Drift Wood", 5, 1053098 );
-			AddCraft( typeof( QuarterStaff ), "Miscellaneous", "Quarter Staff", 55.0, 105.0, typeof( DriftWood ), "Drift Wood", 5, 1053098 );
-			AddCraft( typeof( GnarledStaff ), "Miscellaneous", "GnarledStaff", 57.5, 107.5, typeof( DriftWood ), "Drift Wood", 5, 1053098 );
+			AddCraft( typeof( WoodenHorseStatue ), "Statuettes", "a Wooden Horse", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 50, 1053098 );
 			AddCraft( typeof( Croc ), "Statuettes", "a Wee Crocodile", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
 			AddCraft( typeof( PlainIdol ), "Statuettes", "a Plain Idol", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
 			AddCraft( typeof( Shark ), "Statuettes", "a Hungry Little Shark", 90.0, 100.0, typeof( DriftWood ), "Drift Wood", 10, 1053098 );
