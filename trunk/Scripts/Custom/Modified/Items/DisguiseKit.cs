@@ -49,16 +49,16 @@ namespace Server.Items
 				// That must be in your pack for you to use it.
 				from.SendLocalizedMessage( 1042001 );
 			}
-			//else if ( pm == null || pm.NpcGuild != NpcGuild.ThievesGuild )
-			//{
-			//	// Only Members of the thieves guild are trained to use this item.
-			//	from.SendLocalizedMessage( 501702 );
-			//}
-			//else if ( Stealing.SuspendOnMurder && pm.Kills > 0 )
-			//{
-			//	// You are currently suspended from the thieves guild.  They would frown upon your actions.
-			//	from.SendLocalizedMessage( 501703 );
-			//}
+			else if ( pm == null || pm.NpcGuild != NpcGuild.ThievesGuild )
+			{
+				// Only Members of the thieves guild are trained to use this item.
+				from.SendLocalizedMessage( 501702 );
+			}
+			else if ( Stealing.SuspendOnMurder && pm.Kills > 0 )
+			{
+				// You are currently suspended from the thieves guild.  They would frown upon your actions.
+				from.SendLocalizedMessage( 501703 );
+			}
 			else if ( !from.CanBeginAction( typeof( IncognitoSpell ) ) )
 			{
 				// You cannot disguise yourself while incognitoed.
