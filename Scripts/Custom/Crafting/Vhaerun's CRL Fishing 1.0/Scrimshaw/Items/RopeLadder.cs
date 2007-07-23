@@ -12,6 +12,7 @@ namespace Server.Items
 		public RopeLadder() : base( 0x8A6 )
 		{
 			Weight = 5.0;
+			Movable = true;
 		}
 
 		public RopeLadder( Serial serial ) : base( serial )
