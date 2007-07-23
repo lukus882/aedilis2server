@@ -4811,6 +4811,7 @@ namespace Server.Mobiles
 
 						Titles.AwardFame( ds.m_Mobile, totalFame, true );
 						Titles.AwardKarma( ds.m_Mobile, totalKarma, true );
+						ExperienceValidate.ExperienceAward(ds.m_Mobile, this);
 						// modification to support XmlQuest Killtasks
 						XmlQuest.RegisterKill( this, ds.m_Mobile);
 

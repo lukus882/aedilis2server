@@ -58,6 +58,15 @@ namespace Server.Mobiles
 
 			switch (version)
 			{
+
+                                 case 3:
+                                 {
+				 	Percent = reader.ReadDouble();
+                                 	m_LevelTitle = reader.ReadString();
+                                        m_PlayerLevel = reader.ReadInt();
+                                        goto case 2;
+                                 }
+
 				case 2:
 				{
 					m_CharFlags = CharacterFlags.DeserializeFlags(reader);
@@ -79,7 +88,12 @@ namespace Server.Mobiles
 
 		public void ExtendedSerialize( GenericWriter writer )
 		{
-			writer.Write( (int)2 ); //version
+			writer.Write( (int)3 ); //version
+
+			//Alteration 3 Player Levels
+			writer.Write( (double)Percent );
+                        writer.Write( (String)m_LevelTitle );
+                        writer.Write( m_PlayerLevel );
 			
 			//Alteration 2
 			CharacterFlags.SerializeFlags(writer, m_CharFlags);

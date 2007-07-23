@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
@@ -213,6 +213,33 @@ namespace Server.Mobiles
 		}
 
 		#endregion
+
+		#region PlayerLevel
+                        
+			private double Percent;
+			[CommandProperty(AccessLevel.Owner)]
+			public double LevelPercent
+			{
+			get { return Percent; }
+			set { Percent = value; InvalidateProperties(); }
+			}
+
+                        private int m_PlayerLevel;
+                        [CommandProperty( AccessLevel.GameMaster )]
+                        public int PlayerLevel
+                        {
+                            get { return m_PlayerLevel; }
+                            set { m_PlayerLevel = value; InvalidateProperties(); }
+                        }
+                        
+                        public string m_LevelTitle;
+                        [CommandProperty(AccessLevel.Owner)]
+                        public string LevelTitle
+                        {
+                            get { return m_LevelTitle; }
+                            set { m_LevelTitle = value; InvalidateProperties(); }
+                        }
+                        #endregion
 
 		#region PlayerFlags
 		public PlayerFlag Flags
@@ -2855,6 +2882,82 @@ namespace Server.Mobiles
             if (m_Settings != null)
                 m_Settings.OnAfterGetProperties(list);
 		}
+
+#region PlayerLevel
+									public override void AddNameProperties(ObjectPropertyList list)
+									{
+										base.AddNameProperties(list);
+							           
+										double Pertemp;
+										if (m_PlayerLevel >= 0 && m_PlayerLevel <= 4999)
+										{
+											m_LevelTitle = "Neophyte";
+											Pertemp = ((((double)(m_PlayerLevel)) / 4999) * 1000);
+											Percent = (((int)(Pertemp)) / 10);
+										}
+										else if (m_PlayerLevel >= 5000 && m_PlayerLevel <= 14999)
+										{ 
+											m_LevelTitle = "Monster Basher";
+											Pertemp = ((((double)(m_PlayerLevel - 5000)) / 9999) * 1000);
+											Percent = (((int)(Pertemp)) / 10);
+										}
+										else if (m_PlayerLevel >= 15000 && m_PlayerLevel <= 29999)
+										{   
+											m_LevelTitle = "Skilled Warrior";
+											Pertemp = ((((double)(m_PlayerLevel - 15000)) / 14999) * 1000);
+											Percent = (((int)(Pertemp)) / 10);
+										}
+										else if (m_PlayerLevel >= 30000 && m_PlayerLevel <= 49999)
+										{
+											m_LevelTitle = "Master of the Slice & Dice";
+											Pertemp = ((((double)(m_PlayerLevel - 30000)) / 19999) * 1000);
+											Percent = (((int)(Pertemp)) / 10);
+										}
+										else if (m_PlayerLevel >= 50000 && m_PlayerLevel <= 64999)
+										{
+											m_LevelTitle = "Blade of the King";
+											Pertemp = ((((double)(m_PlayerLevel - 50000)) / 14999) * 1000);
+											Percent = (((int)(Pertemp)) / 10);
+										}
+										else if (m_PlayerLevel >= 65000 && m_PlayerLevel <= 99999)
+										{
+											m_LevelTitle = "Weathered Warrior";
+											Pertemp = ((((double)(m_PlayerLevel - 65000)) / 34999) * 1000);
+											Percent = (((int)(Pertemp)) / 10);
+										}
+										else if (m_PlayerLevel >= 100000 && m_PlayerLevel <= 139999)
+										{
+											m_LevelTitle = "Old School Slasher";
+											Pertemp = ((((double)(m_PlayerLevel - 100000)) / 39999) * 1000);
+											Percent = (((int)(Pertemp)) / 10);
+										}
+										else if (m_PlayerLevel >= 140000 && m_PlayerLevel <= 189999)
+										{
+											m_LevelTitle = "High Protector";
+											Pertemp = ((((double)(m_PlayerLevel - 140000)) / 49999) * 1000);
+											Percent = (((int)(Pertemp)) / 10);
+										}
+										else if (m_PlayerLevel >= 190000 && m_PlayerLevel <= 259999)
+										{
+											m_LevelTitle = "Deadly Weapon";
+											Pertemp = ((((double)(m_PlayerLevel - 190000)) / 69999) * 1000);
+											Percent = (((int)(Pertemp)) / 10);
+										}
+										else if (m_PlayerLevel >= 260000 && m_PlayerLevel <= 349999)
+										{
+											m_LevelTitle = "Unstopable Force";
+											Pertemp = ((((double)(m_PlayerLevel - 260000)) / 89999) * 1000);
+											Percent = (((int)(Pertemp)) / 10);
+										}
+										else if (m_PlayerLevel >= 350000)
+										{
+											m_LevelTitle = "Honored Veteran";
+											Percent = 100;
+										}
+
+										list.Add(String.Concat("Level: ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", m_LevelTitle)," ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", Percent), "%")); InvalidateMyRunUO();
+									}
+						#endregion
 
 		public override void OnSingleClick( Mobile from )
 		{
