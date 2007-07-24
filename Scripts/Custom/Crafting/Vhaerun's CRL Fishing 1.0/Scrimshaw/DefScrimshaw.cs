@@ -144,8 +144,8 @@ namespace Server.Engines.Craft
 		index = AddCraft( typeof( FishingNet ), "Nets", "Fishing Net", 80.0, 105.0, typeof( CoilRope ), "Coils of Rope", 3, "You don't have enough coils of rope." );
 		AddSkill( index, SkillName.Tailoring, 50.0, 55.0 );
 
-		index = AddCraft( typeof( RopeLadder ), "Other", "Rope Ladder", 65.0, 90.0, typeof( CoilRope ), "Coils of Rope", 2, "You don't have enough coils of rope." );
-		AddSkill( index, SkillName.Tailoring, 40.0, 45.0 );
+		//index = AddCraft( typeof( RopeLadder ), "Other", "Rope Ladder", 65.0, 90.0, typeof( CoilRope ), "Coils of Rope", 2, "You don't have enough coils of rope." );
+		//AddSkill( index, SkillName.Tailoring, 40.0, 45.0 );
 
             // END OF MENU
 
