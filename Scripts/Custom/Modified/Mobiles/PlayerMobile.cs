@@ -2955,7 +2955,8 @@ namespace Server.Mobiles
 											Percent = 100;
 										}
 
-										list.Add(String.Concat("Level: ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", m_LevelTitle)," ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", Percent), "%")); InvalidateMyRunUO();
+										list.Add(String.Concat(" ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", m_LevelTitle)," ")); InvalidateMyRunUO();
+										list.Add(String.Concat("XP: ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", m_PlayerLevel)," ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", Percent), "%")); InvalidateMyRunUO();
 									}
 						#endregion
 
