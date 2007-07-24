@@ -9,7 +9,7 @@ using Server.Gumps;
 
 namespace Server.Mobiles
 {
-     	public class Greeter : BaseGuildmaster
+     	public class VoteGuy : BaseGuildmaster
 	    {
 		public override NpcGuild NpcGuild{ get{ return NpcGuild.TailorsGuild; } }
 
@@ -19,13 +19,13 @@ namespace Server.Mobiles
 		
 		      string[] kfcsay = new string[] // things to say while greating 
 		      { 
-		         "Welcome To The World of Aedilis. If this is your first visit please take some time to read through our website. You can get there by clicking on the welcome book in your pack or you can use this web stone.",   
+		         "Hey, I hear there is this dimensional voting thing. Have you voted for Aedilis yet? You can vote once per week. Click on the voting stone to help other visitors find out about our world.",   
       };
 
 		[Constructable]
-		public Greeter() : base( "Greeter" )
+		public VoteGuy() : base( "VoteGuy" )
 		{
-			Name = "Greeter";
+			Name = "VoteGuy";
 			Female = false;
 
 			AddItem( new Server.Items.FancyShirt() );
@@ -65,7 +65,7 @@ namespace Server.Mobiles
 			      { 
 			         m.Say( say[Utility.Random( say.Length )] ); 
 			      } 
-					public Greeter( Serial serial ) : base( serial )
+					public VoteGuy( Serial serial ) : base( serial )
 					{
 		}
 
@@ -84,38 +84,7 @@ namespace Server.Mobiles
 		
 		}
 		
-		public class GreeterEntry : ContextMenuEntry
-		{
-			private Mobile m_Mobile;
-			private Mobile m_Giver;
-			
-			public GreeterEntry( Mobile from, Mobile giver ) : base( 6146, 3 )
-			{
-				m_Mobile = from;
-				m_Giver = giver;
-			}
-
-			public override void OnClick()
-			{
-				
-
-                          if( !( m_Mobile is PlayerMobile ) )
-					return;
-				
-				PlayerMobile mobile = (PlayerMobile) m_Mobile;
-
-				{
-					if ( ! mobile.HasGump( typeof( GreeterGump ) ) )
-					{
-						mobile.SendGump( new GreeterGump( mobile ));
-						
-				         	
-				         }
-				         
-				  }       
-				     
-                        }
-           }
+		
    }   
 }	
 					 				       
