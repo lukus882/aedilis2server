@@ -216,7 +216,7 @@ namespace Server.Mobiles
 
 		#region PlayerLevel
                         
-			private double Percent;
+			public double Percent;
 			[CommandProperty(AccessLevel.Owner)]
 			public double LevelPercent
 			{
@@ -224,7 +224,7 @@ namespace Server.Mobiles
 			set { Percent = value; InvalidateProperties(); }
 			}
 
-                        private int m_PlayerLevel;
+                        public int m_PlayerLevel;
                         [CommandProperty( AccessLevel.GameMaster )]
                         public int PlayerLevel
                         {
@@ -2945,7 +2945,7 @@ namespace Server.Mobiles
 										}
 										else if (m_PlayerLevel >= 260000 && m_PlayerLevel <= 349999)
 										{
-											m_LevelTitle = "Unstopable Force";
+											m_LevelTitle = "Unstoppable Force";
 											Pertemp = ((((double)(m_PlayerLevel - 260000)) / 89999) * 1000);
 											Percent = (((int)(Pertemp)) / 10);
 										}
@@ -2956,7 +2956,7 @@ namespace Server.Mobiles
 										}
 
 										list.Add(String.Concat(" ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", m_LevelTitle)," ")); InvalidateMyRunUO();
-										list.Add(String.Concat("XP: ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", m_PlayerLevel)," ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", Percent), "%")); InvalidateMyRunUO();
+										//list.Add(String.Concat("XP: ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", m_PlayerLevel)," ", String.Format("<BASEFONT COLOR={0}>{1}", "#00FF00", Percent), "%")); InvalidateMyRunUO();
 									}
 						#endregion
 

@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
@@ -1525,7 +1525,7 @@ namespace Server.Multis
 				bool valid = m_House != null && Sextant.Format( m_House.Location, m_House.Map, ref xLong, ref yLat, ref xMins, ref yMins, ref xEast, ref ySouth );
 
 				if ( valid )
-					location = String.Format( "{0}° {1}'{2}, {3}° {4}'{5}", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W" );
+					location = String.Format( "{0} {1}'{2}, {3} {4}'{5}", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W" );
 				else
 					location = "unknown";
 
@@ -3045,19 +3045,41 @@ namespace Server.Multis
 			return false;
 		}
 
-		public static bool HasAccountHouse( Mobile m )
-		{
-			Account a = m.Account as Account;
+        public static bool HasAccountHouse(Mobile m)
+        {
+            // ARTEGORDONMOD
+            // unlimited housing for the specified staff level and above
+            if (m.AccessLevel >= AccessLevel.GameMaster) return false;
 
-			if ( a == null )
-				return false;
+            Account a = m.Account as Account;
 
-			for ( int i = 0; i < a.Length; ++i )
-				if ( a[i] != null && HasHouse( a[i] ) )
-					return true;
+            if (a == null)
+                return false;
 
-			return false;
-		}
+            // ARTEGORDONMOD
+            // allow for a limited number of houses for the rest
+            int nHouses = 0;
+
+            for (int i = 0; i < a.Length; ++i)
+            {
+                Mobile mob = a[i];
+
+                if (mob != null)
+                    nHouses += GetHouses(mob).Count;
+            }
+
+            // 4 houses per account limit by default
+            int maxhouses = 4;
+
+            // see if they have a special override of the housing limit
+            try{
+            maxhouses = Convert.ToInt32( a.GetTag("maxHouses") );
+            } catch{}
+
+            if (nHouses >= maxhouses) return true;
+
+            return false;
+        }
 
 		public bool CheckAccount( Mobile mobCheck, Mobile accCheck )
 		{

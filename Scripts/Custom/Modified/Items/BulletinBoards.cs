@@ -158,7 +158,7 @@ namespace Server.Items
 			{
 				Cleanup();
 				from.Send( new BBDisplayBoard( this ) );
-				from.Send( new ContainerContent( from, this ) );
+				from.Send( new ContainerContent( from, this, from.NetState.Version ) );
 			}
 			else
 			{
