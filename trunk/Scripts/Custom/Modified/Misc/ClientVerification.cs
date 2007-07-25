@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server;
 using System.Diagnostics;
 using System.IO;
@@ -120,6 +120,9 @@ namespace Server.Misc
 			string kickMessage = null;
 			NetState state = e.State;
 			ClientVersion version = e.Version;
+
+			if ( state == null || state.Mobile == null )
+				return;
 
 			if( Required != null && m_OldClientResponse == OldClientResponse.Kick && version < Required )
 			{

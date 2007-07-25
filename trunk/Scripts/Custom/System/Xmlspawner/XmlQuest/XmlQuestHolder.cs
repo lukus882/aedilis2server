@@ -339,7 +339,7 @@ namespace Server.Items
             UnHideRewards();
 
             to.Send(new ContainerDisplay(this));
-            to.Send(new ContainerContent(to, this));
+            to.Send(new ContainerContent(to, this, to.NetState.Version));		
 
             if (ObjectPropertyList.Enabled)
             {

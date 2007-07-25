@@ -17,9 +17,7 @@ namespace Server.Items
 		Paladin,
 		Ninja,
 		Samurai,
-		Arcanist,
-                Avatar
-
+		Arcanist
 	}
 
 	public class Spellbook : Item, ICraftable, ISlayer
@@ -80,7 +78,6 @@ namespace Server.Items
 				case 4: type = SpellbookType.Ninja; break;
 				case 5: type = SpellbookType.Samurai; break;
 				case 6:	type = SpellbookType.Arcanist; break;
-                                case 7: type = SpellbookType.Avatar;      break;
 			}
 
 			Spellbook book = Spellbook.Find( from, -1, type );
@@ -142,9 +139,6 @@ namespace Server.Items
 				return SpellbookType.Ninja;
 			else if ( spellID >= 600 && spellID < 617 )
 				return SpellbookType.Arcanist;
-			else if ( spellID >= 210 && spellID < 214 )
-				return SpellbookType.Avatar;
-
 
 			return SpellbookType.Invalid;
 		}
@@ -177,11 +171,6 @@ namespace Server.Items
 		public static Spellbook FindArcanist( Mobile from )
 		{
 			return Find( from, -1, SpellbookType.Arcanist );
-		}
-
-		public static Spellbook FindAvatar( Mobile from )
-		{
-			return Find( from, -1, SpellbookType.Avatar );
 		}
 
 		public static Spellbook Find( Mobile from, int spellID )
@@ -495,7 +484,7 @@ namespace Server.Items
 			else if ( Parent is Item )
 			{
 				// What will happen if the client doesn't know about our parent?
-				to.Send( new ContainerContentUpdate( this ) );
+				to.Send( new ContainerContentUpdate( this, to.NetState.Version ) );
 			}
 			else if ( Parent is Mobile )
 			{

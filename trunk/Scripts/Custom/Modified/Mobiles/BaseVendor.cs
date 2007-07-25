@@ -1,4 +1,4 @@
-/**************************************
+﻿/**************************************
 *Script Name: NPC Sales Tax           *
 *Author: Joeku AKA Demortris          *
 *For use with RunUO 2.0               *
@@ -708,7 +708,7 @@ namespace Server.Mobiles
 
 				SendPacksTo( from );
 				
-				from.Send( new VendorBuyContent( list ) );
+				from.Send( new VendorBuyContent( list, from.NetState.Version ) );
 				from.Send( new VendorBuyList( this, list ) );
 				from.Send( new DisplayBuyList( this ) );
 				from.Send( new MobileStatusExtended( from ) );//make sure their gold amount is sent
