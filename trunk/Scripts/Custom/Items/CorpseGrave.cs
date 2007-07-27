@@ -22,10 +22,10 @@ namespace Server.Items
 
 	public class CorpseGrave : Item
 	{
-		public CorpseGrave() : base( 0x1180 )
+		public CorpseGrave() : base( 0x3679 )
 		{
 			Movable = false;
-			Weight = 8.0;
+			Weight = 10.0;
 			ItemRemovalTimer thisTimer = new ItemRemovalTimer( this ); 
 			thisTimer.Start(); 
 		}
