@@ -2056,6 +2056,97 @@ namespace Server.Mobiles
 					RemoveBuff( list[i] );
 				}
 			}
+
+			if( c is Corpse )
+			{
+				PlayerMobile corpsekiller = ((Corpse)c).Owner.LastKiller as PlayerMobile;
+
+				if( corpsekiller != null )
+				{
+		        		Item grave = new CorpseGrave();
+					grave.Name = String.Concat("A Grave Stone Marking The Death Of " + ((Corpse)c).Owner.Name + " who was killed by " + corpsekiller.RawName);
+
+					if ( this.Kills >= 3 )
+						grave.Hue = 35;
+
+					else if ( ((Corpse)c).Criminal == true )
+						grave.Hue = 903;
+
+					else
+						grave.Hue = 295;
+
+            				grave.MoveToWorld( c.Location, c.Map );
+
+		        		Item Cball = new CorpseCrystalBall();
+					Cball.Name = String.Concat("A Crystal Ball Showing The Death Of " + ((Corpse)c).Owner.Name + " who was killed by " + corpsekiller.RawName);
+
+					if ( this.Kills >= 3 )
+						Cball.Hue = 35;
+
+					else if ( ((Corpse)c).Criminal == true )
+						Cball.Hue = 903;
+
+					else
+						Cball.Hue = 295;
+
+            				Cball.MoveToWorld( c.Location, c.Map );
+				}
+			}
+/*
+			if( c is Corpse )
+			{
+				PlayerMobile corpsekiller = ((Corpse)c).Owner.LastKiller as PlayerMobile;
+
+				if( corpsekiller != null )
+				{
+            				Point3D pa = new Point3D( c.Location );
+					pa.Z = (c.Z + 5);
+                        		bool canFita = c.Map.CanFit( c.X, c.Y, c.Z, 6, false, false );
+		        		CorpseCrystalBall Cball = new CorpseCrystalBall();
+					Cball.Name = String.Concat("A Crystal Ball Showing The Death Of " + ((Corpse)c).Owner.Name + " who was killed by " + corpsekiller.RawName);
+            				Cball.Map = c.Map; 
+		        		Cball.Location = pa;
+
+					if ( this.Kills >= 3 )
+					{
+						Cball.Hue = 35;
+					}
+
+					else if ( ((Corpse)c).Criminal == true )
+					{
+						Cball.Hue = 903;
+					}
+
+					else
+					{
+						Cball.Hue = 295;
+					}
+
+            				Point3D p = new Point3D( c.Location );
+					p.Z = c.Z;
+                        		bool canFit = c.Map.CanFit( c.X, c.Y, c.Z, 6, false, false );
+		        		CorpseGrave grave = new CorpseGrave();
+					grave.Name = String.Concat("A Grave Stone Marking The Death Of " + ((Corpse)c).Owner.Name + " who was killed by " + corpsekiller.RawName);
+            				grave.Map = c.Map; 
+		        		grave.Location = p;
+
+					if ( this.Kills >= 3 )
+					{
+						grave.Hue = 35;
+					}
+
+					else if ( ((Corpse)c).Criminal == true )
+					{
+						grave.Hue = 903;
+					}
+
+					else
+					{
+						grave.Hue = 295;
+					}
+				}
+			}
+*/
 		}
 
 		private List<Mobile> m_PermaFlags;
