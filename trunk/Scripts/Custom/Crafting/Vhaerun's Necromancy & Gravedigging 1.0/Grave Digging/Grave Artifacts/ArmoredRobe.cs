@@ -1,0 +1,38 @@
+using System;
+using Server;
+
+namespace Server.Items
+{
+	public class ArmoredRobe : Robe
+	{
+		[Constructable]
+		public ArmoredRobe()
+		{
+			Name = "Armored Robe";
+			Hue = 1000;
+			Resistances.Physical = 27;
+			Resistances.Cold = 3;
+			Resistances.Fire = 2;
+			Resistances.Poison = 1;
+			Resistances.Energy = 2;
+		}
+
+		public ArmoredRobe( Serial serial ) : base( serial )
+		{
+		}
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int) 0 );
+		}
+		
+		public override void Deserialize(GenericReader reader)
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+		}
+	}
+}
