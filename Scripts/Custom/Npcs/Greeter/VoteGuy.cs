@@ -19,7 +19,7 @@ namespace Server.Mobiles
 		
 		      string[] kfcsay = new string[] // things to say while greating 
 		      { 
-		         "Hey, I hear there is this dimensional voting thing. Have you voted for Aedilis yet? You can vote once per week. Click on the voting stone to help other visitors find out about our world.",   
+		         "Hey, I hear there is this dimensional voting thing. Have you voted for Aedilis yet? You can vote once per week on our primary stone and once a day on the secondary stone. Click on the voting stone to help other visitors find out about our world.",   
       };
 
 		[Constructable]
