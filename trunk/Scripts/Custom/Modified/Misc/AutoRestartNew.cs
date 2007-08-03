@@ -146,7 +146,7 @@ namespace Server.Misc
 		{	
 			Warning_Callback();
 			World.Save();
-			Process.Start( Core.ExePath );
+			Process.Start( Core.ExePath, Core.Arguments );
 			Core.Process.Kill();
 		}
 		
