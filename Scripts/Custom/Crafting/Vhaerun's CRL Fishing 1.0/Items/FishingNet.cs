@@ -206,7 +206,7 @@ namespace Server.Items
 		{
 			from.RevealingAction();
 
-			int count = GetResCount();
+			double count = (3 * from.Skills[SkillName.Fishing].Value) / 20 + 2;
 			int dolcount = GetSpawnCount();
 
 			for ( int i = 0; map != null && i < count; ++i )
