@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using Server;
 using Server.Mobiles;
@@ -98,7 +98,7 @@ namespace Server.Commands
 					PlayerMobile pm = (PlayerMobile)from;
 					Mobile targ = (Mobile)targeted;
 
-					if ( targ.AccessLevel < from.AccessLevel )
+					if ( targ.AccessLevel <= from.AccessLevel )
 					{
 						List<Mobile> list = pm.VisibilityList;
 

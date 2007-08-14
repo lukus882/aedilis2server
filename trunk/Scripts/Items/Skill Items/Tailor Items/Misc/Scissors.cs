@@ -71,6 +71,9 @@ namespace Server.Items
 				{
 					from.SendLocalizedMessage( 1063305 ); // Didn't your parents ever tell you not to run with scissors in your hand?!
 				}
+				else if ( targeted is Item && !((Item)targeted).Movable ) {
+					return;
+				}
 				else if( targeted is IScissorable )
 				{
 					IScissorable obj = (IScissorable)targeted;

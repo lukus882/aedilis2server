@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Net;
 using System.Text;
 using System.Collections;
@@ -515,7 +515,7 @@ namespace Server.Gumps
 				{
 					if ( m_List == null )
 					{
-						m_List = new ArrayList( (ICollection)NetState.Instances );
+						m_List = new ArrayList( NetState.Instances );
 						m_List.Sort( NetStateComparer.Instance );
 					}
 

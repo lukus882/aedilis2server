@@ -72,6 +72,9 @@ namespace Server.Items
         private string m_status_str;
         private int m_QuestDifficulty = 1;
 
+        public static int JournalNotifyColor = 0;
+        public static int JournalEchoColor = 6;
+
         public XmlQuestHolder(Serial serial)
             : base(serial)
         {
@@ -305,6 +308,7 @@ namespace Server.Items
                 {
                     tmpitem = new Item(1);
                 }
+
                 // need to get it to allocate a new list by adding an item
                 DropItem(tmpitem);
             }
@@ -322,7 +326,8 @@ namespace Server.Items
             // remove the placeholder
             if (tmpitem != null && Items.Contains(tmpitem))
             {
-                Items.Remove(tmpitem); 
+                Items.Remove(tmpitem);
+                tmpitem.Map = Map.Internal;
             }
 
             if (tmpitem != null && tmpitem != PlaceHolderItem)
@@ -339,7 +344,7 @@ namespace Server.Items
             UnHideRewards();
 
             to.Send(new ContainerDisplay(this));
-            to.Send(new ContainerContent(to, this, to.NetState.Version));		
+            to.Send(new ContainerContent(to, this));
 
             if (ObjectPropertyList.Enabled)
             {
@@ -538,70 +543,128 @@ namespace Server.Items
         public ArrayList Journal { get { return m_Journal; } set { m_Journal = value; } }
         private static char[] colondelim = new char[1] { ':' };
 
+        public string EchoAddJournalEntry
+        {
+            set
+            {
+                // notify and echo journal text
+                VerboseAddJournalEntry(value, true, true);
+            }
+        }
+
+        public string NotifyAddJournalEntry
+        {
+            set
+            {
+                // notify
+                VerboseAddJournalEntry(value, true, false);
+            }
+        }
+
         public string AddJournalEntry
         {
             set
             {
-                if (value == null) return;
+                // silent
+                VerboseAddJournalEntry(value, false, false);
+            }
+        }
 
-                // parse the value
-                string[] args = value.Split(colondelim, 2);
+        private void VerboseAddJournalEntry(string entrystring, bool notify, bool echo)
+        {
+            if (entrystring == null) return;
 
-                if (args == null) return;
+            // parse the value
+            string[] args = entrystring.Split(colondelim, 2);
 
-                string entryID = null;
-                string entryText = null;
-                if (args.Length > 0)
+            if (args == null) return;
+
+            string entryID = null;
+            string entryText = null;
+            if (args.Length > 0)
+            {
+                entryID = args[0].Trim();
+            }
+
+            if (entryID == null || entryID.Length == 0) return;
+
+            if (args.Length > 1)
+            {
+                entryText = args[1].Trim();
+            }
+
+            // allocate a new journal if none exists
+            if (m_Journal == null) m_Journal = new ArrayList();
+
+            // go through the existing journal to find a matching ID
+            XmlQuest.JournalEntry foundEntry = null;
+
+            foreach (XmlQuest.JournalEntry e in m_Journal)
+            {
+                if (e.EntryID == entryID)
                 {
-                    entryID = args[0].Trim();
+                    foundEntry = e;
+                    break;
                 }
+            }
 
-                if (entryID == null || entryID.Length == 0) return;
-
-                if (args.Length > 1)
+            if (foundEntry != null)
+            {
+                // modify an existing entry
+                if (entryText == null || entryText.Length == 0)
                 {
-                    entryText = args[1].Trim();
-                }
-
-                // allocate a new journal if none exists
-                if (m_Journal == null) m_Journal = new ArrayList();
-
-                // go through the existing journal to find a matching ID
-                XmlQuest.JournalEntry foundEntry = null;
-
-                foreach (XmlQuest.JournalEntry e in m_Journal)
-                {
-                    if (e.EntryID == entryID)
-                    {
-                        foundEntry = e;
-                        break;
-                    }
-                }
-
-                if (foundEntry != null)
-                {
-
-                    if (entryText == null || entryText.Length == 0)
-                    {
-                        // delete the entry
-                        m_Journal.Remove(foundEntry);
-                    }
-                    else
-                    {
-                        // just replace the text
-                        foundEntry.EntryText = entryText;
-                    }
+                    // delete the entry
+                    m_Journal.Remove(foundEntry);
                 }
                 else
                 {
-                    if (entryText != null && entryText.Length != 0)
+                    // just replace the text
+                    foundEntry.EntryText = entryText;
+
+                    Mobile holder = RootParent as Mobile;
+
+                    if (holder != null)
                     {
-                        // add the new entry
-                        m_Journal.Add(new XmlQuest.JournalEntry(entryID, entryText));
+                        if (notify)
+                        {
+                            // notify the player holding the questholder                       
+                            holder.SendMessage(JournalNotifyColor,"Journal entry '{0}' of quest '{1}' has been modified.", entryID, Name);
+                        }
+                        if (echo)
+                        {
+                            // echo the journal text to the player holding the questholder                       
+                            holder.SendMessage(JournalEchoColor,"{0}", entryText);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // add a new entry
+                if (entryText != null && entryText.Length != 0)
+                {
+                    // add the new entry
+                    m_Journal.Add(new XmlQuest.JournalEntry(entryID, entryText));
+
+                    Mobile holder = RootParent as Mobile;
+
+                    if (holder != null)
+                    {
+                        if (notify)
+                        {
+                            // notify the player holding the questholder                       
+                            holder.SendMessage(JournalNotifyColor,"Journal entry '{0}' has been added to quest '{1}'.", entryID, Name);
+                        }
+                        if (echo)
+                        {
+                            // echo the journal text to the player holding the questholder                       
+                            holder.SendMessage(JournalEchoColor, "{0}", entryText);
+                        }
                     }
                 }
             }
         }
+
 
 
         private void QuestCompletionAttachment()

@@ -1097,7 +1097,7 @@ namespace Server.Engines.XmlSpawner2
 						pause = TimeSpan.FromSeconds(CurrentEntry.Pause);
 					}
 					// check to see if the current pause interval has elapsed
-					if(DateTime.Now > m_LastInteraction + pause)
+					if(DateTime.Now - pause > m_LastInteraction)
 					{
 						// process speech that is not keyword dependent
 						CheckForReset();
@@ -1120,7 +1120,7 @@ namespace Server.Engines.XmlSpawner2
 		private void CheckForReset()
 		{
 			// check to see if the interaction time has elapsed.  If so then reset to entry zero
-			if(DateTime.Now > m_LastInteraction + ResetTime && !m_HoldProcessing)
+            if ((DateTime.Now - ResetTime > m_LastInteraction) && !m_HoldProcessing)
 			{
 
 				Reset();
@@ -1314,7 +1314,7 @@ namespace Server.Engines.XmlSpawner2
 						pause = TimeSpan.FromSeconds(m_npc.CurrentEntry.Pause);
 					}
 					// check to see if the current pause interval has elapsed
-					if(DateTime.Now > m_npc.LastInteraction + pause)
+					if(DateTime.Now - pause > m_npc.LastInteraction)
 					{
 						// process speech that is not keyword dependent
 

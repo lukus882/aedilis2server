@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using Server;
 using Server.Targeting;
@@ -35,7 +35,8 @@ namespace Server.Commands.Generic
 				}
 				else
 				{
-					BaseCommand command = this.Commands[e.GetString( 1 )];
+					BaseCommand command = null;
+					Commands.TryGetValue( e.GetString( 1 ), out command );
 
 					if ( command == null )
 					{

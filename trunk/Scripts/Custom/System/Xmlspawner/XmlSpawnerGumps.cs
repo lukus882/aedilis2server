@@ -85,7 +85,7 @@ namespace Server.Mobiles
                 "GOTO/subgroup\n" +
                 "BROWSER/url\n" +
                 "MUSIC,musicname[,range]\n" +
-                "SOUND,value[,range]\n" +
+                "SOUND,value\n" +
                 "EFFECT,itemid,duration[,x,y,z]\n" +
                 "MEFFECT,itemid[,speed][,x,y,z][,x2,y2,z2]" +
                 "RESURRECT[,range][,PETS]\n" +
@@ -122,7 +122,7 @@ namespace Server.Mobiles
                 "GIVEN\n" +
                 "GET,itemname or serialno[,itemtype],property\n" +
                 "GETVAR,varname\n" +
-                "GETONCARRIED,itemname[,itemtype],property\n" +
+                "GETONCARRIED,itemname[,itemtype][,equippedonly],property\n" +
                 "GETONNEARBY,range,name[,type][,searchcontainers],property\n" +
                 "GETONMOB,mobname[,mobtype],property\n" +
                 "GETONGIVEN,property\n" +

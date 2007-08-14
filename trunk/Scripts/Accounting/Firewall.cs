@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Collections.Generic;
 
 namespace Server
 {
@@ -269,6 +269,16 @@ namespace Server
 				Add( (IPAddress)obj );
 			else if( obj is string )
 				Add( (string)obj );
+			else if( obj is IFirewallEntry )
+				Add( (IFirewallEntry)obj );
+		}
+
+		public static void Add( IFirewallEntry entry )
+		{
+			if( !m_Blocked.Contains( entry ) )
+				m_Blocked.Add( entry );
+
+			Save();
 		}
 
 		public static void Add( string pattern )
