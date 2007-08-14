@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -48,7 +48,7 @@ namespace Server.Misc
 				{
 					++count;
 
-					if ( count >= MaxAddresses )
+					if ( count > MaxAddresses )
 						return false;
 				}
 			}

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server;
 using Server.Mobiles;
 using Server.Targeting;
@@ -26,8 +26,6 @@ namespace Server.Items
 			Stackable = true;
 			Amount = amount;
 		}
-
-		
 
 		public bool Dye( Mobile from, DyeTub sender )
 		{

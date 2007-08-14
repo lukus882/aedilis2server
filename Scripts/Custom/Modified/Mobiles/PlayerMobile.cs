@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
@@ -430,11 +430,7 @@ namespace Server.Mobiles
 		public static void Initialize()
 		{
 			if ( FastwalkPrevention )
-			{
-				PacketHandler ph = PacketHandlers.GetHandler( 0x02 );
-
-				ph.ThrottleCallback = new ThrottlePacketCallback( MovementThrottle_Callback );
-			}
+				PacketHandlers.RegisterThrottler( 0x02, new ThrottlePacketCallback( MovementThrottle_Callback ) );
 
 			EventSink.Login += new LoginEventHandler( OnLogin );
 			EventSink.Logout += new LogoutEventHandler( OnLogout );

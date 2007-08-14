@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server;
 using Server.Mobiles;
 
@@ -256,7 +256,7 @@ namespace Server.Misc
 
 		private static bool AllowGain( Mobile from, Skill skill, object obj )
 		{
-			if ( from is PlayerMobile && AntiMacroCode && UseAntiMacro[skill.Info.SkillID] )
+			if ( AntiMacroCode && from is PlayerMobile && UseAntiMacro[skill.Info.SkillID] )
 				return ((PlayerMobile)from).AntiMacroCheck( skill, obj );
 			else
 				return true;
@@ -283,11 +283,13 @@ namespace Server.Misc
 					toGain = Utility.Random( 4 ) + 1;
 
                 Skills skills = from.Skills;
+
                 if ((skills.Total / skills.Cap) >= Utility.RandomDouble())//( skills.Total >= skills.Cap )
                 {
                     for (int i = 0; i < skills.Length; ++i)
                     {
                         Skill toLower = skills[i];
+
                         if (toLower != skill && toLower.Lock == SkillLock.Down && toLower.BaseFixedPoint >= toGain)
                         {
                             toLower.BaseFixedPoint -= toGain;
@@ -419,10 +421,33 @@ namespace Server.Misc
 
 		public static void GainStat( Mobile from, Stat stat )
 		{
-			if ( (from.LastStatGain + m_StatGainDelay) >= DateTime.Now )
+			switch( stat )
+			{
+				case Stat.Str:
+				{
+					if( (from.LastStrGain + m_StatGainDelay) >= DateTime.Now )
 						return;
 
-			from.LastStatGain = DateTime.Now;
+					from.LastStrGain = DateTime.Now;
+					break;
+				}
+				case Stat.Dex:
+				{
+					if( (from.LastDexGain + m_StatGainDelay) >= DateTime.Now )
+						return;
+
+					from.LastDexGain = DateTime.Now;
+					break;
+				}
+				case Stat.Int:
+				{
+					if( (from.LastIntGain + m_StatGainDelay) >= DateTime.Now )
+						return;
+
+					from.LastIntGain = DateTime.Now;
+					break;
+				}
+			}
 
 			bool atrophy = ( (from.RawStatTotal / (double)from.StatCap) >= Utility.RandomDouble() );
 

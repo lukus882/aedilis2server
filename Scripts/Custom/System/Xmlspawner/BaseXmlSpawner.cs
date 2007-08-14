@@ -186,12 +186,13 @@ namespace Server.Mobiles
             Type objecttype = o.GetType();
 
             Type targettype = null;
+            bool returnvalue = false;
             try
             {
                 targettype = SpawnerType.GetType(typename);
             }
             catch { }
-
+            
             if (objecttype != null && targettype != null && (objecttype.Equals(targettype) || objecttype.IsSubclassOf(targettype)))
             {
                 return true;
@@ -199,6 +200,7 @@ namespace Server.Mobiles
             }
 
             return false;
+
         }
 
         private enum typeKeyword
@@ -283,6 +285,7 @@ namespace Server.Mobiles
             LOOTPACK,
             TAKEN,
             GIVEN,
+            ITEM,
             MULTIADDON
         }
 
@@ -617,6 +620,7 @@ namespace Server.Mobiles
             AddItemKeyword("LOOTPACK");
             AddItemKeyword("TAKEN");
             AddItemKeyword("GIVEN");
+            AddItemKeyword("ITEM");
             AddItemKeyword("MULTIADDON");
 
         }
@@ -2258,13 +2262,16 @@ namespace Server.Mobiles
                             }
                             else if (kw == valuemodKeyword.GETONCARRIED)
                             {
-                                // syntax is GETONCARRIED,itemname[,itemtype],property
-                                // or GETONCARRIED,itemname[,itemtype],<ATTACHMENT,type,name,property>
+                                // syntax is GETONCARRIED,itemname[,itemtype][,equippedonly],property
+                                // or GETONCARRIED,itemname[,itemtype][,equippedonly],<ATTACHMENT,type,name,property>
                                 // note this will be an arg to some property
                                 if (value_keywordargs.Length > 2)
                                 {
+                                    bool equippedonly = false;
+
                                     if (trigmob != null && !trigmob.Deleted)
                                     {
+                                        string itemname = value_keywordargs[1];
                                         string propname = value_keywordargs[2];
                                         string typestr = null;
                                         if (value_keywordargs.Length > 3)
@@ -2272,10 +2279,30 @@ namespace Server.Mobiles
                                             propname = value_keywordargs[3];
                                             typestr = value_keywordargs[2];
                                         }
+                                        if (value_keywordargs.Length > 4)
+                                        {
+                                            propname = value_keywordargs[4];
+                                            if (value_keywordargs[3].ToLower() == "equippedonly")
+                                            {
+                                                equippedonly = true;
+                                            }
+                                            else
+                                            {
+                                                try
+                                                {
+                                                    equippedonly = bool.Parse(value_keywordargs[3]);
+                                                }
+                                                catch 
+                                                {
+                                                    status_str = "GETONCARRIED error parsing equippedonly";
+                                                    no_error = false;
+                                                }
+                                            }
+                                        }
                                         // get the current property value
                                         //Type ptype;
                                         // get target item
-                                        Item testitem = SearchMobileForItem(trigmob, ParseObjectType(value_keywordargs[1]), typestr, false);
+                                        Item testitem = SearchMobileForItem(trigmob, ParseObjectType(itemname), typestr, false, equippedonly);
 
                                         string resultstr = ApplyToProperty(spawner, testitem, o, propname, arglist[0]);
 
@@ -3085,15 +3112,10 @@ namespace Server.Mobiles
                                 }
                                 try
                                 {
-                                    if (sound >= 0 && o is Mobile)
+                                    if (sound >= 0 && o is IEntity)
                                     {
-                                        Effects.PlaySound(((Mobile)o).Location, ((Mobile)o).Map, sound);
+                                        Effects.PlaySound(((IEntity)o).Location, ((IEntity)o).Map, sound);
                                     }
-                                    else
-                                        if (sound >= 0 && o is Item)
-                                        {
-                                            Effects.PlaySound(((Item)o).Location, ((Item)o).Map, sound);
-                                        }
                                 }
                                 catch { }
                                 if (arglist.Length < 2) break;
@@ -4178,10 +4200,11 @@ namespace Server.Mobiles
                         }
                         else if ((kw == valueKeyword.GETONCARRIED) && arglist.Length > 2)
                         {
-                            // syntax is GETONCARRIED,itemname[,itemtype],property
+                            // syntax is GETONCARRIED,itemname[,itemtype][,equippedonly],property
 
                             string propname = arglist[2];
                             string typestr = null;
+                            bool equippedonly = false;
 
                             // if the itemtype arg has been specified then check it
                             if (arglist.Length > 3)
@@ -4189,8 +4212,26 @@ namespace Server.Mobiles
                                 propname = arglist[3];
                                 typestr = arglist[2];
                             }
+                            if (arglist.Length > 4)
+                            {
+                                propname = arglist[4];
+                                if (arglist[3].ToLower() == "equippedonly")
+                                {
+                                    equippedonly = true;
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        equippedonly = bool.Parse(arglist[3]);
+                                    }
+                                    catch
+                                    {
+                                    }
+                                }
+                            }
 
-                            Item testitem = SearchMobileForItem(trigmob, ParseObjectType(arglist[1]), typestr, false);
+                            Item testitem = SearchMobileForItem(trigmob, ParseObjectType(arglist[1]), typestr, false, equippedonly);
 
                             string getvalue = GetPropertyValue(spawner, testitem, propname, out ptype);
 
@@ -5615,7 +5656,7 @@ namespace Server.Mobiles
             bool has_no_such_item = true;
 
             // check to see whether there is an objective specification as well.  The format is name[,type][,EQUIPPED][,objective,objective,...]
-            string[] objstr = ParseString(objectivestr, 7, ",");
+            string[] objstr = ParseString(objectivestr, 8, ",");
             string itemname = objstr[0];
 
             // check for attachment keyword
@@ -5679,7 +5720,7 @@ namespace Server.Mobiles
             }
 
             // look for the item
-            Item testitem = SearchMobileForItem(m, itemname, typestr, false);
+            Item testitem = SearchMobileForItem(m, itemname, typestr, false, equippedonly);
 
             // found the item
             if (testitem != null)
@@ -5783,7 +5824,7 @@ namespace Server.Mobiles
             bool has_valid_item = false;
 
             // check to see whether there is an objective specification as well.  The format is name[,type][,EQUIPPED][,objective,objective,...]
-            string[] objstr = ParseString(objectivestr, 7, ",");
+            string[] objstr = ParseString(objectivestr, 8, ",");
 
             string itemname = objstr[0];
 
@@ -5845,7 +5886,7 @@ namespace Server.Mobiles
             }
 
 
-            Item testitem = SearchMobileForItem(m, itemname, typestr, false);
+            Item testitem = SearchMobileForItem(m, itemname, typestr, false, equippedonly);
 
             // found the item
             if (testitem != null)
@@ -6865,6 +6906,37 @@ namespace Server.Mobiles
                                             ApplyObjectStringProperties(spawner, itemargstring, item, trigmob, refobject, out status_str);
                                         }
                                     }
+                                    break;
+                                }
+                            case itemKeyword.ITEM:
+                                {
+                                    // syntax is ITEM,serial
+                                    if (itemkeywordargs.Length == 2)
+                                    {
+                                        int serial = -1;
+                                        bool converterror = false;
+                                        try { serial = Convert.ToInt32(itemkeywordargs[1], 16); }
+                                        catch { status_str = "Invalid ITEM args : " + itemtypestr; converterror = true; }
+
+                                        if (converterror) return false;
+
+                                        Item item = World.FindItem(serial);
+                                        if (item != null)
+                                        {
+                                            pack.DropItem(item);
+                                            // could call applyobjectstringproperties on a nested propertylist here to set item attributes
+                                            if (itemargstring != null)
+                                            {
+                                                ApplyObjectStringProperties(spawner, itemargstring, item, trigmob, refobject, out status_str);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        status_str = "ITEM takes 1 arg : " + itemtypestr;
+                                        return false;
+                                    }
+
                                     break;
                                 }
                             case itemKeyword.LOOT:
@@ -9777,9 +9849,9 @@ namespace Server.Mobiles
                                     }
                                     catch { status_str = "Improper sound number format"; }
                                 }
-                                if (sound >= 0 && spawner != null && !spawner.Deleted)
+                                if (sound >= 0 && invoker is IEntity)
                                 {
-                                    Effects.PlaySound(spawner.Location, spawner.Map, sound);
+                                    Effects.PlaySound(((IEntity)invoker).Location, ((IEntity)invoker).Map, sound);
                                 }
                                 if (status_str != null)
                                 {
@@ -10418,6 +10490,32 @@ namespace Server.Mobiles
                                     status_str = "JEWELRY takes 2 args : " + itemtypestr;
                                     return false;
                                 }
+                                break;
+                            }
+                        case itemKeyword.ITEM:
+                            {
+                                // syntax is ITEM,serial
+                                if (itemkeywordargs.Length == 2)
+                                {
+                                    int serial = -1;
+                                    bool converterror = false;
+                                    try { serial = Convert.ToInt32(itemkeywordargs[1], 16); }
+                                    catch { status_str = "Invalid ITEM args : " + itemtypestr; converterror = true; }
+
+                                    if (converterror) return false;
+
+                                    Item item = World.FindItem(serial);
+                                    if (item != null)
+                                    {
+                                        AddSpawnItem(spawner, TheSpawn, item, location, map, triggermob, requiresurface, spawnpositioning, substitutedtypeName, out status_str);
+                                    }
+                                }
+                                else
+                                {
+                                    status_str = "ITEM takes 1 arg : " + itemtypestr;
+                                    return false;
+                                }
+
                                 break;
                             }
                         case itemKeyword.SCROLL:

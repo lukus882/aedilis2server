@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 using System.Collections;
 using Server;
@@ -134,7 +134,6 @@ namespace Server.Gumps
 						toSet = TimeSpan.Zero;
 					}
 
-					
 					shouldSet = shouldSend = successfulParse;
 
 					break;

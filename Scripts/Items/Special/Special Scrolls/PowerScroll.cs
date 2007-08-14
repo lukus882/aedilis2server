@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server;
 using Server.Gumps;
 using Server.Network;
@@ -170,7 +170,6 @@ namespace Server.Items
 		{
 			base.Hue = 0x481;
 			base.Weight = 1.0;
-
 
 			m_Skill = skill;
 			m_Value = value;

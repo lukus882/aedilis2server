@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Reflection;
 using System.Collections;
 using Server;
+using Server.Commands.Generic;
 using Server.Network;
 using Server.Menus;
 using Server.Menus.Questions;
@@ -235,7 +236,7 @@ namespace Server.Gumps
 		{
 			Mobile from = state.Mobile;
 
-			if ( !Server.Commands.Generic.BaseCommand.IsAccessible( from, m_Object ) )
+			if ( !BaseCommand.IsAccessible( from, m_Object ) )
 			{
 				from.SendMessage( "You may no longer access their properties." );
 				return;
@@ -315,10 +316,12 @@ namespace Server.Gumps
 						}
 						else if( HasAttribute( type, typeofPropertyObject, true ) )
 						{
-							object o = prop.GetValue( m_Object, null );
+							object obj = prop.GetValue( m_Object, null );
 							
-							if( o != null )
-								from.SendGump( new PropertiesGump( from, o, m_Stack, new StackEntry( m_Object, prop ) ) );
+							if ( obj != null )
+								from.SendGump( new PropertiesGump( from, obj, m_Stack, new StackEntry( m_Object, prop ) ) );
+							else
+								from.SendGump( new PropertiesGump( from, m_Object, m_Stack, m_List, m_Page ) );
 						}
 					}
 
@@ -489,7 +492,7 @@ namespace Server.Gumps
 			}
 			else if ( o is Item )
 			{
-				return String.Format( "(I) 0x{0:X}", ((Item)o).Serial.Value );
+				return String.Format( "(I) 0x{0:X}", ((Item)o).Serial );
 			}
 			else if ( o is Type )
 			{
@@ -671,7 +674,7 @@ namespace Server.Gumps
 			}
 			else if ( o is Item )
 			{
-				return String.Format( "(I) 0x{0:X}", ((Item)o).Serial.Value );
+				return String.Format( "(I) 0x{0:X}", ((Item)o).Serial );
 			}
 			else if ( o is Type )
 			{

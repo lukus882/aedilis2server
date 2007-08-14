@@ -1,20 +1,4 @@
-﻿/**************************************
-*Script Name: NPC Sales Tax           *
-*Author: Joeku AKA Demortris          *
-*For use with RunUO 2.0               *
-*Client Tested with: 5.0.7.1          *
-*Version: 1.02                        *
-*Initial Release: 01/06/07            *
-*Revision Date: 01/07/07              *
-**************************************/
-
-//07SEP2006 Talking Vendors by RavonTUS@Yahoo.com
-//  Play at An Nox, the cure for the UO addicition
-//  annox.no-ip.com
-//  Thank you sordican for his Chuck Norris script, which is partly used here.
-
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server.Items;
@@ -39,57 +23,6 @@ namespace Server.Mobiles
 
 	public abstract class BaseVendor : BaseCreature, IVendor
 	{
-        //07SEP2006 Talking Vendors by RavonTUS@Yahoo.com *** START ***
-        #region Make Vendors Talk
-        private static bool m_Talked;
-        string[] VendorSay = new string[] 
-		{ 
-	    "Greetings",
-            "Hello there",
-            "Hey there hot stuff, my shift ends in about an hour want to go get some grog?",
-            "Hello",
-            "Hi, how are you today?",
-            "Nice to see you friend",
-            "Ah, another friendly face off on a wild adventure!",
-            "How goes that wild adventure friend?"
-		};
-
-        public override void OnMovement(Mobile m, Point3D oldLocation)
-        {
-            if (m_Talked == false)
-            {
-                if (m.InRange(this, 3) && m is PlayerMobile && m.AccessLevel == AccessLevel.Player)
-                {
-                    m_Talked = true;
-                    SayRandom(VendorSay, this);
-                    this.Move(GetDirectionTo(m.Location));
-                    SpamTimer t = new SpamTimer();
-                    t.Start();
-                }
-            }
-        }
-
-        private class SpamTimer : Timer
-        {
-            public SpamTimer()
-                : base(TimeSpan.FromMinutes(1))
-            {
-                Priority = TimerPriority.OneMinute;
-            }
-
-            protected override void OnTick()
-            {
-                m_Talked = false;
-            }
-        }
-
-        private static void SayRandom(string[] say, Mobile m)
-        {
-            m.Say(say[Utility.Random(say.Length)]);
-        }
-        #endregion
-        //07SEP2006 Talking Vendors by RavonTUS@Yahoo.com *** END ***
-
 		private const int MaxSell = 500;
 
 		protected abstract ArrayList SBInfos{ get; }
@@ -708,7 +641,13 @@ namespace Server.Mobiles
 
 				SendPacksTo( from );
 				
-				from.Send( new VendorBuyContent( list, from.NetState.Version ) );
+				if ( from.NetState == null )
+					return;
+				
+				if ( from.NetState.IsPost6017 )
+					from.Send( new VendorBuyContent6017( list ) );
+				else
+					from.Send( new VendorBuyContent( list ) );
 				from.Send( new VendorBuyList( this, list ) );
 				from.Send( new DisplayBuyList( this ) );
 				from.Send( new MobileStatusExtended( from ) );//make sure their gold amount is sent

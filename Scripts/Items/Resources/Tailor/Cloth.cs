@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server.Items;
 using Server.Network;
 
@@ -66,6 +66,7 @@ namespace Server.Items
 
 			from.Send( new MessageLocalized( Serial, ItemID, MessageType.Regular, 0x3B2, 3, number, "", Amount.ToString() ) );
 		}
+		
 		public bool Scissor( Mobile from, Scissors scissors )
 		{
 			if ( Deleted || !from.CanSee( this ) ) return false;
