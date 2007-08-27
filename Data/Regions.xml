@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ServerRegions>
 	<Facet name="Felucca">
 		<region type="GuardedRegion" priority="50" name="Moongates">
@@ -1972,7 +1972,7 @@
 
     <region type="TownRegion" priority="49"  name="Maris">
       <rect x="644" y="372" width="281" height="233" />
-	<go x="723" y="455" z="0" />
+	<go x="724" y="451" z="7" />
 	<smartNoHousing active="true" />
     </region>
 
