@@ -871,21 +871,38 @@ namespace Server.Mobiles
 			{
 				m_Mobile.DebugSay( "Praise the shepherd!" );
 			}
-			else if( m_Mobile.CurrentWayPoint != null )
+			else if( m_Mobile.CurrentWayPoint != null )  //Addition
 			{
-				WayPoint point = m_Mobile.CurrentWayPoint;
-				if( (point.X != m_Mobile.Location.X || point.Y != m_Mobile.Location.Y) && point.Map == m_Mobile.Map && point.Parent == null && !point.Deleted )
+				if( m_Mobile.Combatant == null )
 				{
-					m_Mobile.DebugSay( "I will move towards my waypoint." );
-					DoMove( m_Mobile.GetDirectionTo( m_Mobile.CurrentWayPoint ) );
-				}
-				else if( OnAtWayPoint() )
-				{
-					m_Mobile.DebugSay( "I will go to the next waypoint" );
-					m_Mobile.CurrentWayPoint = point.NextPoint;
-					if( point.NextPoint != null && point.NextPoint.Deleted )
+					WayPoint point = m_Mobile.CurrentWayPoint;
+					if( (point.X != m_Mobile.Location.X || point.Y != m_Mobile.Location.Y) && point.Map == m_Mobile.Map && point.Parent == null && !point.Deleted )
+					{
+						m_Mobile.DebugSay( "I will move towards my waypoint." );
+						DoMove( m_Mobile.GetDirectionTo( m_Mobile.CurrentWayPoint) );
+					}
+					else if( OnAtWayPoint() )
+					{
+						m_Mobile.DebugSay( "I will go to the next waypoint" );
+						m_Mobile.CurrentWayPoint = point.NextPoint;
+						if( point.NextPoint != null && point.NextPoint.Deleted )
 						m_Mobile.CurrentWayPoint = point.NextPoint = point.NextPoint.NextPoint;
+					}
 				}
+				else if( m_Mobile.Combatant != null )
+					{
+						Mobile c = m_Mobile.Combatant;
+
+						if( c == null || c.Deleted || c.Map != m_Mobile.Map || !c.Alive || c.IsDeadBondedPet )
+						{
+							Action = ActionType.Wander;
+						}
+						else
+						{
+							m_Mobile.Direction = m_Mobile.GetDirectionTo( c );
+							Action = ActionType.Combat;
+						}
+					}
 			}
 			else if( m_Mobile.IsAnimatedDead )
 			{

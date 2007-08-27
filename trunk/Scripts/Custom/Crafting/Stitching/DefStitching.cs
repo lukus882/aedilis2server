@@ -106,8 +106,31 @@ namespace Server.Engines.Craft
 
 			// Pillows
 			index = AddCraft( typeof( BigPillow ), "Pillows", "Big Pillow", 100.0, 120.0, typeof( Cloth ), 1044286, 85, 1044287 );
+			AddRes(index, typeof(Cotton), "Cotton", 6, "You don't have any Cotton.");
+
 			index = AddCraft( typeof( MediumPillow ), "Pillows", "Medium Pillow", 100.0, 120.0, typeof( Cloth ), 1044286, 75, 1044287 );
+
+			AddRes(index, typeof(Cotton), "Cotton", 6, "You don't have any Cotton.");
 			index = AddCraft( typeof( SmallPillow ), "Pillows", "Small Pillow", 100.0, 120.0, typeof( Cloth ), 1044286, 65, 1044287 );
+			AddRes(index, typeof(Cotton), "Cotton", 6, "You don't have any Cotton.");
+
+            		index = AddCraft(typeof(TasslePillow), "Pillows", "Tassle Pillow", 6.2, 31.2, typeof(Cloth), 1044286, 6, 1044287);
+           		AddRes(index, typeof(Cotton), "Cotton", 6, "You don't have any Cotton.");
+
+            		index = AddCraft(typeof(FloorPillow), "Pillows", "Floor Pillow", 6.2, 31.2, typeof(Cloth), 1044286, 12, 1044287);
+            		AddRes(index, typeof(Cotton), "Cotton", 12, "You don't have any Cotton.");
+
+            		index = AddCraft(typeof(RoundPillow), "Pillows", "Round Pillow", 6.2, 31.2, typeof(Cloth), 1044286, 10, 1044287);
+            		AddRes(index, typeof(Cotton), "Cotton", 10, "You don't have any Cotton.");
+
+            		index = AddCraft(typeof(BedPillow), "Pillows", "Bed Pillow", 6.2, 31.2, typeof(Cloth), 1044286, 4, 1044287);
+            		AddRes(index, typeof(Cotton), "Cotton", 4, "You don't have any Cotton.");
+
+            		index = AddCraft(typeof(TaggedPillow), "Special Pillows", "Tagged Pillow", 6.2, 31.2, typeof(Cloth), 1044286, 10, 1044287);
+            		AddRes(index, typeof(Wool), "Wool", 5, "You don't have any wool.");
+            
+            		index = AddCraft(typeof(ThrowingPillow), "Special Pillows", "Throwing Pillow", 6.2, 31.2, typeof(Cloth), 1044286, 10, 1044287);
+            		AddRes(index, typeof(Feather), "Feather", 20, "You don't have any feathers.");
 
 			// Towels
 			index = AddCraft( typeof( Towel ), "Towels", "Towel", 100.0, 120.0, typeof( Cloth ), 1044286, 55, 1044287 );

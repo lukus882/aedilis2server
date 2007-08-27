@@ -141,11 +141,11 @@ namespace Server.Items
 				{
 					case CraftResource.DullCopper:		ar += 2; break;
 					case CraftResource.ShadowIron:		ar += 4; break;
-					case CraftResource.Copper:			ar += 6; break;
-					case CraftResource.Bronze:			ar += 8; break;
-					case CraftResource.Gold:			ar += 10; break;
-					case CraftResource.Agapite:			ar += 12; break;
-					case CraftResource.Verite:			ar += 14; break;
+					case CraftResource.Copper:		ar += 6; break;
+					case CraftResource.Bronze:		ar += 8; break;
+					case CraftResource.Gold:		ar += 10; break;
+					case CraftResource.Agapite:		ar += 12; break;
+					case CraftResource.Verite:		ar += 14; break;
 					case CraftResource.Valorite:		ar += 16; break;
 					case CraftResource.SpinedLeather:	ar += 10; break;
 					case CraftResource.HornedLeather:	ar += 13; break;
@@ -1348,11 +1348,11 @@ namespace Server.Items
 			{
 				case CraftResource.DullCopper:		oreType = 1053108; break; // dull copper
 				case CraftResource.ShadowIron:		oreType = 1053107; break; // shadow iron
-				case CraftResource.Copper:			oreType = 1053106; break; // copper
-				case CraftResource.Bronze:			oreType = 1053105; break; // bronze
-				case CraftResource.Gold:			oreType = 1053104; break; // golden
-				case CraftResource.Agapite:			oreType = 1053103; break; // agapite
-				case CraftResource.Verite:			oreType = 1053102; break; // verite
+				case CraftResource.Copper:		oreType = 1053106; break; // copper
+				case CraftResource.Bronze:		oreType = 1053105; break; // bronze
+				case CraftResource.Gold:		oreType = 1053104; break; // golden
+				case CraftResource.Agapite:		oreType = 1053103; break; // agapite
+				case CraftResource.Verite:		oreType = 1053102; break; // verite
 				case CraftResource.Valorite:		oreType = 1053101; break; // valorite
 				case CraftResource.SpinedLeather:	oreType = 1061118; break; // spined
 				case CraftResource.HornedLeather:	oreType = 1061117; break; // horned

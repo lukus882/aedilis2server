@@ -706,8 +706,8 @@ namespace Server.Engines.Craft
 			// Add every material you want the player to be able to choose from
 			// This will override the overridable material
 			AddSubRes( typeof( IronIngot ),			1044022, 00.0, 1044036, 1044267 );
-			AddSubRes( typeof( DullCopperIngot ),	1044023, 65.0, 1044036, 1044268 );
-			AddSubRes( typeof( ShadowIronIngot ),	1044024, 70.0, 1044036, 1044268 );
+			AddSubRes( typeof( DullCopperIngot ),		1044023, 65.0, 1044036, 1044268 );
+			AddSubRes( typeof( ShadowIronIngot ),		1044024, 70.0, 1044036, 1044268 );
 			AddSubRes( typeof( CopperIngot ),		1044025, 75.0, 1044036, 1044268 );
 			AddSubRes( typeof( BronzeIngot ),		1044026, 80.0, 1044036, 1044268 );
 			AddSubRes( typeof( GoldIngot ),			1044027, 85.0, 1044036, 1044268 );
