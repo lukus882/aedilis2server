@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
@@ -624,15 +624,6 @@ namespace Server.Engines.Craft
 				if ( types[i] == null )
 					types[i] = new Type[]{ baseType };
 
-				/*if ( !retainedColor && RetainsColorFrom( craftSystem, baseType ) )
-				{
-					retainedColor = true;
-					Item resItem = ourPack.FindItemByType( types[i] );
-
-					if ( resItem != null )
-						resHue = resItem.Hue;
-				}*/
-
 				amounts[i] = craftRes.Amount;
 
 				// For stackable items that can ben crafted more than one at a time
@@ -1105,11 +1096,6 @@ namespace Server.Engines.Craft
 						endquality = ((ICraftable)item).OnCraft( quality, makersMark, from, craftSystem, typeRes, tool, this, resHue );
 					else if ( item.Hue == 0 )
 						item.Hue = resHue;
-
-					if ( m_NameNumber == 1027124 ) //Multiplies crafted amount of "Shaft"
-					{
-						  maxAmount *= 2;
-					}
 
 					if ( maxAmount > 0 )
 					{

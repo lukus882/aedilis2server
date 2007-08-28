@@ -191,11 +191,11 @@ namespace Server.Mobiles
 			return TimeSpan.Zero;
 		}
 
-		public override void OnSuccessfulBulkOrderRecieve( Mobile from )
-		{
-			if( Core.SE && from is PlayerMobile )
-				((PlayerMobile)from).NextSmithBulkOrder = TimeSpan.Zero;
-		}
+		//public override void OnSuccessfulBulkOrderReceive( Mobile from )
+		//{
+		//	if( Core.SE && from is PlayerMobile )
+		//		((PlayerMobile)from).NextSmithBulkOrder = TimeSpan.Zero;
+		//}
 		#endregion
 
 		public RepairingBlacksmith( Serial serial ) : base( serial )

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using Server;
 using Server.Gumps;
@@ -375,6 +375,12 @@ namespace Server.Items
 
 						house.Price = m_Cost;
 
+                        if ( from.AccessLevel >= AccessLevel.GameMaster )
+                        {
+                            from.SendMessage( "{0} gold would have been withdrawn from your bank if you were not a GM.", m_Cost.ToString() );
+                        }
+                        else
+                        {
 						if ( Banker.Withdraw( from, m_Cost ) )
 						{
 							from.SendLocalizedMessage( 1060398, m_Cost.ToString() ); // ~1_AMOUNT~ gold has been withdrawn from your bank box.
@@ -386,6 +392,7 @@ namespace Server.Items
 							from.SendLocalizedMessage( 1060646 ); // You do not have the funds available in your bank box to purchase this house.  Try placing a smaller house, or adding gold or checks to your bank box.
 							return;
 						}
+                        }
 
 						house.MoveToWorld( center, from.Map );
 
