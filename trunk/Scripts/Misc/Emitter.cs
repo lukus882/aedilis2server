@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
@@ -236,7 +236,8 @@ namespace Server
 
 		public void Load( Enum value )
 		{
-			Load( (int) (object) value );
+			int toLoad = ((IConvertible)value).ToInt32( null );
+			Load( toLoad );
 
 			Pop();
 			Push( value.GetType() );

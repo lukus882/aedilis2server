@@ -477,36 +477,13 @@ namespace Server.Mobiles
 		{
 			global = LightCycle.ComputeLevelFor( this );
 
-// ** EDIT ** Time System
+                        bool racialNightSight = (Core.ML && this.Race == Race.Elf);
 
-	/*if ( this.LightLevel < 21 && AosAttributes.GetValue( this, AosAttribute.NightSight ) > 0 )
+			if ( this.LightLevel < 21 && ( AosAttributes.GetValue( this, AosAttribute.NightSight ) > 0 || racialNightSight ))
 				personal = 21;
 			else
-		personal = this.LightLevel;*/
-
-	if (this.LightLevel < 21 && AosAttributes.GetValue(this, AosAttribute.NightSight) > 0)
-	{
-		int level = TimeSystem.EffectsEngine.GetNightSightLevel(this, 21);
-
-		if (level > -1)
-		{
-			personal = level;
-		}
-		else
-		{
-			personal = 0;
-		}
-	}
-	else
-	{
 				personal = this.LightLevel;
 		}
-
-// ** END *** Time System
-
-}
-
-
 
 		public override void CheckLightLevels( bool forceResend )
 		{

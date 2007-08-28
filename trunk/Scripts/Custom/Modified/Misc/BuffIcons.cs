@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Server;
 using Server.Mobiles;
@@ -14,16 +14,12 @@ namespace Server
 		{
 			if( Enabled )
 			{
-				EventSink.ClientVersionRecieved += new ClientVersionRecievedHandler( delegate( ClientVersionRecievedArgs args )
+				EventSink.ClientVersionReceived += new ClientVersionReceivedHandler( delegate( ClientVersionReceivedArgs args )
 				{
-					NetState state = args.State;
-					if ( state != null )
-					{
-						PlayerMobile pm = state.Mobile as PlayerMobile;
+					PlayerMobile pm = args.State.Mobile as PlayerMobile;
 					
 					if( pm != null )
 						Timer.DelayCall( TimeSpan.Zero, pm.ResendBuffs );
-					}
 				} );
 			}
 		}

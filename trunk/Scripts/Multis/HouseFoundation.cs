@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -242,16 +242,7 @@ namespace Server.Multis
 					{
 						int type = (itemID - 0x314) / 16;
 						DoorFacing facing = (DoorFacing)(((itemID - 0x314) / 2) % 8);
-
-						//TODO: Change this to just do a 0x314 + type*16
-						switch( type )
-						{
-							case 0: door = new GenericHouseDoor( facing, 0x314, 0xED, 0xF4 ); break;
-							case 1: door = new GenericHouseDoor( facing, 0x324, 0xED, 0xF4 ); break;
-							case 2: door = new GenericHouseDoor( facing, 0x334, 0xED, 0xF4 ); break;
-							case 3: door = new GenericHouseDoor( facing, 0x344, 0xED, 0xF4 ); break;
-							case 4: door = new GenericHouseDoor( facing, 0x354, 0xED, 0xF4 ); break;
-						}
+						door = new GenericHouseDoor( facing, 0x314 + ( type * 16 ), 0xED, 0xF4 );
 					}
 					else if( itemID >= 0x824 && itemID < 0x834 )
 					{
@@ -450,7 +441,7 @@ namespace Server.Multis
 				case FoundationType.ElvenNatural: corner = 0x2DFB; east = 0x2DFD; south = 0x2DFE; post = 0x2DFC; break;
 
 				case FoundationType.Crystal: corner = 0x3672; east = 0x3671; south = 0x3670; post = 0x3673; break;
-				case FoundationType.Shadow: corner = 0x3676; east = 0x3675; south = 0x3634; post = 0x3677; break;
+				case FoundationType.Shadow: corner = 0x3676; east = 0x3675; south = 0x3674; post = 0x3677; break;
 			}
 		}
 
@@ -902,6 +893,12 @@ namespace Server.Multis
 			int newPrice = oldPrice + CustomizationCost + ((DesignState.Components.List.Length - CurrentState.Components.List.Length) * 500);
 			int cost = newPrice - oldPrice;
 
+            if ( from.AccessLevel >= AccessLevel.GameMaster && cost != 0 )
+            {
+                from.SendMessage( "{0} gold would have been {1} your bank if you were not a GM.", cost.ToString(), ((cost > 0 )? "withdrawn from" : "deposited into" ) );
+            }
+            else
+            {
 			if( cost > 0 )
 			{
 				if( Banker.Withdraw( from, cost ) )
@@ -921,6 +918,7 @@ namespace Server.Multis
 				else
 					return;
 			}
+            }
 
 			/* Client chose to commit current design state
 				 *  - Commit design state
@@ -1105,10 +1103,13 @@ namespace Server.Multis
 				delta = (m_BlockIDs[i] - id);
 
 			return (delta == 0);
+
+			//if ID matches one of the the items in m_BlockIDs, return true
 		}
 
 		public static bool IsStair( int id, ref int dir )
 		{
+			//dir n=0 w=1 s=2 e=3
 			id &= 0x3FFF;
 			int delta = -4;
 

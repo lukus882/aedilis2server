@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using Server;
 using Server.Items;
@@ -6,7 +6,7 @@ using Server.Network;
 using Server.Accounting;
 using Server.Commands;
 
-namespace Server.Admin
+namespace Server.RemoteAdmin
 {
 	public enum LoginResponse : byte
 	{
