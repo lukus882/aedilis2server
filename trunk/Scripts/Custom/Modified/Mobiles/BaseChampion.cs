@@ -42,12 +42,16 @@ namespace Server.Mobiles
 			int level;
 			double random = Utility.RandomDouble();
 
-			if ( 0.05 >= random )
+//old method
+		/*	if ( 0.05 >= random )
 				level = 20;
 			else if ( 0.4 >= random )
 				level = 15;
 			else
 				level = 10;
+		*/
+// limited to 105
+				level = 05;
 
 			return PowerScroll.CreateRandomNoCraft( level, level );
 		}
@@ -119,16 +123,18 @@ namespace Server.Mobiles
 
 			m.SendLocalizedMessage( 1049524 ); // You have received a scroll of power!
 
-			if( !Core.SE || m.Alive )
-				m.AddToBackpack( ps );
-			else
-			{
+			//if( !Core.SE || m.Alive )
+			//	m.AddToBackpack( ps );
+			//else
+			//{
 				if( m.Corpse != null && !m.Corpse.Deleted )
 					m.Corpse.DropItem( ps );
 				else
 					m.AddToBackpack( ps );
-			}
+			//}
 
+//Removed Extra Powerscroll drops
+/*
 			if( m is PlayerMobile )
 			{
 				PlayerMobile pm = (PlayerMobile)m;
@@ -167,6 +173,7 @@ namespace Server.Mobiles
 					}
 				}
 			}
+*/
 		}
 
 		public override bool OnBeforeDeath()

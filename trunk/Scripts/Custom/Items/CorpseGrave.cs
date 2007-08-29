@@ -7,7 +7,7 @@ namespace Server.Items
 	public class ItemRemovalTimer : Timer 
 	{ 
 		private Item i_item; 
-		public ItemRemovalTimer( Item item ) : base( TimeSpan.FromDays( 2.0 ) ) 
+		public ItemRemovalTimer( Item item ) : base( TimeSpan.FromHours( 3.0 ) ) 
 		{ 
 			Priority = TimerPriority.OneSecond; 
 			i_item = item; 
