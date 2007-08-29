@@ -30,6 +30,7 @@ namespace Server.Items
                         Layer = Layer.OuterTorso;
                         ItemID = 0x1F03;
 
+			LootType = LootType.Blessed;
 			Weight = 3.0;
 		}
 
@@ -50,35 +51,24 @@ namespace Server.Items
 				from.SendMessage( "You cannot be mounted while wearing your costume!" );
 			}
 
-                        else if ( this.Transformed == false )
+
+			else if ( from.BodyMod == 0x0 )
                         { 
 				
-				LootType = LootType.Blessed;
+
                			from.SendMessage( "You pull the mask over your head." );
 				from.PlaySound( 0x440 );
-				//from.Title = "skeleton";
 				from.BodyMod = 75;
-				from.NameHue = 39;
 				from.DisplayGuildTitle = false; 
-				this.Transformed = true; 
-				//ItemID = 9860;
-				from.RemoveItem(this);
-              			from.EquipItem(this);
                         
 			}
 			else
 			{
 				from.SendMessage( "You lower the mask." );
 				from.PlaySound( 0x440 );
-				//from.Title = null;
 				from.BodyMod = 0x0;
-				from.NameHue = -1;
-				from.HueMod = -1;
 				from.DisplayGuildTitle = true;
 				this.Transformed = false;
-				//ItemID = 0x1F03;
-				from.RemoveItem(this);
-              			from.EquipItem(this);
 			}
 		}
 
@@ -94,19 +84,27 @@ namespace Server.Items
 			return true;
 		}
 			
-		public override void OnRemoved( Object o )
+		public override void OnRemoved( Object parent)
       		{
       			
-      			if( o is Mobile && ((Mobile)o).Kills >= 5)
-               		{
-               			( (Mobile)o).Criminal = true;
-                	}
-      			if( o is Mobile && ((Mobile)o).GuildTitle != null )
-               		{
-          			( (Mobile)o).DisplayGuildTitle = true;
-                	}
+			            base.OnRemoved(parent);
+
+            		if (parent is Mobile)
+            		{
+                		Mobile from = (Mobile)parent;
+
+				if ( from.BodyMod == 101 )
+                        	{ 
 				
-      			base.OnRemoved( o );
+				from.SendMessage( "You lower the mask." );
+				from.PlaySound( 0x440 );
+				from.BodyMod = 0x0;
+				from.DisplayGuildTitle = true;
+				}
+                        
+			}
+				
+      			
       		}			
 
 		public override void Serialize( GenericWriter writer )
