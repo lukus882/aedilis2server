@@ -23,8 +23,7 @@ namespace Server
 		{
 			if( from.Alive )
 			{
-				from.SendLocalizedMessage( 1054034 ); // Target the Champion Idol of the Champion you wish to challenge!.
-				from.Target = new InternalTarget();
+				from.SendMessage("This virtue has been disabled");
 			}
 		}
 
