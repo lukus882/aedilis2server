@@ -1,0 +1,205 @@
+using System; 
+using System.Collections;
+using System.Collections.Generic;
+using Server; 
+using Server.Gumps; 
+using Server.Accounting;
+using Server.Commands;
+
+namespace Server 
+{ 
+   public class AccountCheck 
+   { 
+      public static void Initialize() 
+      { 
+         CommandSystem.Register("AccountCheck",AccessLevel.Administrator,new CommandEventHandler(AccountCheck_OnCommand)); 
+      } 
+
+      public static void AccountCheck_OnCommand(CommandEventArgs e) 
+      { 
+         GenerateLists(); 
+
+         if (AccountCheck.unusedList.Count > 0) 
+            e.Mobile.SendGump(new RemoveAccountsGump(e.Mobile,AccountCheck.unusedList),true); 
+         else 
+            e.Mobile.SendMessage("No unused accounts to delete."); 
+      } 
+
+      public static TimeSpan unusedGracePeriod = TimeSpan.FromDays(30); 
+
+      public static ArrayList unusedList; 
+
+      public static void RemoveAccount(Account a) 
+      { 
+         if (a == null) return; 
+
+         for (int i = 0; i < 5;i++) 
+         { 
+            if (a[i] == null) continue; 
+            Mobile m = a[i] as Mobile; 
+
+            m.Delete(); 
+         } 
+
+         Accounts.Table.Remove(a.Username); 
+      } 
+
+      public static void GenerateLists() 
+      { 
+         unusedList = new ArrayList(); 
+         foreach (Account a in Accounts.Table.Values) 
+         { 
+            TimeSpan time = DateTime.Now - a.LastLogin; // time from last login. 
+            if ( time > unusedGracePeriod) 
+            { 
+               unusedList.Add(a.Username); 
+            } 
+         } 
+      } 
+   } 
+
+   public class RemoveAccountsGump : Gump 
+   { 
+      private struct RemoveAccountInfo 
+      { 
+         public string Username; 
+         public bool toRemove; 
+
+         public RemoveAccountInfo(string un, bool remove) 
+         { 
+            Username = un; 
+            toRemove = remove; 
+         } 
+         public RemoveAccountInfo(string un) 
+         { 
+            Username = un; 
+            toRemove = true; 
+         } 
+      } 
+
+      private int m_ShowPage; 
+      private RemoveAccountInfo[] m_Accounts; 
+
+      public const int PrevButtonID1 = 0x15E3; // Arrow pointing left 
+      public const int PrevButtonID2 = 0x15E7; // " pressed 
+
+      public const int NextButtonID1 = 0x15E1; // Arrow pointing right 
+      public const int NextButtonID2 = 0x15E5; // " pressed 
+
+      public const int OffsetGumpID = 0x0052; // Pure black 
+      public const int BackGumpID = 0x13BE; // Gray slate/stoney 
+
+      private RemoveAccountsGump(Mobile from, RemoveAccountInfo[] accounts, int showpage):base(50,50) 
+      { 
+         m_Accounts = accounts; 
+
+         ShowPage(showpage); 
+      } 
+
+      public RemoveAccountsGump(Mobile from, ArrayList accounts) : base(50,50) 
+      { 
+         from.CloseGump(typeof(RemoveAccountsGump)); 
+
+         //Generate accounts hashtable ::  key=username | value=bool(toDelete) 
+         m_Accounts = new RemoveAccountInfo[accounts.Count]; 
+         for (int i = 0;i<accounts.Count;i++) 
+         { 
+            m_Accounts[i] = new RemoveAccountInfo(accounts[i].ToString()); 
+         } 
+
+         // initialized, show page 
+         ShowPage(0); 
+      } 
+
+      private void ShowPage(int showpage) 
+      { 
+         if (showpage < 0) 
+            showpage = 0; 
+
+         m_ShowPage = showpage; 
+
+         AddPage(0); 
+         int bordersize = 10, useablewidth=400, useableheight=200; 
+
+         AddBackground( 0, 0, bordersize + useablewidth + bordersize, bordersize + useableheight + bordersize, BackGumpID ); 
+         AddImageTiled( bordersize, bordersize + 15 , useablewidth - bordersize, useableheight - (bordersize*4), OffsetGumpID ); 
+
+         AddLabel(bordersize + 10,6,PropsConfig.TextHue,"Please check the accounts you wish to delete."); 
+
+         if (showpage > 0) 
+         {   // show back button. 
+            AddButton( useablewidth - 25, 7, PrevButtonID1, PrevButtonID2, 1, GumpButtonType.Reply, 0 ); 
+         } 
+         if (showpage+1 < Math.Floor(m_Accounts.Length / 15)+1) 
+         {   // show next button. 
+            AddButton( useablewidth - 25 + 20, 7, NextButtonID1, NextButtonID2, 2, GumpButtonType.Reply, 0 ); 
+         } 
+
+         int column = 0; 
+         int row = 0; 
+             
+         for (int j = 0; j < 15 ; j++ ) 
+         { 
+            int i = (showpage * 15) + j; 
+            if (i >= m_Accounts.Length) break; 
+
+            if (row > 5) 
+            { 
+               row = 0; 
+               column++; 
+            } 
+
+            AddCheck(15+(column * (useablewidth/3)), bordersize + 20 + (row * 25), 0xD2,0xD3,m_Accounts[i].toRemove,i); 
+            AddLabel(35+(column * (useablewidth/3)), bordersize + 20 + (row * 25), 10, m_Accounts[i].Username); 
+
+            row++; 
+         } 
+
+         AddButton( 20, useableheight - (bordersize), 4005, 4007, 3, GumpButtonType.Reply, 0 ); 
+         AddHtml( 55, useableheight - (bordersize), 75, 20, "Ok", false, false ); 
+
+         AddButton( 100, useableheight - (bordersize), 4005, 4007, 0, GumpButtonType.Reply, 0 ); 
+         AddHtml( 135, useableheight - (bordersize), 75, 20, "Cancel", false, false ); 
+
+         AddHtml(250,useableheight - bordersize,useablewidth - 250,20,"Accounts Found: " + m_Accounts.Length.ToString(),false,false); 
+      } 
+
+      public override void OnResponse(Network.NetState sender,RelayInfo info) 
+      { 
+         if (info.ButtonID == 0) return; 
+
+         Mobile from = sender.Mobile; 
+
+         for (int i=0; i < 15; i++) 
+         { 
+            int idx = i + (m_ShowPage * 15); 
+            if (idx >= m_Accounts.Length) break; 
+
+            m_Accounts[idx].toRemove = info.IsSwitched(idx); 
+         } 
+
+         switch (info.ButtonID) 
+         { 
+               //Prev 
+            case 1: 
+               from.SendGump(new RemoveAccountsGump(from,m_Accounts,m_ShowPage-1)); 
+               break; 
+               //Next 
+            case 2: 
+               from.SendGump(new RemoveAccountsGump(from,m_Accounts,m_ShowPage+1)); 
+               break; 
+               //Ok 
+            case 3: 
+               int removecount = 0; 
+               for (int i = 0; i < m_Accounts.Length; i++) 
+                  if (m_Accounts[i].toRemove) 
+                  { 
+                     AccountCheck.RemoveAccount(Accounts.GetAccount(m_Accounts[i].Username)); 
+                     removecount++; 
+                  } 
+               from.SendMessage("{0} accounts have been removed.",removecount); 
+               break; 
+         } 
+      } 
+   } 
+}
