@@ -1,15 +1,16 @@
 using System;
 using Server;
 using Server.Items;
+using Server.Engines.XmlSpawner2;
 
 namespace Server.Multis
 {
-	public class SmallDragonBoat : BaseBoat
+	public class SmallBoat : BaseBoat
 	{
-		public override int NorthID{ get{ return 0x4004; } }
-		public override int  EastID{ get{ return 0x4005; } }
-		public override int SouthID{ get{ return 0x4006; } }
-		public override int  WestID{ get{ return 0x4007; } }
+		public override int NorthID{ get{ return 0x4000; } }
+		public override int  EastID{ get{ return 0x4001; } }
+		public override int SouthID{ get{ return 0x4002; } }
+		public override int  WestID{ get{ return 0x4003; } }
 
 		public override int HoldDistance{ get{ return 4; } }
 		public override int TillerManDistance{ get{ return -4; } }
@@ -19,14 +20,16 @@ namespace Server.Multis
 
 		public override Point3D MarkOffset{ get{ return new Point3D( 0, 1, 3 ); } }
 
-		public override BaseDockedBoat DockedBoat{ get{ return new SmallDockedDragonBoat( this ); } }
+		public override BaseDockedBoat DockedBoat{ get{ return new SmallDockedBoat( this ); } }
 
 		[Constructable]
-		public SmallDragonBoat()
+		public SmallBoat()
 		{
+		// add a siege attachment with 500 hits, 60% fire resistance, 20% physical resistance
+  		XmlAttach.AttachTo(this, new XmlSiege(2000,30,90));
 		}
 
-		public SmallDragonBoat( Serial serial ) : base( serial )
+		public SmallBoat( Serial serial ) : base( serial )
 		{
 		}
 
@@ -45,17 +48,17 @@ namespace Server.Multis
 		}
 	}
 
-	public class SmallDragonBoatDeed : BaseBoatDeed
+	public class SmallBoatDeed : BaseBoatDeed
 	{
-		public override int LabelNumber{ get{ return 1041206; } } // small dragon ship deed
-		public override BaseBoat Boat{ get{ return new SmallDragonBoat(); } }
+		public override int LabelNumber{ get{ return 1041205; } } // small ship deed
+		public override BaseBoat Boat{ get{ return new SmallBoat(); } }
 
 		[Constructable]
-		public SmallDragonBoatDeed() : base( 0x4004, Point3D.Zero )
+		public SmallBoatDeed() : base( 0x4000, Point3D.Zero )
 		{
 		}
 
-		public SmallDragonBoatDeed( Serial serial ) : base( serial )
+		public SmallBoatDeed( Serial serial ) : base( serial )
 		{
 		}
 
@@ -74,15 +77,15 @@ namespace Server.Multis
 		}
 	}
 
-	public class SmallDockedDragonBoat : BaseDockedBoat
+	public class SmallDockedBoat : BaseDockedBoat
 	{
-		public override BaseBoat Boat{ get{ return new SmallDragonBoat(); } }
+		public override BaseBoat Boat{ get{ return new SmallBoat(); } }
 
-		public SmallDockedDragonBoat( BaseBoat boat ) : base( 0x4004, Point3D.Zero, boat )
+		public SmallDockedBoat( BaseBoat boat ) : base( 0x4000, Point3D.Zero, boat )
 		{
 		}
 
-		public SmallDockedDragonBoat( Serial serial ) : base( serial )
+		public SmallDockedBoat( Serial serial ) : base( serial )
 		{
 		}
 

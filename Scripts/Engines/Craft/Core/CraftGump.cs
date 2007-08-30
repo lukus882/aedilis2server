@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using Server.Gumps;
 using Server.Network;
@@ -154,7 +154,7 @@ namespace Server.Engines.Craft
 
 				int resIndex = ( context == null ? -1 : context.LastResourceIndex2 );
 
-                Type resourceType = craftSystem.CraftSubRes.ResType;
+		Type resourceType = craftSystem.CraftSubRes2.ResType;
 
 				if ( resIndex > -1 )
 				{
@@ -197,6 +197,7 @@ namespace Server.Engines.Craft
 		public void CreateResList( bool opt )
 		{
 			CraftSubResCol res = ( opt ? m_CraftSystem.CraftSubRes2 : m_CraftSystem.CraftSubRes );
+			CraftContext context = m_CraftSystem.GetContext( m_From );
 
 			for ( int i = 0; i < res.Count; ++i )
 			{
@@ -214,18 +215,30 @@ namespace Server.Engines.Craft
 					if ( i > 0 )
 						AddButton( 455, 260, 4014, 4015, 0, GumpButtonType.Page, i / 10 );
 
-					CraftContext context = m_CraftSystem.GetContext( m_From );
+
 
 					AddButton( 220, 260, 4005, 4007, GetButtonID( 6, 4 ), GumpButtonType.Reply, 0 );
 					AddHtmlLocalized( 255, 263, 200, 18, (context == null || !context.DoNotColor) ? 1061591 : 1061590, LabelColor, false, false );
 				}
 
+				Type resourceType = subResource.ItemType;
+
+				int resourceCount = 0;
+
+				if ( m_From.Backpack != null )
+				{
+					Item[] items = m_From.Backpack.FindItemsByType( resourceType, true );
+
+					for ( int j = 0; j < items.Length; ++j )
+						resourceCount += items[j].Amount;
+				}
+
 				AddButton( 220, 60 + (index * 20), 4005, 4007, GetButtonID( 5, i ), GumpButtonType.Reply, 0 );
 
 				if ( subResource.NameNumber > 0 )
-					AddHtmlLocalized( 255, 63 + (index * 20), 250, 18, subResource.NameNumber, LabelColor, false, false );
+					AddHtmlLocalized( 255, 63 + (index * 20), 250, 18, subResource.NameNumber, resourceCount.ToString(), LabelColor, false, false );
 				else
-					AddLabel( 255, 60 + (index * 20), LabelHue, subResource.NameString );
+					AddLabel( 255, 60 + (index * 20), LabelHue, String.Format( "{0} ({1})", subResource.NameString, resourceCount.ToString() ) );
 			}
 		}
 

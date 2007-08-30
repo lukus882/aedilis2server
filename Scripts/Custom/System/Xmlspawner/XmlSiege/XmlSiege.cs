@@ -30,7 +30,7 @@ namespace Server.Engines.XmlSpawner2
 		private int m_HitsMax = 1000;	// max hits
 		private int m_ResistFire = 30;	// percentage resistance to fire attacks
 		private int m_ResistPhysical = 30;	// percentage resistance to physical attacks
-		private int m_Stone = 1;	// amount of stone required per repair
+		private int m_Stone = 0;	// amount of stone required per repair
 		private int m_Iron = 20;	// amount of iron required per repair
 		private int m_Wood = 20;	// amount of wood required per repair
 		private int m_DestroyedItemID = 10984;	// itemid used when hits go to zero. 2322=dirt patch, 10984 pulsing pool.  Specifying a value of zero will cause the object to be permanently destroyed.

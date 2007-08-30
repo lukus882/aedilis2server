@@ -71,7 +71,7 @@ namespace Server.Items
 
 			// make them siegable by default
 			// XmlSiege( hitsmax, resistfire, resistphysical, wood, iron, stone)
-			XmlAttach.AttachTo(this, new XmlSiege(100, 10, 10, 20, 30, 0));
+			XmlAttach.AttachTo(this, new XmlSiege(100, 10, 10, 20, 30, 0, 0));
 
 			// and draggable
 			XmlAttach.AttachTo(this, new XmlDrag());
