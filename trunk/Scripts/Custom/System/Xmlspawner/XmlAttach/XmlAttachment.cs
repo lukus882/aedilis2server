@@ -78,9 +78,13 @@ namespace Server.Engines.XmlSpawner2
 
 		bool BlockDefaultOnUse(Mobile from, object target);
 
+        bool OnDragLift(Mobile from, Item item);
+
 		string OnIdentify(Mobile from);
 
 		string DisplayedProperties(Mobile from);
+
+        void AddProperties(ObjectPropertyList list);
 
 		string AttachedBy { get; }
 
@@ -316,6 +320,11 @@ namespace Server.Engines.XmlSpawner2
 			return false;
 		}
 
+        public virtual bool OnDragLift(Mobile from, Item item)
+        {
+            return true;
+        }
+
 		public void SetAttachedBy(string name)
 		{
 			m_AttachedBy = name;
@@ -370,6 +379,10 @@ namespace Server.Engines.XmlSpawner2
 			return OnIdentify(from);
 		}
 
+
+        public virtual void AddProperties(ObjectPropertyList list)
+        {
+        }
 
 		public void InvalidateParentProperties()
 		{

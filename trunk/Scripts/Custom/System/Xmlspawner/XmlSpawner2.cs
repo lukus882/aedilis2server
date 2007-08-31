@@ -26,7 +26,7 @@ using Server.Engines.XmlSpawner2;
 /*
 ** XmlSpawner2
 ** version 3.22
-** updated 3/31/07
+** updated 8/31/07
 ** ArteGordon
 ** Modification of the original XmlSpawner written by bobsmart
 */
