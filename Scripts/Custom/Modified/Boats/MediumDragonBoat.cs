@@ -26,7 +26,7 @@ namespace Server.Multis
 		public MediumDragonBoat()
 		{
 		// add a siege attachment with 500 hits, 60% fire resistance, 20% physical resistance
-  		XmlAttach.AttachTo(this, new XmlSiege(4000,30,90));
+  		XmlAttach.AttachTo(this, new XmlSiege(2500,30,90));
 		}
 
 		public MediumDragonBoat( Serial serial ) : base( serial )
