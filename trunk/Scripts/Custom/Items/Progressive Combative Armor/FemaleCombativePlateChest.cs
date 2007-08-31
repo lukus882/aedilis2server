@@ -82,10 +82,10 @@ namespace Server.Items
 				if ( legsB != null && ( legsB is CombativePlateLegs || legsB is CombativePlateSkirt) && legsB != this )
 				{
 					if (count >= 4) legsB.ArmorAttributes.MageArmor = 1;
-						legsB.ArmorAttributes.MageArmor = 0;
+						else legsB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) legsB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) legsB.ArmorAttributes.SelfRepair = 1;
-						else legsB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) legsB.ArmorAttributes.SelfRepair = 1;
+						else  legsB.ArmorAttributes.SelfRepair = 0;
 					legsB.Attributes.ReflectPhysical = bonus;
 					legsB.Attributes.WeaponDamage = bonus;
 					legsB.Attributes.WeaponSpeed = bonus;
@@ -95,10 +95,10 @@ namespace Server.Items
 				if ( chestB != null && ( chestB is CombativePlateChest || chestB is FemaleCombativePlateChest) && chestB != this )
 				{
 					if (count >= 4) chestB.ArmorAttributes.MageArmor = 1;
-						chestB.ArmorAttributes.MageArmor = 0;
+						else chestB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) chestB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) chestB.ArmorAttributes.SelfRepair = 1;
-						else chestB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) chestB.ArmorAttributes.SelfRepair = 1;
+						else  chestB.ArmorAttributes.SelfRepair = 0;
 					chestB.Attributes.ReflectPhysical = bonus;
 					chestB.Attributes.WeaponDamage = bonus;
 					chestB.Attributes.WeaponSpeed = bonus;
@@ -108,10 +108,10 @@ namespace Server.Items
 				if ( armsB != null && armsB is CombativePlateArms && armsB != this )
 				{
 					if (count >= 4) armsB.ArmorAttributes.MageArmor = 1;
-						armsB.ArmorAttributes.MageArmor = 0;
+						else armsB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) armsB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) armsB.ArmorAttributes.SelfRepair = 1;
-						else armsB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) armsB.ArmorAttributes.SelfRepair = 1;
+						else  armsB.ArmorAttributes.SelfRepair = 0;
 					armsB.Attributes.ReflectPhysical = bonus;
 					armsB.Attributes.WeaponDamage = bonus;
 					armsB.Attributes.WeaponSpeed = bonus;
@@ -121,10 +121,10 @@ namespace Server.Items
 				if ( helmB != null && helmB is CombativeNorseHelm && helmB != this )
 				{
 					if (count >= 4) helmB.ArmorAttributes.MageArmor = 1;
-						helmB.ArmorAttributes.MageArmor = 0;
+						else helmB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) helmB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) helmB.ArmorAttributes.SelfRepair = 1;
-						else helmB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) helmB.ArmorAttributes.SelfRepair = 1;
+						else  helmB.ArmorAttributes.SelfRepair = 0;
 					helmB.Attributes.ReflectPhysical = bonus;
 					helmB.Attributes.WeaponDamage = bonus;
 					helmB.Attributes.WeaponSpeed = bonus;
@@ -134,10 +134,10 @@ namespace Server.Items
 				if ( glovesB != null && glovesB is CombativePlateGloves && glovesB != this )
 				{
 					if (count >= 4) glovesB.ArmorAttributes.MageArmor = 1;
-						glovesB.ArmorAttributes.MageArmor = 0;
+						else glovesB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) glovesB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) glovesB.ArmorAttributes.SelfRepair = 1;
-						else glovesB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) glovesB.ArmorAttributes.SelfRepair = 1;
+						else  glovesB.ArmorAttributes.SelfRepair = 0;
 					glovesB.Attributes.ReflectPhysical = bonus;
 					glovesB.Attributes.WeaponDamage = bonus;
 					glovesB.Attributes.WeaponSpeed = bonus;
@@ -147,10 +147,10 @@ namespace Server.Items
 				if ( gorgetB != null && gorgetB is CombativePlateGorget && gorgetB != this )
 				{
 					if (count >= 4) gorgetB.ArmorAttributes.MageArmor = 1;
-						gorgetB.ArmorAttributes.MageArmor = 0;
+						else gorgetB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) gorgetB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) gorgetB.ArmorAttributes.SelfRepair = 1;
-						else gorgetB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) gorgetB.ArmorAttributes.SelfRepair = 1;
+						else  gorgetB.ArmorAttributes.SelfRepair = 0;
 					gorgetB.Attributes.ReflectPhysical = bonus;
 					gorgetB.Attributes.WeaponDamage = bonus;
 					gorgetB.Attributes.WeaponSpeed = bonus;
@@ -212,10 +212,10 @@ namespace Server.Items
 				if ( legsB != null && ( legsB is CombativePlateLegs || legsB is CombativePlateSkirt) && legsB != this )
 				{
 					if (count >= 4) legsB.ArmorAttributes.MageArmor = 1;
-						legsB.ArmorAttributes.MageArmor = 0;
+						else legsB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) legsB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) legsB.ArmorAttributes.SelfRepair = 1;
-						else legsB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) legsB.ArmorAttributes.SelfRepair = 1;
+						else  legsB.ArmorAttributes.SelfRepair = 0;
 					legsB.Attributes.ReflectPhysical = bonus;
 					legsB.Attributes.WeaponDamage = bonus;
 					legsB.Attributes.WeaponSpeed = bonus;
@@ -225,10 +225,10 @@ namespace Server.Items
 				if ( chestB != null && ( chestB is CombativePlateChest || chestB is FemaleCombativePlateChest) && chestB != this )
 				{
 					if (count >= 4) chestB.ArmorAttributes.MageArmor = 1;
-						chestB.ArmorAttributes.MageArmor = 0;
+						else chestB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) chestB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) chestB.ArmorAttributes.SelfRepair = 1;
-						else chestB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) chestB.ArmorAttributes.SelfRepair = 1;
+						else  chestB.ArmorAttributes.SelfRepair = 0;
 					chestB.Attributes.ReflectPhysical = bonus;
 					chestB.Attributes.WeaponDamage = bonus;
 					chestB.Attributes.WeaponSpeed = bonus;
@@ -238,10 +238,10 @@ namespace Server.Items
 				if ( armsB != null && armsB is CombativePlateArms && armsB != this )
 				{
 					if (count >= 4) armsB.ArmorAttributes.MageArmor = 1;
-						armsB.ArmorAttributes.MageArmor = 0;
+						else armsB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) armsB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) armsB.ArmorAttributes.SelfRepair = 1;
-						else armsB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) armsB.ArmorAttributes.SelfRepair = 1;
+						else  armsB.ArmorAttributes.SelfRepair = 0;
 					armsB.Attributes.ReflectPhysical = bonus;
 					armsB.Attributes.WeaponDamage = bonus;
 					armsB.Attributes.WeaponSpeed = bonus;
@@ -251,10 +251,10 @@ namespace Server.Items
 				if ( helmB != null && helmB is CombativeNorseHelm && helmB != this )
 				{
 					if (count >= 4) helmB.ArmorAttributes.MageArmor = 1;
-						helmB.ArmorAttributes.MageArmor = 0;
+						else helmB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) helmB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) helmB.ArmorAttributes.SelfRepair = 1;
-						else helmB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) helmB.ArmorAttributes.SelfRepair = 1;
+						else  helmB.ArmorAttributes.SelfRepair = 0;
 					helmB.Attributes.ReflectPhysical = bonus;
 					helmB.Attributes.WeaponDamage = bonus;
 					helmB.Attributes.WeaponSpeed = bonus;
@@ -264,10 +264,10 @@ namespace Server.Items
 				if ( glovesB != null && glovesB is CombativePlateGloves && glovesB != this )
 				{
 					if (count >= 4) glovesB.ArmorAttributes.MageArmor = 1;
-						glovesB.ArmorAttributes.MageArmor = 0;
+						else glovesB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) glovesB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) glovesB.ArmorAttributes.SelfRepair = 1;
-						else glovesB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) glovesB.ArmorAttributes.SelfRepair = 1;
+						else  glovesB.ArmorAttributes.SelfRepair = 0;
 					glovesB.Attributes.ReflectPhysical = bonus;
 					glovesB.Attributes.WeaponDamage = bonus;
 					glovesB.Attributes.WeaponSpeed = bonus;
@@ -277,10 +277,10 @@ namespace Server.Items
 				if ( gorgetB != null && gorgetB is CombativePlateGorget && gorgetB != this )
 				{
 					if (count >= 4) gorgetB.ArmorAttributes.MageArmor = 1;
-						gorgetB.ArmorAttributes.MageArmor = 0;
+						else gorgetB.ArmorAttributes.MageArmor = 0;
 					if (count >= 6) gorgetB.ArmorAttributes.SelfRepair = 2;
-						else if (count >= 3) gorgetB.ArmorAttributes.SelfRepair = 1;
-						else gorgetB.ArmorAttributes.SelfRepair = 0;
+						else  if (count >= 3) gorgetB.ArmorAttributes.SelfRepair = 1;
+						else  gorgetB.ArmorAttributes.SelfRepair = 0;
 					gorgetB.Attributes.ReflectPhysical = bonus;
 					gorgetB.Attributes.WeaponDamage = bonus;
 					gorgetB.Attributes.WeaponSpeed = bonus;
