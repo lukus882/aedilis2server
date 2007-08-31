@@ -3,24 +3,33 @@ using Server;
 using Server.Items;
 using Server.Network;
 using Server.Mobiles;
+using Server.Targeting;
 
 namespace Server.Engines.XmlSpawner2
 {
     public class XmlUse : XmlAttachment
     {
         private bool m_BlockDefaultUse;
-        private string m_Condition;
-        private string m_SuccessAction;
-        private string m_FailureAction;
-        private string m_RefractoryAction;
-        private string m_MaxUsesAction;
+        private string m_Condition;         // additional condition required for use
+        private string m_TargetingAction;    // action performed when the target cursor is brought up
+        private string m_TargetCondition;   // condition test applied when target is selected to determine whether it is appropriate
+        private string m_TargetFailureAction;     // action performed if target condition is not met
+        private string m_SuccessAction;     // action performed on successful use or targeting
+        private string m_FailureAction;     // action performed if the player cannot use the object for reasons other than range, refractory, or maxuses
+        private string m_RefractoryAction;  // action performed if the object is used before the refractory interval expires
+        private string m_MaxUsesAction;     // action performed if the object is used when the maxuses are exceeded
         private int m_NUses = 0;
         private int m_MaxRange = 3;         // must be within 3 tiles to use by default
         private int m_MaxUses = 0;
         private TimeSpan m_Refractory = TimeSpan.Zero;
-        private DateTime m_EndTime;
+        public DateTime m_EndTime;
         private bool m_RequireLOS = false;
         private bool m_AllowCarried = true;
+        private bool m_TargetingEnabled = false;
+
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool TargetingEnabled { get { return m_TargetingEnabled; } set { m_TargetingEnabled = value; } }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool AllowCarried { get { return m_AllowCarried; } set { m_AllowCarried = value; } }
@@ -45,6 +54,15 @@ namespace Server.Engines.XmlSpawner2
 
         [CommandProperty(AccessLevel.GameMaster)]
         public string Condition { get { return m_Condition; } set { m_Condition = value; } }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public string TargetCondition { get { return m_TargetCondition; } set { m_TargetCondition = value; } }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public string TargetingAction { get { return m_TargetingAction; } set { m_TargetingAction = value; } }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public string TargetFailureAction { get { return m_TargetFailureAction; } set { m_TargetFailureAction = value; } }
 
         [CommandProperty(AccessLevel.GameMaster)]
         public string SuccessAction { get { return m_SuccessAction; } set { m_SuccessAction = value; } }
@@ -84,7 +102,12 @@ namespace Server.Engines.XmlSpawner2
         {
             base.Serialize(writer);
 
-            writer.Write((int)1);
+            writer.Write((int)2);
+            // version 2
+            writer.Write(m_TargetingEnabled);
+            writer.Write(m_TargetingAction);
+            writer.Write(m_TargetCondition);
+            writer.Write(m_TargetFailureAction);
             // version 1
             writer.Write(m_AllowCarried);
             // version 0
@@ -109,6 +132,12 @@ namespace Server.Engines.XmlSpawner2
             int version = reader.ReadInt();
             switch (version)
             {
+                case 2:
+                    m_TargetingEnabled = reader.ReadBool();
+                    m_TargetingAction = reader.ReadString();
+                    m_TargetCondition = reader.ReadString();
+                    m_TargetFailureAction = reader.ReadString();
+                    goto case 1;
                 case 1:
                     m_AllowCarried = reader.ReadBool();
                     goto case 0;
@@ -131,7 +160,7 @@ namespace Server.Engines.XmlSpawner2
             }
         }
 
-        private void ExecuteActions(Mobile mob, object target, string actions)
+        public void ExecuteActions(Mobile mob, object target, string actions)
         {
             if (actions == null || actions.Length <= 0) return;
             // execute any action associated with it
@@ -258,6 +287,20 @@ namespace Server.Engines.XmlSpawner2
         }
 
         // return true to allow use
+        private bool CheckTargetCondition(Mobile from, object target)
+        {
+            // test the condition if there is one
+            if (TargetCondition != null && TargetCondition.Length > 0)
+            {
+                string status_str;
+
+                return BaseXmlSpawner.CheckPropertyString(null, target, TargetCondition, from, out status_str);
+            }
+
+            return true;
+        }
+
+        // return true to allow use
         private bool CheckRange(Mobile from, object target)
         {
             if (from == null || !(target is IEntity) || MaxRange < 0) return false;
@@ -324,15 +367,64 @@ namespace Server.Engines.XmlSpawner2
             from.SendLocalizedMessage(500446); // That is too far away.
         }
 
+        public class XmlUseTarget : Target
+        {
+            private object m_objectused;
+            private XmlUse m_xa;
+
+            public XmlUseTarget(object objectused, XmlUse xa)
+                : base(30, true, TargetFlags.None)
+            {
+                m_objectused = objectused;
+                m_xa = xa;
+                CheckLOS = false;
+            }
+            protected override void OnTarget(Mobile from, object targeted)
+            {
+                if (from == null || targeted == null || m_xa == null) return;
+
+                // success
+                if (m_xa.CheckTargetCondition(from, targeted))
+                {
+                    m_xa.ExecuteActions(from, targeted, m_xa.SuccessAction);
+
+                    m_xa.m_EndTime = DateTime.Now + m_xa.Refractory;
+                    m_xa.NUses++;
+                }
+                else
+                {
+                    m_xa.ExecuteActions(from, targeted, m_xa.TargetFailureAction);
+                }
+
+            }
+        }
+
+        private void TryToTarget(Mobile from, object target, XmlUse xa)
+        {
+            if (from == null) return;
+
+            ExecuteActions(from, target, TargetingAction);
+
+            from.Target = new XmlUseTarget(target, xa);
+        }
+
         private void TryToUse(Mobile from, object target)
         {
             if (CheckRange(from, target) && CheckCondition(from, target) && CheckMaxUses && CheckRefractory)
             {
-                // success
-                ExecuteActions(from, target, SuccessAction);
+                // check for targeting
+                if (TargetingEnabled)
+                {
+                    TryToTarget(from, target, this);
+                }
+                else
+                {
+                    // success
+                    ExecuteActions(from, target, SuccessAction);
 
-                m_EndTime = DateTime.Now + Refractory;
-                NUses++;
+                    m_EndTime = DateTime.Now + Refractory;
+                    NUses++;
+                }
             }
             else
             {
