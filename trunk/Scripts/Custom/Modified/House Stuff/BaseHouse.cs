@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
@@ -3690,6 +3690,9 @@ namespace Server.Multis
 
 				if ( !isOwned )
 					isOwned = house.IsLockedDown( item );
+
+				if (!isOwned)
+					isOwned = (item is AddonHouseTeleporter && house.Addons.Contains(item));
 
 				if ( isOwned )
 					sec = (ISecurable)item;

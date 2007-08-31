@@ -239,6 +239,12 @@ namespace Server.Engines.Craft
 			AddCraft( typeof( Lantern ), 1044050, 1022597, 30.0, 80.0, typeof( IronIngot ), 1044036, 2, 1044037 );
 			AddCraft( typeof( HeatingStand ), 1044050, 1026217, 60.0, 110.0, typeof( IronIngot ), 1044036, 4, 1044037 );
 
+			index = AddCraft(typeof(HouseTeleporterDeed), 1044050, "House Teleporter Deed", 95.0, 120.0, typeof(IronIngot), 1044036, 50, 1044037);
+			AddRes(index, typeof(ArcaneGem), "arcane gem", 1, 1044253);
+			AddRes(index, typeof(GateTravelScroll), 1044446, 1, 1044253);
+			AddRes(index, typeof(PowderOfTranslocation), 1054136, 100, 1044253);
+			AddSkill(index, SkillName.Magery, 95.0, 120.0);
+
 			if ( Core.SE )
 			{
 				index = AddCraft( typeof( ShojiLantern ), 1044050, 1029404, 65.0, 115.0, typeof( IronIngot ), 1044036, 10, 1044037 );

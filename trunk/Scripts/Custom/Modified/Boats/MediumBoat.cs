@@ -26,7 +26,7 @@ namespace Server.Multis
 		public MediumBoat()
 		{
 		// add a siege attachment with 500 hits, 60% fire resistance, 20% physical resistance
-  		XmlAttach.AttachTo(this, new XmlSiege(4000,30,90));
+  		XmlAttach.AttachTo(this, new XmlSiege(2000,30,90));
 		}
 
 		public MediumBoat( Serial serial ) : base( serial )

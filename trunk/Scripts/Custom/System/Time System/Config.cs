@@ -44,18 +44,18 @@ namespace Server.TimeSystem
 
             Data.UpdateInterval = 1000;
 
-            Data.DayLevel = 12;
-            Data.NightLevel = 24;
+            Data.DayLevel = 6;
+            Data.NightLevel = 20;
             Data.DarkestHourLevel = 28;
-            Data.LightsOnLevel = 10;
-            Data.MoonLevelAdjust = 22;
+            Data.LightsOnLevel = 18;
+            Data.MoonLevelAdjust = 18;
 
             Data.MinutesPerHour = 60;
             Data.HoursPerDay = 24;
 
-            Data.NightStartHour = 18;
+            Data.NightStartHour = 19;
             Data.NightStartMinute = 0;
-            Data.DayStartHour = 6;
+            Data.DayStartHour = 7;
             Data.DayStartMinute = 0;
             Data.ScaleTimeMinutes = 60;
 
