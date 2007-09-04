@@ -153,7 +153,7 @@ namespace Server.Items
 					gorgetB.Attributes.Luck = 10 * bonus;
 				}
 				if (count >= 4) this.ArmorAttributes.MageArmor = 1;
-					this.ArmorAttributes.MageArmor = 0;
+					else this.ArmorAttributes.MageArmor = 0;
 				if (count >= 6) this.ArmorAttributes.SelfRepair = 2;
 					else if (count >= 3) this.ArmorAttributes.SelfRepair = 1;
 					else this.ArmorAttributes.SelfRepair = 0;

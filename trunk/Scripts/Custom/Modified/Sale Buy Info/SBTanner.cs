@@ -63,7 +63,8 @@ namespace Server.Mobiles
 				Add( typeof( Pouch ), 3 );
 				Add( typeof( Backpack ), 7 );
 
-				Add( typeof( Leather ), 5 );
+				Add( typeof( Leather ), 3 );
+				Add( typeof( Leather ), 3 );
 
 				Add( typeof( SkinningKnife ), 7 );
 				
