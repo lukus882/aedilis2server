@@ -17,42 +17,42 @@ using Server.Mobiles;
 
 namespace Server.Items
 {
-    public class PopUp : Item
+    public class PopUp2 : Item
     {
         [Constructable]
-        public PopUp()
+        public PopUp2()
             : base(0x1BC3)
         {
             Movable = false;
             Visible = false;
 
-            Name = "PopUp - use [set name 'Your PopUp information goes here.'";
+            Name = "PopUp2 - use [set name 'Your PopUp2 information goes here.'";
         }
 
         public override bool HandlesOnMovement { get { return true; } }
 
         public override void OnMovement(Mobile from, Point3D oldLocation)
         {
-            if ( from is PlayerMobile && from.InRange(this, 3))
+            if ( from is PlayerMobile && from.InRange(this, 6) )
             {
-                if (!from.HasGump(typeof(PopUpGump)))
-                    from.SendGump(new PopUpGump(Name));
+                if (!from.HasGump(typeof(PopUp2Gump)))
+                    from.SendGump(new PopUp2Gump(Name));
             }
-            if (from is PlayerMobile && !from.InRange(this, 3))
+            if ( from is PlayerMobile && !from.InRange(this, 6))
             {
-                if (from.HasGump(typeof(PopUpGump)))
-                    from.CloseGump(typeof(PopUpGump));
+                if (from.HasGump(typeof(PopUp2Gump)))
+                    from.CloseGump(typeof(PopUp2Gump));
             }
         }
 
-        //If you want to be able to double click on the 'PopUp' then add the following lines.
+        //If you want to be able to double click on the 'PopUp2' then add the following lines.
         //public override void OnDoubleClick(Mobile from)
         //{
-        //    if (!from.HasGump(typeof(PopUpGump)))
-        //        from.SendGump(new PopUpGump(Name));
+        //    if (!from.HasGump(typeof(PopUp2Gump)))
+        //        from.SendGump(new PopUp2Gump(Name));
         //}
 
-        public PopUp(Serial serial)
+        public PopUp2(Serial serial)
             : base(serial)
         {
         }
@@ -76,9 +76,9 @@ namespace Server.Items
 //The Gump
 namespace Server.Gumps
 {
-    public class PopUpGump : Gump
+    public class PopUp2Gump : Gump
     {
-        public PopUpGump(string Name)
+        public PopUp2Gump(string Name)
             : base(0, 0)
         {
             this.Closable = true;
