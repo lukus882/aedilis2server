@@ -17,23 +17,23 @@
 
 <!--Last number set
 
-		<Town name="Britain"           tax="10"/>
-		<Town name="Cove"              tax="20" />
-		<Town name="Jhelom"            tax="5" />
-		<Town name="Minoc"             tax="18"/>
-		<Town name="Ocllo"             tax="4" />
-		<Town name="Trinsic"           tax="9"/>
-		<Town name="Vesper"            tax="20"/>
-		<Town name="Yew"               tax="5"/>
-		<Town name="Wind"              tax="2" />
+		<Town name="Britain"           tax="15"/>
+		<Town name="Cove"              tax="10" />
+		<Town name="Jhelom"            tax="10" />
+		<Town name="Minoc"             tax="15"/>
+		<Town name="Ocllo"             tax="10" />
+		<Town name="Trinsic"           tax="10"/>
+		<Town name="Vesper"            tax="5"/>
+		<Town name="Yew"               tax="10"/>
+		<Town name="Wind"              tax="15" />
 		<Town name="Serpent's Hold"    tax="0" />
-		<Town name="Skara Brae"        tax="0" />
-		<Town name="Nujel'm"           tax="10" />
-		<Town name="Moonglow"          tax="8"/>
-		<Town name="Magincia"          tax="7"/>
-		<Town name="Buccaneer's Den"   tax="6" />
-		<Town name="Papua"             tax="20" />
-		<Town name="Delucia"             tax="20" />
+		<Town name="Skara Brae"        tax="8" />
+		<Town name="Nujel'm"           tax="15" />
+		<Town name="Moonglow"          tax="20"/>
+		<Town name="Magincia"          tax="15"/>
+		<Town name="Buccaneer's Den"   tax="15" />
+		<Town name="Papua"             tax="5" />
+		<Town name="Delucia"             tax="25" />
 
  -->
 
