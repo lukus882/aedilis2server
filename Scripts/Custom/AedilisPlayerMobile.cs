@@ -30,6 +30,23 @@ namespace Server.Mobiles
 {
 	public partial class PlayerMobile
 	{
+
+		#region PopUp Toggle -- Storm Septmber '07
+
+			public bool m_PopUpToggle;
+
+			[CommandProperty( AccessLevel.GameMaster )]
+			public bool PopUpToggle
+			{
+				get{ return m_PopUpToggle; }
+				set
+				{
+					m_PopUpToggle = value;
+				}
+			}
+
+		#endregion
+
 		#region Fatima.CharacterFlags -- April 28th '07
 			private Dictionary<string, BaseCharacterFlag> m_CharFlags = new Dictionary<string, BaseCharacterFlag>();
 			public Dictionary<string, BaseCharacterFlag> CharFlags{ get{ return m_CharFlags; } }
@@ -59,6 +76,11 @@ namespace Server.Mobiles
 			switch (version)
 			{
 
+                                 case 4:
+                                 {
+					m_PopUpToggle = reader.ReadBool();
+                                        goto case 3;
+                                 }
                                  case 3:
                                  {
 				 	Percent = reader.ReadDouble();
@@ -88,7 +110,10 @@ namespace Server.Mobiles
 
 		public void ExtendedSerialize( GenericWriter writer )
 		{
-			writer.Write( (int)3 ); //version
+			writer.Write( (int)4 ); //version
+
+			//Alteration 4 // PopUpToggle
+			writer.Write( (bool)m_PopUpToggle );
 
 			//Alteration 3 Player Levels
 			writer.Write( (double)Percent );

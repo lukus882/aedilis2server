@@ -1,14 +1,3 @@
-// 15AUG2007 written by RavonTUS
-//
-//   /\\           |\\  ||
-//  /__\\  |\\ ||  | \\ ||  /\\  \ //
-// /    \\ | \\||  |  \\||  \//  / \\ 
-// Play at An Nox, the cure for the UO addiction
-// http://annox.no-ip.com  // RavonTUS@Yahoo.com
-
-//use [add popup
-//use [set name "Your PopUp information goes here."
-
 using System;
 using Server.Items;
 using Server.Gumps;
@@ -33,24 +22,27 @@ namespace Server.Items
 
         public override void OnMovement(Mobile from, Point3D oldLocation)
         {
-            if ( from is PlayerMobile && from.InRange(this, 6) )
-            {
-                if (!from.HasGump(typeof(PopUp2Gump)))
-                    from.SendGump(new PopUp2Gump(Name));
-            }
-            if ( from is PlayerMobile && !from.InRange(this, 6))
-            {
-                if (from.HasGump(typeof(PopUp2Gump)))
-                    from.CloseGump(typeof(PopUp2Gump));
-            }
-        }
+	   	if ( from is PlayerMobile)
+		{
+			PlayerMobile pm = (PlayerMobile)from;
 
-        //If you want to be able to double click on the 'PopUp2' then add the following lines.
-        //public override void OnDoubleClick(Mobile from)
-        //{
-        //    if (!from.HasGump(typeof(PopUp2Gump)))
-        //        from.SendGump(new PopUp2Gump(Name));
-        //}
+            		if ( pm.PopUpToggle && pm.InRange(this, 5))
+            			{
+	
+           	   		  		if (!pm.HasGump(typeof(PopUp2Gump)))
+				 	 	{
+            	   		 	 	pm.SendGump(new PopUp2Gump(Name));
+						}
+           			 }
+           		 if (!pm.InRange(this, 5))
+           			 {
+            	 		   		if (pm.HasGump(typeof(PopUp2Gump)))
+				 	 	{
+            	 		  		 pm.CloseGump(typeof(PopUp2Gump));
+						}
+           			 }
+		}
+        }
 
         public PopUp2(Serial serial)
             : base(serial)

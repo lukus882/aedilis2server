@@ -70,6 +70,10 @@ namespace Server.Misc
 
 			if (m.AccessLevel == AccessLevel.Owner)
 			PackItem( new OwnerRobe() );
+
+			PlayerMobile pm = (PlayerMobile)m;
+			pm.PopUpToggle = true;
+
 		}
 
 		private static Item MakeNewbie( Item item )
