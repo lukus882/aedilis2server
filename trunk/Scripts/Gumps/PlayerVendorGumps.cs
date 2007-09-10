@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -55,7 +55,7 @@ namespace Server.Gumps
 
 			if ( info.ButtonID == 1 )
 			{
-				if ( !m_VI.Valid )
+				if ( !m_VI.Valid || !m_VI.Item.IsChildOf( m_Vendor.Backpack ) )
 				{
 					m_Vendor.SayTo( from, 503216 ); // You can't buy that.
 					return;
