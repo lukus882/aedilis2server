@@ -1,3 +1,5 @@
+#define CLIENT6017
+
 using System;
 using Server;
 using Server.Gumps;
@@ -344,7 +346,14 @@ namespace Server.Items
             UnHideRewards();
 
             to.Send(new ContainerDisplay(this));
-            to.Send(new ContainerContent(to, this));
+
+#if(CLIENT6017)
+            // add support for new client container packets
+            if (to.NetState != null && to.NetState.IsPost6017)
+                to.Send(new ContainerContent6017(to, this));
+            else
+#endif
+                to.Send(new ContainerContent(to, this));
 
             if (ObjectPropertyList.Enabled)
             {
@@ -628,12 +637,12 @@ namespace Server.Items
                         if (notify)
                         {
                             // notify the player holding the questholder                       
-                            holder.SendMessage(JournalNotifyColor,"Journal entry '{0}' of quest '{1}' has been modified.", entryID, Name);
+                            holder.SendMessage(JournalNotifyColor, "Journal entry '{0}' of quest '{1}' has been modified.", entryID, Name);
                         }
                         if (echo)
                         {
                             // echo the journal text to the player holding the questholder                       
-                            holder.SendMessage(JournalEchoColor,"{0}", entryText);
+                            holder.SendMessage(JournalEchoColor, "{0}", entryText);
                         }
                     }
                 }
@@ -653,7 +662,7 @@ namespace Server.Items
                         if (notify)
                         {
                             // notify the player holding the questholder                       
-                            holder.SendMessage(JournalNotifyColor,"Journal entry '{0}' has been added to quest '{1}'.", entryID, Name);
+                            holder.SendMessage(JournalNotifyColor, "Journal entry '{0}' has been added to quest '{1}'.", entryID, Name);
                         }
                         if (echo)
                         {
