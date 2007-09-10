@@ -85,6 +85,10 @@ namespace Server.Items
 					if ( c.Controlled == false )
 					{
 						from.SendMessage( "That Creature is not tamed." );
+					}
+					else if ( c.Controlled is Golem )
+					{
+						from.SendMessage( "Golems can not be bonded." );
 					}	
 					else if ( c.ControlMaster != from )
 					{
