@@ -90,6 +90,10 @@ namespace Server.Items
 					{
 						from.SendMessage( "Golems can not be bonded." );
 					}	
+					else if ( c.Controlled is NightSheep )
+					{
+						from.SendMessage( "Night Sheep can not be bonded." );
+					}	
 					else if ( c.ControlMaster != from )
 					{
 						from.SendMessage( "This is not your pet." );
