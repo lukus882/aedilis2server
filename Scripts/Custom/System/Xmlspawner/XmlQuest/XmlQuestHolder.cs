@@ -396,6 +396,14 @@ namespace Server.Items
             return false;
         }
 
+        public override bool CheckTarget(Mobile from, Server.Targeting.Target targ, object targeted)
+        {
+            if (from.AccessLevel == AccessLevel.Player) return false;
+
+            return true;
+        }
+
+
         public override void OnDoubleClick(Mobile from)
         {
             //base.OnDoubleClick(from);
