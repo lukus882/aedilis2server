@@ -45,39 +45,18 @@ namespace Server.Spells.First
 
 		if ( targ.BeginAction( typeof( LightCycle ) ) )
 		{
-
-// ** EDIT ** Time System
-
-			//new LightCycle.NightSightTimer( targ ).Start();
+						new LightCycle.NightSightTimer( targ ).Start();
 			int level = (int)( LightCycle.DungeonLevel * ( (Core.AOS ? targ.Skills[SkillName.Magery].Value : from.Skills[SkillName.Magery].Value )/ 100 ) );
 
 			if ( level < 0 )
 				level = 0;
 
-			int oldLevel = level;
-
-			level = TimeSystem.EffectsEngine.GetNightSightLevel(targ, level);
-
-			if (level > -1)
-			{
 				targ.LightLevel = level;
 
 				targ.FixedParticles( 0x376A, 9, 32, 5007, EffectLayer.Waist );
 				targ.PlaySound( 0x1E3 );
 
 				BuffInfo.AddBuff( targ, new BuffInfo( BuffIcon.NightSight, 1075643 ) );	//Night Sight/You ignore lighting effects
-
-				TimeSystem.EffectsEngine.SetNightSightOn(targ, oldLevel);
-			}
-			else
-			{
-				targ.EndAction(typeof(LightCycle));
-
-				from.SendMessage("Your spell seems to have no effect.");
-			}
-
-// ** END *** Time System
-
 		}
 		else
 		{
@@ -87,7 +66,6 @@ namespace Server.Spells.First
 
 	m_Spell.FinishSequence();
 }
-
 
 			protected override void OnTargetFinish( Mobile from )
 			{
