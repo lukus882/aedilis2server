@@ -90,7 +90,8 @@ namespace Server.Mobiles
         private static string defwaypointname = null;            // default waypoint name will get assigned in Initialize
         private const string XmlTableName = "Properties";
         private const string XmlDataSetName = "XmlSpawner";
-        public static AccessLevel DiskAccessLevel = AccessLevel.GameMaster; // minimum access level required by commands that can access the disk such as XmlLoad, XmlSave, and the Save function of XmlEdit
+        public static AccessLevel DiskAccessLevel = AccessLevel.Administrator; // minimum access level required by commands that can access the disk such as XmlLoad, XmlSave, and the Save function of XmlEdit
+        public static AccessLevel ConstructableAccessLevel = AccessLevel.GameMaster; // allow spawning of objects that have Constructable access restrictions at this level or lower
         private static int MaxMoveCheck = 10; // limit number of players that can be checked for triggering in a single OnMovement tick
 
         #endregion
@@ -11035,7 +11036,7 @@ public static void _TraceEnd(int index)
                 if (ctor == null) continue;
 
                 // if both requireconstructable and requireattachable are true, then allow either condition
-                if (!(requireconstructable && Add.IsConstructable(ctor)) && !(requireattachable && XmlAttach.IsAttachable(ctor)))
+if (!(requireconstructable && Add.IsConstructable(ctor, ConstructableAccessLevel)) && !(requireattachable && XmlAttach.IsAttachable(ctor)))
                     continue;
 
                 // check the parameter list of the constructor

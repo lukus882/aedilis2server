@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server.Items;
@@ -997,11 +997,11 @@ namespace Server.Mobiles
 			{
 				if ( cont.ConsumeTotal( typeof( Gold ), totalCost ) )
 					bought = true;
-				else if ( totalCost < 2000 )
+				else if ( totalCost < 500 )
 					SayTo( buyer, 500192 );//Begging thy pardon, but thou casnt afford that.
 			}
 
-			if ( !bought && totalCost >= 2000 )
+			if ( !bought && totalCost >= 500 )
 			{
 				cont = buyer.FindBankNoCreate();
 				if ( cont != null && cont.ConsumeTotal( typeof( Gold ), totalCost ) )
