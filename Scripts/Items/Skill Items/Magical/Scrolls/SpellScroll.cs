@@ -71,6 +71,7 @@ namespace Server.Items
 				list.Add( new ContextMenus.AddToSpellbookEntry() );
 		}
 
+
 		public override void OnDoubleClick( Mobile from )
 		{
 			if ( !Multis.DesignContext.Check( from ) )
