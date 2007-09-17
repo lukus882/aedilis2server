@@ -1481,10 +1481,10 @@ namespace Server.Items
 
 			if ( (prop = m_AosAttributes.LowerManaCost) != 0 )
 				list.Add( 1060433, prop.ToString() ); // lower mana cost ~1_val~%
-
+/* LRC Removed -Storm
 			if ( (prop = m_AosAttributes.LowerRegCost) != 0 )
 				list.Add( 1060434, prop.ToString() ); // lower reagent cost ~1_val~%
-
+End LRC Remove*/ 
 			if ( (prop = GetLowerStatReq()) != 0 )
 				list.Add( 1060435, prop.ToString() ); // lower requirements ~1_val~%
 
@@ -1622,7 +1622,7 @@ namespace Server.Items
 			if( Quality == ArmorQuality.Exceptional )
 			{
 				DistributeBonuses( (tool is BaseRunicTool ? 6 : Core.SE ? 15 : 14) ); // Not sure since when, but right now 15 points are added, not 14.
-
+/* Removed Arms Lore Bonus -Storm
 				if( Core.ML && !(this is BaseShield) )
 				{
 					int bonus = (int)(from.Skills.ArmsLore.Value / 20);
@@ -1641,6 +1641,7 @@ namespace Server.Items
 
 					from.CheckSkill( SkillName.ArmsLore, 0, 100 );
 				}
+End Removed Arms Lore Bonus */
 			}
 
 			if ( Core.AOS && tool is BaseRunicTool )

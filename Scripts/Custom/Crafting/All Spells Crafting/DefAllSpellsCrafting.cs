@@ -94,19 +94,18 @@ namespace Server.Engines.Craft
 			index = AddCraft( typeof( GarlicOrb ), "Mage Essences", "Essence of Garlic", 90.0, 100.0, typeof( Garlic ), "Garlic", 10, "You do not have enough garlic" );
 			index = AddCraft( typeof( SpidersSilkOrb ), "Mage Essences", "Essence Of Spider's Silk", 90.0, 100.0, typeof( SpidersSilk ), "Spider's Silk", 100, "You don't have enough Spider's Silk."  );
 			index = AddCraft( typeof( SulfurousAshOrb ), "Mage Essences", "Essence Of  Sulfurous Ash", 90.0, 100.0, typeof( SulfurousAsh ), "Sulfurous Ash", 100, "You don't have enough Sulfurous Ash."  );
-			index = AddCraft( typeof( GinsengOrb ), "Mage Orbs", "Essence Of  Ginseng", 90.0, 100.0, typeof( Ginseng ), "Ginseng", 100, "You don't have enough Ginseng."  );
+			index = AddCraft( typeof( GinsengOrb ), "Mage Essences", "Essence Of  Ginseng", 90.0, 100.0, typeof( Ginseng ), "Ginseng", 100, "You don't have enough Ginseng."  );
 			index = AddCraft( typeof( BlackPearlOrb ), "Mage Essences", "Essence Of  Black Pearl", 90.0, 100.0, typeof( BlackPearl ), "Black Pearl", 100, "You don't have enough Black Pearl."  );
 			index = AddCraft( typeof( MandrakeOrb ), "Mage Essences", "Essence Of  Mandrake", 90.0, 100.0, typeof( MandrakeRoot ), "Mandrake Root", 100, "You don't have enough Mandrake Root."  );
 			index = AddCraft( typeof( BloodMossOrb ), "Mage Essences", "Essence Of  Blood Moss", 90.0, 100.0, typeof( Bloodmoss ), "Bloodmoss", 100, "You don't have enough Blood Moss."  );
 			index = AddCraft( typeof( NightshadeOrb ), "Mage Essences", "Essence Of  Night Shade", 90.0, 100.0, typeof( Nightshade ), "Nightshade", 100, "You don't have enough Nightshade."  );
 			
 			index = AddCraft( typeof( LevelOneRunicCondenser ), "Runic Condensers", "Level One Runic Condenser", 90.0, 100.0, typeof( GarlicOrb ), "Essence Of Garlic", 1, "You don't have enough essence." );
-			AddRes( index, typeof(GarlicOrb), "Essence Of Garlic", 1, "You don't have enough essence.");
+			AddRes( index, typeof(BloodMossOrb), "Essence Of Blood Moss", 1, "You don't have enough essence.");
 			AddRes( index, typeof(SpidersSilkOrb), "Essence Of Spider Silk", 1, "You don't have enough essence.");
 			AddRes( index, typeof(SulfurousAshOrb), "Essence Of Sulfurous Ash", 1, "You don't have enough essence.");
 
 			index = AddCraft( typeof( LevelTwoRunicCondenser ), "Runic Condensers", "Level Two Runic Condenser", 90.0, 100.0, typeof( GinsengOrb ), "Essence Of Ginseng", 1, "You don't have enough essence." );
-			AddRes( index, typeof( Cloth ), 1044286, 60, 1044287 );
 			AddRes( index, typeof(BlackPearlOrb), "Essence Of Black Pearl", 1, "You don't have enough essence.");
 			AddRes( index, typeof(MandrakeOrb), "Essence Of Mandrake Root", 1, "You don't have enough essence.");
 			AddRes( index, typeof(NightshadeOrb), "Essence Of Night Shade", 1, "You don't have enough essence.");
