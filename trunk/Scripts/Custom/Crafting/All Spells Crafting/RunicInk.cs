@@ -73,11 +73,20 @@ namespace Server.Items
 
           			if( target != null && target is Spellbook ) 
           			{ 
-            
+
+				          
           				Spellbook c = (Spellbook)target;
-					c.Content = ulong.MaxValue;
-					from.SendMessage( "You Invoke The Power Locked Inside The Ink and Add Every Known Magery Spell To Your Book" );
-					m_Powder.Delete();
+
+					if ( c.ItemID == 0xE3B )
+					{
+						c.Content = ulong.MaxValue;
+						from.SendMessage( "You Invoke The Power Locked Inside The Ink and Add Every Known Magery Spell To Your Book" );
+						m_Powder.Delete();
+					}
+					else
+					{
+						from.SendMessage( "That is not a Magery Spellbook" );
+					}
 	
   
             			}

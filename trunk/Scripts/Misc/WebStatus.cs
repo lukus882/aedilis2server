@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using Server;
@@ -9,8 +9,11 @@ namespace Server.Misc
 {
 	public class StatusPage : Timer
 	{
+		public static bool Enabled = true;
+
 		public static void Initialize()
 		{
+			if ( Enabled )
 			new StatusPage().Start();
 		}
 

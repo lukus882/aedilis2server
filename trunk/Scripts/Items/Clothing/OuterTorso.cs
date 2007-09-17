@@ -589,8 +589,66 @@ namespace Server.Items
 	}
 
 	[Flipable( 0x2FB9, 0x3173 )]
-	public class MaleElvenRobe : BaseOuterTorso
+	public class MaleElvenRobe : BaseOuterTorso, IArcaneEquip
 	{
+		#region Arcane Impl
+		private int m_MaxArcaneCharges, m_CurArcaneCharges;
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int MaxArcaneCharges
+		{
+			get{ return m_MaxArcaneCharges; }
+			set{ m_MaxArcaneCharges = value; InvalidateProperties(); Update(); }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int CurArcaneCharges
+		{
+			get{ return m_CurArcaneCharges; }
+			set{ m_CurArcaneCharges = value; InvalidateProperties(); Update(); }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public bool IsArcane
+		{
+			get{ return ( m_MaxArcaneCharges > 0 && m_CurArcaneCharges >= 0 ); }
+		}
+
+		public void Update()
+		{
+			if ( IsArcane )
+				ItemID = 0x26AE;
+			else if ( ItemID == 0x26AE )
+				ItemID = 0x1F04;
+
+			if ( IsArcane && CurArcaneCharges == 0 )
+				Hue = 0;
+		}
+
+		public override void GetProperties( ObjectPropertyList list )
+		{
+			base.GetProperties( list );
+
+			if ( IsArcane )
+				list.Add( 1061837, "{0}\t{1}", m_CurArcaneCharges, m_MaxArcaneCharges ); // arcane charges: ~1_val~ / ~2_val~
+		}
+
+		public override void OnSingleClick( Mobile from )
+		{
+			base.OnSingleClick( from );
+
+			if ( IsArcane )
+				LabelTo( from, 1061837, String.Format( "{0}\t{1}", m_CurArcaneCharges, m_MaxArcaneCharges ) );
+		}
+
+		public void Flip()
+		{
+			if ( ItemID == 0x1F03 )
+				ItemID = 0x1F04;
+			else if ( ItemID == 0x1F04 )
+				ItemID = 0x1F03;
+		}
+		#endregion
 		// TODO: Supports arcane?
 		public override Race RequiredRace { get { return Race.Elf; } }
 
@@ -627,8 +685,66 @@ namespace Server.Items
 	}
 
 	[Flipable( 0x2FBA, 0x3174 )]
-	public class FemaleElvenRobe : BaseOuterTorso
+	public class FemaleElvenRobe : BaseOuterTorso, IArcaneEquip
 	{
+		#region Arcane Impl
+		private int m_MaxArcaneCharges, m_CurArcaneCharges;
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int MaxArcaneCharges
+		{
+			get{ return m_MaxArcaneCharges; }
+			set{ m_MaxArcaneCharges = value; InvalidateProperties(); Update(); }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int CurArcaneCharges
+		{
+			get{ return m_CurArcaneCharges; }
+			set{ m_CurArcaneCharges = value; InvalidateProperties(); Update(); }
+		}
+
+		[CommandProperty( AccessLevel.GameMaster )]
+		public bool IsArcane
+		{
+			get{ return ( m_MaxArcaneCharges > 0 && m_CurArcaneCharges >= 0 ); }
+		}
+
+		public void Update()
+		{
+			if ( IsArcane )
+				ItemID = 0x26AE;
+			else if ( ItemID == 0x26AE )
+				ItemID = 0x1F04;
+
+			if ( IsArcane && CurArcaneCharges == 0 )
+				Hue = 0;
+		}
+
+		public override void GetProperties( ObjectPropertyList list )
+		{
+			base.GetProperties( list );
+
+			if ( IsArcane )
+				list.Add( 1061837, "{0}\t{1}", m_CurArcaneCharges, m_MaxArcaneCharges ); // arcane charges: ~1_val~ / ~2_val~
+		}
+
+		public override void OnSingleClick( Mobile from )
+		{
+			base.OnSingleClick( from );
+
+			if ( IsArcane )
+				LabelTo( from, 1061837, String.Format( "{0}\t{1}", m_CurArcaneCharges, m_MaxArcaneCharges ) );
+		}
+
+		public void Flip()
+		{
+			if ( ItemID == 0x1F03 )
+				ItemID = 0x1F04;
+			else if ( ItemID == 0x1F04 )
+				ItemID = 0x1F03;
+		}
+		#endregion
 		// TODO: Supports arcane?
 		public override Race RequiredRace { get { return Race.Elf; } }
 		[Constructable]

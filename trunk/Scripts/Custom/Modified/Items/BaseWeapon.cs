@@ -3165,10 +3165,10 @@ namespace Server.Items
 
         if ((prop = m_AosAttributes.LowerManaCost) != 0)
             list.Add(1060433, prop.ToString()); // lower mana cost ~1_val~%
-
+/* LRC Removed -Storm
         if ((prop = m_AosAttributes.LowerRegCost) != 0)
             list.Add(1060434, prop.ToString()); // lower reagent cost ~1_val~%
-
+End LRC Remove*/ 
         if ((prop = GetLowerStatReq()) != 0)
             list.Add(1060435, prop.ToString()); // lower requirements ~1_val~%
 
@@ -3381,12 +3381,13 @@ namespace Server.Items
 						Attributes.WeaponDamage -= 20;
 					else
 						Attributes.WeaponDamage = 15;
-
+/* Removed Arms Lore Bonus -Storm
 					if( Core.ML )
 					{
 						Attributes.WeaponDamage += (int)(from.Skills.ArmsLore.Value / 20);
 						from.CheckSkill( SkillName.ArmsLore, 0, 100 );
 					}
+End Removed Arms Lore Bonus */
 				}
 			}
 			else if ( tool is BaseRunicTool )
