@@ -46,7 +46,7 @@ Add( new GenericBuyInfo( typeof( WitherScroll ), 72, 20, 0x226E, 0 ) );
 Add( new GenericBuyInfo( typeof( WraithFormScroll ), 32, 20, 0x226F, 0 ) );
 Add( new GenericBuyInfo( typeof( NecromancerSpellbook ), 115, 10, 0x2253, 0 ) ); 
 } 
-
+Add( new GenericBuyInfo( typeof( NecroReagentAxe ), 15, 10, 0x13E3, 112 ) );
 Add( new GenericBuyInfo( typeof( ScribesPen ), 8, 10, 0xFBF, 0 ) ); 
 Add( new GenericBuyInfo( typeof( BlankScroll ), 5, 20, 0x0E34, 0 ) ); 
 } 

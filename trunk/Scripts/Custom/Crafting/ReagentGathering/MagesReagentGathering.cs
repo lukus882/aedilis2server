@@ -89,8 +89,8 @@ namespace Server.Engines.Harvest
 			reagent.MaxTotal = 4;
 
 			// A resource bank will respawn its content every 20 to 30 minutes
-			reagent.MinRespawn = TimeSpan.FromMinutes( 60.0 );
-			reagent.MaxRespawn = TimeSpan.FromMinutes( 90.0 );
+			reagent.MinRespawn = TimeSpan.FromMinutes( 20.0 );
+			reagent.MaxRespawn = TimeSpan.FromMinutes( 40.0 );
 
 			// Skill checking is done on the Magery skill
 			reagent.Skill = SkillName.Magery;
@@ -127,15 +127,15 @@ namespace Server.Engines.Harvest
                     // 4th Success Message CLI No
 
 				new HarvestResource( 000.0, 000.0, 010.0, "You put some Kindling in your backpack",		typeof( Kindling ) ),
-				new HarvestResource( 100.0, 100.0, 100.0, "You put some Bloodmoss in your backpack",		typeof( Bloodmoss ) ),
-				new HarvestResource( 100.0, 100.0, 100.0, "You put some Garlic in your backpack",		typeof( Garlic ) ),
-				new HarvestResource( 100.0, 100.0, 100.0, "You put some Ginseng in your backpack",		typeof( Ginseng ) ),
-				new HarvestResource( 100.0, 100.0, 100.0, "You put some Mandrake Root in your backpack",	typeof( MandrakeRoot ) ),
-				new HarvestResource( 100.0, 100.0, 100.0, "You put some Nightshade in your backpack",		typeof( Nightshade ) ),
-				new HarvestResource( 100.0, 100.0, 100.0, "You put some Spiders Silk in your backpack",		typeof( SpidersSilk ) ),
-				new HarvestResource( 100.0, 100.0, 100.0, "You put some Black Pearl in your backpack",		typeof( BlackPearl ) ),
-				new HarvestResource( 100.0, 100.0, 100.0, "You put some Sulphurous Ash in your backpack",	typeof( SulfurousAsh ) ),
-				new HarvestResource( 100.0, 100.0, 100.0, "You put some Garlic in your backpack",		typeof( Garlic ) )
+				new HarvestResource( 50.0, 50.0, 50.0, "You put some Bloodmoss in your backpack",		typeof( Bloodmoss ) ),
+				new HarvestResource( 50.0, 50.0, 50.0, "You put some Garlic in your backpack",			typeof( Garlic ) ),
+				new HarvestResource( 50.0, 50.0, 50.0, "You put some Ginseng in your backpack",			typeof( Ginseng ) ),
+				new HarvestResource( 50.0, 50.0, 50.0, "You put some Mandrake Root in your backpack",		typeof( MandrakeRoot ) ),
+				new HarvestResource( 50.0, 50.0, 50.0, "You put some Nightshade in your backpack",		typeof( Nightshade ) ),
+				new HarvestResource( 50.0, 50.0, 50.0, "You put some Spiders Silk in your backpack",		typeof( SpidersSilk ) ),
+				new HarvestResource( 50.0, 50.0, 50.0, "You put some Black Pearl in your backpack",		typeof( BlackPearl ) ),
+				new HarvestResource( 50.0, 50.0, 50.0, "You put some Sulphurous Ash in your backpack",		typeof( SulfurousAsh ) ),
+				new HarvestResource( 50.0, 50.0, 50.0, "You put some Garlic in your backpack",			typeof( Garlic ) )
 				};
 
 			veins = new HarvestVein[]

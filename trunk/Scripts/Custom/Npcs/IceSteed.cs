@@ -9,52 +9,45 @@ namespace Server.Mobiles
 	public class IceSteed : BaseMount
 	{
 		[Constructable]
-		public IceSteed() : this( "an ice steed" )
+		public IceSteed() : this( "an Ice Steed" )
 		{
 		}
 
 		[Constructable]
 		public IceSteed( string name ) : base( name, 0x74, 0x3EA7, AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
+            		Hue = 1152;
 			BaseSoundID = 0xA8;
-			Hue = 1152;
 
-			SetStr( 721, 760 );
-			SetDex( 101, 130 );
-			SetInt( 386, 425 );
+			SetStr( 496, 525 );
+			SetDex( 86, 105 );
+			SetInt( 86, 125 );
 
-			SetHits( 433, 456 );
+			SetHits( 298, 315 );
 
-			SetDamage( 17, 25 );
+			SetDamage( 16, 22 );
 
-			SetDamageType( ResistanceType.Physical, 30 );
-			SetDamageType( ResistanceType.Cold, 70 );
+			SetDamageType( ResistanceType.Energy, 20 );
+			SetDamageType( ResistanceType.Cold, 80 );
 
-			SetResistance( ResistanceType.Physical, 55, 70 );
-			SetResistance( ResistanceType.Fire, 15, 25 );
-			SetResistance( ResistanceType.Cold, 80, 90 );
-			SetResistance( ResistanceType.Poison, 40, 50 );
-			SetResistance( ResistanceType.Energy, 40, 50 );
+			SetResistance( ResistanceType.Physical, 30, 40 );
+			SetResistance( ResistanceType.Fire, 70, 80 );
+			SetResistance( ResistanceType.Cold, 20, 30 );
+			SetResistance( ResistanceType.Poison, 30, 40 );
+			SetResistance( ResistanceType.Energy, 30, 40 );
 
-			SetSkill( SkillName.EvalInt, 99.1, 100.0 );
-			SetSkill( SkillName.Magery, 99.1, 100.0 );
-			SetSkill( SkillName.MagicResist, 99.1, 100.0 );
-			SetSkill( SkillName.Tactics, 97.6, 100.0 );
-			SetSkill( SkillName.Wrestling, 90.1, 100.0 );
+			SetSkill( SkillName.MagicResist, 100.0, 120.0 );
+			SetSkill( SkillName.Tactics, 100.0 );
+			SetSkill( SkillName.Wrestling, 100.0 );
 
-			Fame = 18000;
-			Karma = -18000;
+			Fame = 8000;
+			Karma = -800;
 
-			VirtualArmor = 64;
+			VirtualArmor = 60;
 
 			Tamable = true;
-			ControlSlots = 3;
-			MinTameSkill = 103.1;
-
-			int totalstats = this.Str + this.Dex + this.Int + this.HitsMax + this.StamMax + this.ManaMax + this.PhysicalResistance + this.FireResistance + this.ColdResistance + this.EnergyResistance + this.PoisonResistance + this.DamageMin + this.DamageMax + this.VirtualArmor;
-			int nextlevel = totalstats * 10;
-
-			this.NextLevel = nextlevel;
+			ControlSlots = 2;
+			MinTameSkill = 95.1;
 
 			switch ( Utility.Random( 3 ) )
 			{
@@ -84,6 +77,7 @@ namespace Server.Mobiles
 		public override void GenerateLoot()
 		{
 			AddLoot( LootPack.Rich );
+			AddLoot( LootPack.Average );
 			AddLoot( LootPack.LowScrolls );
 			AddLoot( LootPack.Potions );
 		}
@@ -101,6 +95,7 @@ namespace Server.Mobiles
 		public override int Hides{ get{ return 10; } }
 		public override HideType HideType{ get{ return HideType.Barbed; } }
 		public override FoodType FavoriteFood{ get{ return FoodType.Meat; } }
+		public override bool CanAngerOnTame { get { return true; } }
 
 		public IceSteed( Serial serial ) : base( serial )
 		{
