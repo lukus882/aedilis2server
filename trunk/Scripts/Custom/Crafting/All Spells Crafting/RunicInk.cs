@@ -77,7 +77,7 @@ namespace Server.Items
 				          
           				Spellbook c = (Spellbook)target;
 
-					if ( c.ItemID == 0xE3B )
+					if ( c.ItemID == 0xEFA )
 					{
 						c.Content = ulong.MaxValue;
 						from.SendMessage( "You Invoke The Power Locked Inside The Ink and Add Every Known Magery Spell To Your Book" );
@@ -85,7 +85,7 @@ namespace Server.Items
 					}
 					else
 					{
-						from.SendMessage( "That is not a Magery Spellbook" );
+						from.SendMessage( "That is not a Magery Spellbook ID" );
 					}
 	
   
