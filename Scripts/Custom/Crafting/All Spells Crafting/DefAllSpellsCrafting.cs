@@ -91,7 +91,7 @@ namespace Server.Engines.Craft
 
 			// Identification Stuff
 
-			index = AddCraft( typeof( GarlicOrb ), "Mage Essences", "Essence of Garlic", 90.0, 100.0, typeof( Garlic ), "Garlic", 10, "You do not have enough garlic" );
+			index = AddCraft( typeof( GarlicOrb ), "Mage Essences", "Essence of Garlic", 90.0, 100.0, typeof( Garlic ), "Garlic", 100, "You do not have enough garlic" );
 			index = AddCraft( typeof( SpidersSilkOrb ), "Mage Essences", "Essence Of Spider's Silk", 90.0, 100.0, typeof( SpidersSilk ), "Spider's Silk", 100, "You don't have enough Spider's Silk."  );
 			index = AddCraft( typeof( SulfurousAshOrb ), "Mage Essences", "Essence Of  Sulfurous Ash", 90.0, 100.0, typeof( SulfurousAsh ), "Sulfurous Ash", 100, "You don't have enough Sulfurous Ash."  );
 			index = AddCraft( typeof( GinsengOrb ), "Mage Essences", "Essence Of  Ginseng", 90.0, 100.0, typeof( Ginseng ), "Ginseng", 100, "You don't have enough Ginseng."  );
