@@ -77,7 +77,7 @@ namespace Server.Items
 				          
           				Spellbook c = (Spellbook)target;
 
-					if ( c.ItemID == 0xEFA )
+					if ( c.SpellbookType == SpellbookType.Regular )
 					{
 						c.Content = ulong.MaxValue;
 						from.SendMessage( "You Invoke The Power Locked Inside The Ink and Add Every Known Magery Spell To Your Book" );
