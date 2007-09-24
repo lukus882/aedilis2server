@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Server;
 using Server.Items;
 using Server.Guilds;
@@ -345,19 +345,41 @@ namespace Server.Spells
 			if (to.Region is HouseRegion)			
 				{
 
-					if (Server.Spells.SpellHelper.CheckCombat(to)) // doesnt seem to work needs a check for if the target is in combat
+					if ( to is PlayerMobile && from is PlayerMobile )
 					{
-					to.SendMessage("You Are In Combat And No Longer Safe From Indirect Attacks");
-					from.SendMessage("Your Victim Is In Combat And No Longer Safe From Indirect Attacks");
-					return true;
+						if ( Server.Spells.SpellHelper.CheckCombat(to) ) // doesnt seem to work needs a check for if the target is in combat
+						{
+							to.SendMessage("You Are In Combat And No Longer Safe From Indirect Attacks");
+							from.SendMessage("Your Victim Is In Combat And No Longer Safe From Indirect Attacks");
+							return true;
+						}	
+
+						else
+						{
+							from.SendMessage("Your Victim Is Safe From Indirect Attacks In a Home");
+							to.SendMessage("You Are Safe From Indirect Attacks In a Home");
+							return false;
+						}
 					}
 
-					else
+					else if ( to is PlayerMobile && from is BaseCreature )
 					{
-					from.SendMessage("Your Victim Is Safe From Indirect Attacks In Their Home");
-					to.SendMessage("You Are Safe From Indirect Attacks In Your Home");
-					return false;
+
+							to.SendMessage("You are vulnerable to creature attacks in a house");
+							return true;
+
 					}
+
+					else if( to is BaseCreature )
+						{
+							BaseCreature c = (BaseCreature)to;
+
+							if( c.Controlled || c.Summoned )
+							{
+								from.SendMessage("Summons or pets are not safe from your attack.");
+								return true;
+							}
+						}
 
 				}
 

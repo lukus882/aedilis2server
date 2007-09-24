@@ -232,6 +232,37 @@ namespace Server.Spells
 				return true;
  End LRC Remove */
 
+			if ( m_Caster.Skills[SkillName.Magery].Value >= 110 || m_Caster.Skills[SkillName.Necromancy].Value >= 110 )
+			{
+				int lrc = AosAttributes.GetValue( m_Caster, AosAttribute.LowerRegCost ); 
+				lrc = lrc > 50 ? 50 : lrc; //if LRC greater than 50, set lrc = 50, else lrc = what normally was 
+				if ( lrc > Utility.Random( 100 ))
+				return true;
+			}
+
+			if ( m_Caster.Skills[SkillName.Magery].Value >= 100 || m_Caster.Skills[SkillName.Necromancy].Value >= 100 )
+			{
+				int lrc = AosAttributes.GetValue( m_Caster, AosAttribute.LowerRegCost ); 
+				lrc = lrc > 30 ? 30 : lrc; //if LRC greater than 30, set lrc = 30, else lrc = what normally was 
+				if ( lrc > Utility.Random( 100 ) ) 
+				return true;
+			}
+
+			if ( m_Caster.Skills[SkillName.Magery].Value >= 50 || m_Caster.Skills[SkillName.Necromancy].Value >= 50 )
+			{
+				int lrc = AosAttributes.GetValue( m_Caster, AosAttribute.LowerRegCost ); 
+				lrc = lrc > 10 ? 10 : lrc; //if LRC greater than 10, set lrc = 10, else lrc = what normally was 
+				if ( lrc > Utility.Random( 100 ) ) 
+				return true;
+			}
+
+			if ( m_Caster.Skills[SkillName.Magery].Value < 50 || m_Caster.Skills[SkillName.Necromancy].Value < 50 )
+			{
+				int lrc = AosAttributes.GetValue( m_Caster, AosAttribute.LowerRegCost ); 
+				lrc = lrc > 5 ? 5 : lrc; //if LRC greater than 5, set lrc = 5, else lrc = what normally was 
+				if ( lrc > Utility.Random( 100 ) ) return true;
+			}
+
 			if ( m_Caster.AccessLevel > AccessLevel.Player)
 				return true;
 

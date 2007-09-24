@@ -225,10 +225,10 @@ namespace Server.Items
 
 			if ( (prop = m_AosAttributes.LowerManaCost) != 0 )
 				list.Add( 1060433, prop.ToString() ); // lower mana cost ~1_val~%
-/* LRC Removed -Storm
+
 			if ( (prop = m_AosAttributes.LowerRegCost) != 0 )
 				list.Add( 1060434, prop.ToString() ); // lower reagent cost ~1_val~%
-End LRC Remove*/ 
+
 			if ( (prop = m_AosAttributes.Luck) != 0 )
 				list.Add( 1060436, prop.ToString() ); // luck ~1_val~
 

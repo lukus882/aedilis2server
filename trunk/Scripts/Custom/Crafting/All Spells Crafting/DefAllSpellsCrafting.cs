@@ -100,7 +100,7 @@ namespace Server.Engines.Craft
 			index = AddCraft( typeof( BloodMossOrb ), "Mage Essences", "Essence Of  Blood Moss", 90.0, 100.0, typeof( Bloodmoss ), "Bloodmoss", 100, "You don't have enough Blood Moss."  );
 			index = AddCraft( typeof( NightshadeOrb ), "Mage Essences", "Essence Of  Night Shade", 90.0, 100.0, typeof( Nightshade ), "Nightshade", 100, "You don't have enough Nightshade."  );
 			
-			index = AddCraft( typeof( LevelOneRunicCondenser ), "Runic Condensers", "Level One Runic Condenser", 90.0, 100.0, typeof( GarlicOrb ), "Essence Of Garlic", 1, "You don't have enough essence." );
+			index = AddCraft( typeof( LevelOneRunicCondenser ), "Runic Condensers", "Level One Runic Condenser", 90.0, 100.0, typeof( GarlicOrb ), "Essence of Garlic", 1, "You don't have enough essence." );
 			AddRes( index, typeof(BloodMossOrb), "Essence Of Blood Moss", 1, "You don't have enough essence.");
 			AddRes( index, typeof(SpidersSilkOrb), "Essence Of Spider Silk", 1, "You don't have enough essence.");
 			AddRes( index, typeof(SulfurousAshOrb), "Essence Of Sulfurous Ash", 1, "You don't have enough essence.");
