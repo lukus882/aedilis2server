@@ -34,7 +34,7 @@ namespace Server.Help
 	public class Variables
 	{
 		public static readonly string Website = "http://www.aedilis.us/";
-		public static readonly string Email = "support@uo.com";	//Ex. "support@uo.com"
+		public static readonly string Email = "stormwolf@gmail.com";	//Ex. "support@uo.com"
 		public static readonly string Generic = String.Format( "If you wish to obtain more information, you can visit the website below");
 
 		public static readonly int ErrorHue = 32;

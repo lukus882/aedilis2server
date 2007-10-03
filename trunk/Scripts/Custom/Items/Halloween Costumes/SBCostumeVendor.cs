@@ -34,7 +34,6 @@ namespace Server.Mobiles
 				Add( new GenericBuyInfo( typeof( KappaCostume ), 5000, 50, 9860, 0 ) );
 				Add( new GenericBuyInfo( typeof( MongbatCostume ), 5000, 50, 9860, 0 ) );
 				Add( new GenericBuyInfo( typeof( CentaurCostume ), 5000, 50, 9860, 0 ) );
-				//Add( new GenericBuyInfo( typeof( ArcaneDemonCostume ), 5000, 50, 9860, 0 ) );
 				Add( new GenericBuyInfo( typeof( CyclopsCostume ), 5000, 50, 9860, 0 ) );
 				Add( new GenericBuyInfo( typeof( EarthElementalCostume ), 5000, 50, 9860, 0 ) );
 				Add( new GenericBuyInfo( typeof( EttinCostume ), 5000, 20, 9860, 0 ) );
@@ -56,7 +55,6 @@ namespace Server.Mobiles
 				Add( typeof( KappaCostume ), 2500 );
 				Add( typeof( MongbatCostume ), 2500 );
 				Add( typeof( CentaurCostume ), 2500 );
-				//Add( typeof( ArcaneDemonCostume ), 2500 );
 				Add( typeof( CyclopsCostume ), 2500 );
 				Add( typeof( EarthElementalCostume ), 2500 );
 				Add( typeof( EttinCostume ), 2500 );
