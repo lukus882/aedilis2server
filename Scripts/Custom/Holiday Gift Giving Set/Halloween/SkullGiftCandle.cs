@@ -21,7 +21,7 @@ namespace Server.Items
 		{
 			base.GetProperties( list );
 
-			list.Add( 1060662, "Happy Halloween\t2006" );
+			list.Add( 1060662, "Happy Halloween\t2007" );
 		}
 
 		public override void Serialize( GenericWriter writer )
