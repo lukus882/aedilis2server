@@ -1247,7 +1247,7 @@ namespace Server.Mobiles
 		{
 			int oldHits = this.Hits;
 
-			if ( !this.Summoned && this.Controlled && 0.2 > Utility.RandomDouble() )
+			if ( Core.AOS && !this.Summoned && this.Controlled && 0.2 > Utility.RandomDouble() )
 				amount = (int)(amount * BonusPetDamageScalar);
 
 			if ( Spells.Necromancy.EvilOmenSpell.CheckEffect( this ) )
@@ -2512,9 +2512,6 @@ namespace Server.Mobiles
 					break;
     				       case AIType.AI_Mage:
     				        m_AI = new MageAI(this);
-    				        break;
-    				       case AIType.AI_Melee:
-    				        m_AI = new MeleeAI(this);
     				        break;
     				       case AIType.AI_Necro:
     				        m_AI = new NecroAI(this);
