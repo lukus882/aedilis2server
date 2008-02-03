@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server;
 using Server.Targeting;
 using Server.Items;
@@ -101,7 +101,7 @@ namespace Server.Targets
 					}
 					else
 					{
-						bank.Consume( def, 5, from );
+						bank.Consume( 5, from );
 
 						Item item = new Kindling();
 

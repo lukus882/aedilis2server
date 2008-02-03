@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server.Items;
@@ -621,14 +621,12 @@ namespace Server.Mobiles
 					list.Add( new BuyItemState( name, cont.Serial, item.Serial, price, item.Amount, item.ItemID, item.Hue ) );
 					count++;
 
-					if ( ObjectPropertyList.Enabled ) {
 						if ( opls == null ) {
 							opls = new List<ObjectPropertyList>();
 						}
 
 					opls.Add( item.PropertyList );
 				}
-			}
 			}
 
 			//one (not all) of the packets uses a byte to describe number of items in the list.  Osi = dumb.
@@ -652,7 +650,7 @@ namespace Server.Mobiles
 				from.Send( new DisplayBuyList( this ) );
 				from.Send( new MobileStatusExtended( from ) );//make sure their gold amount is sent
 
-				if ( ObjectPropertyList.Enabled && opls != null ) {
+				if ( opls != null ) {
 					for ( int i = 0; i < opls.Count; ++i ) {
 						from.Send( opls[i] );
 					}

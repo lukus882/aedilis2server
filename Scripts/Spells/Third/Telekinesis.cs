@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server.Targeting;
 using Server.Network;
 using Server.Regions;
@@ -58,7 +58,7 @@ namespace Server.Spells.Third
 				{
 					item.OnSnoop( Caster );
 				}
-				else if ( item is Corpse && !((Corpse)item).CheckLoot( Caster ) )
+				else if ( item is Corpse && !((Corpse)item).CheckLoot( Caster, null ) )
 				{
 				}
 				else if ( Caster.Region.OnDoubleClick( Caster, item ) )

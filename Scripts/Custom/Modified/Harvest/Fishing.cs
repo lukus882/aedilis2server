@@ -43,8 +43,8 @@ namespace Server.Engines.Harvest
 			fish.BankHeight = 8;
 
 			// Every bank holds from 5 to 15 fish
-			fish.MinTotal = 10;
-			fish.MaxTotal = 20;
+			fish.MinTotal = 5;
+			fish.MaxTotal = 15;
 
 			// A resource bank will respawn its content every 10 to 20 minutes
 			fish.MinRespawn = TimeSpan.FromMinutes( 10.0 );
@@ -58,7 +58,7 @@ namespace Server.Engines.Harvest
 			fish.RangedTiles = true;
 
 			// Players must be within 4 tiles to harvest
-			fish.MaxRange = 5;
+			fish.MaxRange = 4;
 
 			// One fish per harvest action
 			fish.ConsumedPerHarvest = 1;
@@ -257,7 +257,7 @@ namespace Server.Engines.Harvest
 					{
 						Item preLoot = null;
 
-						switch ( Utility.Random( 5 ) )
+						switch ( Utility.Random( 7 ) )
 						{
 							case 0: // Bone parts
 							{
@@ -311,23 +311,47 @@ namespace Server.Engines.Harvest
 								preLoot = new ShipwreckedItem( Utility.RandomList( list ) );
 								break;
 							}
-
-						/* YET TO BE TESTED FOR VHAERUN'S CRL FISHING SYSTEM
-
-							case 4: // Treasure Box
+							case 4: // Shells
 							{
-								new TreasureBox();
+								preLoot = new ShipwreckedItem( Utility.Random( 0xFC4, 9 ) );
+								break;
 							}
-							case 5: // Ruined Clothes
+							case 5:	//Hats
 							{
-								preLoot = newShipwreckedItem( Utility.Random( 0xXXX, X ) );
-							}
-						*/
+								if ( Utility.RandomBool() )
+									preLoot = new SkullCap();
+								else
+									preLoot = new TricorneHat();
 
+								break;
+							}
+							case 6: // Misc
+							{
+								int[] list = new int[]
+									{
+										0x1EB5, // unfinished barrel
+										0xA2A, // stool
+										0xC1F, // broken clock
+										0x1047, 0x1048, // globe
+										0x1EB1, 0x1EB2, 0x1EB3, 0x1EB4 // barrel staves
+									};
+
+								if ( Utility.Random( list.Length + 1 ) == 0 )
+									preLoot = new Candelabra();
+								else
+									preLoot = new ShipwreckedItem( Utility.RandomList( list ) );
+
+								break;
+							}
 						}
 
 						if ( preLoot != null )
+						{
+							if ( preLoot is IShipwreckedItem )
+								( (IShipwreckedItem)preLoot ).IsShipwreckedItem = true;
+
 							return preLoot;
+						}
 
 						LockableContainer chest;
 						
@@ -339,7 +363,7 @@ namespace Server.Engines.Harvest
 						if ( sos.IsAncient )
 							chest.Hue = 0x481;
 
-						TreasureMapChest.Fill( chest, Math.Max( 1, Math.Min( 4, sos.Level ) ) );
+						TreasureMapChest.Fill( chest, Math.Max( 1, Math.Max( 4, sos.Level ) ) );
 
 						if ( sos.IsAncient )
 							chest.DropItem( new FabledFishingNet() );
@@ -545,17 +569,23 @@ namespace Server.Engines.Harvest
 			Point3D loc;
 
 			if ( GetHarvestDetails( from, tool, toHarvest, out tileID, out map, out loc ) )
-				Timer.DelayCall( TimeSpan.FromSeconds( 1.5 ), new TimerStateCallback( Splash_Callback ), new object[]{ loc, map } );
-		}
-
-		private void Splash_Callback( object state )
+				Timer.DelayCall( TimeSpan.FromSeconds( 1.5 ), 
+					delegate
 		{
-			object[] args = (object[])state;
-			Point3D loc = (Point3D)args[0];
-			Map map = (Map)args[1];
+						if( Core.ML )
+							from.RevealingAction();
 
 			Effects.SendLocationEffect( loc, map, 0x352D, 16, 4 );
 			Effects.PlaySound( loc, map, 0x364 );
+					} );
+		}
+
+		public override void OnHarvestFinished( Mobile from, Item tool, HarvestDefinition def, HarvestVein vein, HarvestBank bank, HarvestResource resource, object harvested )
+		{
+			base.OnHarvestFinished( from, tool, def, vein, bank, resource, harvested );
+
+			if ( Core.ML )
+				from.RevealingAction();
 		}
 
 		public override object GetLock( Mobile from, Item tool, HarvestDefinition def, object toHarvest )
