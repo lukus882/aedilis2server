@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using Server;
@@ -8,39 +9,73 @@ namespace Server.Misc
 {
 	public class ServerList
 	{
-		/* Address:
+		/* 
+		 * The default setting for Address, a value of 'null', will use your local IP address. If all of your local IP addresses
+		 * are private network addresses and AutoDetect is 'true' then RunUO will attempt to discover your public IP address
+		 * for you automatically.
+		 *
+		 * If you do not plan on allowing clients outside of your LAN to connect, you can set AutoDetect to 'false' and leave
+		 * Address set to 'null'.
 		 * 
-		 * The default setting, a value of 'null', will attempt to detect your IP address automatically:
-		 * private const string Address = null;
+		 * If your public IP address cannot be determined, you must change the value of Address to your public IP address
+		 * manually to allow clients outside of your LAN to connect to your server. Address can be either an IP address or
+		 * a hostname that will be resolved when RunUO starts.
 		 * 
-		 * This detection, however, does not work for servers behind routers. If you're running behind a router, put in your IP:
-		 * private const string Address = "12.34.56.78";
+		 * If you want players outside your LAN to be able to connect to your server and you are behind a router, you must also
+		 * forward TCP port 2593 to your private IP address. The procedure for doing this varies by manufacturer but generally
+		 * involves configuration of the router through your web browser.
+		 *
+		 * ServerList will direct connecting clients depending on both the address they are connecting from and the address and
+		 * port they are connecting to. If it is determined that both ends of a connection are private IP addresses, ServerList
+		 * will direct the client to the local private IP address. If a client is connecting to a local public IP address, they
+		 * will be directed to whichever address and port they initially connected to. This allows multihomed servers to function
+		 * properly and fully supports listening on multiple ports. If a client with a public IP address is connecting to a
+		 * locally private address, the server will direct the client to either the AutoDetected IP address or the manually entered
+		 * IP address or hostname, whichever is applicable. Loopback clients will be directed to loopback.
 		 * 
-		 * If you need to resolve a DNS host name, you can do that too:
-		 * private const string Address = "shard.host.com";
+		 * If you would like to listen on additional ports (i.e. 22, 23, 80, for clients behind highly restrictive egress
+		 * firewalls) or specific IP adddresses you can do so by modifying the file SocketOptions.cs found in this directory.
 		 */
 
-		public static readonly string Address = "127.0.0.1";
+		public static readonly string Address = "aedilis.servegame.com";
+		public static readonly string ServerName = "Aedilis";
 
-		public const string ServerName = "Aedilis Test";
+		public static readonly bool AutoDetect = true;
 
 		public static void Initialize()
 		{
-			Listener.Port = 2593;
+			if ( Address == null ) {
+				if ( AutoDetect )
+					AutoDetection();
+			}
+			else {
+				Resolve( Address, out m_PublicAddress );
+			}
 
 			EventSink.ServerList += new ServerListEventHandler( EventSink_ServerList );
 		}
 
-		public static void EventSink_ServerList( ServerListEventArgs e )
+		private static IPAddress m_PublicAddress;
+
+		private static void EventSink_ServerList( ServerListEventArgs e )
 		{
 			try
 			{
-				IPAddress ipAddr;
+				NetState ns = e.State;
+				Socket s = ns.Socket;
 
-				if ( Resolve( Address != null && !IsLocalMachine( e.State ) ? Address : Dns.GetHostName(), out ipAddr ) )
-					e.AddServer( ServerName, new IPEndPoint( ipAddr, Listener.Port ) );
-				else
-					e.Rejected = true;
+				IPEndPoint ipep = (IPEndPoint)s.LocalEndPoint;
+
+				IPAddress localAddress = ipep.Address;	
+				int localPort = ipep.Port; 
+
+				if ( IsPrivateNetwork( localAddress ) ) {
+					ipep = (IPEndPoint)s.RemoteEndPoint;
+					if ( !IsPrivateNetwork( ipep.Address ) && m_PublicAddress != null )
+						localAddress = m_PublicAddress;
+				}
+
+				e.AddServer( ServerName, new IPEndPoint( localAddress, localPort ) );
 			}
 			catch
 			{
@@ -48,45 +83,85 @@ namespace Server.Misc
 			}
 		}
 
-		public static bool Resolve( string addr, out IPAddress outValue )
+		private static void AutoDetection()
 		{
+			if ( !HasPublicIPAddress() ) {
+				Console.Write( "ServerList: Auto-detecting public IP address..." );
+				m_PublicAddress = FindPublicAddress();
+				
+				if ( m_PublicAddress != null )
+					Console.WriteLine( "done ({0})", m_PublicAddress.ToString() );
+				else
+					Console.WriteLine( "failed" );
+			}
+		}
 
-            if ( IPAddress.TryParse( addr, out outValue ) )
-                return true;
+		private static void Resolve( string addr, out IPAddress outValue )
+		{
+			if ( IPAddress.TryParse( addr, out outValue ) )
+				return;
 
-			try
-			{
+			try {
 				IPHostEntry iphe = Dns.GetHostEntry( addr );
 
 				if ( iphe.AddressList.Length > 0 )
-				{
 					outValue = iphe.AddressList[iphe.AddressList.Length - 1];
-					return true;
-				}
 			}
-			catch
-			{
+			catch {
 			}
+		}
 
-			outValue = IPAddress.None;
+		private static bool HasPublicIPAddress()
+		{
+			IPHostEntry iphe = Dns.GetHostEntry( Dns.GetHostName() );
+
+			IPAddress[] ips = iphe.AddressList;
+
+			for ( int i = 0; i < ips.Length; ++i )
+				if ( !IsPrivateNetwork( ips[i] ) )
+					return true;
+
 			return false;
 		}
 
-		private static bool IsLocalMachine( NetState state )
+		private static bool IsPrivateNetwork( IPAddress ip )
 		{
-			IPAddress theirAddress = state.Address;
+			// 10.0.0.0/8
+			// 172.16.0.0/12
+			// 192.168.0.0/16
 
-			if ( IPAddress.IsLoopback( theirAddress ) )
+			if ( Utility.IPMatch( "192.168.*", ip ) )
 				return true;
+			else if ( Utility.IPMatch( "10.*", ip ) )
+				return true;
+			else if ( Utility.IPMatch( "172.16-31.*", ip ) )
+				return true;
+			else
+				return false;
+		}
 
-			bool contains = false;
+		private static IPAddress FindPublicAddress()
+		{
+			try {
+				WebRequest req = HttpWebRequest.Create( "http://www.runuo.com/ip.php" );
+				req.Timeout = 15000;
 
-			IPHostEntry iphe = Dns.GetHostEntry( Dns.GetHostName() );
+				WebResponse res = req.GetResponse();
 
-			for ( int i = 0; !contains && i < iphe.AddressList.Length; ++i )
-				contains = theirAddress.Equals( iphe.AddressList[i] );
+				Stream s = res.GetResponseStream();
 
-			return contains;
+				StreamReader sr = new StreamReader( s ); 
+
+				IPAddress ip = IPAddress.Parse( sr.ReadLine() );
+
+				sr.Close();
+				s.Close();
+				res.Close();
+
+				return ip;
+			} catch {
+				return null;
+			}
 		}
 	}
 }

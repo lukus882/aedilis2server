@@ -1013,8 +1013,6 @@ namespace Server.Multis
 				return true;
 			else if ( item is Clock )
 				return true;
-			else if ( item is BaseBook )
-				return true;
 			else if ( item is BaseInstrument )
 				return true;
 			else if ( item is Dyes || item is DyeTub )
@@ -1027,6 +1025,42 @@ namespace Server.Multis
 
 		public virtual bool IsInside( Point3D p, int height )
 		{
+			if ( Deleted )
+				return false;
+
+			MultiComponentList mcl = Components;
+
+			int x = p.X - (X + mcl.Min.X);
+			int y = p.Y - (Y + mcl.Min.Y);
+
+			if ( x < 0 || x >= mcl.Width || y < 0 || y >= mcl.Height )
+				return false;
+
+			if ( this is HouseFoundation && y < (mcl.Height-1) && p.Z >= this.Z )
+				return true;
+
+			Tile[] tiles = mcl.Tiles[x][y];
+
+			for ( int j = 0; j < tiles.Length; ++j )
+			{
+				Tile tile = tiles[j];
+				int id = tile.ID & 0x3FFF;
+				ItemData data = TileData.ItemTable[id];
+
+				// Slanted roofs do not count; they overhang blocking south and east sides of the multi
+				if ( (data.Flags & TileFlag.Roof) != 0 )
+					continue;
+
+				// Signs and signposts are not considered part of the multi
+				if ( (id >= 0xB95 && id <= 0xC0E) || (id >= 0xC43 && id <= 0xC44) )
+					continue;
+
+				int tileZ = tile.Z + this.Z;
+
+				if ( p.Z == tileZ || (p.Z + height) > tileZ )
+					return true;
+			}
+
 			Sector sector = Map.GetSector( p );
 
 			foreach( BaseMulti m in sector.Multis )
