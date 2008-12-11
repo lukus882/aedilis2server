@@ -2497,7 +2497,8 @@ namespace Server.Mobiles
     				        m_AI = new AnimalAI(this);
     				        break;
                                         case AIType.AI_Berserk:
-					m_AI = new BerserkAI(this);   				        
+					m_AI = new BerserkAI(this); 
+    				        break;  				        
                                         case AIType.AI_AnimalSkittish:
     				        m_AI = new AnimalSkittishAI(this);
     				        break;
