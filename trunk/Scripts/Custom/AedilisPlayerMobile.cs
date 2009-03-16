@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
@@ -96,7 +96,7 @@ namespace Server.Mobiles
 
 		public void ExtendedSerialize( GenericWriter writer )
 		{
-			writer.Write( (int)4 ); //version
+			writer.Write( (int)3 ); //version
 
 			//Alteration 3 // PopUpToggle
 			writer.Write( (bool)m_PopUpToggle );
