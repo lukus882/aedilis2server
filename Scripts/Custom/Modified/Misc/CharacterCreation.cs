@@ -33,7 +33,8 @@ namespace Server.Misc
 			PackItem( new Dagger() );
 			PackItem( new AedilisLantern() );
 			PackItem( new TrashPack() );
-			PackItem( new WelcomeBook() );
+                        PackItem( new BankToken() );
+			//PackItem( new WelcomeBook() );
 			
 			WristWatch SWW = new WristWatch();
 			SWW.Name = "Time Keeper's Watch";

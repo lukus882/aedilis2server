@@ -65,10 +65,10 @@ namespace Server.Items
         }
 
         [CommandProperty( AccessLevel.GameMaster )]
-        public int MaxCharges { get { return 20; } }
+        public int MaxCharges { get { return 200; } }
 
         [CommandProperty( AccessLevel.GameMaster )]
-        public int MaxRecharges { get { return 100; } }
+        public int MaxRecharges { get { return 1000; } }
 
         public string TranslocationItemName { get { return "A Bank Token"; } }
 
