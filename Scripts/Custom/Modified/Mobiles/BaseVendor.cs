@@ -547,8 +547,6 @@ namespace Server.Mobiles
 
 			UpdateBuyInfo();
 
-			Fatima.Misc.VendorStockMarket.UpdateVendor( this );
-
 			int count = 0;
 			ArrayList list;
 			IBuyItemInfo[] buyInfo = this.GetBuyInfo();
@@ -1107,17 +1105,6 @@ namespace Server.Mobiles
 					SayTo( buyer, true, "The total of thy purchase is {0} gold, which has been withdrawn from your bank account.  My thanks for the patronage.  Unfortunately, I could not sell you all the goods you requested.", totalCost );
 				else
 					SayTo( buyer, true, "The total of thy purchase is {0} gold.  My thanks for the patronage.  Unfortunately, I could not sell you all the goods you requested.", totalCost );
-			}
-
-			if ( buyer.AccessLevel < AccessLevel.GameMaster )
-			{
-				foreach ( BuyItemResponse buy in list )
-				{
-					Item item = World.FindItem( buy.Serial );
-
-					if (item != null)
-						Fatima.Misc.VendorStockMarket.OnVendorPurchase( this, item.GetType(), buy.Amount );
-				}
 			}
 
 			return true;

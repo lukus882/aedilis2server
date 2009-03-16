@@ -6,15 +6,8 @@ using Server.Network;
 namespace Server.Items
 {
 
-	public class WinecrafterSugar : Item, ICommodity
+	public class WinecrafterSugar : Item
 	{
-		string ICommodity.Description
-		{
-			get
-			{
-				return String.Format( Amount == 1 ? "{0} Sugar" : "{0} Sugar", Amount );
-			}
-		}
 
 		[Constructable]
 		public WinecrafterSugar() : this(1)
@@ -22,7 +15,7 @@ namespace Server.Items
 		}
 
 		[Constructable]
-        public WinecrafterSugar(int amount) : base(0xF8F)
+              public WinecrafterSugar(int amount) : base(0xF8F)
 		{
 			this.Stackable = true;
 			this.Hue = 1150;

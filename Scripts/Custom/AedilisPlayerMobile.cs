@@ -23,8 +23,6 @@ using Server.Regions;
 using Server.Accounting;
 using Server.Engines.CannedEvil;
 using Server.Engines.Craft;
-using Fatima;
-using Fatima.CharacterFlags;
 
 namespace Server.Mobiles
 {
@@ -45,13 +43,6 @@ namespace Server.Mobiles
 				}
 			}
 
-		#endregion
-
-		#region Fatima.CharacterFlags -- April 28th '07
-			private Dictionary<string, BaseCharacterFlag> m_CharFlags = new Dictionary<string, BaseCharacterFlag>();
-			public Dictionary<string, BaseCharacterFlag> CharFlags{ get{ return m_CharFlags; } }
-
-			public string MapHash = String.Empty;
 		#endregion
 
 		#region Travel Mages -- April 28th '07
@@ -76,24 +67,19 @@ namespace Server.Mobiles
 			switch (version)
 			{
 
-                                 case 4:
+                                 case 3:
                                  {
 					m_PopUpToggle = reader.ReadBool();
-                                        goto case 3;
+                                        goto case 2;
                                  }
-                                 case 3:
+                                 case 2:
                                  {
 				 	Percent = reader.ReadDouble();
                                  	m_LevelTitle = reader.ReadString();
                                         m_PlayerLevel = reader.ReadInt();
-                                        goto case 2;
+                                        goto case 1;
                                  }
 
-				case 2:
-				{
-					m_CharFlags = CharacterFlags.DeserializeFlags(reader);
-					goto case 1;
-				}
 				case 1:
 				{
 					m_Settings = new MobileSettings(this);
@@ -112,16 +98,13 @@ namespace Server.Mobiles
 		{
 			writer.Write( (int)4 ); //version
 
-			//Alteration 4 // PopUpToggle
+			//Alteration 3 // PopUpToggle
 			writer.Write( (bool)m_PopUpToggle );
 
-			//Alteration 3 Player Levels
+			//Alteration 2 Player Levels
 			writer.Write( (double)Percent );
                         writer.Write( (String)m_LevelTitle );
                         writer.Write( m_PlayerLevel );
-			
-			//Alteration 2
-			CharacterFlags.SerializeFlags(writer, m_CharFlags);
 
 			//Alteration 1
                         m_Settings.Serialize(writer);

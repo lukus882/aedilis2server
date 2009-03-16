@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Server.Items;
 using Server.Network;
 
@@ -22,6 +22,8 @@ namespace Server.Items
 				return String.Format( Amount == 1 ? "{0} piece of {1} leather" : "{0} pieces of {1} leather", Amount, CraftResources.GetName( m_Resource ).ToLower() );	
 			}
 		}
+
+		int ICommodity.DescriptionNumber { get { return LabelNumber; } }
 
 		public override void Serialize( GenericWriter writer )
 		{

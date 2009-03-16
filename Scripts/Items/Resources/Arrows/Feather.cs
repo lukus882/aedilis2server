@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server.Items;
 
 namespace Server.Items
@@ -12,6 +12,8 @@ namespace Server.Items
 				return String.Format( Amount == 1 ? "{0} feather" : "{0} feathers", Amount );
 			}
 		}
+
+		int ICommodity.DescriptionNumber { get { return LabelNumber; } }
 
 		public override double DefaultWeight
 		{
