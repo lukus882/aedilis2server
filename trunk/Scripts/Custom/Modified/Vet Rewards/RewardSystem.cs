@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server;
 using Server.Items;
 using Server.Mobiles;
@@ -33,7 +33,7 @@ namespace Server.Engines.VeteranRewards
 			}
 		}
 
-		public static bool Enabled = false; // change to true to enable vet rewards
+		public static bool Enabled = true; // change to true to enable vet rewards
 		public static bool SkillCapRewards = false; // assuming vet rewards are enabled, should total skill cap bonuses be awarded? (720 skills total at 4th level)
 		public static TimeSpan RewardInterval = TimeSpan.FromDays( 30.0 );
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Text;
 using System.Collections;
 using Server.Network;
@@ -1515,12 +1515,7 @@ namespace Server.Items
 				move = null;
 			}
 
-			// New stuff for BladeWeaing performing Armor Ignore attack
-			WeaponAbility weaponA;
-			bool BladeWeaving = Bladeweave.BladeWeaving(attacker, out weaponA);
-
-			bool ignoreArmor = ( a is ArmorIgnore || (move != null && move.IgnoreArmor( attacker )) ||
-				(BladeWeaving && weaponA is ArmorIgnore ));
+			bool ignoreArmor = ( a is ArmorIgnore || (move != null && move.IgnoreArmor( attacker )) );
 
 			damageGiven = AOS.Damage( defender, attacker, damage, ignoreArmor, phys, fire, cold, pois, nrgy );
 
@@ -3020,28 +3015,6 @@ namespace Server.Items
 
 		public override void GetProperties( ObjectPropertyList list )
 {
-    /************************************************************************/
-    /******************* Mod by FireStorm for ItemID skill ******************/
-    /*if(!Identified )
-    {
-        if (m_Crafter == null && !PlayerConstructed)
-        {
-	    this.Identified = true;
-            //string name = String.Format("Unidentified");
-
-            base.GetProperties(list);
-            //list.Add(name);
-
-            if (ArtifactRarity > 0)
-            list.Add(1061078, ArtifactRarity.ToString()); // artifact rarity ~1_val~
-        }
-        else
-        {
-            this.Identified = true;
-        }
-    }
-    else*/
-    {
         base.GetProperties(list);
 
         if (m_Crafter != null)
@@ -3265,7 +3238,6 @@ namespace Server.Items
 
 	// mod to display attachment properties
 	Server.Engines.XmlSpawner2.XmlAttach.AddAttachmentProperties(this, list);
-    }
 }
 
 		public override void OnSingleClick( Mobile from )

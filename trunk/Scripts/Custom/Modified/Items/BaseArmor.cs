@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server.Network;
@@ -1415,29 +1415,6 @@ namespace Server.Items
 
 		public override void GetProperties( ObjectPropertyList list )
 		{
-
-    /************************************************************************/
-    /******************* Mod  for ItemID skill ******************/
-   /* if(!Identified)
-    {
-        if (m_Crafter == null && !PlayerConstructed)
-        {
-	    this.Identified = true;
-            //string name = String.Format("Unidentified");
-
-            base.GetProperties(list);
-            //list.Add(name);
-
-            if (ArtifactRarity > 0)
-            list.Add(1061078, ArtifactRarity.ToString()); // artifact rarity ~1_val~
-        }
-        else
-        {
-            this.Identified = true;
-        }
-    }
-    else*/
-    {
 			base.GetProperties( list );
 
 			if ( m_Crafter != null )
@@ -1549,7 +1526,6 @@ namespace Server.Items
 
 // mod to display attachment properties
 	Server.Engines.XmlSpawner2.XmlAttach.AddAttachmentProperties(this, list);
-    }
 }
 
 		public override void OnSingleClick( Mobile from )

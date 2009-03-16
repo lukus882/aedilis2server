@@ -4,7 +4,7 @@ using Server.Network;
 
 namespace Server.Items
 {
-	public abstract class BaseWineGrapes : Item, ICommodity
+	public abstract class BaseWineGrapes : Item
 	{
 		private GrapeVariety m_Variety;
 
@@ -13,14 +13,6 @@ namespace Server.Items
 		{
 			get{ return m_Variety; }
 			set{ m_Variety = value; InvalidateProperties(); }
-		}
-
-		string ICommodity.Description
-		{
-			get
-			{
-				return String.Format( Amount == 1 ? "{0} {1} grape" : "{0} {1} grapes", Amount, WinemakingResources.GetName( m_Variety ).ToLower() );
-			}
 		}
 
 		public override void Serialize( GenericWriter writer )

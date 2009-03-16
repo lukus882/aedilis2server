@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server.Items;
 using Server.Network;
 using Server.Targeting;
@@ -24,6 +24,8 @@ namespace Server.Items
 				return String.Format( "{0} {1} ore", Amount, CraftResources.GetName( m_Resource ).ToLower() );
 			}
 		}
+
+		int ICommodity.DescriptionNumber { get { return LabelNumber; } }
 
 		public abstract BaseIngot GetIngot();
 
@@ -209,7 +211,6 @@ namespace Server.Items
 						if ( toConsume <= 0 )
 						{
 							from.SendLocalizedMessage( 501987 ); // There is not enough metal-bearing ore in this pile to make an ingot.
-							m_Ore.Delete();  // If you don't include this, bugged ore ( Amount <= 0 ) will provide infinite skill gain...
 						}
 						else
 						{
@@ -217,29 +218,17 @@ namespace Server.Items
 								toConsume = 30000;
 
 							BaseIngot ingot = m_Ore.GetIngot();
-//							ingot.Amount = toConsume * 2;
-
-							int toMake = 1;  // one success already...
-
-							if ( toConsume != 1 )
-							{
-								for ( int x = 0; x < toConsume - 1; x++ )
-								{
-									if ( from.CheckSkill( SkillName.Mining, minSkill, maxSkill ) )
-										toMake++;
-								}
-							}
-
-							ingot.Amount = toMake * 2;
+							ingot.Amount = toConsume * 2;
 
 							m_Ore.Consume( toConsume );
 							from.AddToBackpack( ingot );
 							//from.PlaySound( 0x57 );
 
+
 							from.SendLocalizedMessage( 501988 ); // You smelt the ore removing the impurities and put the metal in your backpack.
 						}
 					}
-					else if ( m_Ore.Amount < 2 )   // yes, should be 2
+					else if ( m_Ore.Amount < 2 )
 					{
 						from.SendLocalizedMessage( 501989 ); // You burn away the impurities but are left with no useable metal.
 						m_Ore.Delete();
@@ -247,7 +236,7 @@ namespace Server.Items
 					else
 					{
 						from.SendLocalizedMessage( 501990 ); // You burn away the impurities but are left with less useable metal.
-						m_Ore.Amount--;  // /= 2;
+						m_Ore.Amount /= 2;
 					}
 				}
 			}

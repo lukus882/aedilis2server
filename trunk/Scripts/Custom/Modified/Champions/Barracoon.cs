@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server;
 using Server.Items;
 using Server.Spells;
@@ -20,14 +20,14 @@ namespace Server.Mobiles
 			Body = 0x190;
 			Hue = 0x83EC;
 
-			SetStr( 500, 700 );
-			SetDex( 125, 150 );
+			SetStr( 305, 425 );
+			SetDex( 72, 150 );
 			SetInt( 505, 750 );
 
-			SetHits( 8000, 10000 );
+			SetHits( 4200 );
 			SetStam( 102, 300 );
 
-			SetDamage( 35, 45 );
+			SetDamage( 25, 35 );
 
 			SetDamageType( ResistanceType.Physical, 100 );
 
@@ -44,7 +44,7 @@ namespace Server.Mobiles
 			Fame = 22500;
 			Karma = -22500;
 
-			VirtualArmor = 80;
+			VirtualArmor = 70;
 
 			AddItem( new FancyShirt( Utility.RandomGreenHue() ) );
 			AddItem( new LongPants( Utility.RandomYellowHue() ) );

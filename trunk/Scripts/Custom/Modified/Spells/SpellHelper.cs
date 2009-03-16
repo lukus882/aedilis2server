@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server;
 using Server.Items;
 using Server.Guilds;
@@ -894,9 +894,6 @@ namespace Server.Spells
 		{
 			int iDamage = (int)damage;
 
-			if( Evasion.CheckSpellEvasion( target ) )
-				iDamage = 0;
-
 			if( delay == TimeSpan.Zero )
 			{
 				if( from is BaseCreature )
@@ -948,9 +945,6 @@ namespace Server.Spells
 		public static void Damage( Spell spell, TimeSpan delay, Mobile target, Mobile from, double damage, int phys, int fire, int cold, int pois, int nrgy, DFAlgorithm dfa )
 		{
 			int iDamage = (int)damage;
-
-			if( Evasion.CheckSpellEvasion( target ) )
-				iDamage = 0;
 
 			if( delay == TimeSpan.Zero )
 			{

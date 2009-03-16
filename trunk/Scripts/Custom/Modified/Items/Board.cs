@@ -22,6 +22,24 @@ namespace Server.Items
 			}
 		}
 
+		int ICommodity.DescriptionNumber 
+		{ 
+			get
+			{
+				if ( m_Resource >= CraftResource.OakWood && m_Resource <= CraftResource.YewWood )
+					return 1075052 + ( (int)m_Resource - (int)CraftResource.OakWood );
+
+				switch ( m_Resource )
+				{
+					case CraftResource.Bloodwood: return 1075055;
+					case CraftResource.Frostwood: return 1075056;
+					case CraftResource.Heartwood: return 1075062;	//WHY Osi.  Why?
+				}
+
+				return LabelNumber;
+			} 
+		}
+
 		[Constructable]
 		public Board()
 			: this( 1 )

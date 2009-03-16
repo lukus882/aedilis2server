@@ -352,6 +352,7 @@ namespace Server.Items
 		{
 			base.OnSingleClick( from );
 
+			if ( m_IsShipwreckedItem )
 			LabelTo( from, 1041645 );	//recovered from a shipwreck
 		}
 

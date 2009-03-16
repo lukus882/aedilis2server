@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server.Items;
 
 namespace Server.Items
@@ -13,6 +13,8 @@ namespace Server.Items
 				return String.Format( Amount == 1 ? "{0} sand" : "{0} sand", Amount );
 			}
 		}
+
+		int ICommodity.DescriptionNumber { get { return LabelNumber; } }
 
 		public override int LabelNumber{ get{ return 1044626; } } // sand
 

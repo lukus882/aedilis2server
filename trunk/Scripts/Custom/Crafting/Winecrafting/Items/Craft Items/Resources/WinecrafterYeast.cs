@@ -2,15 +2,8 @@ using System;
 
 namespace Server.Items
 {
-	public class WinecrafterYeast : Item, ICommodity
+	public class WinecrafterYeast : Item
 	{
-		string ICommodity.Description
-		{
-			get
-			{
-				return String.Format( Amount == 1 ? "{0} Yeast" : "{0} Yeast", Amount );
-			}
-		}
 
 		[Constructable]
 		public WinecrafterYeast() : this(1)
@@ -18,7 +11,7 @@ namespace Server.Items
 		}
 
 		[Constructable]
-        public WinecrafterYeast(int amount) : base(0x1039)
+                public WinecrafterYeast(int amount) : base(0x1039)
 		{
 			Stackable = true;
 			Weight = 0.1;
