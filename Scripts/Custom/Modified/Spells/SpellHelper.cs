@@ -9,6 +9,7 @@ using Server.Targeting;
 using Server.Engines.PartySystem;
 using Server.Misc;
 using Server.Spells.Bushido;
+using Server.Spells.Necromancy;
 using Server.Spells.Ninjitsu;
 using System.Collections.Generic;
 using Server.Spells.Seventh;
@@ -342,47 +343,6 @@ namespace Server.Spells
 			if( to.Hidden && to.AccessLevel > from.AccessLevel )
 				return false;
 
-			if (to.Region is HouseRegion)			
-				{
-
-					if ( to is PlayerMobile && from is PlayerMobile )
-					{
-						if ( Server.Spells.SpellHelper.CheckCombat(to) ) // doesnt seem to work needs a check for if the target is in combat
-						{
-							to.SendMessage("You Are In Combat And No Longer Safe From Indirect Attacks");
-							from.SendMessage("Your Victim Is In Combat And No Longer Safe From Indirect Attacks");
-							return true;
-						}	
-
-						else
-						{
-							from.SendMessage("Your Victim Is Safe From Indirect Attacks In a Home");
-							to.SendMessage("You Are Safe From Indirect Attacks In a Home");
-							return false;
-						}
-					}
-
-					else if ( to is PlayerMobile && from is BaseCreature )
-					{
-
-							to.SendMessage("You are vulnerable to creature attacks in a house");
-							return true;
-
-					}
-
-					else if( to is BaseCreature )
-						{
-							BaseCreature c = (BaseCreature)to;
-
-							if( c.Controlled || c.Summoned )
-							{
-								from.SendMessage("Summons or pets are not safe from your attack.");
-								return true;
-							}
-						}
-
-				}
-
 			Guild fromGuild = GetGuildFor( from );
 			Guild toGuild = GetGuildFor( to );
 
@@ -621,6 +581,12 @@ namespace Server.Spells
 				if( caster != null )
 					SendInvalidMessage( caster, type );
 
+				return false;
+			}
+
+			if( caster != null && caster.AccessLevel == AccessLevel.Player && caster.Region.IsPartOf( typeof( Regions.Jail ) ) )
+			{
+				caster.SendLocalizedMessage( 1042632 ); // You'll need a better jailbreak plan then that!
 				return false;
 			}
 
@@ -955,7 +921,10 @@ namespace Server.Spells
 					((BaseCreature)target).AlterSpellDamageFrom( from, ref iDamage );
 
 				WeightOverloading.DFA = dfa;
-				AOS.Damage( target, from, iDamage, phys, fire, cold, pois, nrgy );
+
+				int damageGiven = AOS.Damage( target, from, iDamage, phys, fire, cold, pois, nrgy );
+				DoLeech( damageGiven, from, target );
+
 				WeightOverloading.DFA = DFAlgorithm.Standard;
 			}
 			else
@@ -965,6 +934,24 @@ namespace Server.Spells
 
 			if( target is BaseCreature && from != null && delay == TimeSpan.Zero )
 				((BaseCreature)target).OnDamagedBySpell( from );
+		}
+
+		public static void DoLeech( int damageGiven, Mobile from, Mobile target )
+		{
+			TransformContext context = TransformationSpellHelper.GetContext( from );
+			if ( context != null && context.Type == typeof( WraithFormSpell ) )
+			{
+				int wraithLeech = ( 5 + (int)( ( 15 * from.Skills.SpiritSpeak.Value ) / 100 ) ); // Wraith form gives 5-20% mana leech
+				int manaLeech = AOS.Scale( damageGiven, wraithLeech );
+				if ( manaLeech != 0 )
+				{
+					// Mana leeched by the Wraith Form spell is actually stolen, not just leeched.
+					target.Mana -= manaLeech;
+					from.Mana += manaLeech;
+					from.PlaySound( 0x44D );
+					//from.SendMessage(String.Format("You Leeched {0} Mana", manaLeech));
+				}
+			}
 		}
 
 		public static void Heal( int amount, Mobile target, Mobile from )
@@ -1047,7 +1034,10 @@ namespace Server.Spells
 					((BaseCreature)m_Target).AlterSpellDamageFrom( m_From, ref m_Damage );
 
 				WeightOverloading.DFA = m_DFA;
-				AOS.Damage( m_Target, m_From, m_Damage, m_Phys, m_Fire, m_Cold, m_Pois, m_Nrgy );
+
+				int damageGiven = AOS.Damage( m_Target, m_From, m_Damage, m_Phys, m_Fire, m_Cold, m_Pois, m_Nrgy );
+				DoLeech( damageGiven, m_From, m_Target );
+
 				WeightOverloading.DFA = DFAlgorithm.Standard;
 
 				if( m_Target is BaseCreature && m_From != null )

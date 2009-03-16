@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server;
 using Server.Network;
 using Server.Mobiles;
@@ -6,6 +6,7 @@ using Server.Gumps;
 
 namespace Server.Items
 {
+	[FlipableAttribute( 0xA57, 0xA58, 0xA59 )]
 	public class Bedroll : Item
 	{
 		[Constructable]

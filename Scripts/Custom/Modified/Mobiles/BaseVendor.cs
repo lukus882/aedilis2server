@@ -106,7 +106,8 @@ namespace Server.Mobiles
 			private Mobile m_From;
 			private BaseVendor m_Vendor;
 
-			public BulkOrderInfoEntry( Mobile from, BaseVendor vendor ) : base( 6152, 6 )
+			public BulkOrderInfoEntry( Mobile from, BaseVendor vendor )
+				: base( 6152, 6 )
 			{
 				m_From = from;
 				m_Vendor = vendor;
@@ -152,7 +153,8 @@ namespace Server.Mobiles
 			}
 		}
 
-		public BaseVendor( string title ) : base( AIType.AI_Vendor, FightMode.None, 2, 1, 0.5, 2 )
+		public BaseVendor( string title )
+			: base( AIType.AI_Vendor, FightMode.None, 2, 1, 0.5, 2 )
 		{
 			LoadSBInfo();
 
@@ -177,7 +179,8 @@ namespace Server.Mobiles
 			m_LastRestock = DateTime.Now;
 		}
 		
-		public BaseVendor( Serial serial ) : base( serial )
+		public BaseVendor( Serial serial )
+			: base( serial )
 		{
 		}
 
@@ -571,7 +574,6 @@ namespace Server.Mobiles
 				list.Add( new BuyItemState( buyItem.Name, cont.Serial, disp == null ? (Serial) 0x7FC0FFEE : disp.Serial, buyItem.Price, buyItem.Amount, buyItem.ItemID, buyItem.Hue ) );
 				count++;
 
-				if ( ObjectPropertyList.Enabled ) {
 					if ( opls == null ) {
 						opls = new List<ObjectPropertyList>();
 					}
@@ -582,7 +584,6 @@ namespace Server.Mobiles
 						opls.Add( ( ( Mobile ) disp ).PropertyList );
 					}
 				}
-			}
 
 			List<Item> playerItems = cont.Items;
 
@@ -942,7 +943,7 @@ namespace Server.Mobiles
 					{
 						ProcessSinglePurchase( buy, gbi, validBuy, ref controlSlots, ref fullPurchase, ref totalCost );
 					}
-					else if ( item.RootParent == this )
+					else if ( item != this.BuyPack && item.IsChildOf( this.BuyPack ) )
 					{
 						if ( amount > item.Amount )
 							amount = item.Amount;
@@ -1421,7 +1422,8 @@ namespace Server.ContextMenus
 	{
 		private BaseVendor m_Vendor;
 
-		public VendorBuyEntry( Mobile from, BaseVendor vendor ) : base( 6103, 8 )
+		public VendorBuyEntry( Mobile from, BaseVendor vendor )
+			: base( 6103, 8 )
 		{
 			m_Vendor = vendor;
 			Enabled = vendor.CheckVendorAccess( from );
@@ -1437,7 +1439,8 @@ namespace Server.ContextMenus
 	{
 		private BaseVendor m_Vendor;
 
-		public VendorSellEntry( Mobile from, BaseVendor vendor ) : base( 6104, 8 )
+		public VendorSellEntry( Mobile from, BaseVendor vendor )
+			: base( 6104, 8 )
 		{
 			m_Vendor = vendor;
 			Enabled = vendor.CheckVendorAccess( from );

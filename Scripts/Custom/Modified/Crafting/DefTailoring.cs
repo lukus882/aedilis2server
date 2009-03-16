@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server.Items;
 
 namespace Server.Engines.Craft
@@ -145,7 +145,6 @@ namespace Server.Engines.Craft
 				SetNeededExpansion( index, Expansion.SE );
 			}
 
-			// Pants
 			#endregion
 
 			#region Pants

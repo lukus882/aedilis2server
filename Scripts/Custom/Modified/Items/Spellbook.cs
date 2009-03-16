@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using Server;
 using Server.Commands;
@@ -410,6 +410,17 @@ namespace Server.Items
 			LootType = LootType.Blessed;
 
 			Content = content;
+		}
+
+		public override void OnAfterDuped( Item newItem )
+		{
+			Spellbook book = newItem as Spellbook;
+
+			if ( book == null )
+				return;
+
+			book.m_AosAttributes = new AosAttributes( newItem, m_AosAttributes );
+			book.m_AosSkillBonuses = new AosSkillBonuses( newItem, m_AosSkillBonuses );
 		}
 
 		public override void OnAdded( object parent )

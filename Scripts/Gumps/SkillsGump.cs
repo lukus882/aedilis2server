@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using Server;
 using Server.Gumps;
@@ -490,7 +490,8 @@ namespace Server.Gumps
 					SkillName.Necromancy,
 					SkillName.SpiritSpeak,
 					SkillName.Ninjitsu,
-					SkillName.Bushido
+					SkillName.Bushido,
+					SkillName.Spellweaving
 				} ),
 				new SkillsGumpGroup( "Miscellaneous", new SkillName[]
 				{
