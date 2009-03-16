@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using Server;
 
@@ -381,6 +381,8 @@ namespace Server.Mobiles
 	public class MountItem : Item, IMountItem
 	{
 		private BaseMount m_Mount;
+
+		public override double DefaultWeight { get { return 0; } }
 
 		public MountItem( BaseMount mount, int itemID ) : base( itemID )
 		{

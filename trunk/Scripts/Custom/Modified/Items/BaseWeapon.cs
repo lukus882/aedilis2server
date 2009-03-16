@@ -413,6 +413,19 @@ namespace Server.Items
 
 		#endregion
 
+		public override void OnAfterDuped( Item newItem )
+		{
+			BaseWeapon weap = newItem as BaseWeapon;
+
+			if ( weap == null )
+				return;
+
+			weap.m_AosAttributes = new AosAttributes( newItem, m_AosAttributes );
+			weap.m_AosElementDamages = new AosElementAttributes( newItem, m_AosElementDamages );
+			weap.m_AosSkillBonuses = new AosSkillBonuses( newItem, m_AosSkillBonuses );
+			weap.m_AosWeaponAttributes = new AosWeaponAttributes( newItem, m_AosWeaponAttributes );
+		}
+
 		public virtual void UnscaleDurability()
 		{
 			int scale = 100 + GetDurabilityBonus();
@@ -3057,6 +3070,7 @@ namespace Server.Items
                 list.Add(entry.Title);
         }
 
+
         base.AddResistanceProperties(list);
 
         int prop;
@@ -3357,6 +3371,10 @@ namespace Server.Items
 					if( Core.ML )
 					{
 						Attributes.WeaponDamage += (int)(from.Skills.ArmsLore.Value / 20);
+
+						if ( Attributes.WeaponDamage > 50 )
+							Attributes.WeaponDamage = 50;
+
 						from.CheckSkill( SkillName.ArmsLore, 0, 100 );
 					}
 End Removed Arms Lore Bonus */
