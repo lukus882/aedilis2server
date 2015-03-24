@@ -1,0 +1,1 @@
+We are a free game server using the Runuo Server Emulator. The files listed here are the changes we made to the server to make a unique world for our players to play in.
